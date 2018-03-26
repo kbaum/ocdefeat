@@ -10,6 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326191422) do
+ActiveRecord::Schema.define(version: 20180326203401) do
+
+  create_table "obsessions", force: :cascade do |t|
+    t.string "intrusive_thought"
+    t.string "triggers"
+    t.integer "anxiety_rating"
+    t.string "symptoms"
+    t.string "rituals"
+    t.integer "user_id"
+    t.integer "time_consumed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
