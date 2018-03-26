@@ -1,0 +1,2 @@
+class ObsessionCategory < ApplicationRecord
+end
