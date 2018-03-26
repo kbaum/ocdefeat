@@ -22,3 +22,4 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+OCDefeat is a Rails application that enables patients to create custom Exposure Response Prevention (ERP) plans that are used in the treatment of Obsessive Compulsive Disorder (OCD).
