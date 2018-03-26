@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326211214) do
+ActiveRecord::Schema.define(version: 20180326212359) do
 
   create_table "obsession_themes", force: :cascade do |t|
     t.integer "obsession_id"
-    t.integer "category_id"
+    t.integer "theme_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
