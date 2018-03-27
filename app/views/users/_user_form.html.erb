@@ -39,4 +39,6 @@
   <%= f.label :ocd_severity_severe, "Severe (3-8 hrs/day)" %><br>
   <%= f.radio_button :severity, 'extreme' %>
   <%= f.label :ocd_severity_extreme, "Extreme (more than 8 hrs/day)" %><br>
+  <%= f.radio_button :severity, 'not_applicable' %>
+  <%= f.label :ocd_severity_not_applicable, "N/A" %><br>
 <% end %>
