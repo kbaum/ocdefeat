@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327010449) do
+ActiveRecord::Schema.define(version: 20180327010947) do
 
   create_table "obsession_themes", force: :cascade do |t|
     t.integer "obsession_id"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20180327010449) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
+    t.string "name"
     t.string "email"
     t.string "password_digest"
     t.string "uid"
