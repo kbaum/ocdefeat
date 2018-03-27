@@ -30,4 +30,13 @@
   <label>Rate the severity of your OCD based on the amount of time you obsess daily:</label>
 
   <br><br>
+
+  <%= f.radio_button :severity, 'mild' %>
+  <%= f.label :ocd_severity_mild, "Mild (less than 1 hr/day)" %><br>
+  <%= f.radio_button :severity, 'moderate' %>
+  <%= f.label :ocd_severity_moderate, "Moderate (1-3 hrs/day)" %><br>
+  <%= f.radio_button :severity, 'severe' %>
+  <%= f.label :ocd_severity_severe, "Severe (3-8 hrs/day)" %><br>
+  <%= f.radio_button :severity, 'extreme' %>
+  <%= f.label :ocd_severity_extreme, "Extreme (more than 8 hrs/day)" %><br>
 <% end %>
