@@ -41,4 +41,10 @@
   <%= f.label :ocd_severity_extreme, "Extreme (more than 8 hrs/day)" %><br>
   <%= f.radio_button :severity, 'not_applicable' %>
   <%= f.label :ocd_severity_not_applicable, "N/A" %><br>
+
+  <br><br>
+
+  <%= f.label :role_requested, "Request a Role: " %>
+
+  <%= f.select :role_requested, options_for_select(["Patient", "Therapist", "Admin"]), include_blank: true %>
 <% end %>
