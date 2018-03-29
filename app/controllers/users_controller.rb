@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   def create
   end
 
+  def show
+  end
+
   private
 
     def user_params
@@ -15,6 +18,8 @@ class UsersController < ApplicationController
         :password,
         :password_confirmation,
         :uid,
+        :twitter_handle,
+        :bio,
         :severity,
         :role,
         :role_requested
