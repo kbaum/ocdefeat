@@ -5,7 +5,8 @@ class User < ApplicationRecord
   has_many :plans, through: :obsessions, dependent: :destroy
 
   validates :name, presence: true
-  validates :email, presence: true, email: true, uniqueness: true
+  validates :email, presence: true, email: true, uniqueness: true, allow_blank: true
+  # I only want to validate the email attribute of a user instance if it's present
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   # when a user edits their user information, they don't have to retype their password
@@ -20,7 +21,7 @@ class User < ApplicationRecord
 end
 
 # Explanation of #find_or_create_by_omniauth(auth_hash):
-# Trying to find user instance by their provider attribute ("Twitter") and their user ID on Twitter
+# Trying to find user instance by their provider attribute ("Twitter") and their user ID (uid) on Twitter
 # If such a user exists in the DB already, return that user instance
 # If a user instance does NOT exist with that UID from Twitter, then create one:
 # The newly instantiated user instance that was just created is passed to the block,
@@ -28,3 +29,4 @@ end
 # we set its twitter_handle = auth_hash["info"]["nickname"],
 # we set its bio attribute = auth_hash["info"]["description"]
 # and we give it a random, unique string password using SecureRandom.hex
+# The user instance is returned at end of method call
