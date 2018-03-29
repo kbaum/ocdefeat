@@ -8,5 +8,5 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :edit, :update, :destroy]
 
-  get '/auth/facebook/callback' => 'sessions#create'
+  get '/auth/:provider/callback', to: 'sessions#create'
 end
