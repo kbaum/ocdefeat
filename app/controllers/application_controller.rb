@@ -8,5 +8,9 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
 
-  helper_method :current_user # makes #current_user accessible to views
+    def logged_in?
+      !!current_user # the truthiness of calling #current_user
+    end
+
+  helper_method :current_user, :logged_in? # makes methods accessible to views
 end
