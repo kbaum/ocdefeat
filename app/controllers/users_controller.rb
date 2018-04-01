@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    render show_template # private method #show_template returns string name of view file to be rendered
   end
 
   private
