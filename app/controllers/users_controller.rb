@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id # log in the user
-      redirect_to user_path(@user), notice: "You successfully registered, #{current_user.name}! Thank you for joining the OCDefeat Community!"
+      redirect_to user_path(@user), notice: "You successfully registered and created your preliminary profile, #{current_user.name}!"
     else
       flash.now[:error] = "Your registration attempt was unsuccessful. Please try again."
       render :new # present the registration form so the user can try signing up again
