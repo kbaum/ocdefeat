@@ -7,7 +7,7 @@ admin.severity = "not_applicable"
 admin.save
 
 therapist = User.new
-therapist.name = "Dr. Simon Therapinski, PsyD"
+therapist.name = "Dr. Simon Therapinski"
 therapist.email = "psychologist@ocdefeat.com"
 therapist.password = "psychology"
 therapist.role = 2
