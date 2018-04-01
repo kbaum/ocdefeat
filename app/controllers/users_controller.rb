@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
   def new # implicitly renders app/views/users/new.html.erb view file
     @user = User.new
   end
@@ -8,6 +10,9 @@ class UsersController < ApplicationController
 
   def show
     render show_template # private method #show_template returns string name of view file to be rendered
+  end
+
+  def edit
   end
 
   private
