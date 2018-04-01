@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :plans, through: :obsessions, dependent: :destroy
 
   validates :name, presence: true
-  validates :email, presence: true, email: true, uniqueness: true, allow_blank: true
+  validates :email, email: true, uniqueness: true, allow_blank: true
   # I only want to validate the email attribute of a user instance if it's present
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
