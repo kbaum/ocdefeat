@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  
+
   def new # implicitly renders app/views/users/new.html.erb view file
     @user = User.new
   end
@@ -13,6 +13,15 @@ class UsersController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: "User information was successfully updated!"
+    else
+      flash.now[:error] = "Your attempt to edit user information was unsuccessful. Please try again."
+      render :edit
+    end
   end
 
   private
