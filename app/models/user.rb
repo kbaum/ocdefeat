@@ -18,6 +18,14 @@ class User < ApplicationRecord
       user.password = SecureRandom.hex # a random, unique string
     end
   end
+
+  def self.patients
+    self.where(role: 1)
+  end
+
+  def self.by_role(role_number)
+    self.where(role: role_number)
+  end
 end
 
 # Explanation of #find_or_create_by_omniauth(auth_hash):
