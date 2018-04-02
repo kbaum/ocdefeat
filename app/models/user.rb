@@ -37,6 +37,10 @@ class User < ApplicationRecord
   def self.awaiting_assignment(rejected_roles, role_number)
     self.where.not(role_requested: rejected_roles, role: role_number)
   end
+
+  def self.by_ocd_severity(string_severity)
+    patients.where(severity: string_severity)
+  end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
   # so if we're looking for all unassigned_users who want to be patients, we call
