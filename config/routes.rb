@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  root 'welcome#home'
 
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
@@ -8,6 +7,8 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
 
   resources :users, only: [:show, :edit, :update, :destroy]
+
+  resources :obsessions
 
   get '/auth/twitter/callback' => 'sessions#create'
 end
