@@ -29,4 +29,20 @@
   </div>
 
   <br>
+
+  <div class="field">
+    <%= obsession_builder.label :time_consumed, "On average, how much time is consumed by this obsession daily (including time spent ruminating and/or performing rituals)?" %>
+    <br>
+    <%= obsession_builder.number_field :time_consumed, step: :any %> <strong>hour(s)</strong>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= obsession_builder.label :anxiety_rating, "On a scale of 1-10, rate the intensity of the discomfort produced by your obsession:" %>
+    <%= obsession_builder.number_field :anxiety_rating %>
+  </div>
+
+  <br>
+
 <% end %>
