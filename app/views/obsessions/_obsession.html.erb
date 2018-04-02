@@ -45,6 +45,20 @@
 
   <br>
 
+  <div class="field">
+    <%= obsession_builder.label :symptoms, "How (if at all) does your OCD manifest physically?" %>
+    <br>
+    <%= obsession_builder.text_area :symptoms, placeholder: "I experience..." %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= obsession_builder.label :rituals, "What rituals do you engage in to \"undo\" the discomfort produced by your obsession?" %>
+    <br>
+    <%= obsession_builder.text_area :rituals, placeholder: "I am constantly..." %>
+  </div>
+
   <div class="actions">
     <%= obsession_builder.submit %>
   </div>
