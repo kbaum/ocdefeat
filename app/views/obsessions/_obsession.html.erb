@@ -11,4 +11,18 @@
       </ul>
     </div>
   <% end %>
+
+  <label>Complete the prompts below:</label>
+
+  <div class="field">
+    <%= obsession_builder.label :intrusive_thought, "Identify the anxiety-inducing intrusive idea:" %>
+    <br>
+    <%= obsession_builder.text_area :intrusive_thought, placeholder: "What if I..." %>
+  </div>
+
+  <div class="field">
+    <%= obsession_builder.label :triggers, "What precipitates a prolonged period of obsession?" %>
+    <br>
+    <%= obsession_builder.text_area :triggers, placeholder: "My obsession is triggered by..." %>
+  </div>
 <% end %>
