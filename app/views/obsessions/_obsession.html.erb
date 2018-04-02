@@ -1,2 +1,14 @@
 <%= form_for @obsession do |obsession_builder| %>
+  <% if @obsession.errors.any? %>
+    <div id= "error_explanation">
+      <h2>
+        <%= pluralize(@obsession.errors.count, "error") %> prohibited this obsession from being saved:
+      </h2>
+      <ul>
+        <% @obsession.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 <% end %>
