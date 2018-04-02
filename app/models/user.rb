@@ -41,6 +41,18 @@ class User < ApplicationRecord
   def self.by_ocd_severity(string_severity)
     patients.where(severity: string_severity)
   end
+
+  def obsession_count
+    self.obsessions.count if self.patient?
+  end
+
+  def self.sort_by_ascending_obsession_count
+    patients.sort_by {|user| user.obsession_count}
+  end
+
+  def self.sort_by_descending_obsession_count
+    self.sort_by_ascending_obsession_count.reverse
+  end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
   # so if we're looking for all unassigned_users who want to be patients, we call
