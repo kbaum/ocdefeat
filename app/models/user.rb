@@ -16,6 +16,13 @@ class User < ApplicationRecord
       user.twitter_handle = auth_hash["info"]["nickname"] # "code_snippet_JL"
       user.bio = auth_hash["info"]["description"] # "build code, break code, ad infinitum"
       user.password = SecureRandom.hex # a random, unique string
+      user.role_requested = "Patient"
+      user.severity = "Mild"
+      # we can't add a default role_requested value of "Patient" in users table because
+      # our admin and therapists don't want to be patients (see seed data)
+      # If a brand new user signs on via Twitter (user cannot be found in the DB),
+      # by default, just set their role_requested to "Patient" and their OCD severity to "Mild"
+      # as these can be edited, and the majority of app users will presumably be patients
     end
   end
 
