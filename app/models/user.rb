@@ -26,6 +26,20 @@ class User < ApplicationRecord
   def self.by_role(role_number)
     self.where(role: role_number)
   end
+
+  def self.awaiting_assignment(rejected_roles, role_number)
+    self.where.not(role_requested: rejected_roles, role: role_number)
+  end
+  # rejected_roles is an array of string roles the user does NOT want to be and
+  # role_number is the requested role's integer value
+  # so if we're looking for all unassigned_users who want to be patients, we call
+  # User.awaiting_assignment(["Therapist", "Admin"], 1)
+  # we're looking for user instances who are NOT already patients (with role = 1)
+  # AND who did NOT request the roles of therapist or admin
+  # Rails documentation favors .where.not instead of !=, but above method is same as saying:
+  #def self.awaiting_assignment(role_requested, role_number)
+   #self.where("role_requested = ? AND role != ?", role_requested, role_number)
+  #end
 end
 
 # Explanation of #find_or_create_by_omniauth(auth_hash):
