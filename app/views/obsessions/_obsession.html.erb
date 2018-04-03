@@ -72,6 +72,19 @@
 
   <br>
 
+  <label>Create a new OCD subset in which to classify your obsession:</label>
+
+  <br><br>
+
+  <div class="field">
+    <%= obsession_builder.fields_for :themes, Theme.new do |theme_builder| %>
+      <%= theme_builder.label :name, "OCD Theme:" %><br>
+      <%= theme_builder.text_field :name, :value => '', placeholder: "I classify my OCD as..." %>
+    <% end %>
+  </div>
+
+  <br>
+
   <div class="actions">
     <%= obsession_builder.submit %>
   </div>
