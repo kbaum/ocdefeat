@@ -11,5 +11,9 @@ Rails.application.routes.draw do
 
   resources :obsessions
 
+  resources :plans do
+    resources :steps
+  end
+
   get '/auth/twitter/callback' => 'sessions#create'
 end
