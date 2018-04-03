@@ -21,6 +21,16 @@ class ObsessionsController < ApplicationController
   end
 
   def edit
+    @themes = Theme.all
+  end
+
+  def update
+    if @obsession.update(obsession_params)
+      redirect_to obsession_path(@obsession), notice: "Your obsession was successfully updated!"
+    else
+      flash.now[:error] = "Your attempt to edit your obsession was unsuccessful. Please try again."
+      render :edit
+    end
   end
 
   private
