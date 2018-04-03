@@ -57,6 +57,34 @@
     <%= obsession_builder.text_area :rituals, placeholder: "I am constantly..." %>
   </div>
 
+  <% if !themes.empty? %>
+    <label>Select OCD subset(s) in which to classify your obsession:</label>
+
+    <br>
+
+    <%= obsession_builder.collection_check_boxes(:theme_ids, themes, :id, :name) do |b| %>
+      <p>
+        <%= b.label %>
+        <%= b.check_box %>
+      </p>
+    <% end %>
+  <% end %>
+
+  <br>
+
+  <label>Create a new OCD subset in which to classify your obsession:</label>
+
+  <br><br>
+
+  <div class="field">
+    <%= obsession_builder.fields_for :themes, Theme.new do |theme_builder| %>
+      <%= theme_builder.label :name, "OCD Theme:" %><br>
+      <%= theme_builder.text_field :name, :value => '', placeholder: "I classify my OCD as..." %>
+    <% end %>
+  </div>
+
+  <br>
+
   <div class="actions">
     <%= obsession_builder.submit %>
   </div>
