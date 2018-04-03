@@ -29,7 +29,7 @@
   <br>
 
   <div class="field">
-    <%= obsession_builder.label :time_consumed, "On average, how much time is consumed by this obsession daily (including time spent ruminating and/or performing rituals)?" %>
+    <%= obsession_builder.label :time_consumed, "On average, how much time is consumed by this obsession daily?" %>
     <br>
     <%= obsession_builder.number_field :time_consumed, step: :any %> <strong>hour(s)</strong>
   </div>
@@ -66,7 +66,7 @@
 
     <%= obsession_builder.collection_check_boxes(:theme_ids, themes, :id, :name) do |b| %>
       <p>
-        <%= b.label %>
+        <%= b.label :class => "red-outline" %>
         <%= b.check_box %>
       </p>
     <% end %>
