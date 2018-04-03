@@ -59,6 +59,19 @@
 
   <br>
 
+  <% if !themes.empty? %>
+    <label>Select OCD subset(s) in which to classify your obsession:</label>
+
+    <br>
+
+    <%= obsession_builder.collection_check_boxes(:theme_ids, themes, :id, :name) do |b| %>
+      <p>
+        <%= b.label %>
+        <%= b.check_box %>
+      </p>
+    <% end %>
+  <% end %>
+
   <label>Create a new OCD subset in which to classify your obsession:</label>
 
   <br><br>
