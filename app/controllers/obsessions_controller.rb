@@ -1,4 +1,6 @@
 class ObsessionsController < ApplicationController
+  before_action :set_obsession, only: [:show, :edit, :update, :destroy]
+
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
     @themes = Theme.all # @themes stores all OCD themes so user can select which existing theme their new obsession pertains to
@@ -23,16 +25,20 @@ class ObsessionsController < ApplicationController
 
   private
 
-  def obsession_params
-    params.require(:obsession).permit(
-      :intrusive_thought,
-      :triggers,
-      :time_consumed,
-      :anxiety_rating,
-      :symptoms,
-      :rituals,
-      :theme_ids => [],
-      :themes_attributes => [:name]
-    )
-  end
+    def set_obsession
+      @obsession = Obsession.find(params[:id])
+    end
+
+    def obsession_params
+      params.require(:obsession).permit(
+        :intrusive_thought,
+        :triggers,
+        :time_consumed,
+        :anxiety_rating,
+        :symptoms,
+        :rituals,
+        :theme_ids => [],
+        :themes_attributes => [:name]
+      )
+    end
 end
