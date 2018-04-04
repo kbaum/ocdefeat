@@ -5,6 +5,8 @@ class Obsession < ApplicationRecord
   has_many :plans, dependent: :destroy
 
   validates :intrusive_thought, presence: true, uniqueness: true
+  validates :triggers, presence: true
   validates :time_consumed, presence: true, inclusion: { in: 0..24 }
   validates :anxiety_rating, presence: true, inclusion: { in: 1..10 }
+  validates :rituals, presence: true
 end
