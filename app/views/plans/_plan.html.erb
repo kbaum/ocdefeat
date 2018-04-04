@@ -16,4 +16,16 @@
   <p><strong>Which of your obsessions will your ERP plan target?</strong></p>
 
   <%= select("plan", "obsession_id", current_user.obsessions.map {|o| [o.intrusive_thought, o.id]}, {prompt: 'Select Obsession'}) %>
+  <!-- above generates this HTML code for dropdown menu to select which obsession the ERP plan 'belongs_to'
+  <select name="plan[obsession_id]" id="plan_obsession_id">
+    <option value="">Select Obsession</option>
+    <option value="1">left the stove on when I left the house</option>
+  </select>
+  -->
+  <br><br>
+
+  <div class="field">
+    <%= f.label :title, "What's the title of your ERP plan?" %><br>
+    <%= f.text_field :title, :placeholder => (@plan.errors.full_messages_for(:title).first || "Enter your plan's title...") %>
+  </div>
 <% end %>
