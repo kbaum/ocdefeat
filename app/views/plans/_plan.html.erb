@@ -14,4 +14,6 @@
   <% end %>
 
   <p><strong>Which of your obsessions will your ERP plan target?</strong></p>
+
+  <%= select("plan", "obsession_id", current_user.obsessions.map {|o| [o.intrusive_thought, o.id]}, {prompt: 'Select Obsession'}) %>
 <% end %>
