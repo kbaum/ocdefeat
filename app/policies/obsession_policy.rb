@@ -21,6 +21,18 @@ class ObsessionPolicy < ApplicationPolicy
     user.admin? || user.therapist? || obsession_owner
   end
 
+  def edit?
+    obsession_owner
+  end
+
+  def update?
+    obsession_owner
+  end
+
+  def destroy?
+    obsession_owner
+  end
+
   private
 
     def obsession_owner
