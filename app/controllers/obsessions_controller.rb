@@ -33,6 +33,12 @@ class ObsessionsController < ApplicationController
     end
   end
 
+  def destroy
+    authorize @obsession
+    @obsession.destroy
+    redirect_to user_path(current_user), notice: "Congratulations on defeating OCD by conquering your obsession!"
+  end
+
   private
 
     def set_obsession
