@@ -9,4 +9,6 @@ class Obsession < ApplicationRecord
   validates :time_consumed, presence: true, inclusion: { in: 0..24 }
   validates :anxiety_rating, presence: true, inclusion: { in: 1..10 }
   validates :rituals, presence: true
+
+  accepts_nested_attributes_for :themes, reject_if: proc { |attributes| attributes['name'].blank? }
 end
