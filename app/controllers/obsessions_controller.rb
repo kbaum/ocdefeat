@@ -3,11 +3,13 @@ class ObsessionsController < ApplicationController
 
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
+    authorize @obsession
     @themes = Theme.all # @themes stores all OCD themes so user can select which existing theme their new obsession pertains to
   end
 
   def create
     @obsession = current_user.obsessions.build(obsession_params)
+    authorize @obsession
 
     if @obsession.save
       redirect_to obsession_path(@obsession), notice: "Your obsession was successfully created!"
@@ -18,13 +20,17 @@ class ObsessionsController < ApplicationController
   end
 
   def show
+    authorize @obsession
   end
 
   def edit
+    authorize @obsession
     @themes = Theme.all
   end
 
   def update
+    authorize @obsession
+    
     if @obsession.update(obsession_params)
       redirect_to obsession_path(@obsession), notice: "Your obsession was successfully updated!"
     else
