@@ -16,4 +16,10 @@ class ObsessionPolicy < ApplicationPolicy
   def create? # only patients can create obsessions
     user.patient?
   end
+
+  private
+
+    def obsession_owner
+      user == record.user # record refers to the obsession instance
+    end
 end
