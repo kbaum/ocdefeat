@@ -5,9 +5,7 @@ en:
       new?: "Access denied! Only patients are authorized to create obsessions."
       show?: "Access denied! Fellow patients' obsessions are confidential!"
       edit?: "Access denied! An obsession is patient property; you are not authorized to edit this obsession."
-      destroy?: "Access denied! An obsession is patient property; you are not authorized to delete this obsession."
     plan_policy:
       new?: "Access denied! Only patients are authorized to create new ERP plans."
       show?: "Access denied! You are not authorized to access an ERP plan designed by a fellow patient."
       edit?: "Access denied! You are not authorized to edit preliminary information about this ERP plan."
-      destroy?: "Access denied! You are not authorized to delete this ERP plan."
