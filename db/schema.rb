@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404193420) do
+ActiveRecord::Schema.define(version: 20180405235708) do
 
   create_table "obsession_themes", force: :cascade do |t|
     t.integer "obsession_id"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180404193420) do
 
   create_table "steps", force: :cascade do |t|
     t.text "instructions"
-    t.integer "duration"
+    t.string "duration"
     t.integer "discomfort_degree"
     t.integer "plan_id"
     t.integer "status"
