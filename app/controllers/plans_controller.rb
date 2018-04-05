@@ -3,6 +3,10 @@ class PlansController < ApplicationController
     @plan = Plan.new # instance for form_for to wrap around
   end
 
+  def create
+    raise params.inspect
+  end
+
   def show
   end
 
@@ -11,4 +15,14 @@ class PlansController < ApplicationController
 
   def index
   end
+
+  private
+
+    def plan_params
+      params.require(:plan).permit(
+        :title,
+        :goal,
+        :obsession_id
+      )
+    end
 end
