@@ -22,6 +22,15 @@ class PlansController < ApplicationController
   def edit
   end
 
+  def update
+    if @plan.update(plan_params)
+      redirect_to plan_path(@plan), notice: "This ERP plan was successfully edited!"
+    else
+      flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
+      render :edit
+    end
+  end
+
   def index
   end
 
