@@ -27,6 +27,7 @@ class PlansController < ApplicationController
 
   def show
     authorize @plan
+    @step = Step.new # instance for form_for to wrap around in nested resource form on plan show page
   end
 
   def edit
