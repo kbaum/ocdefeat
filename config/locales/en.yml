@@ -1,3 +1,8 @@
 en:
   pundit:
     default: "You have requested a page that you cannot access."
+    obsession_policy:
+      new?: "Access denied! Only patients are authorized to create obsessions."
+      show?: "Access denied! For confidentiality purposes, only therapists and the obsesser can view his/her obsession!"
+      edit?: "Access denied! An obsession is patient property; you are not authorized to edit this obsession."
+      destroy?: "Access denied! An obsession is patient property; you are not authorized to delete this obsession."
