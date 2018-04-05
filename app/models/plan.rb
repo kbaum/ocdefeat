@@ -4,4 +4,8 @@ class Plan < ApplicationRecord
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
+
+  def designer
+    self.obsession.user
+  end
 end
