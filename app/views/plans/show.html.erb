@@ -9,4 +9,8 @@
 <h3>Add a New Exercise to Your ERP Plan!</h3>
 
 <%= form_for [@plan, @step] do |step_builder| %>
+  <div class="field">
+    <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
+    <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
+  </div>
 <% end %>
