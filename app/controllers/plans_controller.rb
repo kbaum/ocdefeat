@@ -4,7 +4,14 @@ class PlansController < ApplicationController
   end
 
   def create
-    raise params.inspect
+    @plan = Plan.new(plan_params)
+    
+    if @plan.save
+      redirect_to plan_path(@plan), notice: "You successfully created the ERP plan entitled #{@plan.title}!"
+    else
+      flash.now[:error] = "Your attempt to create a new ERP plan was unsuccessful. Please try again."
+      render :new
+    end
   end
 
   def show
