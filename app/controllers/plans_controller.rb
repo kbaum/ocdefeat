@@ -17,7 +17,6 @@ class PlansController < ApplicationController
   def create
     @plan = Plan.new(plan_params)
     authorize @plan
-
     if @plan.save
       redirect_to plan_path(@plan), notice: "You successfully created the ERP plan entitled #{@plan.title}!"
     else
