@@ -2,7 +2,11 @@ class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
 
   def new
-    @plan = Plan.new # instance for form_for to wrap around
+    if current_user.patient? && current_user.obsessions.empty?
+      redirect_to new_obsession_path, alert: "You currently have no obsessions! You must first create an obsession before designing an ERP plan in which to tackle that obsession!"
+    else
+      @plan = Plan.new # instance for form_for to wrap around
+    end
   end
 
   def create
