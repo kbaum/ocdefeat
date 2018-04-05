@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= f.label :goal, "What's the intended goal of your ERP plan?" %><br>
-    <%= f.text_area :goal, :placeholder => (@plan.errors.full_messages_for(:goal).first || "Enter your plan's goal...") %>
+    <%= f.text_field :goal, :placeholder => (@plan.errors.full_messages_for(:goal).first || "Enter your plan's goal...") %>
   </div>
 
   <div class="actions">
