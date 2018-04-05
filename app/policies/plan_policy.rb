@@ -23,6 +23,18 @@ class PlanPolicy < ApplicationPolicy
     user.admin? || user.therapist? || plan_owner
   end
 
+  def edit? # Only therapists and patient who developed plan can view form to edit plan title and goal
+    user.therapist? || plan_owner
+  end
+
+  def update? # Only therapists and patient who developed plan can edit preliminary plan title and goal
+    user.therapist? || plan_owner
+  end
+
+  def destroy? # Only patient who created ERP plan or therapist can delete it
+    user.therapist? || plan_owner
+  end
+
   private
 
     def plan_owner
