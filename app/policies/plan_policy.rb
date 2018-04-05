@@ -18,4 +18,14 @@ class PlanPolicy < ApplicationPolicy
   def create? # Only patients can create a preliminary plan, including title and goal
     user.patient?
   end
+
+  def show? # Admins and therapists can see every patient's plans. Patients can only see their own plans
+    user.admin? || user.therapist? || plan_owner
+  end
+
+  private
+
+    def plan_owner
+      user == record.designer # instance method #designer called on plan instance (record) returns user who created plan
+    end
 end
