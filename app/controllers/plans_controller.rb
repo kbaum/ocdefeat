@@ -44,6 +44,12 @@ class PlansController < ApplicationController
     end
   end
 
+  def destroy
+    authorize @plan
+    @plan.destroy
+    redirect_to plans_path, notice: "ERP plan was successfully deleted!"
+  end
+
   private
 
     def set_plan
