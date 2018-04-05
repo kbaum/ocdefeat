@@ -1,6 +1,10 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @plans = policy_scope(Plan)
+  end
+
   def new
     if current_user.patient? && current_user.obsessions.empty?
       redirect_to new_obsession_path, alert: "You currently have no obsessions! You must first create an obsession before designing an ERP plan in which to tackle that obsession!"
@@ -38,9 +42,6 @@ class PlansController < ApplicationController
       flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
       render :edit
     end
-  end
-
-  def index
   end
 
   private
