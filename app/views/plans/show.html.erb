@@ -11,14 +11,14 @@
 <%= form_for [@plan, @step] do |step_builder| %>
   <div class="field">
     <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
-    <%= step_builder.text_area :instructions, :placeholder => @step.errors.full_messages_for(:instructions).first || "Provide instructions..." %>
+    <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
   </div>
 
   <br>
 
   <div class="field">
     <%= step_builder.label :duration, "Estimate the amount of time it takes to complete this exercise:" %><br>
-    <%= step_builder.text_field :duration, :placeholder => @step.errors.full_messages_for(:duration).first || "Add exercise duration..." %>
+    <%= step_builder.text_field :duration, :placeholder => (@step.errors.full_messages_for(:duration).first || "Add exercise duration...") %>
   </div>
 
   <br>
