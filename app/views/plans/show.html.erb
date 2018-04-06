@@ -1,1 +1,16 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @plan.title %></h3>
+    <label><em>an ERP plan designed by <%= @plan.designer.name %></em></label>
+  </div>
+  <!-- Add <div> with plan's existing steps here -->
+</div>
 
+<h3>Add a New Exercise to Your ERP Plan!</h3>
+
+<%= form_for [@plan, @step] do |step_builder| %>
+  <div class="field">
+    <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
+    <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
+  </div>
+<% end %>
