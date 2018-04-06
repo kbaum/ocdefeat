@@ -38,3 +38,15 @@
     <%= step_builder.submit "Add Step to ERP Plan" %>
   </div>
 <% end %>
+
+<br>
+
+<% if policy(@plan).edit? %>
+  <%= link_to "Edit Plan Overview", edit_plan_path(@plan) %>
+<% end %>
+
+<br>
+
+<% if policy(@plan).destroy? %>
+  <%= button_to "Delete ERP Plan", plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" } %>
+<% end %>
