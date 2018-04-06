@@ -13,4 +13,9 @@
     <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
     <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
   </div>
+
+  <div class="field">
+    <%= step_builder.label :duration, "Estimate the amount of time it takes to complete this ERP exercise:" %><br>
+    <%= step_builder.text_field :duration, :placeholder => (@step.errors.full_messages_for(:duration).first || "Add exercise duration...") %>
+  </div>
 <% end %>
