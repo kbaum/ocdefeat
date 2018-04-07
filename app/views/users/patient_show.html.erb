@@ -6,4 +6,10 @@
 
 <div class="well well-lg">
   <p><strong>Obsession Count:</strong> You are currently conquering <%= pluralize(@user.obsession_count, "obsession") %>!</p>
+
+  <br>
+
+  <p>Fixated on something else? Create a <%= link_to "new obsession", new_obsession_path %> that you'll surely overcome!</p>
+
+  <br>
 </div>
