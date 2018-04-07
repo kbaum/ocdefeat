@@ -46,6 +46,10 @@ class User < ApplicationRecord
     self.obsessions.count if self.patient?
   end
 
+  def num_plans_designed
+    self.plans.count if self.patient?
+  end
+
   def self.sort_by_ascending_obsession_count
     patients.sort_by {|user| user.obsession_count}
   end

@@ -12,4 +12,11 @@
   <p>Fixated on something else? <%= link_to "Create a new obsession", new_obsession_path %> that you'll surely overcome!</p>
 
   <br>
+
+  <p>
+    <strong>Number of ERP Plans Designed:</strong>
+    You have designed <%= pluralize(@user.num_plans_designed, "ERP plan") %> thus far!
+  </p>
+
+  <br>
 </div>
