@@ -19,8 +19,16 @@ class UserPolicy < ApplicationPolicy
     elsif user.therapist? # therapists can see their own show page and all patients' show pages
       oneself || record.patient?
     elsif user.patient? || user.unassigned_user? # a patient can only see his own show page
-      oneself # and an unassigned user can only see his own preliminary profile page
+      oneself # an unassigned user can only see his own preliminary profile page
     end
+  end
+
+  def update? # Admins can edit any user's information (e.g. role), and all other user types can only edit their own show pgs
+    user.admin? || oneself
+  end
+
+  def destroy? # Only admins and the user who owns his account can delete his account
+    user.admin? || oneself
   end
 
   private
