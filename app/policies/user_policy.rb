@@ -13,6 +13,16 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    if user.admin? # admins can see every user's show page
+      true
+    elsif user.therapist? # therapists can see their own show page and all patients' show pages
+      oneself || record.patient?
+    elsif user.patient? || user.unassigned_user? # a patient can only see his own show page
+      oneself # and an unassigned user can only see his own preliminary profile page
+    end
+  end
+
   private
 
     def oneself # the user logged in is the selfsame user (record) whose profile is being viewed
