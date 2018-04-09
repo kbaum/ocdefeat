@@ -9,37 +9,41 @@
   </div>
 </div>
 
-<h3>Add a New Exercise to This ERP Plan!</h3>
+<% if policy(@step).create? %>
 
-<%= form_for [@plan, @step] do |step_builder| %>
-  <div class="field">
-    <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
-    <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
-  </div>
+  <h3>Add a New Step to This ERP Plan!</h3>
 
-  <br>
-
-  <div class="field">
-    <%= step_builder.label :duration, "Estimate the amount of time it takes to complete this exercise:" %><br>
-    <%= step_builder.text_field :duration, :placeholder => (@step.errors.full_messages_for(:duration).first || "Add exercise duration...") %>
-  </div>
-
-  <br>
-
-  <% if current_user.patient? %>
+  <%= form_for [@plan, @step] do |step_builder| %>
     <div class="field">
-      <%= step_builder.label :discomfort_degree, "On a scale of 1-10, rate your degree of discomfort while undertaking this exercise:" %>
-      <%= step_builder.number_field :discomfort_degree, min: 1, max: 10 %>
+      <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
+      <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
+    </div>
+
+    <br>
+
+    <div class="field">
+      <%= step_builder.label :duration, "Estimate the amount of time it takes to complete this exercise:" %><br>
+      <%= step_builder.text_field :duration, :placeholder => (@step.errors.full_messages_for(:duration).first || "Add exercise duration...") %>
+    </div>
+
+    <br>
+
+    <% if current_user.patient? %>
+      <div class="field">
+        <%= step_builder.label :discomfort_degree, "On a scale of 1-10, rate your degree of discomfort while undertaking this exercise:" %>
+        <%= step_builder.number_field :discomfort_degree, min: 1, max: 10 %>
+      </div>
+    <% end %>
+
+    <br>
+
+    <%= step_builder.hidden_field :plan_id, value: @plan.id %>
+
+    <div class="actions">
+      <%= step_builder.submit "Add Step to ERP Plan" %>
     </div>
   <% end %>
 
-  <br>
-
-  <%= step_builder.hidden_field :plan_id, value: @plan.id %>
-
-  <div class="actions">
-    <%= step_builder.submit "Add Step to ERP Plan" %>
-  </div>
 <% end %>
 
 <br>
