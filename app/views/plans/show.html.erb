@@ -1,9 +1,12 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title"><%= @plan.title %></h3>
-    <label><em>an ERP plan designed by <%= @plan.designer.name %></em></label>
+    <label><em>an ERP plan designed by <%= @plan.designer.name) %></em></label>
   </div>
-  <!-- Add <div> with plan's existing steps here -->
+
+  <div class="panel-body">
+    <%= render :collection => @plan_steps, :partial => "steps/step_div", :as => :step %>
+  </div>
 </div>
 
 <h3>Add a New Exercise to Your ERP Plan!</h3>
