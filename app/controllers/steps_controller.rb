@@ -10,7 +10,8 @@ class StepsController < ApplicationController
     end
   end
 
-  def edit
+  def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
+    raise params.inspect
   end
 
   private
