@@ -5,7 +5,7 @@ class StepPolicy < ApplicationPolicy # A step does not exist outside the context
 
   private
 
-  def step_owner
+  def plan_possessor
     user == record.plan.designer
   end
 end
