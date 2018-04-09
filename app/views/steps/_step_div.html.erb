@@ -3,9 +3,12 @@
     <h4>STEP # <%= step.plan.steps.find_index(step).to_i + 1 %></h4>
     <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
     <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
-
+    <br>
     <% if current_user.patient? %>
-      <p><%= set_step_status(step) %></p>
+      <p>
+        <em>Check the box found below once you have completed this ERP exercise</em>
+        <%= set_step_status(step) %>
+      </p>
     <% end %>
   </div>
 <% end %>
