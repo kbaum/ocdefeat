@@ -19,5 +19,13 @@
     <% if step.discomfort_degree %>
       <p><strong>Degree of Discomfort:</strong> <%= step.discomfort_degree %></p>
     <% end %>
+
+    <% if policy(step).update? %>
+      <p><%= link_to "Edit Step", edit_plan_step_path(step.plan, step) %></p>
+    <% end %>
+
+    <% if policy(step).destroy? %>
+      <%= button_to "Delete Step", plan_step_path(step.plan, step), :method => "delete", data: { confirm: "Are you sure you want to remove this ERP exercise?" } %>
+    <% end %>
   </div>
 <% end %>
