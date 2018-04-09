@@ -2,6 +2,7 @@ class StepsController < ApplicationController
 
   def create
     @step = Step.new(step_params)
+    authorize @step
     if @step.save
       redirect_to plan_path(@step.plan), notice: "A new step has been added to this ERP plan!"
     else
