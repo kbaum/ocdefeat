@@ -17,7 +17,6 @@ module StepsHelper
   end
 
 end
-
 # Explanation of #div_class_for_step(step):
 # Calling #complete? on step instance returns true if status attribute value of step instance = 1
 # If the step is complete (i.e. its status attribute = 1), then method returns the string "completed"
@@ -43,3 +42,11 @@ end
 # We're telling it that we want to build a checkbox for the status attribute of this step,
 # I want to give that checkbox a class attribute value of "toggle"
 # and the checked attribute of the checkbox should be true if the step is complete (#complete? called on step returns true if step's status = 1)
+# How checkboxes work in the browser:
+# When you uncheck a checkbox, the browser does not submit any data, but when you check a checkbox, the browser does submit data
+# Rails generates 2 <input>s (the first is a hidden <input>).
+# In the event that you uncheck the checked checkbox,
+# the hidden input field with a value of 0 will still submit
+# If you DO check the checkbox, then the <input> with the same name attribute value of "step[status]"
+# will overwrite the value of the always-submitted hidden step[status] <input> of value 0
+# changing it from 0 to 1
