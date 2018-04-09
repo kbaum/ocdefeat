@@ -3,6 +3,14 @@ class StepPolicy < ApplicationPolicy # A step does not exist outside the context
     user.patient? || user.therapist?
   end
 
+  def update? # Therapists and the patient who created the plan to which the step belongs can edit the step
+    plan_possessor || user.therapist?
+  end
+
+  def destroy? # Therapists and the patient who created the plan to which the step belongs can delete the step
+    plan_possessor || user.therapist?
+  end
+
   private
 
   def plan_possessor
