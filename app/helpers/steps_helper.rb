@@ -12,7 +12,6 @@ module StepsHelper
 
   def set_step_status(step)
     form_for([step.plan, step]) do |f|
-      f.label :status, "Completed Exercise?"
       f.check_box :status, :class => "toggle", :checked => step.complete?
     end
   end
