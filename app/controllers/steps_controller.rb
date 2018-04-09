@@ -13,4 +13,14 @@ class StepsController < ApplicationController
 
   def edit
   end
+
+  private
+
+    def step_params
+      params.require(:step).permit(
+        :instructions,
+        :duration,
+        :plan_id
+      )
+    end
 end
