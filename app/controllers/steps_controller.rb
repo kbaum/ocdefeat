@@ -14,6 +14,7 @@ class StepsController < ApplicationController
   def edit # GET request to "/plans/:plan_id/steps/:id/edit" maps to steps#edit
     @plan = Plan.find(params[:plan_id])
     @step = @plan.steps.find(params[:id])
+    authorize @step
   end
 
   def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
