@@ -11,6 +11,11 @@ class StepsController < ApplicationController
     end
   end
 
+  def edit # GET request to "/plans/:plan_id/steps/:id/edit" maps to steps#edit
+    @plan = Plan.find(params[:plan_id])
+    @step = @plan.steps.find(params[:id])
+  end
+
   def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
     @plan = Plan.find(params[:plan_id])
     @step = @plan.steps.find(params[:id]) # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
