@@ -12,7 +12,16 @@ class StepsController < ApplicationController
   end
 
   def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
-    raise params.inspect
+    @plan = Plan.find(params[:plan_id])
+    @step = @plan.steps.find(params[:id]) # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
+    authorize @step
+
+    if @step.update(step_params)
+      redirect_to plan_path(@plan), notice: "You successfully modified an ERP exercise!"
+    else
+      flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
+      render :edit
+    end
   end
 
   private
