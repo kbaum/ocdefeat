@@ -22,7 +22,11 @@ class StepsController < ApplicationController
     @step = @plan.steps.find(params[:id]) # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
     authorize @step
 
-    if @step.update(step_params)
+    if @step.incomplete? # If the step is incomplete (status = 0) before changes are made
+      if @step.update(status: params[:step][:status]) == @step.complete? # And if the step is updated from incomplete to complete
+        redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
+      end
+    elsif @step.update(step_params)
       redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
     else
       flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
