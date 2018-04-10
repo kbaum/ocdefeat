@@ -22,7 +22,7 @@ class StepsController < ApplicationController
     authorize @step
 
     if @step.update(step_params)
-      redirect_to plan_path(@plan), notice: "You successfully modified an ERP exercise!"
+      redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
     else
       flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
       render :edit
