@@ -13,6 +13,10 @@
 
   <h3>Add a New Step to This ERP Plan!</h3>
 
+  <%= render partial: "steps/step", locals: { plan: @plan, step: @step } %>
+
+  <!-- Rendering app/views/steps/_step.html.erb partial generates this HTML form:
+
   <%= form_for [@plan, @step] do |step_builder| %>
     <div class="field">
       <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
@@ -40,7 +44,7 @@
     <%= step_builder.hidden_field :plan_id, value: @plan.id %>
 
     <div class="actions">
-      <%= step_builder.submit "Add Step to ERP Plan" %>
+      <%= step_builder.submit  %>
     </div>
   <% end %>
 
@@ -57,3 +61,4 @@
 <% if policy(@plan).destroy? %>
   <%= button_to "Delete ERP Plan", plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" } %>
 <% end %>
+-->
