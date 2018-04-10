@@ -10,44 +10,8 @@
 </div>
 
 <% if policy(@step).create? %>
-
   <h3>Add a New Step to This ERP Plan!</h3>
-
   <%= render partial: "steps/step", locals: { plan: @plan, step: @step } %>
-
-  <!-- Rendering app/views/steps/_step.html.erb partial generates this HTML form:
-
-  <%= form_for [@plan, @step] do |step_builder| %>
-    <div class="field">
-      <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
-      <%= step_builder.text_area :instructions, :placeholder => (@step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
-    </div>
-
-    <br>
-
-    <div class="field">
-      <%= step_builder.label :duration, "Estimate the amount of time it takes to complete this exercise:" %><br>
-      <%= step_builder.text_field :duration, :placeholder => (@step.errors.full_messages_for(:duration).first || "Add exercise duration...") %>
-    </div>
-
-    <br>
-
-    <% if current_user.patient? %>
-      <div class="field">
-        <%= step_builder.label :discomfort_degree, "On a scale of 1-10, rate your degree of discomfort while undertaking this exercise:" %>
-        <%= step_builder.number_field :discomfort_degree, min: 1, max: 10 %>
-      </div>
-    <% end %>
-
-    <br>
-
-    <%= step_builder.hidden_field :plan_id, value: @plan.id %>
-
-    <div class="actions">
-      <%= step_builder.submit  %>
-    </div>
-  <% end %>
-
 <% end %>
 
 <br>
@@ -61,4 +25,3 @@
 <% if policy(@plan).destroy? %>
   <%= button_to "Delete ERP Plan", plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" } %>
 <% end %>
--->
