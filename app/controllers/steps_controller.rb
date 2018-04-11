@@ -15,14 +15,10 @@ class StepsController < ApplicationController
   end
 
   def edit # GET request to "/plans/:plan_id/steps/:id/edit" maps to steps#edit
-    #@plan = Plan.find(params[:plan_id])
-    #@step = @plan.steps.find(params[:id])
     authorize @step
   end
 
   def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
-    #@plan = Plan.find(params[:plan_id])
-    #@step = @plan.steps.find(params[:id]) # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
     authorize @step
 
     if @step.incomplete? # If the step is incomplete (status = 0) before changes are made
@@ -44,7 +40,7 @@ class StepsController < ApplicationController
   end
 
   private
-
+    # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
     def set_step_and_parent_plan # called before steps#edit, steps#update, steps#destroy
       @plan = Plan.find(params[:plan_id])
       @step = @plan.steps.find(params[:id])
