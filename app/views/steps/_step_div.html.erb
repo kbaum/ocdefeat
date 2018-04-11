@@ -3,7 +3,13 @@
     <h4>STEP #<%= step.plan.steps.find_index(step).to_i + 1 %></h4>
     <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
     <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
+
     <% if current_user.patient? %>
+      <% if step.discomfort_degree %>
+        <p><strong>Degree of Discomfort:</strong> <%= step.discomfort_degree %></p>
+      <% else %>
+        <p><%= link_to "Rate your level of discomfort", edit_plan_step_path(step.plan, step) %> when performing this ERP exercise.</p>
+      <% end %>
       <p>
         <em>Check the box below once you have completed this ERP exercise:</em>
         <%= set_step_status(step) %>
@@ -14,10 +20,10 @@
       <% else %>
         <p><strong>Status:</strong> The patient has not completed this exercise yet.</p>
       <% end %>
-    <% end %>
 
-    <% if step.discomfort_degree %>
-      <p><strong>Degree of Discomfort:</strong> <%= step.discomfort_degree %></p>
+      <% if step.discomfort_degree %>
+        <p>The patient rated their discomfort at level <%= step.discomfort_degree %></p>
+      <% end %>
     <% end %>
 
     <% if policy(step).update? %>
