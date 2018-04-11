@@ -10,8 +10,11 @@
 </div>
 
 <% if policy(@step).create? %>
-  <h3>Add a New Step to This ERP Plan!</h3>
-  <%= render partial: "steps/step", locals: { plan: @plan, step: @step } %>
+  <div class="well well-lg">
+    <h3>Add a New Step to "<%= @plan.title %>"</h3>
+    <br>
+    <%= render partial: "steps/step", locals: { plan: @plan, step: @step } %>
+  </div>
 <% end %>
 
 <br>
