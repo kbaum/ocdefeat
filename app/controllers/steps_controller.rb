@@ -2,9 +2,7 @@ class StepsController < ApplicationController
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
-    @plan = Plan.find(params[:plan_id])
-    @step = @plan.steps.build(step_params)
-    #@step = Step.new(step_params)
+    @step = Step.new(step_params) # new step will automatically belong to plan b/c plan_id is stored in params
     authorize @step
     if @step.save
       redirect_to plan_path(@step.plan), notice: "A new step has been added to this ERP plan!"
