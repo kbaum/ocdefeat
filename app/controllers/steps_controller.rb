@@ -1,7 +1,10 @@
 class StepsController < ApplicationController
+  before_action :set_step, only: [:edit, :update, :destroy]
 
-  def create
-    @step = Step.new(step_params)
+  def create # POST request to "/plans/:plan_id/steps" maps to steps#create
+    @plan = Plan.find(params[:plan_id])
+    @step = @plan.steps.build(step_params)
+    #@step = Step.new(step_params)
     authorize @step
     if @step.save
       redirect_to plan_path(@step.plan), notice: "A new step has been added to this ERP plan!"
@@ -12,14 +15,14 @@ class StepsController < ApplicationController
   end
 
   def edit # GET request to "/plans/:plan_id/steps/:id/edit" maps to steps#edit
-    @plan = Plan.find(params[:plan_id])
-    @step = @plan.steps.find(params[:id])
+    #@plan = Plan.find(params[:plan_id])
+    #@step = @plan.steps.find(params[:id])
     authorize @step
   end
 
   def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
-    @plan = Plan.find(params[:plan_id])
-    @step = @plan.steps.find(params[:id]) # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
+    #@plan = Plan.find(params[:plan_id])
+    #@step = @plan.steps.find(params[:id]) # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
     authorize @step
 
     if @step.incomplete? # If the step is incomplete (status = 0) before changes are made
@@ -34,7 +37,18 @@ class StepsController < ApplicationController
     end
   end
 
+  def destroy # deleting a step - DELETE request to "/plans/:plan_id/steps/:id" mapped to steps#destroy
+    authorize @step
+    @step.destroy
+    redirect_to plan_path(@step.plan), notice: "A step was successfully deleted from this ERP plan!"
+  end
+
   private
+
+    def set_step_and_parent_plan # called before steps#edit, steps#update, steps#destroy
+      @plan = Plan.find(params[:plan_id])
+      @step = @plan.steps.find(params[:id])
+    end
 
     def step_params
       params.require(:step).permit(
