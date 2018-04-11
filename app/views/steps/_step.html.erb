@@ -11,9 +11,9 @@
     <%= step_builder.text_field :duration, :placeholder => (step.errors.full_messages_for(:duration).first || "Add exercise duration...") %>
   </div>
 
-  <br>
-
   <% if current_user.patient? && plan.steps.include?(step) %>
+    <br>
+    
     <div class="field">
       <%= step_builder.label :discomfort_degree, "On a scale of 1-10, rate your degree of discomfort while undertaking this exercise:" %>
       <%= step_builder.number_field :discomfort_degree, min: 1, max: 10 %>
