@@ -16,6 +16,10 @@ module StepsHelper
     end
   end
 
+  def last_updated(step)
+    step.updated_at.strftime("Last modified on %A, %B %e, at %l:%M %p")
+  end
+
 end
 # Explanation of #div_class_for_step(step):
 # Calling #complete? on step instance returns true if status attribute value of step instance = 1
@@ -50,3 +54,16 @@ end
 # If you DO check the checkbox, then the <input> with the same name attribute value of "step[status]"
 # will overwrite the value of the always-submitted hidden step[status] <input> of value 0
 # changing it from 0 to 1
+
+# Explanation of #last_updated(step)
+# The updated_at attribute of a step instance is something like "2018-04-11 18:09:52"
+# strftime(*args) formats date according to the directives in the given format string.
+# The directives begins with a percent (%) character.
+# Any text not listed as a directive will be passed through to the output string.
+# So using strftime, "Last modified on %A, %B %e, at %l:%M %p"
+# %A - The full weekday name ("Wednesday")
+# %B - The full month name ("April")
+# %e - Day of the month, blank-padded (11)
+# %l - Hour of the day, 12-hour clock, blank-padded (1..12)
+# %M - Minute of the hour (00..59)
+# %p - Meridian indicator, uppercase ("AM" or "PM")
