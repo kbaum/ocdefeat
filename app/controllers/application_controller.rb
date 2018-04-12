@@ -26,15 +26,22 @@ class ApplicationController < ActionController::Base
       redirect_to root_path unless logged_in?
     end
 
-    def filter
-      if controller_name == "users" # we want to filter users
-        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered == "obsessions" || filter_object.filtered == "plans"}
-      elsif controller_name == "plans" # we want to filter plans
-        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered == "users" || filter_object.filtered == "obsessions"}
-      elsif controller_name == "obsessions" # we want to filter obsessions
-        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered == "users" || filter_object.filtered == "plans"}
+    def filters
+      if controller_name == "users" # we're in the UsersController, so we want to filter users
+        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered != "users"}.first
+      elsif controller_name == "plans" # we're in the PlansController,so we want to filter plans
+        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered != "plans"}.first
+      elsif controller_name == "obsessions" # we're in the ObsessionsController, so we want to filter obsessions
+        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered != "obsessions"}.first
       end
     end
-
-  helper_method :current_user, :logged_in?, :filter # makes methods accessible to views
+    # Explanation of #filters:
+    # When a therapist is viewing the users index, #filters returns this:
+    #<Filter:0x007fcfd4fb88e8 @filterer="therapist", @filtered="users">
+    # In app/views/users/index.html.erb partial, I <%= render partial: filters ... %>
+    # Since #filters returns a filter instance, ActionPack uses the custom #to_partial_path method that I defined in Filter model
+    # #to_partial_path called on the filter instance returns the string name of the partial that will be rendered
+    # In this case, it returns the string "filter_users/therapist"
+    # We're rendering app/views/filter_users/_therapist.html.erb partial from the users index page
+    helper_method :current_user, :logged_in?, :filters # makes methods accessible to views
 end
