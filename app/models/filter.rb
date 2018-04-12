@@ -15,6 +15,12 @@ class Filter # Filter is NOT an ActiveRecord model b/c there is no DB table
     filterers = User.roles.keys.delete_if {|role| role == "unassigned_user"} #=> ["patient", "therapist", "admin"]
     filterers.map {|filterer| [Filter.new(filterer, "obsessions"), Filter.new(filterer, "plans"), Filter.new(filterer, "users")]}.flatten
   end
+
+  def self.set_filter(viewer) # set_filter(viewer) is class method called on Filter class (self refers to the Filter class itself)
+    self.all.delete_if {|filter| filter.filterer == "patient"} unless viewer.patient?
+    self.all.delete_if {|filter| filter.filterer == "therapist"} unless viewer.therapist?
+    self.all.delete_if {|filter| filter.filterer == "admin"} unless viewer.admin?
+  end
 end
 
 # Explanation of #to_partial_path called on filter instance:
