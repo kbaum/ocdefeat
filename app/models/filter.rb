@@ -1,4 +1,6 @@
 class Filter # Filter is NOT an ActiveRecord model b/c there is no DB table
+  FILTERERS = ["patient", "therapist", "admin"]
+
   attr_reader :filterer # string role of viewer (person filtering): "patient", "therapist" or "admin"
   attr_reader :filtered # string name of objects being filtered: "obsessions", "plans" or "users"
 
@@ -9,6 +11,10 @@ class Filter # Filter is NOT an ActiveRecord model b/c there is no DB table
 
   def to_partial_path # returns the string name of the partial that will be rendered
     "filter_#{filtered}/#{filterer}"
+  end
+
+  def self.all # calling #all on Filter class returns an array of all filter instances
+    FILTERERS.map {|filterer| [Filter.new(filterer, "obsessions"), Filter.new(filterer, "plans"), Filter.new(filterer, "users")]}.flatten
   end
 end
 
