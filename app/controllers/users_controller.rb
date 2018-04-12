@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @users = policy_scope(User)
+  end
+
   def new # implicitly renders app/views/users/new.html.erb view file
     @user = User.new
   end
