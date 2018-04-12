@@ -26,5 +26,15 @@ class ApplicationController < ActionController::Base
       redirect_to root_path unless logged_in?
     end
 
+    def filter
+      if controller_name == "users" # we want to filter users
+        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered == "obsessions" || filter_object.filtered == "plans"}
+      elsif controller_name == "plans" # we want to filter plans
+        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered == "users" || filter_object.filtered == "obsessions"}
+      elsif controller_name == "obsessions" # we want to filter obsessions
+        policy_scope(Filter).delete_if {|filter_object| filter_object.filtered == "users" || filter_object.filtered == "plans"}
+      end
+    end
+
   helper_method :current_user, :logged_in? # makes methods accessible to views
 end
