@@ -36,5 +36,5 @@ class ApplicationController < ActionController::Base
       end
     end
 
-  helper_method :current_user, :logged_in? # makes methods accessible to views
+  helper_method :current_user, :logged_in?, :filter # makes methods accessible to views
 end
