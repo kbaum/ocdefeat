@@ -61,6 +61,14 @@ class User < ApplicationRecord
   def num_plans_completed
     self.plans.select {|plan| plan.done?}.count if self.patient?
   end
+
+  def self.sort_by_ascending_plan_count
+    self.patients.sort_by {|patient| patient.num_plans_designed}
+  end
+
+  def self.sort_by_descending_plan_count
+    self.sort_by_ascending_plan_count.reverse
+  end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
   # so if we're looking for all unassigned_users who want to be patients, we call
