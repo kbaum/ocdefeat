@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def index
+  def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine users viewed on index pg depending on viewer)
     @users = policy_scope(User)
   end
 
