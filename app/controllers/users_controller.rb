@@ -1,8 +1,18 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def index # implicitly renders app/views/users/index.html.erb, where #filters method will be called to get the name of the partial rendered (depends on the role of the user who's filtering)
-    @users = policy_scope(User)
+  def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
+    @users = policy_scope(User) # we're filtering users
+    # when an admin views the users index, @users stores 'array' of ALL user instances (for the table)
+    # when a therapist views the users index, @users stores 'array' of only patients
+    # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
+
+    # From an admin's perspective, the users index page presents a table to manage users accounts, i.e.,
+    # change users' roles, delete accounts, etc.
+    # The 3 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer):
+    @prospective_patients = User.awaiting_assignment(%w(Therapist Admin), 1)
+    @therapists_to_be = User.awaiting_assignment(%w(Patient Admin), 2)
+    @aspiring_admins = User.awaiting_assignment(%w(Patient Therapist), 3)
   end
 
   def new # implicitly renders app/views/users/new.html.erb view file
