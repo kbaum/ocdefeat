@@ -1,1 +1,7 @@
 <h1>OCDefeat Users</h1>
+
+<div>
+  <%= render partial: filters, locals: { users: @users, filtered_users: @filtered_users } %>
+</div>
+
+<!-- This page has access to @users and @filtered_users instance variables defined in users#index -->
