@@ -25,4 +25,8 @@ The above render call works, but this works too:
   <p><strong><em>Users Awaiting Role Assignment:</em></strong></p>
 
   <br>
+
+  <p><em>Prospective Patients:</em></p>
+
+  <%= render partial: "users/users_ul", locals: { users: prospective_patients } %>
 </div>
