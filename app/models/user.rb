@@ -46,16 +46,20 @@ class User < ApplicationRecord
     self.obsessions.count if self.patient?
   end
 
-  def num_plans_designed
-    self.plans.count if self.patient?
-  end
-
   def self.sort_by_ascending_obsession_count
     patients.sort_by {|user| user.obsession_count}
   end
 
   def self.sort_by_descending_obsession_count
     self.sort_by_ascending_obsession_count.reverse
+  end
+
+  def num_plans_designed
+    self.plans.count if self.patient?
+  end
+
+  def num_plans_completed
+    self.plans.select {|plan| plan.done?}.count if self.patient?
   end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
