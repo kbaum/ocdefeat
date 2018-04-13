@@ -25,7 +25,7 @@ end
 # #<Filter:0x007f93ed33c5b0 @filterer="admin", @filtered="users">
 # ]
 
-# filters stores array of filter instances representing the following situations:
-# A patient viewing their own obsessions, their own plans, users who are therapists
-# A therapist viewing patients' obsessions, patients' plans, users who are patients
-# An admin viewing patients' obsessions, patients' plans, all types of users
+# filters stores array of all filter instances representing the following situations:
+# A patient viewing: their own obsessions, their own plans, users who are therapists
+# A therapist viewing: patients' obsessions, patients' plans, users who are patients
+# An admin viewing: patients' obsessions, patients' plans, all types of users
