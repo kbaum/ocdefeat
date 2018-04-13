@@ -1,6 +1,10 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+div.unassigned {
+  border: 1px solid red;
+}
+
 p.unassigned {
-  color: #ff0000;
+  color: red;
 }
