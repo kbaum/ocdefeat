@@ -1,1 +1,11 @@
 <h1>Admin Filtering Users</h1>
+
+<br>
+
+<div>
+  <%= form_tag "/users", method: "get" do %>
+    <%= label_tag "role", "Filter Users by Role:" %><br>
+    <%= select_tag "role", options_for_select(["patient", "therapist", "admin"]), prompt: "Select Role" %>
+    <%= submit_tag "Filter Users" %>
+  <% end %>
+</div>
