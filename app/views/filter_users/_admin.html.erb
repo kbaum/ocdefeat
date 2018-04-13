@@ -10,6 +10,8 @@
   <% end %>
 </div>
 
+<br>
+
 <%= render partial: "users/users_ul", locals: { users: filtered_users } %>
 <!-- The partial app/views/users/_users_ul.html.erb uses the local variable users,
 which is set = to the value of filtered_users local variable found here in app/views/filter_users/_admin.html.erb partial,
