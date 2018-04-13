@@ -1,7 +1,29 @@
-<h1>OCDefeat Users</h1>
-
 <div>
-  <%= render partial: filters, locals: { users: @users, filtered_users: @filtered_users } %>
+  <%= render partial: filters, locals: {
+    users: @users,
+    filtered_users: @filtered_users,
+    prospective_patients: @prospective_patients,
+    therapists_to_be: @therapists_to_be,
+    aspiring_admins: @aspiring_admins
+  } %>
 </div>
 
-<!-- This page has access to @users and @filtered_users instance variables defined in users#index -->
+<!--
+In users#index, @users and @filtered_users instance variables are defined,
+so app/views/users/index.html.erb (this file) has access to these instance variables.
+When an admin views the users index page,
+the partial app/views/filter_users/_admin.html.erb is rendered from app/views/users/index.html.erb
+The variables @users and @filtered_users from the users index view file
+are referenced in the partial app/views/filter_users/_admin.html.erb
+as the local variables users and filtered_users, respectively.
+It's not good to use instance variables in a partial.
+I want to display filtered users in an unordered list, and this code will be repeated frequently,
+so I want to pass the local variables users and filtered_users
+from app/views/filtered_users/_admin.html.erb partial to app/views/users/_users_ul.html.erb partial
+I can pass local variables to sub-templates by using a hash with the variable names as keys
+and the objects as values
+To find out whether a certain local variable has been assigned a value in a particular render call,
+use the following pattern:
+<% if local_assigns.has_key? :headline %>
+  Headline: <%= headline %>
+<% end %>
