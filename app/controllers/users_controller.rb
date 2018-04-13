@@ -8,11 +8,19 @@ class UsersController < ApplicationController
     # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
 
     # From an admin's perspective, the users index page presents a table to manage users accounts, i.e.,
-    # change users' roles, delete accounts, etc.
-    # The 3 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer):
-    @prospective_patients = User.awaiting_assignment(%w(Therapist Admin), 1)
-    @therapists_to_be = User.awaiting_assignment(%w(Patient Admin), 2)
-    @aspiring_admins = User.awaiting_assignment(%w(Patient Therapist), 3)
+    # change users' roles, delete accounts, etc. There is also 1 filter to filter users by current role
+    # The first 3 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
+    if current_user.admin?
+      @prospective_patients = User.awaiting_assignment(%w(Therapist Admin), 1)
+      @therapists_to_be = User.awaiting_assignment(%w(Patient Admin), 2)
+      @aspiring_admins = User.awaiting_assignment(%w(Patient Therapist), 3)
+
+      if !params[:role].blank? # If admin selected value from dropdown to filter users by role
+        @filtered_users = User.by_role(params[:role]) # @filtered_users stores array of all users with a specific role
+      else # If admin did not filter users by role (blank value)
+        @filtered_users = User.all # @filtered_users stores array of all user instances
+      end
+    end
   end
 
   def new # implicitly renders app/views/users/new.html.erb view file
