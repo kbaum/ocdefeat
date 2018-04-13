@@ -22,19 +22,19 @@ The above render call works, but this works too:
 <br>
 
 <div class="well well-lg">
-  <p><strong><em>Users Awaiting Role Assignment:</em></strong></p>
+  <p class="unassigned"><strong>Users Awaiting Role Assignment:</strong></p>
 
   <br>
 
-  <p><em>Prospective Patients:</em></p>
+  <p class="unassigned"><em>Prospective Patients:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: prospective_patients } %>
 
-  <p><em>Therapists To-Be:</em></p>
+  <p class="unassigned"><em>Therapists To-Be:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: therapists_to_be } %>
 
-  <p><em>Aspiring Admins:</em></p>
+  <p class="unassigned"><em>Aspiring Admins:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: aspiring_admins } %>
 </div>
