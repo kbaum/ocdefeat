@@ -16,4 +16,5 @@ which is set = to the value of filtered_users local variable found here in app/v
 which, in turn, got its filtered_users local variable set = to the value of @filtered_users
 in app/views/users/index.html.erb from users#index
 The above render call works, but this works too:
-<%= render partial: "users/users_ul", locals: { users: local_assigns[:filtered_users] } %>
+<%= render partial: "users/users_ul", locals: { users: local_assigns[:filtered_users] } %> -->
+<br>
