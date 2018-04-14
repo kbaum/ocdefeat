@@ -5,3 +5,9 @@
 <h4>Filter Patients by...</h4>
 
 <br>
+
+<%= form_tag "/users", method: "get" do %>
+  <%= select_tag "severity", options_for_select(["mild", "moderate", "severe", "extreme"]), prompt: "OCD Severity" %>
+  <br><br>
+  <%= submit_tag "Filter Patients" %>
+<% end %>
