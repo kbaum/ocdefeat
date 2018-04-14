@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   end
 
   get '/auth/twitter/callback' => 'sessions#create'
+
+  get '/privacy' => 'welcome#privacy'
+  get '/terms' => 'welcome#terms'
 end
