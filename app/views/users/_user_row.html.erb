@@ -1,0 +1,24 @@
+<tr>
+  <td><%= user.id %></td>
+  <td><%= link_to user.name, user_path(user) %></td>
+  <td>
+    <%= form_for(user) do |f| %>
+      <%= f.select(:role, User.roles.keys.map {|role| [role.titleize, role]}) %>
+      <%= f.submit "Revise Role" %>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to "Delete Account", user_path(user), method: :delete, data: { confirm: "This account will be permanently deleted. Do you want to proceed?" } %>
+  </td>
+</tr>
+
+<!--Explanation of form allowing admin to change a user's role:
+calling User.roles returns this hash:
+{"unassigned_user"=>0, "patient"=>1, "therapist"=>2, "admin"=>3}
+Then, calling User.roles.keys returns this array:
+["unassigned_user", "patient", "therapist", "admin"]
+And then, ["unassigned_user", "patient", "therapist", "admin"].map {|role| [role.titleize, role]}
+will return:
+[["Unassigned User", "unassigned_user"], ["Patient", "patient"], ["Therapist", "therapist"], ["Admin", "admin"]]
+So in the dropdown menu, we'll have something like <option value="unassigned_user">Unassigned User</option>
+-->
