@@ -18,26 +18,28 @@ class UsersController < ApplicationController
       if !params[:role].blank? # If admin selected value from dropdown to filter users by role
         @filtered_users = users.by_role(params[:role]) # @filtered_users stores array of all users with a specific role
       else # If admin did not filter users by role (blank value)
-        @filtered_users = users # @filtered_users stores array of all user instances if no filter was used
+        @filtered_users = users # @filtered_users stores array of all user instances if no filter was applied when admin views page
       end
     elsif current_user.therapist?
-      if !params[:severity].blank? # If therapist selected value from dropdown to filter users by severity
-        @filtered_users = users.by_ocd_severity(params[:severity]) # @filtered_users stores array of all users with a specific OCD severity
+      if !params[:severity].blank? # If therapist chose to filter patients by severity
+        @filtered_users = users.by_ocd_severity(params[:severity]) # @filtered_users stores array of all patients with a specific OCD severity
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
-          @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of users ordered by those having least to greatest number of obsessions
+          @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
         else
-          @filtered_users = users.sort_by_descending_obsession_count # @filtered_users stores array of users ordered by those having greatest to least number of obsessions
+          @filtered_users = users.sort_by_descending_obsession_count # @filtered_users stores array of patients ordered by those having most to fewest obsessions
         end
-      elsif !params[:num_plans].blank? # If therapist chose to filter users by the number of ERP plans they've completed
+      elsif !params[:num_plans].blank? # If therapist chose to filter patients by the number of ERP plans they've completed
         if params[:num_plans] == "Fewest to Most Completed Plans"
-          @filtered_users = users.sort_by_ascending_plan_count # @filtered_users stores array of users ordered by those who completed the least to greatest number of ERP plans
+          @filtered_users = users.sort_by_ascending_plan_count # @filtered_users stores array of patients ordered by those who completed the fewest to most ERP plans
         else
-          @filtered_users = users.sort_by_descending_plan_count # @filtered_users stores array of users ordered by those who completed the greatest to least number of ERP plans
+          @filtered_users = users.sort_by_descending_plan_count # @filtered_users stores array of patients ordered by those who completed the most to fewest ERP plans
         end
       else
-        @filtered_users = users # @filtered_users stores array of all user instances if no filter was used
+        @filtered_users = users # @filtered_users stores array of all patients if no filter was applied when therapist views page
       end
+    elsif current_user.patient?
+      @filtered_users = users # @filtered_users stores array of all therapists if no filter was applied when patient views page
     end
   end
 
