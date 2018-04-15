@@ -5,8 +5,8 @@ class User < ApplicationRecord
   has_many :plans, through: :obsessions, dependent: :destroy
 
   validates :name, presence: true
-  validates :email, presence: true, email: true, uniqueness: true
-  
+  validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
+
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   # when a user edits their user information, they don't have to retype their password
