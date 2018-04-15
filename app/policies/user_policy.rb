@@ -18,8 +18,10 @@ class UserPolicy < ApplicationPolicy
       true
     elsif user.therapist? # therapists can see their own show page and all patients' show pages
       oneself || record.patient?
-    elsif user.patient? || user.unassigned_user? # a patient can only see his own show page
-      oneself # an unassigned user can only see his own preliminary profile page
+    elsif user.patient? # a patient can see his own show page and all therapists' show pages
+      oneself || record.therapist?
+    elsif user.unassigned_user? # an unassigned user can only see his own preliminary profile page
+      oneself
     end
   end
 
