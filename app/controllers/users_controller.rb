@@ -2,26 +2,26 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
-    users = policy_scope(User) # we're filtering users
-    @table_users = users
+    users = policy_scope(User) # we're filtering users - users stores the array of user instances available to the type of viewer
     # when an admin views the users index, @users stores 'array' of ALL user instances (for the table)
     # when a therapist views the users index, @users stores 'array' of only patients
     # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
 
-    # From an admin's perspective, the users index page presents a table to manage users accounts, i.e.,
-    # change users' roles, delete accounts, etc. There is also 1 filter to filter users by current role
-    # The first 3 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
+    # From an admin's perspective, the users index page presents a table to manage all users accounts, i.e.,
+    # change users' roles, delete accounts. There is also 1 filter to filter users by current role
+    # The first 4 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
     if current_user.admin?
+      @table_users = users # @table_users stores array of all user instances
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
       @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
       @aspiring_admins = users.awaiting_assignment(%w(Patient Therapist), 3)
 
       if !params[:role].blank? # If admin selected value from dropdown to filter users by role
         @filtered_users = users.by_role(params[:role]) # @filtered_users stores array of all users with a specific role
-      else # If admin did not filter users by role (blank value)
+      else
         @filtered_users = users # @filtered_users stores array of all user instances if no filter was applied when admin views page
       end
-    elsif current_user.therapist?
+    elsif current_user.therapist? # When therapist views users index page, users variable stores all patients
       if !params[:severity].blank? # If therapist chose to filter patients by severity
         @filtered_users = users.by_ocd_severity(params[:severity]) # @filtered_users stores array of all patients with a specific OCD severity
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
         @filtered_users = users # @filtered_users stores array of all patients if no filter was applied when therapist views page
       end
     elsif current_user.patient?
-      @filtered_users = users # @filtered_users stores array of all therapists if no filter was applied when patient views page
+      @therapists = users # @therapists stores array of all therapists when patient views users index page
     end
   end
 
