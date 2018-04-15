@@ -2,6 +2,20 @@
 
 <br>
 
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User ID #</th>
+      <th scope="col">Profile Page</th>
+      <th scope="col">Redesignate Role</th>
+      <th scope="col">Manage Account</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "users/user_row", collection: @table_users, as: :user %>
+  </tbody>
+</table>
+
 <div class="well well-lg">
   <%= form_tag "/users", method: "get" do %>
     <%= label_tag "role", "Filter Users by Role:" %><br>
