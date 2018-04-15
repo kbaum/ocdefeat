@@ -7,11 +7,15 @@
 <br>
 
 <%= form_tag "/users", method: "get" do %>
-  <%= select_tag "severity", options_for_select(["mild", "moderate", "severe", "extreme"]), prompt: "OCD Severity" %>
+  <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
   <br><br>
-  <%= select_tag "num_obsessions", options_for_select(["Fewest to Most Obsessions", "Most to Least Obsessions"]), prompt: "Number of Obsessions" %>
+  <%= select_tag "num_obsessions", options_for_select(["Fewest to Most Obsessions", "Most to Fewest Obsessions"]), prompt: "Number of Obsessions" %>
   <br><br>
-  <%= select_tag "num_plans", options_for_select(["Fewest to Most Completed Plans", "Most to Least Completed Plans"]), prompt: "Number of Completed ERP Plans" %>
+  <%= select_tag "num_plans", options_for_select(["Fewest to Most Plans Completed", "Most to Fewest Plans Completed"]), prompt: "Number of Completed ERP Plans" %>
   <br><br>
   <%= submit_tag "Filter Patients" %>
 <% end %>
+
+<br><br>
+
+<%= render partial: "users/users_ul", locals: { users: filtered_users } %>
