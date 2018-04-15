@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
-    @users = policy_scope(User) # we're filtering users
+    users = policy_scope(User) # we're filtering users
     # when an admin views the users index, @users stores 'array' of ALL user instances (for the table)
     # when a therapist views the users index, @users stores 'array' of only patients
     # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
@@ -11,14 +11,32 @@ class UsersController < ApplicationController
     # change users' roles, delete accounts, etc. There is also 1 filter to filter users by current role
     # The first 3 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
     if current_user.admin?
-      @prospective_patients = User.awaiting_assignment(%w(Therapist Admin), 1)
-      @therapists_to_be = User.awaiting_assignment(%w(Patient Admin), 2)
-      @aspiring_admins = User.awaiting_assignment(%w(Patient Therapist), 3)
+      @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
+      @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
+      @aspiring_admins = users.awaiting_assignment(%w(Patient Therapist), 3)
 
       if !params[:role].blank? # If admin selected value from dropdown to filter users by role
-        @filtered_users = User.by_role(params[:role]) # @filtered_users stores array of all users with a specific role
+        @filtered_users = users.by_role(params[:role]) # @filtered_users stores array of all users with a specific role
       else # If admin did not filter users by role (blank value)
-        @filtered_users = User.all # @filtered_users stores array of all user instances
+        @filtered_users = users # @filtered_users stores array of all user instances if no filter was used
+      end
+    elsif current_user.therapist?
+      if !params[:severity].blank? # If therapist selected value from dropdown to filter users by severity
+        @filtered_users = users.by_ocd_severity(params[:severity]) # @filtered_users stores array of all users with a specific OCD severity
+      elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
+        if params[:num_obsessions] == "Fewest to Most Obsessions"
+          @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of users ordered by those having least to greatest number of obsessions
+        else
+          @filtered_users = users.sort_by_descending_obsession_count # @filtered_users stores array of users ordered by those having greatest to least number of obsessions
+        end
+      elsif !params[:num_plans].blank? # If therapist chose to filter users by the number of ERP plans they've completed
+        if params[:num_plans] == "Fewest to Most Completed Plans"
+          @filtered_users = users.sort_by_ascending_plan_count # @filtered_users stores array of users ordered by those who completed the least to greatest number of ERP plans
+        else
+          @filtered_users = users.sort_by_descending_plan_count # @filtered_users stores array of users ordered by those who completed the greatest to least number of ERP plans
+        end
+      else
+        @filtered_users = users # @filtered_users stores array of all user instances if no filter was used
       end
     end
   end
