@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
     users = policy_scope(User) # we're filtering users
+    @table_users = users
     # when an admin views the users index, @users stores 'array' of ALL user instances (for the table)
     # when a therapist views the users index, @users stores 'array' of only patients
     # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
