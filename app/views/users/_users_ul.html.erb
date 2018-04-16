@@ -1,5 +1,5 @@
 <ul>
-  <% users.each do |user| %>
+  <% users.find_each do |user| %>
     <% if local_assigns[:contact] %>
       <li><strong><%= link_to user.name, user_path(user) %></strong> - <%= user.email %></li>
     <% else %>
