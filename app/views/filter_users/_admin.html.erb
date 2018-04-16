@@ -35,20 +35,20 @@ The above render call works, but this works too:
 <%= render partial: "users/users_ul", locals: { users: local_assigns[:filtered_users] } %> -->
 <br>
 
-<div class="unassigned well well-lg">
-  <h4 class="unassigned"><strong>Users Awaiting Role Assignment:</strong></h4>
+<div class="well well-lg">
+  <h4><strong>Users Awaiting Role Assignment:</strong></h4>
 
   <br>
 
-  <p class="unassigned"><em>Prospective Patients:</em></p>
+  <p><em>Prospective Patients:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: prospective_patients } %>
 
-  <p class="unassigned"><em>Therapists To-Be:</em></p>
+  <p><em>Therapists To-Be:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: therapists_to_be } %>
 
-  <p class="unassigned"><em>Aspiring Admins:</em></p>
+  <p><em>Aspiring Admins:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: aspiring_admins } %>
 </div>
