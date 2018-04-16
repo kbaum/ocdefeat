@@ -10,13 +10,8 @@
 <% if @user.provider == "twitter" %>
   <div class="unassigned well">
     <h4 class="unassigned">Thanks for logging in with Twitter!</h4>
-    <p class="unassigned">
-      <strong>Please note that Twitter users automatically have a "Mild" OCD diagnosis and
-      will request the role of "Patient" unless specified otherwise.</strong>
-    </p>
-    <p class="unassigned">
-      <strong>You may edit your preferences and override these defaults <%= link_to "here", edit_user_path(@user) %>.</strong>
-    </p>
+    <p class="unassigned">You automatically registered as prospective <strong>patient</strong> who has <strong>mild</strong> OCD.</p>
+    <p class="unassigned">You can override default settings for measuring OCD severity and requesting a role <%= link_to "here", edit_user_path(@user) %>!</p>
   </div>
 <% end %>
 
