@@ -5,8 +5,20 @@
 <br>
 
 <p><strong>Name:</strong> <%= @user.name %></p>
-
 <p><strong>Role Requested:</strong> <%= @user.role_requested %></p>
+
+<% if @user.provider == "twitter" %>
+  <div class="unassigned well">
+    <h4 class="unassigned">Thanks for logging in with Twitter!</h4>
+    <p class="unassigned">
+      <strong>Please note that Twitter users automatically have a "Mild" OCD diagnosis and
+      will request the role of "Patient" unless specified otherwise.</strong>
+    </p>
+    <p class="unassigned">
+      <strong>You may edit your preferences and override these defaults <%= link_to "here", edit_user_path(@user) %>.</strong>
+    </p>
+  </div>
+<% end %>
 
 <%= link_to "Edit Account", edit_user_path(@user) %>
 
