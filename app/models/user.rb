@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
   validates :severity, inclusion: { in: %w(Mild Moderate Severe Extreme Nonobsessive), message: "must be selected from the available options" }
-  validates :role_requested, inclusion: { in: %w(Patient Therapist Admin), message: "must be selected from the available roles" }
+  validates :role_requested, inclusion: { in: %w(Patient Therapist Admin), message: "must be selected from the available roles" }, allow_nil: true
 
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
