@@ -16,8 +16,6 @@ class User < ApplicationRecord
     self.where(provider: auth_hash["provider"], uid: auth_hash["uid"]).first_or_create do |user|
       user.name = auth_hash["info"]["name"] # "Jenna Leopold"
       user.email = auth_hash["info"]["email"] # "jleopold424@gmail.com"
-      user.twitter_handle = auth_hash["info"]["nickname"] # "code_snippet_JL"
-      user.bio = auth_hash["info"]["description"] # "build code, break code, ad infinitum"
       user.password = SecureRandom.hex # a random, unique string
       user.role_requested = "Patient"
       user.severity = "Mild"
