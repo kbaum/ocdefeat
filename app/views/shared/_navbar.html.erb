@@ -12,13 +12,21 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if logged_in? %>
-          <li><%= link_to "Logout", logout_path, method: :delete %></li>
+          <% if current_user.unassigned_user? %>
+            <%= render 'shared/unassigned_user_nav_links' %>
+          <% elsif current_user.patient? %>
+            <%= render 'shared/patient_nav_links' %>
+          <% elsif current_user.therapist? %>
+            <%= render 'shared/therapist_nav_links' %>
+          <% elsif current_user.admin? %>
+            <%= render 'shared/admin_nav_links' %>
+          <% end %>
         <% else %>
-          <li class="active"><%= link_to "Sign Up", signup_path %></li>
-          <li><%= link_to "Log In with OCDefeat", login_path %></li>
-          <li><%= link_to "Log In with Twitter", "/auth/twitter" %></li>
+            <li class="active"><%= link_to "Sign Up", signup_path %></li>
+            <li><%= link_to "Log In with OCDefeat", login_path %></li>
+            <li><%= link_to "Log In with Twitter", "/auth/twitter" %></li>
         <% end %>
       </ul>
-    </div>
-  </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
