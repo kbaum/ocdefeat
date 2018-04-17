@@ -11,3 +11,9 @@
 <% end %>
 
 <br>
+
+<ul>
+  <% @themes.each do |theme| %>
+    <p><strong><%= theme.name %>:</strong> <%= theme.num_obsessions %></p>
+  <% end %>
+</ul>
