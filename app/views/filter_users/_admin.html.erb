@@ -18,7 +18,7 @@
 
 <div class="well well-lg">
   <%= form_tag "/users", method: "get" do %>
-    <%= label_tag "role", "Filter Users by Role:" %><br>
+    <%= label_tag "role", "Filter Users by Role:" %><br><br>
     <%= select_tag "role", options_for_select(["patient", "therapist", "admin"]), prompt: "Select Role" %>
     <%= submit_tag "Filter Users" %>
   <% end %>
@@ -36,9 +36,9 @@ The above render call works, but this works too:
 <br>
 
 <div class="well well-lg">
-  <h4><strong>Users Awaiting Role Assignment:</strong></h4>
+  <label>Users Awaiting Role Assignment:</strong></label>
 
-  <br>
+  <br><br>
 
   <p><em>Prospective Patients:</em></p>
 
