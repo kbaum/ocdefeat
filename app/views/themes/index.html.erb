@@ -1,3 +1,13 @@
 <h2>OCD Themes</h2>
 
 <h4><em>Discover the prevalence of a particular type of OCD among OCDefeat users!</em></h4>
+
+<br>
+
+<%= form_tag(themes_path, method: "get") do %>
+  <%= label_tag "obsession_count", "Filter OCD Themes by: " %>
+  <%= select_tag "obsession_count", options_for_select(["Least to Most Obsessions per Theme", "Most to Least Obsessions per Theme"]), prompt: "Number of Obsessions per Theme" %>
+  <%= submit_tag "Filter Themes" %>
+<% end %>
+
+<br>
