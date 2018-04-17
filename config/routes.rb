@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :steps
   end
 
+  resources :themes
+
   get '/auth/twitter/callback' => 'sessions#create'
 
   get '/privacy' => 'welcome#privacy'
