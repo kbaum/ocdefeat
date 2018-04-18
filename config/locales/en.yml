@@ -11,3 +11,5 @@ en:
       edit?: "Access denied! You are not authorized to edit preliminary information about this ERP plan."
     step_policy:
       create?: "Access denied! Only the ERP plan designer and therapists are authorized to add new steps to the plan."
+    theme_policy:
+      destroy?: "Access denied! Only psychology professionals, who are trained in identifying different types of OCD, can remove an inaccurate OCD theme."
