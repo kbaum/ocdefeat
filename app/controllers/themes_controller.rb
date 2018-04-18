@@ -1,6 +1,5 @@
 class ThemesController < ApplicationController
   def index
-    @themes = Theme.all
-    authorize @themes
+    @themes = policy_scope(Theme)
   end
 end
