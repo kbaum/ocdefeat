@@ -43,6 +43,10 @@ class Obsession < ApplicationRecord
   def self.most_to_least_time_consuming
     self.order(time_consumed: :desc)
   end
+
+  def self.by_patient(user_id)
+    self.where(user_id: user_id)
+  end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
   # themes_attributes.values is the array ["Contamination OCD"]
