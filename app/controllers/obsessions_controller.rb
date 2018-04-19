@@ -1,5 +1,6 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
+  before_action :count_obsessions, only: [:index]
 
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
@@ -20,11 +21,7 @@ class ObsessionsController < ApplicationController
   end
 
   def index # implicitly renders app/views/obsessions/index.html.erb
-    obsessions = policy_scope(Obsession)
-
-    if obsessions.empty?
-      redirect_to users_path, alert: "None of your patients are currently obsessing, so there are no obsessions to filter!"
-    elsif current_user.therapist?
+    if current_user.therapist?
       @patients = User.where(role: 1)
 
       if !params[:patient].blank? # if therapist chose to filter obsessions by patient -- params[:patient] is the primary key ID of the patient selected by name from dropdown
@@ -73,6 +70,13 @@ class ObsessionsController < ApplicationController
 
     def set_obsession
       @obsession = Obsession.find(params[:id])
+    end
+
+    def count_obsessions # this method is called before #index
+      obsessions = policy_scope(Obsession)
+      if current_user.therapist? && obsessions.empty?
+        redirect_to users_path, alert: "None of your patients are currently obsessing, so there are no obsessions to filter!"
+      end
     end
 
     def obsession_params
