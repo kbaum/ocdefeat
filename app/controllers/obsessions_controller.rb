@@ -30,6 +30,12 @@ class ObsessionsController < ApplicationController
         else
           @obsessions = obsessions.by_patient(params[:patient])
         end
+      elsif !params[:date].blank? # if therapist chose to filter obsessions by date of creation
+        if params[:date] == "Today"
+          @obsessions = obsessions.from_today
+        else
+          @obsessions = obsessions.old_obsessions
+        end
       end
     end
   end
