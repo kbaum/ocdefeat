@@ -75,7 +75,7 @@ class ObsessionsController < ApplicationController
     def count_obsessions # this method is called before #index
       obsessions = policy_scope(Obsession)
       if current_user.therapist? && obsessions.empty?
-        redirect_to users_path, alert: "None of your patients are currently obsessing, so there are no obsessions to filter!"
+        redirect_to user_path(current_user), alert: "None of your patients are currently obsessing, so there are no obsessions to filter!"
       end
     end
 
