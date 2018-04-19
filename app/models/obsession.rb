@@ -23,7 +23,11 @@ class Obsession < ApplicationRecord
       end
     end
   end
-  # Explanation:
+
+  def self.by_theme(theme_id)
+    where("id IN (?)", Theme.find(theme_id).obsession_ids)
+  end
+  # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
   # themes_attributes.values is the array ["Contamination OCD"]
   # If the user submitted a name of an OCD theme in the form (in this case "Contamination OCD"),
