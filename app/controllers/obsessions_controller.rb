@@ -19,6 +19,11 @@ class ObsessionsController < ApplicationController
     end
   end
 
+  def index # implicitly renders app/views/obsessions/index.html.erb
+    @obsessions = policy_scope(Obsession)
+    @patients = User.where(role: 1)
+  end
+
   def show
     authorize @obsession
   end
@@ -30,7 +35,7 @@ class ObsessionsController < ApplicationController
 
   def update
     authorize @obsession
-    
+
     if @obsession.update(obsession_params)
       redirect_to obsession_path(@obsession), notice: "Your obsession was successfully updated!"
     else
