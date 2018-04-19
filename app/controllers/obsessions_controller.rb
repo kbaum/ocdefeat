@@ -22,6 +22,16 @@ class ObsessionsController < ApplicationController
   def index # implicitly renders app/views/obsessions/index.html.erb
     @obsessions = policy_scope(Obsession)
     @patients = User.where(role: 1)
+
+    if current_user.therapist?
+      if !params[:patient].blank? # if therapist chose to filter obsessions by patient -- params[:patient] is the primary key ID of the patient selected by name from dropdown
+        if User.find(params[:patient]).obsessions.empty?
+          redirect_to obsessions_path, alert: "That user currently has no obsessions!"
+        else
+          @obsessions = @obsessions.by_patient(params[:patient])
+        end
+      end
+    end
   end
 
   def show
