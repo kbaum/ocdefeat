@@ -23,7 +23,7 @@ class Obsession < ApplicationRecord
       end
     end
   end
-
+# The following 4 class methods are used when a patient filters their own obsessions on the obsessions index page
   def self.by_theme(theme_id)
     where("id IN (?)", Theme.find(theme_id).obsession_ids)
   end
@@ -34,6 +34,14 @@ class Obsession < ApplicationRecord
 
   def self.most_to_least_distressing
     self.order(anxiety_rating: :desc)
+  end
+
+  def self.least_to_most_time_consuming
+    self.order(:time_consumed)
+  end
+
+  def self.most_to_least_time_consuming
+    self.order(time_consumed: :desc)
   end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
