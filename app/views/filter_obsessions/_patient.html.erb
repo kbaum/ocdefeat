@@ -1,1 +1,6 @@
-
+<%= form_tag("/obsessions", method: "get") do %>
+  <%= select_tag "ocd_theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
+  <%= select_tag "anxiety_amount", options_for_select(["Least to Most Distressing", "Most to Least Distressing"]), prompt: "Amount of Anxiety Induced" %>
+  <%= select_tag "time_taken", options_for_select(["Least to Most Time-Consuming", "Most to Least Time-Consuming"]), prompt: "Time Consumed" %>
+  <%= submit_tag "Filter Obsessions" %>
+<% end %>
