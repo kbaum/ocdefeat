@@ -27,6 +27,14 @@ class Obsession < ApplicationRecord
   def self.by_theme(theme_id)
     where("id IN (?)", Theme.find(theme_id).obsession_ids)
   end
+
+  def self.least_to_most_distressing
+    self.order(:anxiety_rating)
+  end
+
+  def self.most_to_least_distressing
+    self.order(anxiety_rating: :desc)
+  end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
   # themes_attributes.values is the array ["Contamination OCD"]
