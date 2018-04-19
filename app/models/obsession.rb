@@ -47,6 +47,14 @@ class Obsession < ApplicationRecord
   def self.by_patient(user_id)
     self.where(user_id: user_id)
   end
+
+  def self.from_today
+    self.where("created_at >=?", Time.zone.today.beginning_of_day)
+  end
+
+  def self.old_obsessions
+    self.where("created_at <?", Time.zone.today.beginning_of_day)
+  end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
   # themes_attributes.values is the array ["Contamination OCD"]
