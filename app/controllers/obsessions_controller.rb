@@ -20,7 +20,7 @@ class ObsessionsController < ApplicationController
   end
 
   def index # implicitly renders app/views/obsessions/index.html.erb
-    @obsessions = policy_scope(Obsession)
+    obsessions = policy_scope(Obsession)
     @patients = User.where(role: 1)
 
     if current_user.therapist?
@@ -28,7 +28,7 @@ class ObsessionsController < ApplicationController
         if User.find(params[:patient]).obsessions.empty?
           redirect_to obsessions_path, alert: "That user currently has no obsessions!"
         else
-          @obsessions = @obsessions.by_patient(params[:patient])
+          @obsessions = obsessions.by_patient(params[:patient])
         end
       end
     end
