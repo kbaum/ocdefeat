@@ -7,3 +7,9 @@
 
   <%= render partial: filters, locals: { patients: @patients, themes: @themes } %>
 </div>
+
+<br>
+
+<% if @obsession %>
+  <p><%= link_to "What if I " << "#{@obsession.intrusive_thought}", obsession_path(@obsession) %></p>
+<% end %>
