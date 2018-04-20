@@ -65,6 +65,10 @@ class Obsession < ApplicationRecord
       user_obsessions.order(anxiety_rating: :desc).first
     end
   end
+
+  def plans_per_obsession
+    self.plans.count
+  end
 end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
