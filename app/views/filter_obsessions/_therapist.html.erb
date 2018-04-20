@@ -1,7 +1,7 @@
 <%= form_tag("/obsessions", method: "get") do %>
   <%= select_tag "patient", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient" %>
-  <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Most Distressing Obsession by Patient" %>
-  <%= select_tag "time_consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Most Time-Consuming Obsession by Patient" %>
+  <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Most Distressing Obsession" %>
+  <%= select_tag "time_consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Most Time-Consuming Obsession" %>
   <%= select_tag "ocd_subset", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Subset" %>
   <%= submit_tag "Filter Obsessions" %>
 <% end %>
