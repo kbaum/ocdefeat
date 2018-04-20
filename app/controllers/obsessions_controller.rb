@@ -23,6 +23,7 @@ class ObsessionsController < ApplicationController
   def index # implicitly renders app/views/obsessions/index.html.erb
     obsessions = policy_scope(Obsession)
     @patients = User.where(role: 1)
+    @themes = Theme.all
 
     if current_user.admin?
       if !params[:num_plans].blank? # Admin chose to filter obsessions by number of ERP plans
@@ -75,6 +76,8 @@ class ObsessionsController < ApplicationController
         else
           @obsessions = obsessions.most_to_least_time_consuming
         end
+      else
+        @obsessions = obsessions
       end
     end
   end
