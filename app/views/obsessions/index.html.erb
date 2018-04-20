@@ -2,4 +2,8 @@
 
 <div>
   <h3>Filter Obsessions by...</h3>
+
+  <br>
+
+  <%= render partial: filters, locals: { patients: @patients, themes: @themes } %>
 </div>
