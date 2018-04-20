@@ -1,6 +1,5 @@
 <%= form_tag("/obsessions", method: "get") do %>
   <%= select_tag "patient", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient" %>
-  <%= select_tag "date", options_for_select(["Today", "Old Obsessions"]), prompt: "Date of Creation" %>
-  <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Most Distressing Obsession by User" %>
+  <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Most Distressing Obsession by Patient" %>
   <%= submit_tag "Filter Obsessions" %>
 <% end %>
