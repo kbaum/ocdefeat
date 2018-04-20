@@ -1,0 +1,21 @@
+<h1>History of Obsessions</h1>
+
+<div>
+  <h3>Filter Obsessions by...</h3>
+
+  <br>
+
+  <%= render partial: filters, locals: { patients: @patients, themes: @themes } %>
+</div>
+
+<br>
+
+<% if @obsession %>
+  <p><%= link_to "What if I " << "#{@obsession.intrusive_thought}", obsession_path(@obsession) %></p>
+<% else %>
+  <ul>
+    <% @obsessions.each do |obsession| %>
+      <li><%= link_to "What if I " << "#{obsession.intrusive_thought}", obsession_path(obsession) %></li>
+    <% end %>
+  </ul>
+<% end %>
