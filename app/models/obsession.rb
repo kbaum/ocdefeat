@@ -69,6 +69,14 @@ class Obsession < ApplicationRecord
   def plans_per_obsession
     self.plans.count
   end
+
+  def self.least_to_most_desensitized
+    self.all.sort_by {|o| o.plans_per_obsession}
+  end
+
+  def self.most_to_least_desensitized
+    self.least_to_most_desensitized.reverse
+  end
 end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
