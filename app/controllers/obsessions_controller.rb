@@ -2,6 +2,11 @@ class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
   before_action :count_obsessions, only: :index
 
+  def index
+    @patients = User.where(role: 1)
+    @themes = Theme.all
+  end
+  
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
     authorize @obsession
