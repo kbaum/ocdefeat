@@ -22,30 +22,41 @@ class ObsessionsController < ApplicationController
 
   def index # implicitly renders app/views/obsessions/index.html.erb
     obsessions = policy_scope(Obsession)
+    @patients = User.where(role: 1)
 
-    if current_user.therapist?
-      @patients = User.where(role: 1)
-
-      if !params[:patient].blank? # if therapist chose to filter obsessions by patient -- params[:patient] is the primary key ID of the patient selected by name from dropdown
-        if @patients.find(params[:patient]).obsessions.empty?
-          redirect_to obsessions_path, alert: "That patient currently has no obsessions!"
+    if current_user.admin?
+      if !params[:num_plans].blank? # Admin chose to filter obsessions by number of ERP plans
+        if params[:num_plans] == "Least to Most ERP Plans"
+          @obsessions = obsessions.least_to_most_desensitized
         else
-          @obsessions = obsessions.by_patient(params[:patient])
+          @obsessions = obsessions.most_to_least_desensitized
         end
-      elsif !params[:date].blank? # if therapist chose to filter obsessions by date of creation
+      elsif !params[:date].blank? # Admin chose to filter obsessions by date created
         if params[:date] == "Today"
           @obsessions = obsessions.from_today
         else
           @obsessions = obsessions.old_obsessions
         end
-      elsif !params[:distressed].blank?
-        obsession = Obsession.most_distressing_obsession_by_user(params[:distressed])
+      else # Admin did not choose a filter
+        @obsessions = obsessions
+      end
+    elsif current_user.therapist?
+      if !params[:patient].blank? # therapist chose to filter obsessions by patient -- params[:patient] is the primary key ID of the patient selected by name from dropdown
+        if @patients.find(params[:patient]).obsessions.empty? # if the selected patient has no obsessions
+          redirect_to obsessions_path, alert: "That patient currently has no obsessions! Please select a different patient or choose a new filter."
+        else
+          @obsessions = obsessions.by_patient(params[:patient])
+        end
+      elsif !params[:distressed].blank? # params[:distressed] is the ID of the user the filterer selected to find that user's most distressing obsession
+        obsession = Obsession.most_distressing_obsession_by_user(params[:distressed]) # obsession will either be nil or the user's obsession instance with the highest anxiety_rating attribute value
 
         if obsession.nil?
-          redirect_to obsessions_path, alert: "That user currently has no obsessions!"
+          redirect_to obsessions_path, alert: "That patient currently has no obsessions, so no obsession can be deemed most distressing!"
         else
           @obsession = obsession
         end
+      elsif !params[:ocd_subset].blank?
+        @obsessions = obsessions.by_theme(params[:ocd_subset])
       else
         @obsessions = obsessions
       end
