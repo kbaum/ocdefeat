@@ -21,12 +21,14 @@ class ObsessionsController < ApplicationController
   end
 
   def index # implicitly renders app/views/obsessions/index.html.erb
+    obsessions = policy_scope(Obsession)
+
     if current_user.therapist?
       @patients = User.where(role: 1)
 
       if !params[:patient].blank? # if therapist chose to filter obsessions by patient -- params[:patient] is the primary key ID of the patient selected by name from dropdown
-        if User.find(params[:patient]).obsessions.empty?
-          redirect_to obsessions_path, alert: "That user currently has no obsessions!"
+        if @patients.find(params[:patient]).obsessions.empty?
+          redirect_to obsessions_path, alert: "That patient currently has no obsessions!"
         else
           @obsessions = obsessions.by_patient(params[:patient])
         end
@@ -35,6 +37,32 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.from_today
         else
           @obsessions = obsessions.old_obsessions
+        end
+      elsif !params[:distressed].blank?
+        obsession = Obsession.most_distressing_obsession_by_user(params[:distressed])
+
+        if obsession.nil?
+          redirect_to obsessions_path, alert: "That user currently has no obsessions!"
+        else
+          @obsession = obsession
+        end
+      else
+        @obsessions = obsessions
+      end
+    elsif current_user.patient?
+      if !params[:ocd_theme].blank?
+        @obsessions = obsessions.by_theme(params[:ocd_theme])
+      elsif !params[:anxiety_amount].blank?
+        if params[:anxiety_amount] == "Least to Most Distressing"
+          @obsessions = obsessions.least_to_most_distressing
+        else
+          @obsessions = obsessions.most_to_least_distressing
+        end
+      elsif !params[:time_taken].blank?
+        if params[:time_taken] == "Least to Most Time-Consuming"
+          @obsessions = obsessions.least_to_most_time_consuming
+        else
+          @obsessions = obsessions.most_to_least_time_consuming
         end
       end
     end
@@ -76,6 +104,8 @@ class ObsessionsController < ApplicationController
       obsessions = policy_scope(Obsession)
       if current_user.therapist? && obsessions.empty?
         redirect_to user_path(current_user), alert: "None of your patients are currently obsessing, so there are no obsessions to filter!"
+      elsif current_user.patient? && current_user.obsessions.empty?
+        redirect_to user_path(current_user), alert: "Looks like you haven't been obsessing lately! No obsessions were found."
       end
     end
 
