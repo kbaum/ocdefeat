@@ -1,6 +1,5 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
-  before_action :count_obsessions, only: [:index]
 
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
