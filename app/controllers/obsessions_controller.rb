@@ -5,8 +5,26 @@ class ObsessionsController < ApplicationController
   def index
     @patients = User.where(role: 1)
     @themes = Theme.all
+
+    if current_user.admin?
+      if !params[:num_plans].blank? # Admin filters obsessions by number of ERP plans
+        if params[:num_plans] == "Least to Most ERP Plans"
+          @obsessions = obsessions.least_to_most_desensitized
+        else
+          @obsessions = obsessions.most_to_least_desensitized
+        end
+      elsif !params[:date].blank? # Admin filters obsessions by date created
+        if params[:date] == "Today"
+          @obsessions = obsessions.from_today
+        else
+          @obsessions = obsessions.old_obsessions
+        end
+      else # Admin did not choose a filter, so all patients' obsessions are listed
+        @obsessions = obsessions
+      end
+    end
   end
-  
+
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
     authorize @obsession
