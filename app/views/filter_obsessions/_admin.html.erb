@@ -1,1 +1,5 @@
-<h1>Admin Filtering Obsessions</h1>
+<%= form_tag("/obsessions", method: "get") do %>
+  <%= select_tag "num_plans", options_for_select(["Least to Most ERP Plans", "Most to Least ERP Plans"]), prompt: "Degree of Desensitization" %>
+  <%= select_tag "date", options_for_select(["Today", "Old Obsessions"]), prompt: "Date Created" %>
+  <%= submit_tag "Filter Obsessions" %>
+<% end %>
