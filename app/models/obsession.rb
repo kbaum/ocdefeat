@@ -44,6 +44,15 @@ class Obsession < ApplicationRecord
     self.order(time_consumed: :desc)
   end
 
+  def self.most_time_consuming_by_user(user_id)
+    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
+    if user_obsessions.empty?
+      nil
+    else
+      user_obsessions.order(time_consumed: :desc).first
+    end
+  end
+
   def self.by_patient(user_id)
     self.where(user_id: user_id)
   end
