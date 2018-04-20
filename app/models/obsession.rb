@@ -55,6 +55,17 @@ class Obsession < ApplicationRecord
   def self.old_obsessions
     self.where("created_at <?", Time.zone.today.beginning_of_day)
   end
+
+  def self.most_distressing_obsession_by_user(user_id)
+    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
+
+    if user_obsessions.empty?
+      nil
+    else
+      user_obsessions.order(anxiety_rating: :desc).first
+    end
+  end
+end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
   # themes_attributes.values is the array ["Contamination OCD"]
@@ -69,4 +80,3 @@ class Obsession < ApplicationRecord
   # An obsession_theme instance of ObsessionTheme join models belongs to both an obsession and a theme
   # We're building an obsession_theme off of the obsession (self), so it already belongs to the obsession,
   # and then we set the theme attribute of the obsession_theme instance = the theme instance
-end
