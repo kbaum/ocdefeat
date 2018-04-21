@@ -43,6 +43,24 @@ class ObsessionsController < ApplicationController
       else # Therapist did not choose a filter, so all patients' obsessions are listed
         @obsessions = obsessions
       end
+    elsif current_user.patient?
+      if !params[:ocd_theme].blank? # Patient filtering her own obsessions by OCD theme
+        @obsessions = obsessions.by_theme(params[:ocd_theme])
+      elsif !params[:anxiety_amount].blank? # Patient filtering her own obsessions by anxiety_rating
+        if params[:anxiety_amount] == "Least to Most Distressing"
+          @obsessions = obsessions.least_to_most_distressing
+        else
+          @obsessions = obsessions.most_to_least_distressing
+        end
+      elsif !params[:time_taken].blank? # Patient filtering her own obsessions by time_consumed
+        if params[:time_taken] == "Least to Most Time-Consuming"
+          @obsessions = obsessions.least_to_most_time_consuming
+        else
+          @obsessions = obsessions.most_to_least_time_consuming
+        end
+      else # Patient did not choose a filter, so all of her own obsessions are listed
+        @obsessions = obsessions
+      end
     end
   end
 
