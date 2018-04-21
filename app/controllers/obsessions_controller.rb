@@ -47,11 +47,11 @@ class ObsessionsController < ApplicationController
           @obsession = obsession
         end
       elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset
-        obsessions = obsessions.by_theme(params[:ocd_subset])
-        if obsessions.empty?
-          redirect_to obsessions_path, alert: "No obsessions pertain to this OCD theme."
+        @obsessions = obsessions.by_theme(params[:ocd_subset])
+        if @obsessions.empty?
+          redirect_to obsessions_path, alert: "No obsessions pertain to this OCD subset."
         else
-          @obsessions = obsessions
+          @obsessions
         end
       else # Therapist did not choose a filter, so all patients' obsessions are listed
         @obsessions = obsessions
