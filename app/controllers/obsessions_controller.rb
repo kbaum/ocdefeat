@@ -31,7 +31,7 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.by_patient(params[:patient])
         end
       elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's most distressing obsession -- params[:distressed] is the ID of the user selected to find that user's most distressing obsession
-        obsession = Obsession.most_distressing_obsession_by_user(params[:distressed]) # obsession will either be nil or the user's obsession instance with the highest anxiety_rating attribute value
+        obsession = Obsession.most_distressing_by_user(params[:distressed]) # obsession will either be nil or the user's obsession instance with the highest anxiety_rating attribute value
 
         if obsession.nil? # the selected user has no obsessions
           redirect_to obsessions_path, alert: "That patient currently has no obsessions, so no obsession is deemed most distressing!"
@@ -41,7 +41,7 @@ class ObsessionsController < ApplicationController
       elsif !params[:consumed].blank? # Therapist filters obsessions by a patient's most time-consuming obsession -- params[:consumed] is the ID of the user selected to find that user's most time-consuming obsession
         obsession = Obsession.most_time_consuming_by_user(params[:consumed])
 
-        if obsession.nil?
+        if obsession.nil? # the selected user has no obsessions
           redirect_to obsessions_path, alert: "That patient currently has no obsessions, so no obsession is deemed most time-consuming!"
         else
           @obsession = obsession
