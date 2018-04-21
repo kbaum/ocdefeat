@@ -84,7 +84,7 @@ class Obsession < ApplicationRecord
   end
 
   def self.most_to_least_desensitized
-    self.least_to_most_desensitized.reverse
+    self.all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
   end
 end
   # Explanation of #themes_attributes=(themes_attributes):
