@@ -65,7 +65,7 @@ class Obsession < ApplicationRecord
     self.where("created_at <?", Time.zone.today.beginning_of_day)
   end
 
-  def self.most_distressing_obsession_by_user(user_id)
+  def self.most_distressing_by_user(user_id)
     user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
 
     if user_obsessions.empty?
