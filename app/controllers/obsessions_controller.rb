@@ -3,6 +3,7 @@ class ObsessionsController < ApplicationController
   before_action :count_obsessions, only: :index
 
   def index
+    obsessions = policy_scope(Obsession)
     @patients = User.where(role: 1)
     @themes = Theme.all
 
@@ -20,6 +21,26 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.old_obsessions
         end
       else # Admin did not choose a filter, so all patients' obsessions are listed
+        @obsessions = obsessions
+      end
+    elsif current_user.therapist?
+      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the patient selected by name from dropdown
+        if @patients.find(params[:patient]).obsessions.empty? # if the selected patient has no obsessions
+          redirect_to obsessions_path, alert: "That patient currently has no obsessions!"
+        else
+          @obsessions = obsessions.by_patient(params[:patient])
+        end
+      elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's most distressing obsession -- params[:distressed] is the ID of the user selected to find that user's most distressing obsession
+        obsession = Obsession.most_distressing_obsession_by_user(params[:distressed]) # obsession will either be nil or the user's obsession instance with the highest anxiety_rating attribute value
+
+        if obsession.nil? # the selected user has no obsessions
+          redirect_to obsessions_path, alert: "That patient currently has no obsessions, so no obsession is deemed most distressing!"
+        else
+          @obsession = obsession
+        end
+      elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset
+        @obsessions = obsessions.by_theme(params[:ocd_subset])
+      else # Therapist did not choose a filter, so all patients' obsessions are listed
         @obsessions = obsessions
       end
     end
