@@ -38,6 +38,14 @@ class ObsessionsController < ApplicationController
         else
           @obsession = obsession
         end
+      elsif !params[:consumed].blank? # Therapist filters obsessions by a patient's most time-consuming obsession -- params[:consumed] is the ID of the user selected to find that user's most time-consuming obsession
+        obsession = Obsession.most_time_consuming_by_user(params[:consumed])
+
+        if obsession.nil?
+          redirect_to obsessions_path, alert: "That patient currently has no obsessions, so no obsession is deemed most time-consuming!"
+        else
+          @obsession = obsession
+        end
       elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset
         @obsessions = obsessions.by_theme(params[:ocd_subset])
       else # Therapist did not choose a filter, so all patients' obsessions are listed
