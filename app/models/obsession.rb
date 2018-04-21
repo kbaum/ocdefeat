@@ -46,10 +46,10 @@ class Obsession < ApplicationRecord
 
   def self.most_time_consuming_by_user(user_id)
     user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
-    if user_obsessions.empty?
-      nil
-    else
-      user_obsessions.order(time_consumed: :desc).first
+    if user_obsessions.empty? # if the requested user has NO obsessions
+      nil # the class method returns nil
+    else # if the requested user has obsessions
+      user_obsessions.order(time_consumed: :desc).first # class method returns obsession instance (belonging to user) that has the highest time_consumed value
     end
   end
 
