@@ -58,12 +58,12 @@ class ObsessionsController < ApplicationController
       end
     elsif current_user.patient?
       if !params[:ocd_theme].blank? # Patient filtering her own obsessions by OCD theme
-        obsessions = obsessions.by_theme(params[:ocd_theme])
+        @obsessions = obsessions.by_theme(params[:ocd_theme])
 
-        if obsessions.empty?
+        if @obsessions.empty?
           redirect_to obsessions_path, alert: "No obsessions pertain to this OCD theme."
         else
-          @obsessions = obsessions
+          @obsessions
         end
       elsif !params[:anxiety_amount].blank? # Patient filtering her own obsessions by anxiety_rating
         if params[:anxiety_amount] == "Least to Most Distressing"
