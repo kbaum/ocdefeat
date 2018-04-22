@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_obsessions, only: [:index]
 
   def index
     plans = policy_scope(Plan)
@@ -57,6 +58,17 @@ class PlansController < ApplicationController
 
     def set_plan
       @plan = Plan.find(params[:id])
+    end
+
+    def set_obsessions
+      if current_user.patient?
+        @your_obsessions = current_user.obsessions
+        if @your_obsessions.empty?
+          redirect_to new_obsession_path, alert: "No ERP plans were found since you have no obsessions. Create an obsession now?"
+        else
+          @your_obsessions
+        end
+      end
     end
 
     def plan_params
