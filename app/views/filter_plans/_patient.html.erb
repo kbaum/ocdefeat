@@ -1,4 +1,4 @@
 <%= form_tag("/plans", method: "get") do %>
-  <%= select_tag "obsession_targeted", options_from_collection_for_select(your_obsessions, "id", "What if I #{intrusive_thought}"), prompt: "Obsession Targeted" %>
+  <%= select_tag "obsession_targeted", options_from_collection_for_select(your_obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
