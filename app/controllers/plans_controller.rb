@@ -6,6 +6,16 @@ class PlansController < ApplicationController
     plans = policy_scope(Plan)
     @patients = User.where(role: 1)
     @themes = Theme.all
+
+    if current_user.patient?
+      if !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
+        if Obsession.find(params[:obsession_targeted]).plans.empty?
+          redirect_to plans_path, alert: "No ERP plans were found for that obsession!"
+        else
+          @plans = plans.by_obsession(params[:obsession_targeted])
+        end
+      end
+    end
   end
 
   def new
