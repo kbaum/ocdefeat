@@ -14,6 +14,8 @@ class PlansController < ApplicationController
         else
           @plans = plans.by_obsession(params[:obsession_targeted])
         end
+      else
+        @plans = plans
       end
     end
   end
