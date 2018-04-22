@@ -2,7 +2,9 @@ class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
 
   def index
-    @plans = policy_scope(Plan)
+    plans = policy_scope(Plan)
+    @patients = User.where(role: 1)
+    @themes = Theme.all
   end
 
   def new
