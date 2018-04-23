@@ -11,11 +11,11 @@
 <br>
 
 <% if @obsession %>
-  <p><%= link_to "What if I " << "#{@obsession.intrusive_thought}", obsession_path(@obsession) %></p>
+  <p><%= link_to @obsession.intrusive_thought, obsession_path(@obsession) %></p>
 <% else %>
   <ul>
     <% @obsessions.each do |obsession| %>
-      <li><%= link_to "What if I " << "#{obsession.intrusive_thought}", obsession_path(obsession) %></li>
+      <li><%= link_to obsession.intrusive_thought, obsession_path(obsession) %></li>
     <% end %>
   </ul>
 <% end %>
