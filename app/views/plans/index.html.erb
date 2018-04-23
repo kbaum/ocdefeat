@@ -10,8 +10,12 @@
 
 <br>
 
-<ul>
-  <% @plans.each do |plan| %>
-    <li><%= link_to plan.title, plan_path(plan) %></li>
-  <% end %>
-</ul>
+<% if @plan %>
+  <p><%= link_to @plan.title, plan_path(@plan) %></p>
+<% else %>
+  <ul>
+    <% @plans.each do |plan| %>
+      <li><%= link_to plan.title, plan_path(plan) %></li>
+    <% end %>
+  </ul>
+<% end %>
