@@ -1,4 +1,6 @@
 <%= form_tag("/plans", method: "get") do %>
+  <%= select_tag "title", options_from_collection_for_select(plans, "title", "title"), prompt: "Title" %>
   <%= select_tag "obsession_targeted", options_from_collection_for_select(your_obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %>
+  <%= select_tag "theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
