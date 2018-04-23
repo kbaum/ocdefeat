@@ -86,6 +86,10 @@ class Obsession < ApplicationRecord
   def self.most_to_least_desensitized
     self.all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
   end
+
+  def obsessify(thought) # instance method called on obsession instance takes string argument and formats it
+    "What if I " << "#{thought}?"
+  end
 end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
