@@ -24,4 +24,13 @@ class Plan < ApplicationRecord
   def self.by_theme(theme_name)
     self.where("obsession_id IN (?)", Theme.find_by(name: theme_name).obsession_ids)
   end
+
+  def self.by_patient(patient_id)
+    plans = User.find(patient_id).plans
+    if plans.empty? # if the user's collection of plans is empty
+      nil
+    else
+      plans
+    end
+  end
 end
