@@ -87,8 +87,8 @@ class Obsession < ApplicationRecord
     self.all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
   end
 
-  def obsessify(thought) # instance method called on obsession instance takes string argument and formats it
-    "What if I " << "#{thought}?"
+  def obsessify(thought) # instance method called on obsession instance takes string argument, sets intrusive_thought attribute of obsession to formatted string
+    self.intrusive_thought = "What if I " << "#{thought}?"
   end
 end
   # Explanation of #themes_attributes=(themes_attributes):
