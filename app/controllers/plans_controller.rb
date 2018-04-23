@@ -17,6 +17,13 @@ class PlansController < ApplicationController
         else
           @plans = plans.by_obsession(params[:obsession_targeted])
         end
+      elsif !params[:theme].blank?
+        @plans = plans.by_theme(params[:theme])
+        if @plans.empty? # No plans are classified in the selected OCD theme
+          redirect_to plans_path, alert: "No ERP plans pertain to this theme."
+        else
+          @plans
+        end
       else
         @plans = plans
       end
