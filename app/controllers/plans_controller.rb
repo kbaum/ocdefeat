@@ -27,6 +27,17 @@ class PlansController < ApplicationController
       else
         @plans = plans
       end
+    elsif current_user.therapist?
+      if !params[:patient].blank? # Therapist filters plans by patient -- params[:patient] is the ID of the user whose plans we want to find
+        @plans = plans.by_patient(params[:patient])
+        if @plans.nil?
+          redirect_to plans_path, alert: "No ERP plans were found for that patient."
+        else
+          @plans
+        end
+      else
+        @plans = plans
+      end
     end
   end
 
