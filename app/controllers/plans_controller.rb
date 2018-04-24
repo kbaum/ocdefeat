@@ -33,9 +33,13 @@ class PlansController < ApplicationController
         else
           @plans
         end
-      elsif !params[:completion].blank? # Therapist filters plans by status (whether or not plan has steps/is completed)
+      elsif !params[:completion].blank? # Therapist filters plans by whether or not plan has steps and is completed
         if params[:completion] == "Preliminary Plan (sans steps)"
           @plans = plans.sans_steps
+        elsif params[:completion] == "Completed"
+          @plans = plans.completed
+        elsif params[:completion] == "Not Yet Completed"
+          @plans = plans.not_yet_completed
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
