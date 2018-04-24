@@ -32,4 +32,8 @@ class Plan < ApplicationRecord
   def self.sans_steps # class method returns all plan instances that have no steps
     self.all.select {|plan| plan.steps.empty?}
   end
+
+  def self.with_steps # class method returns all plan instances that have 1 or more steps
+    self.all.select {|plan| plan.steps.count >= 1}
+  end
 end
