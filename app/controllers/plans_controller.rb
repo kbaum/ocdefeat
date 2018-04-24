@@ -17,25 +17,23 @@ class PlansController < ApplicationController
         else
           @plans = plans.by_obsession(params[:obsession_targeted])
         end
-      elsif !params[:theme].blank?
+      end
+    elsif current_user.therapist?
+      if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
+        @plans = plans.by_designer(params[:designer])
+        if @plans.empty?
+          redirect_to plans_path, alert: "The index of ERP plans does not contain plans designed by that patient!"
+        else
+          @plans
+        end
+      elsif !params[:theme].blank? # Therapist filters plans by OCD theme -- params[:theme] is the ID of the theme
         @plans = plans.by_theme(params[:theme])
         if @plans.empty? # No plans are classified in the selected OCD theme
           redirect_to plans_path, alert: "No ERP plans pertain to this theme."
         else
           @plans
         end
-      else
-        @plans = plans
-      end
-    elsif current_user.therapist?
-      if !params[:patient].blank? # Therapist filters plans by patient -- params[:patient] is the ID of the user whose plans we want to find
-        @plans = plans.by_patient(params[:patient])
-        if @plans.nil?
-          redirect_to plans_path, alert: "No ERP plans were found for that patient."
-        else
-          @plans
-        end
-      else
+      else # Therapist did not choose a filter for filtering plans
         @plans = plans
       end
     end
