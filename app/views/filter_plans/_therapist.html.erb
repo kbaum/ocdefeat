@@ -1,6 +1,6 @@
 <%= form_tag("/plans", method: "get") do %>
   <%= select_tag "designer", options_from_collection_for_select(patients, "id", "name"), prompt: "Plan Designer" %>
   <%= select_tag "theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
-  <%= select_tag "completion", options_for_select(["Completed", "Not Yet Completed"]), prompt: "Progress Toward Completion" %>
+  <%= select_tag "completion", options_for_select(["Preliminary Plan (sans steps)", "Completed", "Not Yet Completed"]), prompt: "Progress Toward Completion" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
