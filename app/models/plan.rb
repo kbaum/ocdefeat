@@ -21,8 +21,8 @@ class Plan < ApplicationRecord
     self.find_by(title: the_title)
   end
 
-  def self.by_theme(theme_name)
-    self.where("obsession_id IN (?)", Theme.find_by(name: theme_name).obsession_ids)
+  def self.by_theme(theme_id)
+    self.where("obsession_id IN (?)", Theme.find(theme_id).obsession_ids)
   end
 
   def self.by_patient(patient_id)
