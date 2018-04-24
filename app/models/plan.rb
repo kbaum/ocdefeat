@@ -40,4 +40,8 @@ class Plan < ApplicationRecord
   def self.completed # class method returns 'array' of all plans (with at least 1 step) that are completed
     self.with_steps.select {|plan| plan.done?}
   end
+
+  def self.not_yet_completed # class method returns 'array' of all plans (with at least 1 step) that are not completed
+    self.with_steps.reject {|plan| plan.done?}
+  end
 end
