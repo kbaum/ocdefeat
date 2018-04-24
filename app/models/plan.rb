@@ -28,4 +28,8 @@ class Plan < ApplicationRecord
   def self.by_designer(designer_id)
     User.where(role: 1).find(designer_id).plans
   end
+
+  def self.sans_steps # class method returns all plan instances that have no steps
+    self.all.select {|plan| plan.steps.empty?}
+  end
 end
