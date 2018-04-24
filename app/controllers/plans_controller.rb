@@ -22,7 +22,7 @@ class PlansController < ApplicationController
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
         @plans = plans.by_designer(params[:designer])
         if @plans.empty?
-          redirect_to plans_path, alert: "No ERP plans designed by that patient were found."
+          redirect_to plans_path, alert: "No ERP plans were designed by that patient."
         else
           @plans
         end
