@@ -33,22 +33,22 @@ class PlansController < ApplicationController
         else
           @plans
         end
-      elsif !params[:completion].blank? # Therapist filters plans by whether or not plan has steps and is completed
-        if params[:completion] == "Preliminary Plan (sans steps)"
+      elsif !params[:status].blank? # Therapist filters plans by whether or not plan has steps and is completed
+        if params[:status] == "Preliminary Plan (sans steps)"
           @plans = plans.sans_steps
           if @plans.empty?
             redirect_to plans_path, alert: "All ERP plans have at least one step."
           else
             @plans
           end
-        elsif params[:completion] == "Completed"
+        elsif params[:status] == "Completed"
           @plans = plans.completed
           if @plans.empty?
             redirect_to plans_path, alert: "No ERP plans (with at least 1 step) have been completed."
           else
             @plans
           end
-        elsif params[:completion] == "Not Yet Completed"
+        elsif params[:status] == "Not Yet Completed"
           @plans = plans.not_yet_completed
           if @plans.empty?
             redirect_to plans_path, alert: "All ERP plans (with at least 1 step) have been completed."
