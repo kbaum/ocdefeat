@@ -35,30 +35,42 @@ class PlansController < ApplicationController
           @plans
         end
       elsif !params[:status].blank? # Therapist filters plans by status (whether or not plan has steps and is completed)
-        if params[:status] == "Preliminary Plan (sans steps)" # wants to view all plans that have title and goal, but no steps yet
+        if params[:status] == "Preliminary Plan (sans steps)" # wants to view all plans that DON'T have steps
           @plans = plans.sans_steps # array of all plans without steps OR an empty array if all plans found HAVE steps
-          if @plans.empty?
+          if @plans.empty? # all plans HAVE steps
             redirect_to plans_path, alert: "All ERP plans have at least one step."
           else
-            @plans
+            @plans # stores array of all plans without steps
           end
         elsif params[:status] == "Completed"
-          @plans = plans.completed
-          if @plans.empty?
-            redirect_to plans_path, alert: "No ERP plans (with at least 1 step) have been completed."
+          @plans = plans.with_steps # trying to find plans with at least 1 step
+
+          if @plans.empty? # this means that no plans with at least 1 step were found
+            redirect_to plans_path, alert: "ERP plans must have at least 1 step before assessing status of completion."
           else
-            @plans
+            @plans = plans.completed
+            if @plans.empty? # this means that plans with at least 1 step were found, but none of these plans were completed
+              redirect_to plans_path, alert: "Completed ERP plans were not found."
+            else
+              @plans # stores array of plans that have been completed (and contain at least 1 step)
+            end
           end
         elsif params[:status] == "Not Yet Completed"
-          @plans = plans.not_yet_completed
-          if @plans.empty?
-            redirect_to plans_path, alert: "All ERP plans (with at least 1 step) have been completed."
+          @plans = plans.with_steps # trying to find plans with at least 1 step
+
+          if @plans.empty? # this means that no plans with at least 1 step were found
+            redirect_to plans_path, alert: "ERP plans must have at least 1 step before assessing status of completion."
           else
-            @plans
+            @plans = plans.not_yet_completed
+            if @plans.empty? # this means that plans with at least 1 step were found, but these plans were completed
+              redirect_to plans_path, alert: "Unfinished ERP plans were not found."
+            else
+              @plans # stores array of plans that are not yet completed (and contain at least 1 step)
+            end
           end
+        else # Therapist did not choose a filter for filtering plans
+          @plans = plans
         end
-      else # Therapist did not choose a filter for filtering plans
-        @plans = plans
       end
     end
   end
