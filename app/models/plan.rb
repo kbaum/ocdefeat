@@ -33,4 +33,13 @@ class Plan < ApplicationRecord
       plans
     end
   end
+
+  def self.by_designer(designer_id)
+    plans = User.find(designer_id).plans
+    if plans.empty?
+      nil
+    else
+      plans
+    end
+  end
 end
