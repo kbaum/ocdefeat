@@ -36,6 +36,11 @@ class PlansController < ApplicationController
       elsif !params[:completion].blank? # Therapist filters plans by whether or not plan has steps and is completed
         if params[:completion] == "Preliminary Plan (sans steps)"
           @plans = plans.sans_steps
+          if @plans.empty?
+            redirect_to plans_path, alert: "All ERP plans have at least one step."
+          else
+            @plans
+          end
         elsif params[:completion] == "Completed"
           @plans = plans.completed
         elsif params[:completion] == "Not Yet Completed"
