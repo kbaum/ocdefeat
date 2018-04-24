@@ -1,6 +1,7 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_obsessions, only: [:index]
+  before_action :preview_plans, only: [:index]
 
   def index
     plans = policy_scope(Plan)
@@ -33,9 +34,9 @@ class PlansController < ApplicationController
         else
           @plans
         end
-      elsif !params[:status].blank? # Therapist filters plans by whether or not plan has steps and is completed
-        if params[:status] == "Preliminary Plan (sans steps)"
-          @plans = plans.sans_steps
+      elsif !params[:status].blank? # Therapist filters plans by status (whether or not plan has steps and is completed)
+        if params[:status] == "Preliminary Plan (sans steps)" # wants to view all plans that have title and goal, but no steps yet
+          @plans = plans.sans_steps # array of all plans without steps OR an empty array if all plans found HAVE steps
           if @plans.empty?
             redirect_to plans_path, alert: "All ERP plans have at least one step."
           else
@@ -112,6 +113,23 @@ class PlansController < ApplicationController
 
     def set_plan
       @plan = Plan.find(params[:id])
+    end
+
+    def preview_plans # private method called before plans#index
+      @plans = policy_scope(Plan)
+      if current_user.admin? || current_user.therapist?
+        if @plans.empty?
+          redirect_to user_path(current_user), alert: "No ERP plans were found."
+        else
+          @plans # When viewer is admin/therapist, @plans = Plan.all (all ERP plans designed by all patients)
+        end
+      elsif current_user.patient?
+        if @plans.empty?
+          redirect_to user_path(current_user), alert: "Your index of ERP plans is currently empty."
+        else
+          @plans # when viewer is patient, @plans stores 'array' of only that patient's plans
+        end
+      end
     end
 
     def set_obsessions
