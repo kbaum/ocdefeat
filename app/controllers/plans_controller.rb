@@ -119,7 +119,7 @@ class PlansController < ApplicationController
       @plans = policy_scope(Plan)
       if current_user.admin? || current_user.therapist?
         if @plans.empty?
-          redirect_to user_path(current_user), alert: "No ERP plans were found."
+          redirect_to user_path(current_user), alert: "The index of all patients' ERP plans is empty."
         else
           @plans # When viewer is admin/therapist, @plans = Plan.all (all ERP plans designed by all patients)
         end
