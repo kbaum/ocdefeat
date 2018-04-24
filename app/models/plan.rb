@@ -26,11 +26,6 @@ class Plan < ApplicationRecord
   end
 
   def self.by_designer(designer_id)
-    plans = User.find(designer_id).plans
-    if plans.empty?
-      nil
-    else
-      plans
-    end
+    User.where(role: 1).find(designer_id).plans
   end
 end
