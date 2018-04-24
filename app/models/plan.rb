@@ -25,15 +25,6 @@ class Plan < ApplicationRecord
     self.where("obsession_id IN (?)", Theme.find(theme_id).obsession_ids)
   end
 
-  def self.by_patient(patient_id)
-    plans = User.find(patient_id).plans
-    if plans.empty? # if the user's collection of plans is empty
-      nil
-    else
-      plans
-    end
-  end
-
   def self.by_designer(designer_id)
     plans = User.find(designer_id).plans
     if plans.empty?
