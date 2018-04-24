@@ -50,6 +50,11 @@ class PlansController < ApplicationController
           end
         elsif params[:completion] == "Not Yet Completed"
           @plans = plans.not_yet_completed
+          if @plans.empty?
+            redirect_to plans_path, alert: "All ERP plans (with at least 1 step) have been completed."
+          else
+            @plans
+          end
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
