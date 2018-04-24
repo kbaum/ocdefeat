@@ -36,4 +36,8 @@ class Plan < ApplicationRecord
   def self.with_steps # class method returns all plan instances that have 1 or more steps
     self.all.select {|plan| plan.steps.count >= 1}
   end
+
+  def self.completed # class method returns 'array' of all plans (with at least 1 step) that are completed
+    self.with_steps.select {|plan| plan.done?}
+  end
 end
