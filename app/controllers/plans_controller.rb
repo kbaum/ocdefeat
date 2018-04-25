@@ -46,14 +46,14 @@ class PlansController < ApplicationController
           redirect_to plans_path, alert: "ERP plans must have at least 1 step before assessing status of completion."
         else # Plans with at least 1 step were found
           if params[:completion] == "Completed"
-            @plans = plans.with_steps.completed
+            @plans = plans.completed
             if @plans.empty? # this means that plans with at least 1 step were found, but none of these plans were completed
               redirect_to plans_path, alert: "Completed ERP plans were not found."
             else
               @plans # stores array of completed plans (each containing at least 1 step)
             end
           elsif params[:completion] == "Not Yet Completed"
-            @plans = plans.with_steps.not_yet_completed
+            @plans = plans.not_yet_completed
             if @plans.empty? # plans with at least 1 step were found, but these plans were completed
               redirect_to plans_path, alert: "Unfinished ERP plans were not found."
             else
