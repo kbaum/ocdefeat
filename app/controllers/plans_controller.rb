@@ -41,26 +41,7 @@ class PlansController < ApplicationController
         else
           @plans # stores array of all plans without steps
         end
-      elsif !params[:completion].blank? # Therapist filters plans by whether or not plan is completed
-        if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
-          redirect_to plans_path, alert: "ERP plans must have at least 1 step before assessing status of completion."
-        else # Plans with at least 1 step were found
-          if params[:completion] == "Completed"
-            @plans = plans.completed
-            if @plans.empty? # this means that plans with at least 1 step were found, but none of these plans were completed
-              redirect_to plans_path, alert: "Completed ERP plans were not found."
-            else
-              @plans # stores array of completed plans (each containing at least 1 step)
-            end
-          elsif params[:completion] == "Not Yet Completed"
-            @plans = plans.not_yet_completed
-            if @plans.empty? # plans with at least 1 step were found, but these plans were completed
-              redirect_to plans_path, alert: "Unfinished ERP plans were not found."
-            else
-              @plans # stores array of incomplete plans (each containing at least 1 step)
-            end
-          end # closes logic starting with if params[:completion] == "Completed"
-        end # closes logic from if plans.with_steps.empty?
+      elsif # Add logic for therapist filtering a patient's completed/incomplete plans here
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
