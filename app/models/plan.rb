@@ -52,4 +52,12 @@ class Plan < ApplicationRecord
   def self.plans_pending_completion_by_patient(patient_id) # returns 'array' of all plans designed by a particular patient that are incomplete
     User.where(role: 1).find(patient_id).plans.reject {|plan| plan.done?}
   end
+
+  def self.from_today
+    where("created_at >=?", Time.zone.today.beginning_of_day)
+  end
+
+  def self.past_plans
+    where("created_at <?", Time.zone.today.beginning_of_day)
+  end
 end
