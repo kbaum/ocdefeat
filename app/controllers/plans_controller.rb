@@ -64,6 +64,24 @@ class PlansController < ApplicationController
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
+    elsif current_user.admin?
+      if !params[:date].blank? # Admin filters plans by date created
+        if params[:date] == "Today"
+          if plans.from_today.empty? # If no plans created today were found
+            redirect_to plans_path, alert: "No ERP plans were created today."
+          else
+            @plans = plans.from_today
+          end
+        elsif params[:date] == "Past Plans"
+          if plans.past_plans.empty? # If no plans created prior to today were found
+            redirect_to plans_path, alert: "No ERP plans were created prior to today."
+          else
+            @plans = plans.past_plans
+          end
+        end # closes logic for params[:date]
+      else # Admin did not choose a filter for filtering plans
+        @plans = plans
+      end # closes logic about filter selected
     end # closes logic about filterer's role
   end # closes #index action
 
