@@ -1,7 +1,11 @@
 <%= form_tag("/plans", method: "get") do %>
   <%= select_tag "designer", options_from_collection_for_select(patients, "id", "name"), prompt: "Plan Designer" %>
+  <br><br>
   <%= select_tag "theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
+  <br><br>
   <%= select_tag "stepless", options_for_select(["Sans Steps"]), prompt: "Preliminary Plans" %>
+  <br><br>
   <%= select_tag "patient_progress", options_for_select(["Patient's Completed Plans", "Patient's Plans Pending Completion"]), prompt: "Patient Progress in Plan Practice" %>
+  <br><br>
   <%= submit_tag "Filter Plans" %>
 <% end %>
