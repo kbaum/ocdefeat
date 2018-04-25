@@ -1,4 +1,5 @@
 <%= form_tag("/plans", method: "get") do %>
   <%= select_tag "date", options_for_select(["Today", "Past Plans"]), prompt: "Date Created" %>
+  <%= select_tag "completion", options_for_select(["Completed", "Not Yet Completed"]), prompt: "Progress Toward Completion" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
