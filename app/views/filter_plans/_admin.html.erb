@@ -1,1 +1,4 @@
-<h1>Admin Filtering ERP Plans</h1>
+<%= form_tag("/plans", method: "get") do %>
+  <%= select_tag "date", options_for_select(["Today", "Past Plans"]), prompt: "Date Created" %>
+  <%= submit_tag "Filter Plans" %>
+<% end %>
