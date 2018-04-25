@@ -2,6 +2,6 @@
   <%= select_tag "designer", options_from_collection_for_select(patients, "id", "name"), prompt: "Plan Designer" %>
   <%= select_tag "theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
   <%= select_tag "stepless", options_for_select(["Sans Steps"]), prompt: "Preliminary Plans" %>
-  <%= select_tag "completion", options_for_select(["Completed", "Not Yet Completed"]), prompt: "Progress Toward Completion" %>
+  <%= select_tag "patient_progress", options_for_select(["Patient's Completed Plans", "Patient's Plans Pending Completion"]), prompt: "Patient Progress in Plan Practice" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
