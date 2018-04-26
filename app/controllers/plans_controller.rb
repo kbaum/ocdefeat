@@ -88,7 +88,7 @@ class PlansController < ApplicationController
               @plans = plans.not_yet_completed # stores array of incomplete plans (each containing at least 1 step)
             end
           end # closes logic starting with if params[:completion] == "Completed"
-        end # closes logic from if scoped_plans.with_steps.empty?
+        end # closes logic from if plans.with_steps.empty?
       else # Admin did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
