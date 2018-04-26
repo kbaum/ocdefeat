@@ -5,7 +5,7 @@
   <br><br>
   <%= select_tag "stepless", options_for_select(["Sans Steps"]), prompt: "Preliminary Plans" %>
   <br><br>
-  <%= select_tag "patient_practicing", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient Progress in ERP Practice" %>
+  <%= select_tag "patient_practicing", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Progress Toward Completion" %>
   <br><br>
   <%= submit_tag "Filter Plans" %>
 <% end %>
