@@ -43,7 +43,7 @@ class PlansController < ApplicationController
         if @patient_picked.plans.empty? # the patient selected has no ERP plans
           redirect_to plans_path, alert: "No ERP plans were designed by that patient."
         elsif @patient_picked.plans.with_steps.empty? # the patient has plans, but none of the plans have steps
-          redirect_to plans_path, alert: "Progress can only be made if plans consist of steps! The patient should add ERP exercises to each preliminary plan!"
+          redirect_to plans_path, alert: "Progress can only be made if plans contain steps! The patient should add ERP exercises to each preliminary plan!"
         else # the patient has plans with steps
           if !@patient_picked.plans.completed.empty? # The patient has completed ERP plans
             @completed = @patient_picked.plans.completed # @completed stores the patient's completed plans
