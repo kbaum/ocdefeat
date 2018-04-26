@@ -1,7 +1,7 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_obsessions, only: [:index]
-  before_action :preview_plans, only: [:index]
+  before_action :require_plans, only: [:index]
 
   def index
     plans = policy_scope(Plan)
@@ -147,19 +147,17 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
-    def preview_plans # private method called before plans#index
-      @plans = policy_scope(Plan)
+    def require_plans # private method called before plans#index
+      plans = policy_scope(Plan)
+      # When viewer is admin/therapist, plans = Plan.all (all ERP plans designed by all patients)
+      # when viewer is patient, plans stores 'array' of only that patient's plans
       if current_user.admin? || current_user.therapist?
-        if @plans.empty?
+        if plans.empty?
           redirect_to user_path(current_user), alert: "The index of all patients' ERP plans is empty."
-        else
-          @plans # When viewer is admin/therapist, @plans = Plan.all (all ERP plans designed by all patients)
         end
       elsif current_user.patient?
-        if @plans.empty?
+        if plans.empty?
           redirect_to user_path(current_user), alert: "Your index of ERP plans is currently empty."
-        else
-          @plans # when viewer is patient, @plans stores 'array' of only that patient's plans
         end
       end
     end
