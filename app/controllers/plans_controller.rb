@@ -21,25 +21,22 @@ class PlansController < ApplicationController
       end
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
-        @plans = plans.by_designer(params[:designer])
-        if @plans.empty?
+        if plans.by_designer(params[:designer]).empty?
           redirect_to plans_path, alert: "No ERP plans were designed by that patient."
         else
-          @plans
+          @plans = plans.by_designer(params[:designer])
         end
       elsif !params[:theme].blank? # Therapist filters plans by OCD theme -- params[:theme] is the ID of the theme
-        @plans = plans.by_theme(params[:theme])
-        if @plans.empty? # No plans are classified in the selected OCD theme
+        if plans.by_theme(params[:theme]).empty? # No plans are classified in the selected OCD theme
           redirect_to plans_path, alert: "No ERP plans pertain to this theme."
         else
-          @plans
+          @plans = plans.by_theme(params[:theme])
         end
       elsif !params[:stepless].blank? # Therapist filters plans by preliminary plans (without steps)
-        @plans = plans.stepless
-        if @plans.empty? # all plans HAVE steps
+        if plans.stepless.empty? # all plans HAVE steps
           redirect_to plans_path, alert: "All ERP plans have at least one step."
         else
-          @plans # stores array of all plans without steps
+          @plans = plans.stepless # stores array of all plans without steps
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
         @patient_picked = @patients.find(params[:patient_progressing])
@@ -50,14 +47,10 @@ class PlansController < ApplicationController
         else # the patient has plans with steps
           if !@patient_picked.plans.completed.empty? # The patient has completed ERP plans
             @completed = @patient_picked.plans.completed # @completed stores the patient's completed plans
-          else
-            nil
           end
 
           if !@patient_picked.plans.not_yet_completed.empty? # The patient has incomplete ERP plans
             @not_yet_completed = @patient_picked.plans.not_yet_completed # @not_yet_completed stores the patient's incomplete plans
-          else
-            nil
           end
         end
       else # Therapist did not choose a filter for filtering plans
@@ -66,13 +59,13 @@ class PlansController < ApplicationController
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters plans by date created
         if params[:date] == "Today"
-          if plans.from_today.empty? # If no plans created today were found
+          if plans.from_today.empty? # If no plans were created today
             redirect_to plans_path, alert: "No ERP plans were created today."
           else
             @plans = plans.from_today
           end
         elsif params[:date] == "Past Plans"
-          if plans.past_plans.empty? # If no plans created prior to today were found
+          if plans.past_plans.empty? # If no plans were created prior to today
             redirect_to plans_path, alert: "No ERP plans were created prior to today."
           else
             @plans = plans.past_plans
@@ -95,7 +88,7 @@ class PlansController < ApplicationController
               @plans = plans.not_yet_completed # stores array of incomplete plans (each containing at least 1 step)
             end
           end # closes logic starting with if params[:completion] == "Completed"
-        end # closes logic from if plans.with_steps.empty?
+        end # closes logic from if scoped_plans.with_steps.empty?
       else # Admin did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
