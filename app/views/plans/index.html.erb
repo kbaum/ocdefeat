@@ -5,22 +5,20 @@
 
   <br>
 
-  <%= render partial: filters, locals: { plans: @plans, patients: @patients, themes: @themes, your_obsessions: @your_obsessions } %>
+  <%= render partial: filters, locals: { plans: policy_scope(Plan), patients: @patients, themes: @themes, your_obsessions: @your_obsessions } %>
 </div>
 
 <br>
 
 <% if @plan %>
   <p><%= link_to @plan.title, plan_path(@plan) %></p>
-<% else %>
+<% elsif @plans %>
   <ul>
     <% @plans.each do |plan| %>
       <li><%= link_to plan.title, plan_path(plan) %></li>
     <% end %>
   </ul>
 <% end %>
-
-
 
 <% if @patient_picked %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
   <%= render partial: "plan_progress_div", locals: { patient_picked: @patient_picked, completed: @completed, not_yet_completed: @not_yet_completed } %>
