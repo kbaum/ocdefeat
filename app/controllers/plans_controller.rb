@@ -41,7 +41,25 @@ class PlansController < ApplicationController
         else
           @plans # stores array of all plans without steps
         end
-      elsif # Add logic for therapist filtering a patient's completed/incomplete plans here
+      elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
+        @patient_picked = @patients.find(params[:patient_progressing])
+        if @patient_picked.plans.empty? # the patient selected has no ERP plans
+          redirect_to plans_path, alert: "No ERP plans were designed by that patient."
+        elsif @patient_picked.plans.with_steps.empty? # the patient has plans, but none of the plans have steps
+          redirect_to plans_path, alert: "The patient should add steps to each preliminary ERP plan!"
+        else # the patient has plans with steps
+          if @patient_picked.plans.completed.empty? # The patient has no completed ERP plans
+            @completed = nil
+          else
+            @completed = @patient_picked.plans.completed # @completed stores the patient's completed plans
+          end
+
+          if @patient_picked.plans.not_yet_completed.empty? # The patient has no incomplete ERP plans (the patient only has completed plans)
+            @not_yet_completed = nil
+          else
+            @not_yet_completed = @patient_picked.plans.not_yet_completed # @not_yet_completed stores the patient's incomplete plans
+          end
+        end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
