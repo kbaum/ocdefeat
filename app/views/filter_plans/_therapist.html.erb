@@ -3,7 +3,7 @@
   <br><br>
   <%= select_tag "theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
   <br><br>
-  <%= select_tag "patient_prelim_plans", options_for_select(["Sans Steps"]), prompt: "Patient's Preliminary Plans" %>
+  <%= select_tag "patient_prelim_plans", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Preliminary Plans" %>
   <br><br>
   <%= select_tag "patient_progressing", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Progress Toward Completion" %>
   <br><br>
