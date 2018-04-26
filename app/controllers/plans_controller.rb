@@ -48,16 +48,16 @@ class PlansController < ApplicationController
         elsif @patient_picked.plans.with_steps.empty? # the patient has plans, but none of the plans have steps
           redirect_to plans_path, alert: "The patient should add steps to each preliminary ERP plan!"
         else # the patient has plans with steps
-          if @patient_picked.plans.completed.empty? # The patient has no completed ERP plans
-            @completed = nil
-          else
+          if !@patient_picked.plans.completed.empty? # The patient has completed ERP plans
             @completed = @patient_picked.plans.completed # @completed stores the patient's completed plans
+          else
+            nil
           end
 
-          if @patient_picked.plans.not_yet_completed.empty? # The patient has no incomplete ERP plans (the patient only has completed plans)
-            @not_yet_completed = nil
-          else
+          if !@patient_picked.plans.not_yet_completed.empty? # The patient has incomplete ERP plans
             @not_yet_completed = @patient_picked.plans.not_yet_completed # @not_yet_completed stores the patient's incomplete plans
+          else
+            nil
           end
         end
       else # Therapist did not choose a filter for filtering plans
