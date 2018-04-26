@@ -22,30 +22,6 @@
 
 
 
-<% if @patient_picked %> <!--Therapist filtered plans by patient's progress in ERP practice-->
-
-  <div class="well well-lg">
-    <h4><%= @patient_picked.name %>'s ERP Progress:</h4>
-
-    <br>
-
-    <% if @completed %> <!--If the patient selected has completed ERP plans-->
-      <p><em>ERP Plans Completed:</em></p>
-      <ul>
-        <% @completed.each do |completed_plan| %>
-          <li><%= link_to completed_plan.title, plan_path(completed_plan) %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <% if @not_yet_completed %> <!--If the patient selected has incomplete ERP plans-->
-      <p><em>ERP Plans Pending Completion:</em></p>
-      <ul>
-        <% @not_yet_completed.each do |incomplete_plan| %>
-          <li><%= link_to incomplete_plan.title, plan_path(incomplete_plan) %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
-  </div>
+<% if @patient_picked %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
+  <%= render partial: "plan_progress_div", locals: { patient_picked: @patient_picked, completed: @completed, not_yet_completed: @not_yet_completed } %>
 <% end %>
