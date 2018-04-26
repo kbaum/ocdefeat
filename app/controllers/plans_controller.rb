@@ -34,7 +34,7 @@ class PlansController < ApplicationController
         end
       elsif !params[:stepless].blank? # Therapist filters plans by preliminary plans (without steps)
         if plans.stepless.empty? # all plans HAVE steps
-          redirect_to plans_path, alert: "All ERP plans have at least one step."
+          redirect_to plans_path, alert: "No preliminary plans were found because all ERP plans have at least one step."
         else
           @plans = plans.stepless # stores array of all plans without steps
         end
