@@ -157,7 +157,7 @@ class PlansController < ApplicationController
         end
       elsif current_user.patient?
         if plans.empty?
-          redirect_to user_path(current_user), alert: "Your index of ERP plans is currently empty."
+          redirect_to new_plan_path, alert: "Looks like you didn't desensitize lately! Your index of ERP plans is currently empty."
         end
       end
     end
