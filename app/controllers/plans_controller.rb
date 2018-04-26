@@ -32,12 +32,7 @@ class PlansController < ApplicationController
         else
           @plans = plans.by_theme(params[:theme])
         end
-      elsif !params[:stepless].blank? # Therapist filters plans by preliminary plans (without steps)
-        if plans.stepless.empty? # all plans HAVE steps
-          redirect_to plans_path, alert: "No preliminary plans were found; all ERP plans have at least one step."
-        else
-          @plans = plans.stepless # stores array of all plans without steps
-        end
+      # add logic here for filtering plans by patient's preliminary plans (plans w/o steps)
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
         @patient_picked = @patients.find(params[:patient_progressing])
         if @patient_picked.plans.empty? # the patient selected has no ERP plans
@@ -71,6 +66,12 @@ class PlansController < ApplicationController
             @plans = plans.past_plans
           end
         end # closes logic for params[:date]
+      elsif !params[:stepless].blank? # Admin filters plans by preliminary plans (plans without steps)
+        if plans.stepless.empty? # all plans HAVE steps
+          redirect_to plans_path, alert: "No preliminary plans were found; all ERP plans have at least one step."
+        else
+          @plans = plans.stepless # stores array of all plans without steps
+        end
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
         if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
           redirect_to plans_path, alert: "ERP plans must have at least 1 step before assessing status of completion."
