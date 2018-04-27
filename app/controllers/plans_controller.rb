@@ -20,6 +20,8 @@ class PlansController < ApplicationController
           @plans # stores 'array' of plans belonging to the obsession selected
           flash.now[:notice] = "You successfully found ERP plans targeting your obsession!"
         end
+      else # Patient did not choose a filter, so @plans stores 'array' of only plans designed by the patient
+        @plans = plans
       end
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
