@@ -70,10 +70,12 @@ class PlansController < ApplicationController
             flash.now[:notice] = "You successfully filtered ERP plans designed today!"
           end
         elsif params[:date] == "Past Plans"
-          if plans.past_plans.empty? # If no plans were created prior to today
-            redirect_to plans_path, alert: "No ERP plans were created prior to today."
+          @plans = plans.past_plans
+          if @plans.empty? # If no plans were created prior to today
+            flash.now[:alert] = "No ERP plans were created prior to today."
           else
-            @plans = plans.past_plans
+            @plans
+            flash.now[:notice] = "You successfully filtered ERP plans from the past."
           end
         end # closes logic for params[:date]
       elsif !params[:stepless].blank? # Admin filters plans by preliminary plans (plans without steps)
