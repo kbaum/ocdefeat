@@ -64,7 +64,7 @@ class PlansController < ApplicationController
         if params[:date] == "Today"
           @plans = plans.from_today
           if @plans.empty? # If no plans were created today
-            flash.now[:alert] = "No ERP plans were created today!"
+            flash.now[:alert] = "No ERP plans were created today."
           else
             @plans
             flash.now[:notice] = "You successfully found ERP plans designed today!"
@@ -75,7 +75,7 @@ class PlansController < ApplicationController
             flash.now[:alert] = "No ERP plans were created prior to today."
           else
             @plans
-            flash.now[:notice] = "You successfully found ERP plans from the past."
+            flash.now[:notice] = "You successfully found ERP plans from the past!"
           end
         end # closes logic for params[:date]
       elsif !params[:stepless].blank? # Admin filters plans by preliminary plans (plans without steps)
@@ -87,23 +87,27 @@ class PlansController < ApplicationController
           flash.now[:notice] = "You successfully found preliminary ERP plans, i.e., plans that do not contain steps!"
         end
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
-        if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
-          redirect_to plans_path, alert: "ERP plans must have at least 1 step before assessing status of completion."
+        if @plans = plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
+          flash.now[:alert] = "ERP plans must have at least 1 step before assessing status of completion."
         else # Plans with at least 1 step were found
           if params[:completion] == "Completed"
-            if plans.completed.empty? # this means that plans with at least 1 step were found, but none of these plans were completed
-              redirect_to plans_path, alert: "Completed ERP plans were not found."
+            @plans = plans.completed
+            if @plans.empty? # this means that plans with at least 1 step were found, but none of these plans were completed
+              flash.now[:alert] = "Completed ERP plans were not found."
             else
-              @plans = plans.completed # stores array of completed plans (each containing at least 1 step)
+              @plans # stores array of completed plans (each containing at least 1 step)
+              flash.now[:notice] = "You successfully found completed ERP plans!"
             end
           elsif params[:completion] == "Not Yet Completed"
-            if plans.not_yet_completed.empty? # plans with at least 1 step were found, but these plans were completed
-              redirect_to plans_path, alert: "Unfinished ERP plans were not found."
+            @plans = plans.not_yet_completed
+            if @plans.empty? # plans with at least 1 step were found, but these plans were completed
+              flash.now[:alert] = "Unfinished ERP plans were not found."
             else
-              @plans = plans.not_yet_completed # stores array of incomplete plans (each containing at least 1 step)
+              @plans # stores array of incomplete plans (each containing at least 1 step)
+              flash.now[:notice] = "You successfully found ERP plans that are not yet completed!"
             end
           end # closes logic starting with if params[:completion] == "Completed"
-        end # closes logic from if plans.with_steps.empty?
+        end # closes logic from if @plans = plans.with_steps.empty?
       else # Admin did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
