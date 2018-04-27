@@ -10,13 +10,15 @@ class PlansController < ApplicationController
 
     if current_user.patient?
       if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores unique title of plan
-        @plans = plans # need plans for select_tag in app/views/filter_plans/_patient.html.erb
+        @plans = plans # need patient's own plans for select_tag in app/views/filter_plans/_patient.html.erb
         @plan = current_user.plans.by_title(params[:title])
       elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
-        if Obsession.find(params[:obsession_targeted]).plans.empty?
-          redirect_to plans_path, alert: "No ERP plans were found for that obsession!"
+        @plans = current_user.obsessions.find(params[:obsession_targeted]).plans
+        if @plans.empty? # If no plans for that obsession were found
+          flash.now[:alert] = "No ERP plans were found for that obsession."
         else
-          @plans = plans.by_obsession(params[:obsession_targeted])
+          @plans # stores 'array' of plans belonging to the obsession selected
+          flash.now[:notice] = "You successfully found ERP plans targeting your obsession!"
         end
       end
     elsif current_user.therapist?
