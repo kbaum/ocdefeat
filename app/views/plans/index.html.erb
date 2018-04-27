@@ -13,13 +13,7 @@
 <% if @plan %>
   <p><%= link_to @plan.title, plan_path(@plan) %></p>
 <% elsif @plans %>
-  <ul>
-    <% @plans.each do |plan| %>
-      <li><%= link_to plan.title, plan_path(plan) %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if @patient_picked %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
+  <%= render partial: "plans_ul", locals: { plans: @plans, stepless_patient: @stepless_patient } %>
+<% elsif @patient_picked %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
   <%= render partial: "plan_progress_div", locals: { patient_picked: @patient_picked, completed: @completed, not_yet_completed: @not_yet_completed } %>
 <% end %>
