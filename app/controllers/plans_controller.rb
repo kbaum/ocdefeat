@@ -62,10 +62,12 @@ class PlansController < ApplicationController
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters plans by date created
         if params[:date] == "Today"
-          if plans.from_today.empty? # If no plans were created today
-            redirect_to plans_path, alert: "No ERP plans were created today."
+          @plans = plans.from_today
+          if @plans.empty? # If no plans were created today
+            flash.now[:alert] = "No ERP plans were created today!"
           else
-            @plans = plans.from_today
+            @plans
+            flash.now[:notice] = "You successfully filtered ERP plans designed today!"
           end
         elsif params[:date] == "Past Plans"
           if plans.past_plans.empty? # If no plans were created prior to today
