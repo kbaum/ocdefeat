@@ -26,11 +26,11 @@ class PlansController < ApplicationController
         else
           @plans = plans.by_designer(params[:designer])
         end
-      elsif !params[:theme].blank? # Therapist filters plans by OCD theme -- params[:theme] is the ID of the theme
-        if plans.by_theme(params[:theme]).empty? # No plans are classified in the selected OCD theme
-          redirect_to plans_path, alert: "No ERP plans pertain to this theme."
+      elsif !params[:subset].blank? # Therapist filters plans by OCD subset -- params[:subset] is the ID of the theme
+        if plans.by_theme(params[:subset]).empty? # No plans are classified in the selected OCD theme
+          redirect_to plans_path, alert: "No ERP plans pertain to this OCD subset."
         else
-          @plans = plans.by_theme(params[:theme])
+          @plans = plans.by_theme(params[:subset])
         end
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's preliminary plans (plans w/o steps)
         if @patients.find(params[:patient_planning]).plans.empty? # the patient selected has no ERP plans
