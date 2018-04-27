@@ -33,12 +33,12 @@ class PlansController < ApplicationController
           @plans = plans.by_theme(params[:theme])
         end
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's preliminary plans (plans w/o steps)
-        @patient_pulled = @patients.find(params[:patient_planning])
-        if @patient_pulled.plans.empty? # the patient selected has no ERP plans
+        if @patients.find(params[:patient_planning]).plans.empty? # the patient selected has no ERP plans
           redirect_to plans_path, alert: "No ERP plans, including preliminary plans, were designed by that patient."
-        elsif @patient_pulled.plans.stepless.empty? # the patient has plans, but all of these plans contain steps
+        elsif @patients.find(params[:patient_planning]).plans.stepless.empty? # the patient has plans, but all of these plans contain steps
           redirect_to plans_path, alert: "No preliminary plans were found for that patient, as all plans designed by the patient contain steps."
         else # the patient has plans without steps
+          @stepless_patient = @patients.find(params[:patient_planning])
           @plans = plans.stepless
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
