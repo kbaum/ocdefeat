@@ -79,10 +79,12 @@ class PlansController < ApplicationController
           end
         end # closes logic for params[:date]
       elsif !params[:stepless].blank? # Admin filters plans by preliminary plans (plans without steps)
-        if plans.stepless.empty? # all plans HAVE steps
-          redirect_to plans_path, alert: "No preliminary plans were found; all ERP plans have at least one step."
+        @plans = plans.stepless
+        if @plans.empty? # all plans HAVE steps
+          flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
         else
-          @plans = plans.stepless # stores array of all plans without steps
+          @plans # stores array of all plans without steps
+          flash.now[:notice] = "You successfully filtered preliminary ERP plans, i.e., plans that do not contain steps!"
         end
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
         if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
