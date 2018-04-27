@@ -14,7 +14,7 @@
 
 <ul>
   <% @themes.each do |theme| %>
-    <p><strong><%= theme.name %>:</strong> <%= theme.num_obsessions %></p>
+    <p><strong><%= theme.name %>:</strong> <%= num_obsessions_for(theme) %></p>
 
     <% if policy(theme).destroy? %>
       <%= button_to "Remove Theme", theme_path(theme), method: :delete, data: { confirm: "This OCD theme will be permanently deleted. Are you sure you want to remove this content?" } %>
