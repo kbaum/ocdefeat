@@ -67,7 +67,7 @@ class PlansController < ApplicationController
             flash.now[:alert] = "No ERP plans were created today!"
           else
             @plans
-            flash.now[:notice] = "You successfully filtered ERP plans designed today!"
+            flash.now[:notice] = "You successfully found ERP plans designed today!"
           end
         elsif params[:date] == "Past Plans"
           @plans = plans.past_plans
