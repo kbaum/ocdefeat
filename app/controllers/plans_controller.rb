@@ -55,21 +55,23 @@ class PlansController < ApplicationController
           flash.now[:notice] = "You found preliminary ERP plans designed by #{patient_name}!"
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
-        @patient_picked = @patients.find(params[:patient_progressing])
-        if @patient_picked.plans.empty? # the patient selected has no ERP plans
+        patient_progressing = @patients.find(params[:patient_progressing])
+        if patient_progressing.plans.empty? # the patient selected has no ERP plans
           @plans = nil
-          flash.now[:alert] = "No ERP plans were designed by #{@patient_picked.name}."
-        elsif @patient_picked.plans.with_steps.empty? # the patient has plans, but none of the plans have steps
+          flash.now[:alert] = "Patient #{patient_progressing.name} must design ERP plans in order to make progress!"
+        elsif patient_progressing.plans.with_steps.empty? # the patient has plans, but none of the plans have steps
           @plans = nil
-          flash.now[:alert] = "Progress can only be made if plans contain steps! #{@patient_picked.name} should add ERP exercises to each preliminary plan!"
+          flash.now[:alert] = "Progress can only be made if plans contain steps! #{patient_progressing.name} should add ERP exercises to each preliminary plan!"
         else # the patient has plans with steps
-          if !@patient_picked.plans.completed.empty? # The patient has completed ERP plans
-            @completed = @patient_picked.plans.completed # @completed stores the patient's completed plans
+          if !patient_progressing.plans.completed.empty? # If the patient has completed ERP plans
+            @completed = patient_progressing.plans.completed # @completed stores the patient's completed plans
           end
 
-          if !@patient_picked.plans.not_yet_completed.empty? # The patient has incomplete ERP plans
-            @not_yet_completed = @patient_picked.plans.not_yet_completed # @not_yet_completed stores the patient's incomplete plans
+          if !patient_progressing.plans.not_yet_completed.empty? # If the patient has incomplete ERP plans
+            @not_yet_completed = patient_progressing.plans.not_yet_completed # @not_yet_completed stores the patient's incomplete plans
           end
+
+          flash.now[:notice] = "You retrieved #{patient_progressing.name}'s ERP progress report, which identifies this patient's completed and/or incomplete ERP plans!"
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
