@@ -49,7 +49,7 @@ class PlansController < ApplicationController
           flash.now[:alert] = "No ERP plans, including preliminary plans, were designed by patient #{patient_name}."
         elsif @patients.find(params[:patient_planning]).plans.stepless.empty? # the patient has plans, but all of these plans contain steps
           @plans = nil
-          flash.now[:alert] = "No preliminary plans were found for #{patient_name}, as all plans designed by that patient contain steps."
+          flash.now[:alert] = "No preliminary plans were found for #{patient_name}, as all plans designed by this patient contain steps."
         else # the patient has plans without steps
           @plans = plans.stepless
           flash.now[:notice] = "You found preliminary ERP plans designed by #{patient_name}!"
