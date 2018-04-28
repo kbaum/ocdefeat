@@ -114,7 +114,7 @@ class PlansController < ApplicationController
               flash.now[:alert] = "Completed ERP plans were not found."
             else
               @plans # stores array of completed plans (each containing at least 1 step)
-              flash.now[:notice] = "You successfully found completed ERP plans!"
+              flash.now[:notice] = "You found completed ERP plans!"
             end
           elsif params[:completion] == "Not Yet Completed"
             @plans = plans.not_yet_completed
@@ -122,7 +122,7 @@ class PlansController < ApplicationController
               flash.now[:alert] = "Unfinished ERP plans were not found."
             else
               @plans # stores array of incomplete plans (each containing at least 1 step)
-              flash.now[:notice] = "You successfully found ERP plans that are not yet completed!"
+              flash.now[:notice] = "You found ERP plans that are not yet completed!"
             end
           end # closes logic starting with if params[:completion] == "Completed"
         end # closes logic from if @plans = plans.with_steps.empty?
