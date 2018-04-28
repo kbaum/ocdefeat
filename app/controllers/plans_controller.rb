@@ -102,10 +102,11 @@ class PlansController < ApplicationController
           flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
         else
           @plans # stores array of all plans without steps
-          flash.now[:notice] = "You found preliminary ERP plans, i.e., plans that do not contain steps!"
+          flash.now[:notice] = "You found preliminary ERP plans, i.e., plans sans steps!"
         end
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
-        if @plans = plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
+        if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
+          @plans = nil
           flash.now[:alert] = "ERP plans must have at least one step before assessing status of completion."
         else # Plans with at least 1 step were found
           if params[:completion] == "Completed"
