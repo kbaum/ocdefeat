@@ -36,7 +36,24 @@ class ObsessionsController < ApplicationController
             flash.now[:notice] = "Your obsessions are listed in order of descending anxiety rating!"
           end
         end
-      else # Patient did not choose a filter
+      elsif !params[:time_taken].blank? # Patient filters her own obsessions by time_consumed (hrs/day)
+        if current_user.obsessions.count == 1 # If the patient only has 1 obsession
+          @obsession = current_user.obsessions.first # @obsession stores this single obsession
+          flash.now[:alert] = "You only have one obsession, which consumes #{@obsession.time_consumed} hour(s) of your time on a daily basis!"
+        else # the patient has more than 1 obsession
+          total_time = current_user.obsessions.first.time_consumed
+          if current_user.obsessions.all? {|o| o.time_consumed == total_time}
+            @obsessions = obsessions # all of the patient's own obsessions, which have the same time_consumed value of total_time, are listed
+            flash.now[:alert] = "Your obsessions cannot be ranked in order of increasing/decreasing total time consumed, as each of your obsessions below takes #{total_time} hour(s) of your time daily!"
+          elsif params[:time_taken] == "Least to Most Time-Consuming"
+            @obsessions = obsessions.least_to_most_time_consuming
+            flash.now[:notice] = "Your obsessions are listed in order of least to most time-consuming, measured in hours per day!"
+          else
+            @obsessions = obsessions.most_to_least_time_consuming
+            flash.now[:notice] = "Your obsessions are listed in order of most to least time-consuming, measured in hours per day!"
+          end
+        end
+      else # Patient did not choose a filter, so all of her own obsessions are listed
         @obsessions = obsessions # stores all of the patient's own obsessions
       end
     end
