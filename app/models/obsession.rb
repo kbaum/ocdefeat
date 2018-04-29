@@ -28,8 +28,8 @@ class Obsession < ApplicationRecord
     where("id IN (?)", Theme.find(theme_id).obsession_ids)
   end
 
-  def self.by_distress_degree(distress_degree)
-    where(anxiety_rating: distress_degree)
+  def self.by_anxiety_amount(anxiety_amount)
+    where(anxiety_rating: anxiety_amount)
   end
 
   def self.least_to_most_distressing
