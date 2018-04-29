@@ -70,12 +70,13 @@ class Obsession < ApplicationRecord
   end
 
   def self.most_distressing_by_user(user_id)
-    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
+    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions # user_obsessions stores 'array' of all obsessions belonging to a specific patient
 
-    if user_obsessions.empty?
+    if user_obsessions.empty? # If the user has no obsessions, method returns nil
       nil
-    else
-      user_obsessions.order(anxiety_rating: :desc).first
+    else # The user has obsessions
+      max_anxiety = user_obsessions.order(anxiety_rating: :desc).map {|o| o.anxiety_rating}.first
+      user_obsessions.where(anxiety_rating: max_anxiety) # method returns 'array' of all the patient's obsessions rated at the patient's highest anxiety level
     end
   end
 
