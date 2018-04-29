@@ -1,6 +1,6 @@
 <%= form_tag("/obsessions", method: "get") do %>
-  <%= label_tag "anxiety_rating", "Anxiety Rating: " %>
-  <%= number_field_tag "anxiety_rating", nil, in: 1..10 %>
+  <%= label_tag "anxiety_amount", "Amount of Anxiety Induced: " %>
+  <%= number_field_tag "anxiety_amount", nil, in: 1..10 %>
   <br><br>
   <%= select_tag "anxiety_ranking", options_for_select(["Least to Most Distressing", "Most to Least Distressing"]), prompt: "Anxiety Ranking" %>
   <br><br>
