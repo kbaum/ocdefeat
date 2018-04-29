@@ -71,11 +71,11 @@ class ObsessionsController < ApplicationController
           @obsessions = nil
           flash.now[:alert] = "Patient #{patient_name} currently has no obsessions!"
         else
-          @obsessions = obsessions.by_patient(params[:patient])
+          @obsessions = obsessions.by_patient(params[:patient]) # stores 'array' of all the selected patient's obsessions
           flash.now[:notice] = "You found patient #{patient_name}'s obsessions!"
         end
       else # Therapist did not select a filter
-        @obsessions = obsessions
+        @obsessions = obsessions # stores all patients' obsessions
       end
     end
   end
