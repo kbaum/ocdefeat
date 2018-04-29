@@ -12,7 +12,7 @@
 
 <% if @obsession %>
   <p><%= link_to @obsession.intrusive_thought, obsession_path(@obsession) %></p>
-<% else %>
+<% elsif @obsessions %>
   <ul>
     <% @obsessions.each do |obsession| %>
       <li><%= link_to obsession.intrusive_thought, obsession_path(obsession) %></li>
