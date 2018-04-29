@@ -64,6 +64,19 @@ class ObsessionsController < ApplicationController
       else # Patient did not choose a filter, so all of her own obsessions are listed
         @obsessions = obsessions # stores all of the patient's own obsessions
       end
+    elsif current_user.therapist?
+      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the patient selected by name from dropdown
+        patient_name = @patients.find(params[:patient]).name
+        if @patients.find(params[:patient]).obsessions.empty? # if the selected patient has no obsessions
+          @obsessions = nil
+          flash.now[:alert] = "Patient #{patient_name} currently has no obsessions!"
+        else
+          @obsessions = obsessions.by_patient(params[:patient])
+          flash.now[:notice] = "You found patient #{patient_name}'s obsessions!"
+        end
+      else # Therapist did not select a filter
+        @obsessions = obsessions
+      end
     end
   end
 
