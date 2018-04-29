@@ -29,7 +29,7 @@ class Obsession < ApplicationRecord
   end
 
   def self.by_distress_degree(distress_degree)
-    self.where(anxiety_rating: distress_degree)
+    where(anxiety_rating: distress_degree)
   end
 
   def self.least_to_most_distressing
