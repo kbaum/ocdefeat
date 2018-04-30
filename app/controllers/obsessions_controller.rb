@@ -107,6 +107,16 @@ class ObsessionsController < ApplicationController
             end
           end
         end
+      elsif !params[:planless].blank? # Therapist filters obsessions by patient's obsessions without plans
+        patient_picked = @patients.find(params[:planless])
+        if patient_picked.obsessions.empty? # If the selected patient has no obsessions
+          flash.now[:alert] = "#{patient_picked.name} has no obsessions, so there is no need for this patient to practice desensitization."
+        elsif patient_picked.obsessions.sans_plans.empty? # If the selected patient has obsessions, but all of these obsessions have ERP plans
+          flash.now[:alert] = "Patient #{patient_picked.name} designed ERP plans for every obsession."
+        else # patient has obsessions without ERP plans
+          @obsessions = patient_picked.obsessions.sans_plans
+          flash.now[:notice] = "You found #{patient_picked.name}'s obsessions that lack ERP plans!"
+        end
       elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset
         string_subset = Theme.find(params[:ocd_subset]).name
         if obsessions.by_theme(params[:ocd_subset]).empty? # If no obsession is classified in the selected subset
