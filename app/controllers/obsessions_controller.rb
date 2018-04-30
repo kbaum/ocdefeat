@@ -128,6 +128,17 @@ class ObsessionsController < ApplicationController
       else # Therapist did not select a filter
         @obsessions = obsessions # stores all patients' obsessions
       end
+    elsif current_user.admin?
+      if !params[:plan_productivity].blank? # Admin filters obsessions by those with least to most ERP plans
+        if obsessions == obsessions.sans_plans # If no obsessions have ERP plans
+          flash.now[:alert] = "No ERP plans were designed for any single obsession!"
+        elsif obsessions.count == 1
+          flash.now[:alert] = "The Obsessions Log only contains one obsession, which corresponds to #{obsessions.first.plans_per_obsession} ERP plan(s)."
+        else
+          @obsessions = obsessions.least_to_most_plans
+          flash.now[:notice] = "Patients' obsessions are ordered by least to most plans per obsession!"
+        end
+      end
     end
   end
 
