@@ -113,7 +113,7 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "No obsessions pertain to \"#{string_subset}.\""
         else # At least one obsession is categorized in the selected subset
           @obsessions = obsessions.by_theme(params[:ocd_subset])
-          flash.now[:notice] = "At least one obsession is categorized as \"#{string_subset}!\""
+          flash.now[:notice] = "At least one obsession is classified as \"#{string_subset}!\""
         end
       else # Therapist did not select a filter
         @obsessions = obsessions # stores all patients' obsessions
