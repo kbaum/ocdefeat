@@ -129,14 +129,25 @@ class ObsessionsController < ApplicationController
         @obsessions = obsessions # stores all patients' obsessions
       end
     elsif current_user.admin?
-      if !params[:plan_productivity].blank? # Admin filters obsessions by those with least to most ERP plans
-        if obsessions == obsessions.sans_plans # If no obsessions have ERP plans
+      if !params[:plan_productivity].blank? # Admin filters obsessions by number of ERP plans per obsession
+        if obsessions == obsessions.sans_plans # If all obsessions have 0 plans
           flash.now[:alert] = "No ERP plans were designed for any single obsession!"
-        elsif obsessions.count == 1
-          flash.now[:alert] = "The Obsessions Log only contains one obsession, which corresponds to #{obsessions.first.plans_per_obsession} ERP plan(s)."
-        else
-          @obsessions = obsessions.least_to_most_plans
-          flash.now[:notice] = "Patients' obsessions are ordered by least to most plans per obsession!"
+        elsif obsessions.count == 1 # Only 1 obsession exists, but this obsession has some number of plan(s)
+          @obsession = obsessions.first
+          flash.now[:alert] = "The Obsessions Log only contains one obsession, which corresponds to #{@obsession.plans_per_obsession} ERP plan(s)."
+        else # > 1 obsession, some of which have ERP plans, exist
+          first_plan_count = obsessions.first.plans_per_obsession
+          if obsessions.all? {|o| o.plans_per_obsession == first_plan_count}
+            flash.now[:alert] = "Patients' obsessions cannot be ordered by ERP plan count, as all obsessions have #{first_plan_count} ERP plan(s)."
+          else # There are multiple obsessions, and not all obsessions have the same number of ERP plans
+            if params[:plan_productivity] == "Least to Most ERP Plans"
+              @obsessions = obsessions.least_to_most_plans
+              flash.now[:notice] = "Patients' obsessions are ordered by least to most plans per obsession!"
+            else
+              @obsessions = obsessions.most_to_least_plans
+              flash.now[:notice] = "Patients' obsessions are ordered by most to least plans per obsession!"
+            end
+          end
         end
       end
     end
