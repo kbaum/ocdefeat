@@ -88,14 +88,6 @@ class Obsession < ApplicationRecord
     self.find_each.reject {|o| o.plans_per_obsession > 0}
   end
 
-  def self.least_to_most_desensitized
-    self.all.sort_by {|o| o.plans_per_obsession}
-  end
-
-  def self.most_to_least_desensitized
-    self.all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
-  end
-
   def obsessify(thought) # instance method called on obsession instance takes string argument, sets intrusive_thought attribute of obsession to formatted string
     self.intrusive_thought = "What if I " << "#{thought}?"
   end
