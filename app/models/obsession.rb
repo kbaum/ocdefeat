@@ -84,6 +84,10 @@ class Obsession < ApplicationRecord
     self.plans.count
   end
 
+  def self.sans_plans
+    self.find_each.reject {|o| o.plans_per_obsession > 0}
+  end
+
   def self.least_to_most_desensitized
     self.all.sort_by {|o| o.plans_per_obsession}
   end
