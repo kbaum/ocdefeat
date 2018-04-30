@@ -5,6 +5,8 @@
   <br><br>
   <%= select_tag "consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Time Taken" %>
   <br><br>
+  <%= select_tag "desensitized", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Degree of Desensitization" %>
+  <br><br>
   <%= select_tag "ocd_subset", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Subset" %>
   <br><br>
   <%= submit_tag "Filter Obsessions" %>
