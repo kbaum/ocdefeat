@@ -76,7 +76,7 @@ class ObsessionsController < ApplicationController
       elsif !params[:distressed].blank? # Therapist filters obsessions by patient's obsessions ordered by descending distress degree
         patient_picked = @patients.find(params[:distressed])
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient currently has no obsessions."
+          flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient currently has no obsessions!"
         else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
