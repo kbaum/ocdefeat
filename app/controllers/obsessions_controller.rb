@@ -149,6 +149,24 @@ class ObsessionsController < ApplicationController
             end
           end
         end
+      elsif !params[:date].blank? # Admin filters obsessions by date created
+        if params[:date] == "Today"
+          if obsessions.from_today.empty? # If no obsessions were created today
+            flash.now[:alert] = "No obsessions were created today."
+          else
+            @obsessions = obsessions.from_today # stores all obsessions created today
+            flash.now[:notice] = "You found obsessions created today!"
+          end
+        elsif params[:date] == "Old Obsessions"
+          if obsessions.old_obsessions.empty? # If no obsessions were created prior to today
+            flash.now[:alert] = "No obsessions were created prior to today."
+          else
+            @obsessions = obsessions.old_obsessions # stores all obsessions created prior to today
+            flash.now[:notice] = "You found old obsessions!"
+          end
+        end
+      else # Admin did not choose a filter
+        @obsessions = obsessions # stores all patients' obsessions
       end
     end
   end
