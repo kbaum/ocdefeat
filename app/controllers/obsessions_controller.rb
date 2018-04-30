@@ -74,6 +74,25 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.by_patient(params[:patient]) # stores 'array' of all the selected patient's obsessions
           flash.now[:notice] = "You found patient #{patient_name}'s obsessions!"
         end
+      elsif !params[:distressed].blank? # Therapist filters obsessions by patient's obsessions ordered by descending distress degree
+        patient_picked = @patients.find(params[:distressed])
+        if patient_picked.obsessions.empty? # If the selected patient has no obsessions
+          @obsessions = nil
+          flash.now[:alert] = "Patient #{patient_picked.name} currently has no obsessions."
+        else # The patient selected has obsessions
+          first_rating = patient_picked.obsessions.first.anxiety_rating
+          if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
+            flash.now[:alert] = "Patient #{patient_picked.name} only has one obsession rated at anxiety level #{first_rating}!"
+          else # If the patient selected has more than 1 obsession
+            if patient_picked.obsessions.all? {|o| o.anxiety_rating == first_rating}
+              @obsessions = patient_picked.obsessions # all of the selected patient's obsessions, which have the same anxiety_rating, will be listed
+              flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered by descending distress degree, as the patient ranked each obsession at anxiety level #{first_rating}."
+            else # patient has multiple obsessions that do not all have the same anxiety_rating value
+              @obsessions = patient_picked.obsessions.most_to_least_distressing # stores 'array' of all the selected patient's obsessions ordered by descending distress degree
+              flash.now[:notice] = "Patient #{patient_picked.name}'s obsessions are ordered by descending distress degree!"
+            end
+          end
+        end
       else # Therapist did not select a filter
         @obsessions = obsessions # stores all patients' obsessions
       end
