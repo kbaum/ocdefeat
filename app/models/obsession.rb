@@ -92,6 +92,10 @@ class Obsession < ApplicationRecord
     self.all.sort_by {|o| o.plans_per_obsession}
   end
 
+  def self.most_to_least_plans
+    self.least_to_most_plans.reverse
+  end
+
   def obsessify(thought) # instance method called on obsession instance takes string argument, sets intrusive_thought attribute of obsession to formatted string
     self.intrusive_thought = "What if I " << "#{thought}?"
   end
