@@ -107,6 +107,14 @@ class ObsessionsController < ApplicationController
             end
           end
         end
+      elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset
+        string_subset = Theme.find(params[:ocd_subset]).name
+        if obsessions.by_theme(params[:ocd_subset]).empty? # If no obsession is classified in the selected subset
+          flash.now[:alert] = "No obsessions pertain to \"#{string_subset}.\""
+        else # At least one obsession is categorized in the selected subset
+          @obsessions = obsessions.by_theme(params[:ocd_subset])
+          flash.now[:notice] = "At least one obsession is categorized as \"#{string_subset}!\""
+        end
       else # Therapist did not select a filter
         @obsessions = obsessions # stores all patients' obsessions
       end
