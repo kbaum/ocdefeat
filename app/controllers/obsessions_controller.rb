@@ -76,7 +76,7 @@ class ObsessionsController < ApplicationController
       elsif !params[:distressed].blank? # Therapist filters obsessions by patient's obsessions ordered by descending distress degree
         patient_picked = @patients.find(params[:distressed])
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "Patient #{patient_picked.name} currently has no obsessions."
+          flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient currently has no obsessions."
         else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
@@ -102,7 +102,7 @@ class ObsessionsController < ApplicationController
             if patient_picked.obsessions.all? {|o| o.time_consumed == first_timeframe} # all of the selected patient's obsessions consume the same amount of time daily, so none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least time-consuming, as each obsession consumes #{first_timeframe} hours daily."
             else # patient has multiple obsessions that do not all take up the same amount of time
-              @obsessions = patient_picked.obsessions.most_to_least_time_consuming # stores 'array' of all the selected patient's obsessions ordered by most to least time-consuming
+              @obsessions = patient_picked.obsessions.most_to_least_time_consuming # stores 'array' of the selected patient's obsessions ordered from most to least time-consuming
               flash.now[:notice] = "Patient #{patient_picked.name}'s obsessions are ordered from most to least time-consuming!"
             end
           end
