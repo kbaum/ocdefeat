@@ -77,16 +77,33 @@ class ObsessionsController < ApplicationController
         patient_picked = @patients.find(params[:distressed])
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "Patient #{patient_picked.name} currently has no obsessions."
-        else # The patient selected has obsessions
+        else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
             flash.now[:alert] = "Patient #{patient_picked.name} only has one obsession rated at anxiety level #{first_rating}!"
-          else # If the patient selected has more than 1 obsession
+          else # If the selected patient has more than 1 obsession
             if patient_picked.obsessions.all? {|o| o.anxiety_rating == first_rating} # all of the selected patient's obsessions have the same anxiety_rating, so none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered by descending distress degree, as this patient rated each obsession at anxiety level #{first_rating}."
             else # patient has multiple obsessions that do not all have the same anxiety_rating
               @obsessions = patient_picked.obsessions.most_to_least_distressing # stores 'array' of all the selected patient's obsessions ordered by descending distress degree
               flash.now[:notice] = "Patient #{patient_picked.name}'s obsessions are ordered by descending distress degree!"
+            end
+          end
+        end
+      elsif !params[:consumed].blank? # Therapist filters obsessions by patient's obsessions ordered from most to least time-consuming
+        patient_picked = @patients.find(params[:consumed])
+        if patient_picked.obsessions.empty? # If the selected patient has no obsessions
+          flash.now[:alert] = "#{patient_picked.name} has some free time; this patient currently has no obsessions!"
+        else # The selected patient has obsessions
+          first_timeframe = patient_picked.obsessions.first.time_consumed
+          if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
+            flash.now[:alert] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} hours of the patient's time."
+          else # If the selected patient has more than 1 obsession
+            if patient_picked.obsessions.all? {|o| o.time_consumed == first_timeframe} # all of the selected patient's obsessions consume the same amount of time daily, so none are displayed
+              flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least time-consuming, as each obsession consumes #{first_timeframe} hours daily."
+            else # patient has multiple obsessions that do not all take up the same amount of time
+              @obsessions = patient_picked.obsessions.most_to_least_time_consuming # stores 'array' of all the selected patient's obsessions ordered by most to least time-consuming
+              flash.now[:notice] = "Patient #{patient_picked.name}'s obsessions are ordered from most to least time-consuming!"
             end
           end
         end
