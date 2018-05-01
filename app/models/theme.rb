@@ -6,4 +6,8 @@ class Theme < ApplicationRecord
   def prevalence_in_patients # instance method returns number of users who have at least 1 obsession w/ theme content
     self.obsessions.map {|o| o.user}.uniq.count
   end
+
+  def self.least_to_most_prevalent # class method returns array of theme instances ordered by those w/ the least to greatest number of unique users having obsessions about these themes
+    self.all.sort_by {|theme| theme.prevalence_in_patients}
+  end
 end
