@@ -5,9 +5,9 @@
 <br>
 
 <%= form_tag(themes_path, method: "get") do %>
-  <%= label_tag "user_count", "Filter OCD Themes by: " %>
+  <%= label_tag "prevalence", "Filter OCD Themes by: " %>
   <br><br>
-  <%= select_tag "user_count", options_for_select(["Least to Most Users Obsessing About Theme", "Most to Least Users Obsessing About Theme"]), prompt: "Number of Users Obsessing About Theme" %>
+  <%= select_tag "prevalence", options_for_select(["Least to Most Prevalent", "Most to Least Prevalent"]), prompt: "Prevalence of OCD Theme Among Patients" %>
   <br><br>
   <%= select_tag "obsession_count", options_for_select(["Least to Most Obsessions per Theme", "Most to Least Obsessions per Theme"]), prompt: "Number of Obsessions per Theme" %>
   <br><br>
