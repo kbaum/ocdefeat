@@ -12,6 +12,6 @@ class Theme < ApplicationRecord
   end
 
   def self.most_to_least_prevalent # class method returns array of theme instances ordered by those w/ the greatest to least number of unique users having obsessions about these themes
-    self.least_to_most_prevalent.reverse
+    self.all.sort {|a,b| b.prevalence_in_patients <=> a.prevalence_in_patients}
   end
 end
