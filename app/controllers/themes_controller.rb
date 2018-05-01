@@ -3,9 +3,15 @@ class ThemesController < ApplicationController
 
   def index
     themes = policy_scope(Theme)
+
     if !params[:prevalence].blank? # Filtering OCD themes by prevalence of theme among patients
       primary_prevalence = themes.first.prevalence_in_patients # stores the number of distinct users obsessing about the 1st theme
-      if themes.all? {|theme| theme.prevalence_in_patients == primary_prevalence} # If the same number of distinct users obsesses about each theme
+      if themes.all? {|theme| theme.prevalence_in_patients == 0} # If none of the patients' obsessions pertain to the available themes
+        flash.now[:alert] = "Patients' obsessions are not classified in any OCD theme."
+      elsif themes.count == 1 # There is only 1 OCD theme with a prevalence in patients that is > 0
+        @theme = themes.first
+        flash.now[:notice] = "#{@theme.name} is the only theme currently listed in the Index of OCD Themes, and it supplies obsession content for #{@theme.prevalence_in_patients} patient(s)."
+      elsif themes.all? {|theme| theme.prevalence_in_patients == primary_prevalence} # If there is more than 1 theme, the prevalence in patients is not 0, and the same number of distinct users obsesses about each theme
         flash.now[:alert] = "All OCD themes are equally prevalent among patients; each theme preoccupies #{primary_prevalence} patient(s)."
       elsif params[:prevalence] == "Least to Most Prevalent"
         @themes = themes.least_to_most_prevalent
