@@ -21,6 +21,12 @@
           <% elsif current_user.admin? %>
             <%= render 'shared/admin_nav_links' %>
           <% end %>
+          <% unless current_user.unassigned_user? %>
+            <li><%= link_to "Obsessions Log", obsessions_path %></li>
+            <li><%= link_to "Index of ERP Plans", plans_path %></li>
+          <% end %>
+          <li><%= link_to "OCD Themes", themes_path %></li>
+          <li><%= link_to "Log Out", logout_path, method: :delete %></li>
         <% else %>
             <li class="active"><%= link_to "Sign Up", signup_path %></li>
             <li><%= link_to "Log In with OCDefeat", login_path %></li>
