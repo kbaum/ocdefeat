@@ -17,3 +17,11 @@
 <% end %>
 
 <hr>
+
+<% if @theme %>
+  <%= render partial: "theme_div", locals: { theme: @theme } %>
+<% elsif @themes %>
+  <% @themes.each do |theme| %>
+    <%= render partial: "theme_div", locals: { theme: theme } %>
+  <% end %>
+<% end %>
