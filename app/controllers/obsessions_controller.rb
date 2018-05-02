@@ -222,7 +222,7 @@ class ObsessionsController < ApplicationController
       @obsession = Obsession.find(params[:id])
     end
 
-    def count_obsessions # this method is called before #index action
+    def require_obsessions # this method is called before obsessions#index
       obsessions = policy_scope(Obsession)
       if current_user.admin? && obsessions.empty?
         redirect_to user_path(current_user), alert: "The Obsessions Log is currently empty!"
