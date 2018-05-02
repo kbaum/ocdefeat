@@ -14,4 +14,8 @@ class Theme < ApplicationRecord
   def self.most_to_least_prevalent # class method returns array of theme instances ordered by those w/ the greatest to least number of unique users having obsessions about these themes
     self.all.sort {|a,b| b.prevalence_in_patients <=> a.prevalence_in_patients}
   end
+
+  def obs_agreement # instance method called on theme instance returns a string (such as "1 obsession" or "2 obsessions") that is properly formatted for singular/plural agreement, given the number of obsessions classified in that theme
+    "#{self.obsessions.count} " << "obsession".pluralize(self.obsessions.count)
+  end
 end
