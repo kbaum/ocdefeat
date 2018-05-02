@@ -19,9 +19,7 @@
 <hr>
 
 <% if @theme %>
-  <%= render partial: "theme_div", locals: { theme: @theme } %>
+  <%= render @theme %>
 <% elsif @themes %>
-  <% @themes.each do |theme| %>
-    <%= render partial: "theme_div", locals: { theme: theme } %>
-  <% end %>
+  <%= render(@themes) || "The Index of OCD Themes is currently empty." %>
 <% end %>
