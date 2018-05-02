@@ -35,7 +35,7 @@ class ThemesController < ApplicationController
         @theme = themes.first
         flash.now[:notice] = "#{@theme.obsessions_per_theme} #{'obsession'.pluralize(@theme.obsessions_per_theme)} #{'is'.pluralize(@theme.obsessions_per_theme)} classified in \"#{@theme.name},\" the only OCD theme currently listed."
       elsif themes.all? {|theme| theme.obsessions.count == obsession_count_one} # If all themes have the same number of obsessions classified in them
-        flash.now[:alert] = "OCD themes cannot be ordered by number of obsessions per theme, as all OCD themes contain #{obsession_count_one} " << "#{'obsession'.pluralize(obsession_count_one)}!"
+        flash.now[:alert] = "OCD themes cannot be ordered by number of obsessions per theme, as all OCD themes contain #{obsession_count_one} #{'obsession'.pluralize(obsession_count_one)}!"
       elsif params[:obsession_count] == "Least to Most Obsessions per Theme"
         @themes = themes.least_to_most_obsessions
         flash.now[:notice] = "OCD themes are ordered by least to most obsessions per theme!"
