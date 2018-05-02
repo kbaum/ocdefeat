@@ -15,8 +15,10 @@ class ThemesController < ApplicationController
         flash.now[:alert] = "All OCD themes are equally prevalent among patients; each theme preoccupies #{primary_prevalence} " << "#{'patient'.pluralize(primary_prevalence)}."
       elsif params[:prevalence] == "Least to Most Prevalent"
         @themes = themes.least_to_most_prevalent
+        flash.now[:notice] = "OCD themes are ordered from least to most prevalent in patients!"
       else
         @themes = themes.most_to_least_prevalent
+        flash.now[:notice] = "OCD themes are ordered from most to least prevalent in patients!"
       end
     else # No filter was chosen
       @themes = themes # stores all themes
