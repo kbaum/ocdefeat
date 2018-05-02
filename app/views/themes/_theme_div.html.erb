@@ -1,0 +1,7 @@
+<div class="well well-sm">
+  <h4><%= theme.name %></h4>
+  <p><%= tally_popularity(theme) %></p>
+  <% if policy(theme).destroy? %>
+    <%= button_to "Remove Theme", theme_path(theme), method: :delete, data: { confirm: "The OCD theme \"#{theme.name}\" will be permanently deleted. Are you sure you want to remove this content?" } %>
+  <% end %>
+</div>
