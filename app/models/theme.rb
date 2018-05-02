@@ -15,6 +15,10 @@ class Theme < ApplicationRecord
     self.all.sort {|a,b| b.prevalence_in_patients <=> a.prevalence_in_patients}
   end
 
+  def obsessions_per_theme # instance method called on theme instance returns the number of obsessions classified in theme
+    self.obsessions.count
+  end
+
   def obs_agreement # instance method called on theme instance returns a string (such as "1 obsession" or "2 obsessions") that is properly formatted for singular/plural agreement, given the number of obsessions classified in that theme
     "#{self.obsessions.count} " << "obsession".pluralize(self.obsessions.count)
   end
