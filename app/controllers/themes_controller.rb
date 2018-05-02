@@ -27,6 +27,8 @@ class ThemesController < ApplicationController
       elsif themes.count == 1 # There is 1 OCD theme, in which at least 1 obsession is classified
         @theme = themes.first
         flash.now[:notice] = "\"#{@theme.name},\" the only OCD theme currently listed, contains #{@theme.obsessions.count} " << "#{'obsession'.pluralize(@theme.obsessions.count)}."
+      elsif themes.all? {|theme| theme.obsessions.count == obsession_count_one} # If all themes have the same number of obsessions classified in them
+        flash.now[:alert] = "OCD themes cannot be ordered by increasing/decreasing number of obsessions per theme, as all OCD themes contain #{obsession_count_one} " << "#{'obsession'.pluralize(obsession_count_one)}!"
       elsif params[:obsession_count] == "Least to Most Obsessions per Theme"
         @themes = themes.least_to_most_obsessions
         flash.now[:notice] = "OCD themes are ordered by least to most obsessions per theme!"
