@@ -15,7 +15,7 @@ class ThemesController < ApplicationController
         flash.now[:alert] = "Patients' obsessions are not classified in any OCD theme."
       elsif themes.count == 1 # There is only 1 OCD theme with a prevalence in patients that is > 0
         @theme = themes.first
-        flash.now[:notice] = "\"#{@theme.name}\" is the only theme currently listed, and it supplies content for #{@theme.prevalence_in_patients} " << "#{'patient'.pluralize(@theme.prevalence_in_patients)}."
+        flash.now[:notice] = "\"#{@theme.name}\" is the only theme currently listed, and it supplies content for #{@theme.prevalence_in_patients} #{'patient'.pluralize(@theme.prevalence_in_patients)} obsessions."
       elsif themes.all? {|theme| theme.prevalence_in_patients == primary_prevalence} # If there is more than 1 theme, the prevalence in patients is not 0, and the same number of distinct users obsesses about each theme
         flash.now[:alert] = "All OCD themes are equally prevalent among patients; #{primary_prevalence} #{'patient'.pluralize(primary_prevalence)} #{'is'.pluralize(primary_prevalence)} obsessing about each theme."
       elsif params[:prevalence] == "Least to Most Prevalent"
