@@ -1,6 +1,6 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
-  before_action :count_obsessions, only: :index
+  before_action :require_obsessions, only: :index
 
   def index
     obsessions = policy_scope(Obsession)
