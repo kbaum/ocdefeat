@@ -27,7 +27,9 @@ class ThemesController < ApplicationController
       end
     elsif !params[:obsession_count].blank? # Filtering OCD themes by the number of obsessions classified in theme
       obsession_count_one = themes.first.obsessions.count
-      if themes.all? {|theme| theme.obsessions.empty?} # If every theme has no obsessions
+      if Obsession.all.empty? # if there are no obsessions at all
+        flash.now[:alert] = "OCD Themes cannot be ordered by obsession count, as there are currently no obsessions!"
+      elsif themes.all? {|theme| theme.obsessions.empty?} # If every theme has no obsessions
         flash.now[:alert] = "No obsessions are classified in any OCD theme."
       elsif themes.count == 1 # There is 1 OCD theme, in which at least 1 obsession is classified
         @theme = themes.first
