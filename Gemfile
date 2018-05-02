@@ -64,3 +64,5 @@ gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'pundit'
 
 gem 'record_tag_helper', '~> 1.0'
+
+gem 'possessive'
