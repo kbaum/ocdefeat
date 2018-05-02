@@ -20,6 +20,19 @@ class ThemesController < ApplicationController
         @themes = themes.most_to_least_prevalent
         flash.now[:notice] = "OCD themes are ordered from most to least prevalent in patients!"
       end
+    elsif !params[:obsession_count].blank? # Filtering OCD themes by the number of obsessions classified in theme
+      if themes.all? {|theme| theme.obsessions.empty?} # If every theme has no obsessions
+        flash.now[:alert] = "No obsessions are classified in any OCD theme."
+      elsif themes.count == 1 # There is 1 OCD theme, in which at least 1 obsession is classified
+        @theme = themes.first
+        flash.now[:notice] = "\"#{@theme.name},\" the only OCD theme currently listed, contains #{@theme.obsessions.count} " << "#{'obsession'.pluralize(@theme.obsessions.count)}."
+      elsif params[:obsession_count] == "Least to Most Obsessions per Theme"
+        @themes = themes.least_to_most_obsessions
+        flash.now[:notice] = "OCD themes are ordered by least to most obsessions per theme!"
+      else # Filtering themes by Most to Least Obsessions per Theme
+        @themes = themes.most_to_least_obsessions
+        flash.now[:notice] = "OCD themes are ordered by most to least obsessions per theme!"
+      end
     else # No filter was chosen
       @themes = themes # stores all themes
     end
