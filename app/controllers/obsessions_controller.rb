@@ -223,13 +223,15 @@ class ObsessionsController < ApplicationController
     end
 
     def require_obsessions # this method is called before obsessions#index
-      obsessions = policy_scope(Obsession)
-      if current_user.admin? && obsessions.empty?
-        redirect_to user_path(current_user), alert: "The Obsessions Log is currently empty!"
-      elsif current_user.therapist? && obsessions.empty?
-        redirect_to user_path(current_user), alert: "None of your patients are currently obsessing, and all past obsessions have been defeated and deleted!"
-      elsif current_user.patient? && current_user.obsessions.empty?
-        redirect_to user_path(current_user), alert: "You're making progress! Looks like you haven't been obsessing lately! No obsessions were found."
+      if policy_scope(Obsession).empty? # If there are no obsessions to view
+        msg = if current_user.patient?
+          "Looks like you haven't obsessed lately! No obsessions were found."
+        elsif current_user.therapist?
+          "Your patients are making progress! No one is currently obsessing, and all old obsessions were defeated and deleted!"
+        elsif current_user.admin?
+          "The Obsessions Log is currently empty."
+        end
+        redirect_to user_path(current_user), alert: "#{msg}"
       end
     end
 
