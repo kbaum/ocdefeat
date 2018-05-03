@@ -60,13 +60,12 @@ class ObsessionsController < ApplicationController
         @obsessions = obsessions # stores all of the patient's own obsessions
       end
     elsif current_user.therapist?
-      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the patient selected by name from dropdown
-        patient_name = @patients.find(params[:patient]).name
+      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the patient selected from dropdown
         if @patients.find(params[:patient]).obsessions.empty? # if the selected patient has no obsessions
-          flash.now[:alert] = "Patient #{patient_name} currently has no obsessions!"
+          flash.now[:alert] = "Patient #{@patients.find(params[:patient]).name} currently has no obsessions!"
         else
           @obsessions = obsessions.by_patient(params[:patient]) # stores 'array' of all the selected patient's obsessions
-          flash.now[:notice] = "You found patient #{patient_name}'s obsessions!"
+          flash.now[:notice] = "You found patient #{@patients.find(params[:patient]).name}'s obsessions!"
         end
       elsif !params[:distressed].blank? # Therapist filters obsessions by patient's obsessions ordered by descending distress degree
         patient_picked = @patients.find(params[:distressed])
