@@ -3,7 +3,7 @@
   <br><br>
   <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Descending Distress Degree" %>
   <br><br>
-  <%= select_tag "consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Time Taken" %>
+  <%= select_tag "consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Most to Least Time Taken" %>
   <br><br>
   <%= select_tag "planless", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Without ERP Plans" %>
   <br><br>
