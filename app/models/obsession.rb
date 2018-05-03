@@ -57,8 +57,8 @@ class Obsession < ApplicationRecord
     end
   end
 
-  def self.by_patient(user_id)
-    self.where(user_id: user_id)
+  def self.by_patient(patient_id)
+    where(user_id: patient_id)
   end
 
   def self.from_today
