@@ -26,8 +26,8 @@ class ObsessionsController < ApplicationController
         end
       elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
         if current_user.obsession_count == 1 # If the patient only has 1 obsession
-          @obsession = current_user.obsessions.first # @obsession stores this single obsession
-          flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsession.anxiety_rating}!"
+          @obsessions = current_user.obsessions # @obsessions is AR::Relation 'array' that stores 1 single obsession
+          flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsessions.first.anxiety_rating}!"
         else # the patient has more than 1 obsession
           distress_degree = current_user.obsessions.first.anxiety_rating # stores the patient's first obsession's anxiety_rating
           if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree} # all of the patient's obsessions have the same anxiety_rating, so none are displayed
