@@ -24,10 +24,10 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.by_theme(params[:ocd_theme]) # stores 'array' of the patient's obsessions (1 or more) that are classified in the selected OCD theme
           flash.now[:notice] = "#{themed_obsessions.count} #{'obsession'.pluralize(themed_obsessions.count)} #{'is'.pluralize(themed_obsessions.count)} categorized in \"#{theme_name}.\""
         end
-      elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by anxiety_rating
+      elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
         if current_user.obsessions.count == 1 # If the patient only has 1 obsession
           @obsession = current_user.obsessions.first # @obsession stores this single obsession
-          flash.now[:alert] = "You only have one obsession with an anxiety rating of #{@obsession.anxiety_rating}!"
+          flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsession.anxiety_rating}!"
         else # the patient has more than 1 obsession
           distress_degree = current_user.obsessions.first.anxiety_rating
           if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree}
