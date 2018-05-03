@@ -3,9 +3,9 @@ class ObsessionsController < ApplicationController
   before_action :require_obsessions, only: :index
 
   def index
-    obsessions = policy_scope(Obsession)
+    obsessions = policy_scope(Obsession) # patient only sees her own obsessions; admins and therapists see all
     @patients = User.where(role: 1)
-    @themes = Theme.all
+    @themes = policy_scope(Theme) # patients, therapists and admins see all themes
 
     if current_user.patient?
       if !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] is the integer anxiety_rating attribute value
