@@ -80,12 +80,12 @@ class Obsession < ApplicationRecord
     end
   end
 
-  def plans_per_obsession
-    self.plans.count
+  def plans_per_obsession # instance method called on obsession instance.
+    plans.count # self.plans.count
   end
 
   def self.sans_plans
-    self.find_each.reject {|o| o.plans_per_obsession > 0}
+    find_each.reject {|o| o.plans_per_obsession > 0}
   end
 
   def self.least_to_most_plans
