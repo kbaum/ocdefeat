@@ -15,16 +15,18 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.by_anxiety_amount(params[:anxiety_amount]) # stores 'array' of the patient's obsessions with the selected anxiety_rating
           flash.now[:notice] = "You rated #{@obsessions.count} #{'obsession'.pluralize(@obsessions.count)} at anxiety level #{params[:anxiety_amount]}!"
         end
-      elsif !params[:ocd_theme].blank? # Patient filters her own obsessions by OCD theme - params[:ocd_theme] is the ID of the theme in which the obsessions we're searching for are categorized
-        theme_name = Theme.find(params[:ocd_theme]).name
+      elsif !params[:ocd_theme].blank? # Patient filters her own obsessions by OCD theme - params[:ocd_theme] is the ID of the theme in which the obsessions we're searching for are classified
         themed_obsessions = obsessions.by_theme(params[:ocd_theme])
-
+        theme_name = Theme.find(params[:ocd_theme]).name
         if themed_obsessions.empty? # If none of the patient's obsessions pertain to that theme
-          @obsessions = nil
           flash.now[:alert] = "None of your obsessions pertain to \"#{theme_name}.\""
-        else
-          @obsessions = themed_obsessions # stores 'array' of the patient's obsessions categorized in the selected OCD theme
-          flash.now[:notice] = "At least one of your obsessions is categorized as \"#{theme_name}!\""
+        else # obsessions are classified in the selected theme
+          if themed_obsessions.count == 1 # If there's only 1 obsession classified in the selected theme
+            @obsession = obsessions.by_theme(params[:ocd_theme]) # stores single obsession classified in theme
+          else
+            @obsessions = obsessions.by_theme(params[:ocd_theme]) # stores 'array' of the patient's obsessions classified in the selected OCD theme
+          end
+          flash.now[:notice] = "#{themed_obsessions.count} #{'obsession'.pluralize(themed_obsessions.count)} #{'is'.pluralize(themed_obsessions.count)} categorized as \"#{theme_name}.\""
         end
       elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by anxiety_rating
         if current_user.obsessions.count == 1 # If the patient only has 1 obsession
