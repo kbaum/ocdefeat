@@ -7,8 +7,8 @@ class ObsessionsController < ApplicationController
     @patients = User.where(role: 1)
     @themes = policy_scope(Theme) # patients, therapists and admins see all themes
 
-    if current_user.patient?
-      if !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] is the integer anxiety_rating attribute value
+    if current_user.patient? # patient is guaranteed to have at least 1 obsesion due to #require_obsessions
+      if !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = integer anxiety_rating attribute value
         if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
           @obsessions = nil
           flash.now[:alert] = "You did not rate any of your obsessions at anxiety level #{params[:anxiety_amount]}."
@@ -225,7 +225,7 @@ class ObsessionsController < ApplicationController
     def require_obsessions # this method is called before obsessions#index
       if policy_scope(Obsession).empty? # If there are no obsessions to view
         msg = if current_user.patient?
-          "Looks like you haven't obsessed lately! No obsessions were found."
+          "Looks like you haven't been obsessing! No obsessions were found."
         elsif current_user.therapist?
           "Your patients are making progress! No one is currently obsessing, and all old obsessions were defeated and deleted!"
         elsif current_user.admin?
