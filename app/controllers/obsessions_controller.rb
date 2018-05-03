@@ -25,7 +25,7 @@ class ObsessionsController < ApplicationController
           flash.now[:notice] = "#{themed_obsessions.count} #{'obsession'.pluralize(themed_obsessions.count)} #{'is'.pluralize(themed_obsessions.count)} categorized in \"#{theme_name}.\""
         end
       elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
-        if current_user.obsessions.count == 1 # If the patient only has 1 obsession
+        if current_user.obsession_count == 1 # If the patient only has 1 obsession
           @obsession = current_user.obsessions.first # @obsession stores this single obsession
           flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsession.anxiety_rating}!"
         else # the patient has more than 1 obsession
@@ -41,7 +41,7 @@ class ObsessionsController < ApplicationController
           end
         end
       elsif !params[:time_taken].blank? # Patient filters her own obsessions by time_consumed (hrs/day)
-        if current_user.obsessions.count == 1 # If the patient only has 1 obsession
+        if current_user.obsession_count == 1 # If the patient only has 1 obsession
           @obsession = current_user.obsessions.first # @obsession stores this single obsession
           flash.now[:alert] = "You only have one obsession, which consumes #{@obsession.time_consumed} hour(s) of your time on a daily basis!"
         else # the patient has more than 1 obsession
