@@ -231,7 +231,7 @@ class ObsessionsController < ApplicationController
         elsif current_user.admin?
           "The Obsessions Log is currently empty."
         end
-        redirect_to user_path(current_user), alert: "#{msg}"
+        redirect_to root_path, alert: "#{msg}"
       end
     end
 
