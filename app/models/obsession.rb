@@ -23,21 +23,21 @@ class Obsession < ApplicationRecord
       end
     end
   end
-# The following 4 class methods are used when a patient filters their own obsessions on the obsessions index page
-  def self.by_theme(theme_id)
-    where("id IN (?)", Theme.find(theme_id).obsession_ids)
-  end
 
-  def self.by_anxiety_amount(anxiety_amount)
+  def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
     where(anxiety_rating: anxiety_amount)
-  end
-
+  end # returns ActiveRecord::Relation ('array') of obsessions w/ given anxiety_rating
+  # or an empty 'array' #<ActiveRecord::Relation []> if no obsessions are found w/ that anxiety_rating
   def self.least_to_most_distressing
     self.order(:anxiety_rating)
   end
 
   def self.most_to_least_distressing
     self.order(anxiety_rating: :desc)
+  end
+
+  def self.by_theme(theme_id) # returns 'array' of obsessions classified in selected theme, or nil if none are found
+    find([Theme.find(theme_id).obsession_ids]) # similar to where("id IN (?)", Theme.find(theme_id).obsession_ids)
   end
 
   def self.least_to_most_time_consuming
