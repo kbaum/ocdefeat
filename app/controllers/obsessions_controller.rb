@@ -92,7 +92,8 @@ class ObsessionsController < ApplicationController
         else # The selected patient has obsessions
           first_timeframe = patient_picked.obsessions.first.time_consumed
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
-            flash.now[:alert] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} hours of the patient's time."
+            @obsessions = patient_picked.obsessions
+            flash.now[:notice] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of the patient's time."
           else # If the selected patient has more than 1 obsession
             if patient_picked.obsessions.all? {|o| o.time_consumed == first_timeframe} # all of the selected patient's obsessions consume the same amount of time daily, so none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least time-consuming, as each obsession consumes #{first_timeframe} hours daily."
