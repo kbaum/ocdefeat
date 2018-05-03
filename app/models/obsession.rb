@@ -62,11 +62,11 @@ class Obsession < ApplicationRecord
   end
 
   def self.from_today
-    self.where("created_at >=?", Time.zone.today.beginning_of_day)
+    where("created_at >=?", Time.zone.today.beginning_of_day)
   end
 
   def self.old_obsessions
-    self.where("created_at <?", Time.zone.today.beginning_of_day)
+    where("created_at <?", Time.zone.today.beginning_of_day)
   end
 
   def self.most_distressing_by_user(user_id)
