@@ -81,7 +81,7 @@ class ObsessionsController < ApplicationController
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered by descending degree of distress, as this patient rated each obsession at anxiety level #{first_rating}."
             else # patient has multiple obsessions that do not all have the same anxiety_rating
               @obsessions = patient_picked.obsessions.most_to_least_distressing # stores 'array' of all the selected patient's obsessions ordered by descending distress degree
-              flash.now[:notice] = "Patient #{patient_picked.name}'s obsessions are ordered by descending degree of distress!"
+              flash.now[:notice] = "#{patient_picked.name}'s obsessions are ordered by descending degree of distress. Prioritize treating the obsessions that bring this patient the most discomfort!"
             end
           end
         end
