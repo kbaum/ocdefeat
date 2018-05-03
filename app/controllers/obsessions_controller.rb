@@ -8,9 +8,8 @@ class ObsessionsController < ApplicationController
     @themes = policy_scope(Theme) # patients, therapists and admins see all themes
 
     if current_user.patient? # patient is guaranteed to have at least 1 obsesion due to #require_obsessions
-      if !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = integer anxiety_rating attribute value
+      if !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
         if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
-          @obsessions = nil
           flash.now[:alert] = "You did not rate any of your obsessions at anxiety level #{params[:anxiety_amount]}."
         else
           @obsessions = obsessions.by_anxiety_amount(params[:anxiety_amount]) # stores 'array' of the patient's obsessions with the selected anxiety_rating
