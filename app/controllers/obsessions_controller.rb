@@ -67,10 +67,10 @@ class ObsessionsController < ApplicationController
           @obsessions = obsessions.by_patient(params[:patient]) # stores 'array' of all the selected patient's obsessions
           flash.now[:notice] = "You found patient #{@patients.find(params[:patient]).name}'s obsessions!"
         end
-      elsif !params[:distressed].blank? # Therapist filters obsessions by patient's obsessions ordered by descending distress degree
-        patient_picked = @patients.find(params[:distressed])
+      elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's obsessions ordered by descending distress degree (i.e. from highest to lowest anxiety_rating)
+        patient_picked = @patients.find(params[:distressed]) # params[:distressed] is the ID of the user whose obsessions we're ordering by descending distress degree
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient currently has no obsessions!"
+          flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
