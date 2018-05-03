@@ -29,11 +29,11 @@ class Obsession < ApplicationRecord
   end # returns ActiveRecord::Relation ('array') of obsessions w/ given anxiety_rating
   # or an empty 'array' #<ActiveRecord::Relation []> if no obsessions are found w/ that anxiety_rating
   def self.least_to_most_distressing
-    self.order(:anxiety_rating)
+    order(:anxiety_rating)
   end
 
   def self.most_to_least_distressing
-    self.order(anxiety_rating: :desc)
+    order(anxiety_rating: :desc)
   end
 
   def self.by_theme(theme_id) # returns 'array' of obsessions classified in selected theme, or empty 'array' if none are found
@@ -41,11 +41,11 @@ class Obsession < ApplicationRecord
   end
 
   def self.least_to_most_time_consuming
-    self.order(:time_consumed)
+    order(:time_consumed)
   end
 
   def self.most_to_least_time_consuming
-    self.order(time_consumed: :desc)
+    order(time_consumed: :desc)
   end
 
   def self.most_time_consuming_by_user(user_id)
