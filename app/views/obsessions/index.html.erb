@@ -11,11 +11,9 @@
 <br>
 
 <% if @obsession %>
-  <p><%= link_to @obsession.intrusive_thought, obsession_path(@obsession) %></p>
+  <%= render partial: "obsession_div", locals: { obsession: @obsession } %>
 <% elsif @obsessions %>
-  <ul>
-    <% @obsessions.each do |obsession| %>
-      <li><%= link_to obsession.intrusive_thought, obsession_path(obsession) %></li>
-    <% end %>
-  </ul>
+  <% @obsessions.each do |obsession| %>
+    <%= render partial: "obsession_div", locals: { obsession: obsession } %>
+  <% end %>
 <% end %>
