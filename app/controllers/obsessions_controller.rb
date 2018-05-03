@@ -26,7 +26,7 @@ class ObsessionsController < ApplicationController
           else
             @obsessions = obsessions.by_theme(params[:ocd_theme]) # stores 'array' of the patient's obsessions classified in the selected OCD theme
           end
-          flash.now[:notice] = "#{themed_obsessions.count} #{'obsession'.pluralize(themed_obsessions.count)} #{'is'.pluralize(themed_obsessions.count)} classified as \"#{theme_name}.\""
+          flash.now[:notice] = "#{themed_obsessions.count} #{'obsession'.pluralize(themed_obsessions.count)} #{'is'.pluralize(themed_obsessions.count)} categorized in \"#{theme_name}.\""
         end
       elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by anxiety_rating
         if current_user.obsessions.count == 1 # If the patient only has 1 obsession
