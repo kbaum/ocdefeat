@@ -42,8 +42,8 @@ class ObsessionsController < ApplicationController
         end
       elsif !params[:time_taken].blank? # Patient filters her own obsessions by time_consumed (hrs/day)
         if current_user.obsession_count == 1 # If the patient only has 1 obsession
-          @obsession = current_user.obsessions.first # @obsession stores this single obsession
-          flash.now[:notice] = "You only have one obsession, which consumes #{@obsession.time_consumed} #{'hour'.pluralize(@obsession.time_consumed)} of your time on a daily basis!"
+          @obsessions = current_user.obsessions # @obsessions is AR::Relation 'array' with 1 single obsession
+          flash.now[:notice] = "You only have one obsession, which consumes #{@obsessions.first.time_consumed} #{'hour'.pluralize(@obsessions.first.time_consumed)} of your time on a daily basis!"
         else # the patient has more than 1 obsession
           first_timeframe = current_user.obsessions.first.time_consumed
           if current_user.obsessions.all? {|o| o.time_consumed == first_timeframe} # The patient's own obsessions all have the same time_consumed value, so they're not displayed
