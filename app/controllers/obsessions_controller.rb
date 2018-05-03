@@ -29,10 +29,9 @@ class ObsessionsController < ApplicationController
           @obsession = current_user.obsessions.first # @obsession stores this single obsession
           flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsession.anxiety_rating}!"
         else # the patient has more than 1 obsession
-          distress_degree = current_user.obsessions.first.anxiety_rating
-          if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree}
-            @obsessions = obsessions # all of the patient's own obsessions, which have the same anxiety rating, are listed
-            flash.now[:alert] = "Your obsessions cannot be ranked in order of ascending/descending anxiety rating, as each of your obsessions below has an anxiety rating of #{distress_degree}!"
+          distress_degree = current_user.obsessions.first.anxiety_rating # stores the patient's first obsession's anxiety_rating
+          if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree} # all of the patient's obsessions have the same anxiety_rating, so none are displayed
+            flash.now[:alert] = "Your obsessions cannot be ranked in order of anxiety rating, as you rated each obsession at anxiety level #{distress_degree}!"
           elsif params[:anxiety_ranking] == "Least to Most Distressing"
             @obsessions = obsessions.least_to_most_distressing
             flash.now[:notice] = "Your obsessions are listed in order of ascending anxiety rating!"
