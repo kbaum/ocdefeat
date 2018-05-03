@@ -74,7 +74,8 @@ class ObsessionsController < ApplicationController
         else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
-            flash.now[:alert] = "Patient #{patient_picked.name} only has one obsession rated at anxiety level #{first_rating}!"
+            @obsessions = patient_picked.obsessions
+            flash.now[:notice] = "Patient #{patient_picked.name} only has one obsession rated at anxiety level #{first_rating}!"
           else # If the selected patient has more than 1 obsession
             if patient_picked.obsessions.all? {|o| o.anxiety_rating == first_rating} # all of the selected patient's obsessions have the same anxiety_rating, so none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered by descending degree of distress, as this patient rated each obsession at anxiety level #{first_rating}."
