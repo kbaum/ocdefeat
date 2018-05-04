@@ -8,7 +8,7 @@
   <p><strong>Manifests in symptoms such as:</strong> <%= obsession.symptoms %></p>
   <p><strong>Results in the urge to perform rituals such as:</strong> <%= obsession.rituals %></p>
   <p><strong>Consumes</strong>: <%= obsession.time_consumed %> hours/day</p>
-  <p><em>...And thereby necessitates some quality</em> <strong><%= link_to "Self Help!", obsession_path(obsession) %></strong></p>
+  <p>...And thereby necessitates some quality <strong><%= link_to "Self Help!", obsession_path(obsession) %></strong></p>
 
   <% if policy(obsession).update? %>
     <br>
