@@ -33,14 +33,18 @@ class User < ApplicationRecord
     end
   end
 
+  def self.asymptomatic # returns all users who have obsessions that are symptomless
+    joins(:obsessions).merge(Obsession.symptomless)
+  end
+
   def self.ruminating_recently # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
     interval = (Time.now.midnight - 1.day)..Time.now.midnight
     joins(:obsessions).where(obsessions: {:created_at => interval}) # self.joins(:obsessions).where(:obsessions => {:created_at => interval})
   end
 
-  def self.not_desensitized # Returns all users who have obsessions for which no ERP plans were designed
-    joins(:obsessions).merge( Obsession.sans_plans )
-  end
+  #def self.not_desensitized # Returns all users who have obsessions for which no ERP plans were designed
+    #joins(:obsessions).merge( Obsession.sans_plans )
+  #end
 
   def self.by_role(string_role)
     self.where(role: self.roles[string_role])
