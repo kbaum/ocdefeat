@@ -15,11 +15,3 @@
     rather than avoiding them or engaging in rituals such as <%= @obsession.rituals %>.
   </p>
 </div>
-
-<% if policy(@obsession).update? %>
-  <p><%= link_to "Edit Obsession", edit_obsession_path(@obsession) %></p>
-<% end %>
-
-<% if policy(@obsession).destroy? %>
-  <%= button_to "Delete Obsession", obsession_path(@obsession), method: :delete, data: { confirm: "Are you sure you want to delete this obsession?" } %>
-<% end %>
