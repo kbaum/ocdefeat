@@ -81,19 +81,19 @@ class Obsession < ApplicationRecord
   end
 
   def plans_per_obsession # instance method called on obsession instance.
-    plans.count # self.plans.count
+    plans.count
   end
 
   def self.sans_plans
-    find_each.reject {|o| o.plans_per_obsession > 0}
+    all.select {|obsession| obsession.plans_per_obsession == 0}
   end
 
   def self.least_to_most_plans
-    self.all.sort_by {|o| o.plans_per_obsession}
+    all.sort_by(&:plans_per_obsession) # self.all.sort_by {|o| o.plans_per_obsession}
   end
 
   def self.most_to_least_plans
-    self.all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
+    all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
   end
 
   def obsessify(thought) # instance method called on obsession instance takes string argument, sets intrusive_thought attribute of obsession to formatted string
