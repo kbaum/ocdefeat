@@ -1,9 +1,18 @@
 <div class="obsession well well-sm">
   <h4>OCD Spike:  <em><%= obsession.intrusive_thought %></em></h4>
+
   <p><strong>Triggered by</strong>: <%= obsession.triggers %></p>
   <p><strong>Induces anxiety at level</strong>: <%= obsession.anxiety_rating %></p>
   <p><strong>Manifests in symptoms such as:</strong> <%= obsession.symptoms %></p>
   <p><strong>Results in the urge to perform rituals such as:</strong> <%= obsession.rituals %></p>
   <p><strong>Consumes</strong>: <%= obsession.time_consumed %> hours/day</p>
   <p><em>...And thereby necessitates some quality</em> <strong><%= link_to "Self Help!", obsession_path(obsession) %></strong></p>
+
+  <% if policy(obsession).update? %>
+    <p><%= link_to "Edit Obsession", edit_obsession_path(obsession) %></p>
+  <% end %>
+
+  <% if policy(obsession).destroy? %>
+    <%= button_to "Delete Obsession", obsession_path(obsession), method: :delete, data: { confirm: "Are you sure you want to delete this obsession?" } %>
+  <% end %>
 </div>
