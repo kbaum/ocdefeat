@@ -138,10 +138,10 @@ class ObsessionsController < ApplicationController
           else # There are multiple obsessions, and not all obsessions have the same number of ERP plans
             if params[:plan_productivity] == "Least to Most ERP Plans"
               @obsessions = obsessions.least_to_most_plans
-              flash.now[:notice] = "Patients' obsessions are ordered by least to most plans per obsession!"
+              flash.now[:notice] = "Patients' obsessions are ordered by least to most ERP plans per obsession!"
             else
               @obsessions = obsessions.most_to_least_plans
-              flash.now[:notice] = "Patients' obsessions are ordered by most to least plans per obsession!"
+              flash.now[:notice] = "Patients' obsessions are ordered by most to least ERP plans per obsession!"
             end
           end
         end
