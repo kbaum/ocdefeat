@@ -9,6 +9,7 @@
   <p><em>...And thereby necessitates some quality</em> <strong><%= link_to "Self Help!", obsession_path(obsession) %></strong></p>
 
   <% if policy(obsession).update? %>
+    <br>
     <p><%= link_to "Edit Obsession", edit_obsession_path(obsession) %></p>
   <% end %>
 
