@@ -6,6 +6,7 @@ class Obsession < ApplicationRecord
 
   scope :most_unnerving, -> { where('anxiety_rating > ?', 5) }
   scope :most_consuming, -> { where('time_consumed > ?', 6) }
+  scope :symptomless, -> { where(symptoms: ["", " "]) }
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
@@ -27,7 +28,7 @@ class Obsession < ApplicationRecord
     end
   end
 
-  def self.most_debilitating # returns 'array' of obsessions where anxiety_rating is > 5 and time_consumed > 8
+  def self.most_debilitating # returns AR::Relation 'array' of obsessions where anxiety_rating is > 5 and time_consumed > 6
     most_unnerving.most_consuming
   end
 
