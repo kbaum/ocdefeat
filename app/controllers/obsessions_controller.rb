@@ -129,7 +129,7 @@ class ObsessionsController < ApplicationController
         if obsessions == obsessions.sans_plans # If all obsessions have 0 plans
           flash.now[:alert] = "No ERP plans were designed for any single obsession!"
         elsif obsessions.count == 1 # Only 1 obsession exists, but this obsession has some number of plan(s)
-          @obsessions = obsessions.first
+          @obsessions = obsessions # stores AR::Relation 'array' containing 1 obsession
           flash.now[:notice] = "The Obsessions Log only contains one obsession, which corresponds to #{@obsessions.first.plans_per_obsession} ERP #{'plan'.pluralize(@obsessions.first.plans_per_obsession)}."
         else # > 1 obsession, some of which have ERP plans, exist
           first_plan_count = obsessions.first.plans_per_obsession
