@@ -1,4 +1,7 @@
 class Obsession < ApplicationRecord
+  scope :most_unnerving, -> { order(anxiety_rating: :desc).first }
+  scope :most_pervasive, -> { order(time_consumed: :desc).first }
+
   belongs_to :user # obsessions table has user_id foreign key column
   has_many :obsession_themes
   has_many :themes, through: :obsession_themes, dependent: :destroy
@@ -48,15 +51,6 @@ class Obsession < ApplicationRecord
     order(time_consumed: :desc)
   end
 
-  def self.most_time_consuming_by_user(user_id)
-    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
-    if user_obsessions.empty? # if the requested user has NO obsessions
-      nil # the class method returns nil
-    else # if the requested user has obsessions
-      user_obsessions.order(time_consumed: :desc).first # class method returns obsession instance (belonging to user) that has the highest time_consumed value
-    end
-  end
-
   def self.by_patient(patient_id)
     where(user_id: patient_id)
   end
@@ -67,17 +61,6 @@ class Obsession < ApplicationRecord
 
   def self.old_obsessions
     where("created_at <?", Time.zone.today.beginning_of_day)
-  end
-
-  def self.most_distressing_by_user(user_id)
-    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions # user_obsessions stores 'array' of all obsessions belonging to a specific patient
-
-    if user_obsessions.empty? # If the user has no obsessions, method returns nil
-      nil
-    else # The user has obsessions
-      max_anxiety = user_obsessions.order(anxiety_rating: :desc).map {|o| o.anxiety_rating}.first
-      user_obsessions.where(anxiety_rating: max_anxiety) # method returns 'array' of all the patient's obsessions rated at the patient's highest anxiety level
-    end
   end
 
   def plans_per_obsession # instance method called on obsession instance.
