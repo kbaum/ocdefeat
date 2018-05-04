@@ -5,7 +5,7 @@ class Obsession < ApplicationRecord
   has_many :plans, dependent: :destroy
 
   scope :most_unnerving, -> { where('anxiety_rating > ?', 5) }
-  scope :most_consuming, -> { where('time_consumed > ?', 8) }
+  scope :most_consuming, -> { where('time_consumed > ?', 6) }
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
