@@ -33,6 +33,11 @@ class User < ApplicationRecord
     end
   end
 
+  def self.ruminating_recently # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
+    interval = (Time.now.midnight - 1.day)..Time.now.midnight
+    joins(:obsessions).where(obsessions: {:created_at => interval}) # self.joins(:obsessions).where(:obsessions => {:created_at => interval})
+  end
+
   def self.by_role(string_role)
     self.where(role: self.roles[string_role])
   end
