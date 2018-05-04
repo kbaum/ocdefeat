@@ -130,11 +130,11 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "No ERP plans were designed for any single obsession!"
         elsif obsessions.count == 1 # Only 1 obsession exists, but this obsession has some number of plan(s)
           @obsessions = obsessions # stores AR::Relation 'array' containing 1 obsession
-          flash.now[:notice] = "The Obsessions Log only contains one obsession, which corresponds to #{@obsessions.first.plans_per_obsession} ERP #{'plan'.pluralize(@obsessions.first.plans_per_obsession)}."
+          flash.now[:notice] = "The Obsessions Log only contains one obsession, which is targeted by #{@obsessions.first.plans_per_obsession} ERP #{'plan'.pluralize(@obsessions.first.plans_per_obsession)}."
         else # > 1 obsession, some of which have ERP plans, exist
           first_plan_count = obsessions.first.plans_per_obsession
           if obsessions.all? {|o| o.plans_per_obsession == first_plan_count}
-            flash.now[:alert] = "Patients' obsessions cannot be ordered by ERP plan count, as all obsessions have #{first_plan_count} ERP plan(s)."
+            flash.now[:alert] = "Patients' obsessions cannot be ordered by ERP plan count, as all obsessions are targeted by #{first_plan_count} ERP #{'plan'.pluralize(first_plan_count)}."
           else # There are multiple obsessions, and not all obsessions have the same number of ERP plans
             if params[:plan_productivity] == "Least to Most ERP Plans"
               @obsessions = obsessions.least_to_most_plans
