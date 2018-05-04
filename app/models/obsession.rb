@@ -1,11 +1,11 @@
 class Obsession < ApplicationRecord
-  scope :most_unnerving, -> { order(anxiety_rating: :desc).first }
-  scope :most_pervasive, -> { order(time_consumed: :desc).first }
-
   belongs_to :user # obsessions table has user_id foreign key column
   has_many :obsession_themes
   has_many :themes, through: :obsession_themes, dependent: :destroy
   has_many :plans, dependent: :destroy
+
+  scope :most_unnerving, -> { where('anxiety_rating > ?', 5) }
+  scope :most_consuming, -> { where('time_consumed > ?', 8) }
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
@@ -25,6 +25,10 @@ class Obsession < ApplicationRecord
         end
       end
     end
+  end
+
+  def self.most_debilitating # returns 'array' of obsessions where anxiety_rating is > 5 and time_consumed > 8
+    most_unnerving.most_consuming
   end
 
   def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
