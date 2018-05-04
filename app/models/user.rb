@@ -6,7 +6,7 @@ class User < ApplicationRecord
   scope :moderately_obsessive_patients, -> { patients.where(severity: "Moderate") }
   scope :severely_obsessive_patients, -> { patients.where(severity: "Severe") }
   scope :extremely_obsessive_patients, -> { patients.where(severity: "Extreme") }
-  
+
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
 
@@ -30,15 +30,6 @@ class User < ApplicationRecord
       # If a brand new user signs on via Twitter (user cannot be found in the DB),
       # by default, just set their role_requested to "patient" and their OCD severity to "mild"
       # as these can be edited, and the majority of app users will presumably be patients
-    end
-  end
-
-  def self.most_time_consuming_by_user(user_id)
-    user_obsessions = User.where(role: 1).find_by(id: user_id).obsessions
-    if user_obsessions.empty? # if the requested user has NO obsessions
-      nil # the class method returns nil
-    else # if the requested user has obsessions
-      user_obsessions.order(time_consumed: :desc).first # class method returns obsession instance (belonging to user) that has the highest time_consumed value
     end
   end
 
