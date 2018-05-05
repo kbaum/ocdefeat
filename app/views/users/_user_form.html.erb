@@ -57,6 +57,28 @@
 
   <br><br>
 
+  <label>Select your variant of OCD based on the way you react to triggers:</label>
+
+  <br><br>
+
+  <%= f.radio_button :variant, 'Traditional' %>
+  <%= f.label :ocd_variant_traditional, "Traditional:" %><br>
+  <%= "I perform outward compulsive behaviors, such as repetitively washing my hands or touching the doorknob a certain number of times." %>
+  <br><br>
+  <%= f.radio_button :variant, 'Purely Obsessional' %>
+  <%= f.label :ocd_variant_purely_obsessional, "Purely Obsessional (Pure-O):" %><br>
+  <%= "My rituals take place primarily in my own mind, such as mental review of events and prolonged periods of rumination." %>
+  <br><br>
+  <%= f.radio_button :variant, 'Both' %>
+  <%= f.label :ocd_variant_both, "Both Traditional and Pure-O:" %><br>
+  <%= "I perform a combination of overtly compulsive behaviors and primarily obsessional mental exercises." %>
+  <br><br>
+  <%= f.radio_button :variant, 'Neither' %>
+  <%= f.label :ocd_variant_neither, "Neither Traditional nor Pure-O:" %><br>
+  <%= "N/A (I request the role of therapist/admin)" %>
+
+  <hr>
+
   <%= f.label :role_requested, "Request a Role: " %>
 
   <%= f.select :role_requested, options_for_select(["Patient", "Therapist", "Admin"]), include_blank: true %>
