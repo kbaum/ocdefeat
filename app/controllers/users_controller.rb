@@ -117,11 +117,10 @@ class UsersController < ApplicationController
         :password,
         :password_confirmation,
         :uid,
-        :twitter_handle,
-        :bio,
+        :role_requested,
+        :variant,
         :severity,
-        :role,
-        :role_requested
+        :role
       )
     end
 end
