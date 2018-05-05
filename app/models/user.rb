@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
+  validates :variant, inclusion: { in: %w(Traditional Pure-O Both Neither), message: "must be selected from the available variants of OCD" }
   validates :severity, inclusion: { in: %w(Mild Moderate Severe Extreme Nonobsessive), message: "must be selected from the available options" }
   validates :role_requested, inclusion: { in: %w(Patient Therapist Admin), message: "must be selected from the available roles" }, allow_blank: true
 
