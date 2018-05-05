@@ -2,10 +2,10 @@ class User < ApplicationRecord
   enum role: { unassigned_user: 0, patient: 1, therapist: 2, admin: 3 }
 
   scope :patients, -> { where(role: 1) }
-  scope :mildly_obsessive_patients, -> { patients.where(severity: "Mild") }
-  scope :moderately_obsessive_patients, -> { patients.where(severity: "Moderate") }
-  scope :severely_obsessive_patients, -> { patients.where(severity: "Severe") }
-  scope :extremely_obsessive_patients, -> { patients.where(severity: "Extreme") }
+  scope :patients_mildly_obsessive, -> { patients.where(severity: "Mild") }
+  scope :patients_moderately_obsessive, -> { patients.where(severity: "Moderate") }
+  scope :patients_severely_obsessive, -> { patients.where(severity: "Severe") }
+  scope :patients_extremely_obsessive, -> { patients.where(severity: "Extreme") }
   scope :patients_traditional, -> { patients.where(variant: "Traditional") }
   scope :patients_purely_obsessional, -> { patients.where(variant: "Purely Obsessional") }
 
