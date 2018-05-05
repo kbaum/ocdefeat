@@ -38,6 +38,12 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
+  <br>
+
+  <%= f.label :role_requested, "Request a Role: " %>
+
+  <%= f.select :role_requested, options_for_select(["Patient", "Therapist", "Admin"]), include_blank: true %>
+
   <hr>
 
   <label>Rate the severity of your OCD based on the amount of time you obsess daily:</label>
@@ -78,10 +84,6 @@
   <%= "N/A (I request the role of therapist/admin)" %>
 
   <hr>
-
-  <%= f.label :role_requested, "Request a Role: " %>
-
-  <%= f.select :role_requested, options_for_select(["Patient", "Therapist", "Admin"]), include_blank: true %>
 
   <div class="actions">
     <%= f.submit %>
