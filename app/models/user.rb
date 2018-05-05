@@ -6,6 +6,8 @@ class User < ApplicationRecord
   scope :moderately_obsessive_patients, -> { patients.where(severity: "Moderate") }
   scope :severely_obsessive_patients, -> { patients.where(severity: "Severe") }
   scope :extremely_obsessive_patients, -> { patients.where(severity: "Extreme") }
+  scope :patients_traditional, -> { patients.where(variant: "Traditional") }
+  scope :patients_purely_obsessional, -> { patients.where(variant: "Purely Obsessional") }
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
