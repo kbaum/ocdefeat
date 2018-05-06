@@ -7,6 +7,7 @@ class Obsession < ApplicationRecord
   scope :most_unnerving, -> { where('anxiety_rating > ?', 5) }
   scope :most_consuming, -> { where('time_consumed > ?', 6) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
+  scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
@@ -70,10 +71,6 @@ class Obsession < ApplicationRecord
 
   def plans_per_obsession # instance method called on obsession instance.
     plans.count
-  end
-
-  def self.sans_plans
-    all.select {|obsession| obsession.plans_per_obsession == 0}
   end
 
   def self.least_to_most_plans
