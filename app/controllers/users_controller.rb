@@ -12,14 +12,21 @@ class UsersController < ApplicationController
     # The first 4 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
     if current_user.admin?
       @table_users = users # @table_users stores array of all user instances
+      @filtered_users = users
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
       @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
       @aspiring_admins = users.awaiting_assignment(%w(Patient Therapist), 3)
 
-      if !params[:role].blank? # If admin selected value from dropdown to filter users by role
-        @filtered_users = users.by_role(params[:role]) # @filtered_users stores array of all users with a specific role
+      if !params[:role].blank? # Admin filters users by role ("patient", "therapist" or "admin")
+        if users.by_role(params[:role]).empty? # If there are no users with the selected role
+          flash.now[:alert] = "No #{params[:role]}s were found."
+        else
+          @filtered_users = users.by_role(params[:role]) # stores 'array' of all users with the selected role
+          num_users = users.by_role(params[:role]).count
+          flash.now[:notice] = "You found #{num_users} #{params[:role].pluralize(num_users)}!"
+        end
       else
-        @filtered_users = users # @filtered_users stores array of all user instances if no filter was applied when admin views page
+        @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
       end
     elsif current_user.therapist? # When therapist views users index page, users variable stores all patients
       if !params[:severity].blank? # Therapist filters patients by OCD severity
