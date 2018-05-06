@@ -35,6 +35,19 @@ class UsersController < ApplicationController
           @filtered_users = users.by_ocd_severity(params[:severity]) # stores 'array' of all patients with the selected OCD severity
           flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'has'.pluralize(@filtered_users.count)} #{params[:severity]} OCD!"
         end
+      elsif !params[:variant].blank? # Therapist filters patients by OCD variant
+        if users.by_variant(params[:variant]).empty? # If no patients have the specified OCD variant
+          flash.now[:alert] = "No patients with that variant of OCD were found."
+        else
+          @filtered_users = users.by_variant(params[:variant]) # stores 'array' of all patients with a specific OCD variant
+          if params[:variant] == "Both"
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} both traditional and purely obsessive."
+          elsif params[:variant] == "PureO"
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} purely obsessive."
+          else
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} traditionally obsessive."
+          end
+        end
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
           @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
