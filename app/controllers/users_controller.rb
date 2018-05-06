@@ -22,8 +22,14 @@ class UsersController < ApplicationController
         @filtered_users = users # @filtered_users stores array of all user instances if no filter was applied when admin views page
       end
     elsif current_user.therapist? # When therapist views users index page, users variable stores all patients
-      if !params[:severity].blank? # If therapist chose to filter patients by severity
-        @filtered_users = users.by_ocd_severity(params[:severity]) # @filtered_users stores array of all patients with a specific OCD severity
+      if !params[:severity].blank? # Therapist filters patients by OCD severity
+        if users.by_ocd_severity(params[:severity]).empty? # If no patients have the selected OCD severity
+          flash.now[:alert] = "No patients were diagnosed with #{params[:severity]} OCD."
+        else
+          @filtered_users = users.by_ocd_severity(params[:severity]) # stores 'array' of all patients with the selected OCD severity
+          num_patients = User.send("patients_#{params[:severity].downcase}ly_obsessive").count
+          flash.now[:notice] = "#{num_patients} #{'patient'.pluralize(num_patients)} #{'has'.pluralize(num_patients)} #{params[:severity]} OCD!"
+        end
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
           @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
