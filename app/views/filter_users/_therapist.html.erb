@@ -18,4 +18,6 @@
 
 <br><br>
 
-<%= render partial: "users/users_ul", locals: { users: filtered_users } %>
+<% if filtered_users %>
+  <%= render partial: "users/users_ul", locals: { users: filtered_users } %>
+<% end %>
