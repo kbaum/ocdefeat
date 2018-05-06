@@ -22,8 +22,7 @@ class UsersController < ApplicationController
           flash.now[:alert] = "No #{params[:role]}s were found."
         else
           @filtered_users = users.by_role(params[:role]) # stores 'array' of all users with the selected role
-          num_users = users.by_role(params[:role]).count
-          flash.now[:notice] = "You found #{num_users} #{params[:role].pluralize(num_users)}!"
+          flash.now[:notice] = "You found #{@filtered_users.count} #{params[:role].pluralize(@filtered_users.count)}!"
         end
       else
         @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
