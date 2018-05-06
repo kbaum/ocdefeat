@@ -4,8 +4,7 @@ class Obsession < ApplicationRecord
   has_many :themes, through: :obsession_themes, dependent: :destroy
   has_many :plans, dependent: :destroy
 
-  scope :most_unnerving, -> { where('anxiety_rating > ?', 5) }
-  scope :most_consuming, -> { where('time_consumed > ?', 6) }
+  scope :most_unnerving, -> { where('anxiety_rating >= ?', 5) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
 
