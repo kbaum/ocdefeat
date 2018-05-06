@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
 
   def self.by_ocd_severity(severity)
-    patients.where(severity: severity)
+    where(severity: severity)
   end
 
   def self.by_variant(variant)
