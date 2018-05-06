@@ -33,8 +33,7 @@ class UsersController < ApplicationController
           flash.now[:alert] = "No patients were diagnosed with #{params[:severity]} OCD."
         else
           @filtered_users = users.by_ocd_severity(params[:severity]) # stores 'array' of all patients with the selected OCD severity
-          num_patients = User.send("patients_#{params[:severity].downcase}ly_obsessive").count
-          flash.now[:notice] = "#{num_patients} #{'patient'.pluralize(num_patients)} #{'has'.pluralize(num_patients)} #{params[:severity]} OCD!"
+          flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'has'.pluralize(@filtered_users.count)} #{params[:severity]} OCD!"
         end
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
