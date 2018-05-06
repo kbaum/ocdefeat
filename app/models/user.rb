@@ -61,6 +61,14 @@ class User < ApplicationRecord
     patients.where(severity: severity)
   end
 
+  def self.by_variant(variant)
+    where(variant: variant)
+  end
+
+  def self.by_severity_and_variant(severity, variant)
+    self.send("patients_#{severity.downcase}ly_obsessive").by_variant(variant)
+  end
+
   def obsession_count
     self.obsessions.count if self.patient?
   end
