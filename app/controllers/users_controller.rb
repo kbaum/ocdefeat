@@ -65,14 +65,14 @@ class UsersController < ApplicationController
           flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one obsession that lacks ERP plans."
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
-        if params[:symptoms_presence] == "Symptomatic Patients"
+        if params[:symptoms_presence] == "Symptomatic patients"
           if users.symptomatic.empty?
             flash.now[:alert] = "No patients present with physical symptoms of OCD distress."
           else
             @filtered_users = users.symptomatic
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} physically symptomatic of OCD distress."
           end
-        elsif params[:symptoms_presence] == "Asymptomatic Patients"
+        elsif params[:symptoms_presence] == "Asymptomatic patients"
           if users.asymptomatic.empty?
             flash.now[:alert] = "All patients present with physical symptoms of OCD distress."
           else
