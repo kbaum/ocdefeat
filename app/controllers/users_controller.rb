@@ -57,6 +57,13 @@ class UsersController < ApplicationController
           @filtered_users = users.by_severity_and_variant(severity, variant)
           flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
         end
+      elsif !params[:desensitization_deficiency].blank? # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed
+        if users.not_fully_desensitized.empty?
+          flash.now[:alert] = "Patients either have no obsessions or are becoming desensitized to all obsessions."
+        else
+          @filtered_users = users.not_fully_desensitized
+          flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one obsession that lacks ERP plans."
+        end
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
           @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
