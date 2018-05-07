@@ -5,7 +5,7 @@ class Obsession < ApplicationRecord
   has_many :plans, dependent: :destroy
 
   scope :most_unnerving, -> { where('anxiety_rating >= ?', 5) }
-  scope :symptomatic, -> { where.not(symptoms: ["", " "]) }
+  scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
   scope :with_enough_exposure, -> { joins(:plans).merge(Plan.completed_plans) }
