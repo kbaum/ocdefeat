@@ -42,7 +42,7 @@ class UsersController < ApplicationController
           @filtered_users = users.by_variant(params[:variant]) # stores 'array' of all patients with a specific OCD variant
           if params[:variant] == "Both"
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} both traditionally and purely obsessive."
-          elsif params[:variant] == "PureO"
+          elsif params[:variant] == "Purely Obsessional"
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} purely obsessive."
           else
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} traditionally obsessive."
