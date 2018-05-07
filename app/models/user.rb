@@ -28,6 +28,7 @@ class User < ApplicationRecord
       user.password = SecureRandom.hex # a random, unique string
       user.role_requested = "Patient"
       user.severity = "Mild"
+      user.variant = "Traditional"
       # we can't add a default role_requested value of "patient" in users table because
       # our admin and therapists don't want to be patients (see seed data)
       # If a brand new user signs on via Twitter (user cannot be found in the DB),
