@@ -65,7 +65,7 @@ class UsersController < ApplicationController
           flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one obsession that lacks ERP plans."
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
-        if users.all? {|user| user.obsession_count == 0} # If none of the patients have obsessions
+        if users.all? {|user| user.obsessions.empty?} # If none of the patients have obsessions
           flash.now[:notice] = "All patients are asymptomatic since nobody is obsessing!"
         elsif params[:symptoms_presence] == "Symptomatic patients"
           if users.symptomatic.empty?
