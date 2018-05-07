@@ -70,7 +70,7 @@ class UsersController < ApplicationController
             flash.now[:alert] = "No patients present with physical symptoms of OCD distress."
           else
             @filtered_users = users.symptomatic
-            flash.now[:notice] = "#{@filtered_users.count} OCD #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} physically symptomatic."
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} physically symptomatic of OCD distress."
           end
         elsif params[:symptoms_presence] == "Asymptomatic Patients"
           if users.asymptomatic.empty?
