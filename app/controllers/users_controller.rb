@@ -48,7 +48,7 @@ class UsersController < ApplicationController
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} traditionally obsessive."
           end
         end
-      elsif !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "PureO", "Both")
+      elsif !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "Purely Obsessional", "Both")
         severity = params[:severity_and_variant].split(" and ").first
         variant = params[:severity_and_variant].split(" and ").last
         if users.by_severity_and_variant(severity, variant).empty?
