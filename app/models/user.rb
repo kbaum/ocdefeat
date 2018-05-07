@@ -7,14 +7,14 @@ class User < ApplicationRecord
   scope :patients_severely_obsessive, -> { patients.where(severity: "Severe") }
   scope :patients_extremely_obsessive, -> { patients.where(severity: "Extreme") }
   scope :patients_traditional, -> { patients.where(variant: "Traditional") }
-  scope :patients_purely_obsessional, -> { patients.where(variant: "Pure-O") }
+  scope :patients_purely_obsessional, -> { patients.where(variant: "Purely Obsessional") }
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
-  validates :variant, inclusion: { in: %w(Traditional Pure-O Both Neither), message: "must be selected from the available OCD variants" }
+  validates :variant, inclusion: { in: ["Traditional", "Purely Obsessional", "Both", "Neither"], message: "must be selected from the available OCD variants" }
   validates :severity, inclusion: { in: %w(Mild Moderate Severe Extreme Nonobsessive), message: "must be selected from the available OCD severities" }
   validates :role_requested, inclusion: { in: %w(Patient Therapist Admin), message: "must be selected from the available roles" }, allow_blank: true
 
@@ -50,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def self.by_role(string_role)
-    where(role: self.roles[string_role]) # self.roles returns this hash: {"unassigned_user" => 0, "patient" => 1, "therapist" => 2, "admin" => 3} 
+    where(role: self.roles[string_role]) # self.roles returns this hash: {"unassigned_user" => 0, "patient" => 1, "therapist" => 2, "admin" => 3}
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
