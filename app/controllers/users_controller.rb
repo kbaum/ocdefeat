@@ -64,6 +64,22 @@ class UsersController < ApplicationController
           @filtered_users = users.not_fully_desensitized
           flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one obsession that lacks ERP plans."
         end
+      elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
+        if params[:symptoms_presence] == "Symptomatic Patients"
+          if users.symptomatic.empty?
+            flash.now[:alert] = "No patients present with physical symptoms of OCD distress."
+          else
+            @filtered_users = users.symptomatic
+            flash.now[:notice] = "#{@filtered_users.count} OCD #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} physically symptomatic."
+          end
+        elsif params[:symptoms_presence] == "Asymptomatic Patients"
+          if users.asymptomatic.empty?
+            flash.now[:alert] = "All patients present with physical symptoms of OCD distress."
+          else
+            @filtered_users = users.asymptomatic
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} asymptomatic."
+          end
+        end
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
           @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
