@@ -82,6 +82,13 @@ class UsersController < ApplicationController
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} asymptomatic."
           end
         end
+      elsif !params[:ruminating_recently].blank? # Therapist filters patients by those who created new obsessions yesterday
+        if users.recent_ruminators.empty?
+          flash.now[:alert] = "No patients reported new obsessions yesterday."
+        else
+          @filtered_users = users.recent_ruminators
+          flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} reported new obsessions yesterday!"
+        end
       elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
         if params[:num_obsessions] == "Fewest to Most Obsessions"
           @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
