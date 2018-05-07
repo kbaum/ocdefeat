@@ -45,9 +45,9 @@ class User < ApplicationRecord
     joins(:obsessions).merge(Obsession.symptomless)
   end
 
-  def self.ruminating_recently # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
+  def self.recent_ruminators # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
     interval = (Time.now.midnight - 1.day)..Time.now.midnight
-    joins(:obsessions).where(obsessions: {:created_at => interval}) # self.joins(:obsessions).where(:obsessions => {:created_at => interval})
+    joins(:obsessions).where(obsessions: {created_at: interval})
   end
 
   def self.not_fully_desensitized # Returns all users who have at least 1 obsession for which no ERP plans were designed
