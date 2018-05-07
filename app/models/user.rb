@@ -36,6 +36,10 @@ class User < ApplicationRecord
     end
   end
 
+  def self.symptomatic # returns 'array' of users who have obsessions w/ symptoms attribute != empty string
+    joins(:obsessions).merge(Obsession.presenting_symptoms)
+  end
+
   def self.asymptomatic # returns all users who have obsessions that are symptomless
     joins(:obsessions).merge(Obsession.symptomless)
   end
