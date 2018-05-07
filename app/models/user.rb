@@ -75,7 +75,7 @@ class User < ApplicationRecord
   end
 
   def obsession_count
-    self.obsessions.count if self.patient?
+    obsessions.count
   end
 
   def self.sort_by_ascending_obsession_count
