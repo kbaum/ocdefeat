@@ -45,7 +45,7 @@ class User < ApplicationRecord
     joins(:obsessions).where(obsessions: {:created_at => interval}) # self.joins(:obsessions).where(:obsessions => {:created_at => interval})
   end
 
-  def self.not_desensitized # Returns all users who have obsessions for which no ERP plans were designed
+  def self.not_fully_desensitized # Returns all users who have at least 1 obsession for which no ERP plans were designed
     joins(:obsessions).merge(Obsession.sans_plans)
   end
 
