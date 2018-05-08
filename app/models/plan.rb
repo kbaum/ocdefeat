@@ -1,6 +1,5 @@
 class Plan < ApplicationRecord
   scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
-  scope :finished, -> { includes(:steps).where(steps: { status: 1 }) }
 
   belongs_to :obsession
   has_many :steps
