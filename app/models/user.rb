@@ -91,10 +91,6 @@ class User < ApplicationRecord
     joins(:plans).merge(Plan.stepless)
   end
 
-  def self.therapy_contacts
-    therapists.pluck(:email)
-  end
-
   def num_plans_designed
     self.plans.count if self.patient?
   end
