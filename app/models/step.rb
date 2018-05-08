@@ -3,8 +3,7 @@ class Step < ApplicationRecord
     :incomplete => 0,
     :complete => 1
   }
-
-  scope :marked_complete, -> { where(status: 1) } # Calling marked_complete on Step class returns AR::Relation 'array' of all completed steps
+  
   belongs_to :plan # therefore, steps table has plan_id foreign key column
 
   validates :instructions, presence: true
