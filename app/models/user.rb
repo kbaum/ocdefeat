@@ -8,7 +8,6 @@ class User < ApplicationRecord
   scope :patients_extremely_obsessive, -> { patients.where(severity: "Extreme") }
   scope :patients_traditional, -> { patients.where(variant: "Traditional") }
   scope :patients_purely_obsessional, -> { patients.where(variant: "Purely Obsessional") }
-  scope :patients_planning_preliminarily, -> { patients.joins(:plans).merge(Plan.stepless) }
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
@@ -85,6 +84,10 @@ class User < ApplicationRecord
 
   def self.most_to_least_obsessions
     patients.sort {|a,b| b.obsession_count <=> a.obsession_count}
+  end
+
+  def self.patients_planning_preliminarily
+    joins(:plans).merge(Plan.stepless)
   end
 
   def num_plans_designed
