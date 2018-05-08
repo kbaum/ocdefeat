@@ -89,11 +89,23 @@ class UsersController < ApplicationController
           @filtered_users = users.recent_ruminators
           flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} reported new obsessions yesterday!"
         end
-      elsif !params[:num_obsessions].blank? # If therapist chose to filter users by their obsession count
-        if params[:num_obsessions] == "Fewest to Most Obsessions"
-          @filtered_users = users.sort_by_ascending_obsession_count # @filtered_users stores array of patients ordered by those having fewest to most obsessions
-        else
-          @filtered_users = users.sort_by_descending_obsession_count # @filtered_users stores array of patients ordered by those having most to fewest obsessions
+      elsif !params[:num_obsessions].blank? # Therapist filters patients by obsession count
+        if users.all? {|user| user.obsessions.empty?} # If no patient has obsessions
+          flash.now[:alert] = "The OCD volume is low. Not a single patient has obsessions!"
+        else # Patients have obsessions
+          first_obsession_count = users.first.obsession_count
+          if users.count == 1 # If there is only 1 patient
+            @filtered_users = users # AR::Relation 'array' of 1 user instance
+            flash.now[:notice] = "A single patient was found who has #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
+          elsif users.all? {|user| user.obsession_count == first_obsession_count} # > 1 patient, but all patients have the same number of obsessions
+            flash.now[:alert] = "Patients cannot be ordered by obsession count, as all patients have #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
+          elsif params[:num_obsessions] == "Least to Most Obsessions"
+            @filtered_users = users.least_to_most_obsessions # stores array of patients ordered by those w/ least to most obsessions
+            flash.now[:notice] = "Patients are ordered by ascending obsession count!"
+          else
+            @filtered_users = users.most_to_least_obsessions # stores array of patients ordered by those w/ most to least obsessions
+            flash.now[:notice] = "Patients are ordered by descending obsession count!"
+          end
         end
       elsif !params[:num_plans].blank? # If therapist chose to filter patients by the number of ERP plans they've completed
         if params[:num_plans] == "Fewest to Most Completed Plans"
