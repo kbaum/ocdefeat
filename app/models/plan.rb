@@ -1,4 +1,7 @@
 class Plan < ApplicationRecord
+  scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
+  scope :completed_plans, -> { joins(:steps).merge(Step.completed_steps) }
+
   belongs_to :obsession
   has_many :steps
 
@@ -12,6 +15,10 @@ class Plan < ApplicationRecord
   def done? # returns true if plan consists of at least 1 step and all steps are completed (step's status = 1)
     self.steps.count > 0 && self.steps.all? {|step| step.complete?}
   end
+
+  #def self.completed_plans # return an AR::Relation of all plans that are completed
+    #joins(:steps).merge(Step.completed_steps)
+  #end
 
   def self.by_obsession(the_obsession_id)
     self.where(obsession_id: the_obsession_id)
@@ -27,10 +34,6 @@ class Plan < ApplicationRecord
 
   def self.by_designer(designer_id)
     User.where(role: 1).find(designer_id).plans
-  end
-
-  def self.stepless # class method returns all plan instances that have no steps
-    self.all.select {|plan| plan.steps.empty?}
   end
 
   def self.with_steps # class method returns all plan instances that have 1 or more steps
