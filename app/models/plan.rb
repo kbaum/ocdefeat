@@ -2,7 +2,7 @@ class Plan < ApplicationRecord
   scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
 
   belongs_to :obsession
-  has_many :steps
+  has_many :steps, dependent: :destroy
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
