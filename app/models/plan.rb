@@ -16,10 +16,6 @@ class Plan < ApplicationRecord
     self.steps.count > 0 && self.steps.all? {|step| step.complete?}
   end
 
-  #def self.completed_plans # return an AR::Relation of all plans that are completed
-    #joins(:steps).merge(Step.completed_steps)
-  #end
-
   def self.by_obsession(the_obsession_id)
     self.where(obsession_id: the_obsession_id)
   end
