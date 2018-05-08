@@ -107,12 +107,7 @@ class UsersController < ApplicationController
             flash.now[:notice] = "Patients are ordered by descending obsession count!"
           end
         end
-      elsif !params[:num_plans].blank? # If therapist chose to filter patients by the number of ERP plans they've completed
-        if params[:num_plans] == "Fewest to Most Completed Plans"
-          @filtered_users = users.sort_by_ascending_plan_count # @filtered_users stores array of patients ordered by those who completed the fewest to most ERP plans
-        else
-          @filtered_users = users.sort_by_descending_plan_count # @filtered_users stores array of patients ordered by those who completed the most to fewest ERP plans
-        end
+      
       else
         @filtered_users = users # @filtered_users stores array of all patients if no filter was applied when therapist views page
       end
