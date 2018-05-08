@@ -57,12 +57,21 @@ class UsersController < ApplicationController
           @filtered_users = users.by_severity_and_variant(severity, variant)
           flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
         end
-      elsif !params[:desensitization_deficiency].blank? # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed
-        if users.not_fully_desensitized.empty?
-          flash.now[:alert] = "Patients either have no obsessions or are becoming desensitized to all obsessions."
-        else
-          @filtered_users = users.not_fully_desensitized
-          flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one obsession that lacks ERP plans."
+      elsif !params[:desensitization_deficiency].blank? # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed, or by patients with preliminary plans (sans steps)
+        if params[:desensitization_deficiency] == "Patients with obsession lacking ERP plans"
+          if users.with_obsession_without_plan.empty?
+            flash.now[:alert] = "Patients either have no obsessions or are becoming desensitized to all obsessions."
+          else
+            @filtered_users = users.with_obsession_without_plan
+            flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one obsession that lacks ERP plans."
+          end
+        elsif params[:desensitization_deficiency] == "Patients with preliminary plans"
+          if users.patients_planning_preliminarily.empty?
+            flash.now[:alert] = "No patients designed preliminary ERP plans, i.e., plans sans steps."
+          else
+            @filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} designed preliminary ERP plans, i.e., plans sans steps."
+          end
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
         if users.all? {|user| user.obsessions.empty?} # If none of the patients have obsessions
