@@ -107,17 +107,6 @@ class UsersController < ApplicationController
             flash.now[:notice] = "Patients are ordered by descending obsession count!"
           end
         end
-      elsif !params[:plan_productivity].blank? # Therapist filters patients by plan productivity
-        if users.all? {|user| user.plans.empty?} # If no patients designed ERP plans
-          flash.now[:alert] = "No ERP plans were designed by any patient."
-        elsif params[:plan_productivity] == "Patients with Preliminary Plans"
-          if users.patients_planning_preliminarily.empty?
-            flash.now[:alert] = "No patients designed preliminary ERP plans, i.e., plans sans steps."
-          else
-            @filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} designed preliminary ERP plans, i.e., plans sans steps."
-          end
-        end
       else
         @filtered_users = users # @filtered_users stores array of all patients if no filter was applied when therapist views page
       end
