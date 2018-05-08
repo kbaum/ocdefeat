@@ -1,4 +1,5 @@
 class Plan < ApplicationRecord
+  scope :procedural, -> { includes(:steps).where.not(steps: { id: nil }) } # returns AR:Relation of all plans that have steps
   scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
 
   belongs_to :obsession
@@ -11,7 +12,7 @@ class Plan < ApplicationRecord
     self.obsession.user
   end
 
-  def done? # returns true if plan consists of at least 1 step and all steps are completed (step's status = 1)
+  def done # returns true if plan consists of at least 1 step and all steps are completed (step's status = 1)
     self.steps.count > 0 && self.steps.all? {|step| step.complete?}
   end
 
