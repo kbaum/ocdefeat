@@ -78,12 +78,8 @@ class User < ApplicationRecord
     obsessions.count
   end
 
-  def self.sort_by_ascending_obsession_count
-    patients.sort_by {|user| user.obsession_count}
-  end
-
-  def self.sort_by_descending_obsession_count
-    self.sort_by_ascending_obsession_count.reverse
+  def self.least_to_most_obsessions
+    patients.sort_by {|patient| patient.obsession_count}
   end
 
   def num_plans_designed
