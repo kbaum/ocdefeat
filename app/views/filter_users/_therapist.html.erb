@@ -36,6 +36,7 @@
   <br><br>
   <%= select_tag "num_obsessions", options_for_select(["Least to Most Obsessions", "Most to Least Obsessions"]), prompt: "Number of Obsessions" %>
   <br><br>
+  <%= select_tag "plan_productivity", options_for_select(["Patients with Preliminary Plans", "Patients with Completed Plans", "Patients with Plans Pending Completion"]), prompt: "Plan Productivity" %>
   <br><br>
   <%= submit_tag "Filter Patients" %>
 <% end %>
