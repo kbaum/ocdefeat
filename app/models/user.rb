@@ -2,6 +2,7 @@ class User < ApplicationRecord
   enum role: { unassigned_user: 0, patient: 1, therapist: 2, admin: 3 }
 
   scope :patients, -> { where(role: 1) }
+  scope :therapists, -> { where(role: 2) }
   scope :patients_mildly_obsessive, -> { patients.where(severity: "Mild") }
   scope :patients_moderately_obsessive, -> { patients.where(severity: "Moderate") }
   scope :patients_severely_obsessive, -> { patients.where(severity: "Severe") }
@@ -88,6 +89,10 @@ class User < ApplicationRecord
 
   def self.patients_planning_preliminarily
     joins(:plans).merge(Plan.stepless)
+  end
+
+  def self.therapy_contacts
+    therapists.pluck(:email)
   end
 
   def num_plans_designed
