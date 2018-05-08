@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def self.least_to_most_obsessions
-    patients.sort_by {|patient| patient.obsession_count}
+    patients.sort_by(&:obsession_count) # equivalent to: patients.sort_by {|patient| patient.obsession_count}
   end
 
   def self.most_to_least_obsessions
