@@ -82,6 +82,10 @@ class User < ApplicationRecord
     patients.sort_by {|patient| patient.obsession_count}
   end
 
+  def self.most_to_least_obsessions
+    patients.sort {|a,b| b.obsession_count <=> a.obsession_count}
+  end
+
   def num_plans_designed
     self.plans.count if self.patient?
   end
