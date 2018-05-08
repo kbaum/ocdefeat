@@ -1,6 +1,8 @@
 <%= form_tag("/obsessions", method: "get") do %>
   <%= select_tag "patient", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient" %>
   <br><br>
+  <%= select_tag "most_distressing", options_from_collection_for_select(patients, "id", "name"), prompt: "Most Distressing Obsession by Patient" %>
+  <br><br>
   <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Descending Distress Degree" %>
   <br><br>
   <%= select_tag "consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Ordered by Most to Least Time Taken" %>
