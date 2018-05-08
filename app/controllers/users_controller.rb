@@ -120,7 +120,7 @@ class UsersController < ApplicationController
         @filtered_users = users # @filtered_users stores array of all patients if no filter was applied when therapist views page
       end
     elsif current_user.patient?
-      @therapists = users # @therapists stores array of all therapists when patient views users index page
+      @therapists = users # @therapists stores 'array' of all therapists when patient views users index page
     end
   end
 
