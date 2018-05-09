@@ -12,10 +12,6 @@ class Plan < ApplicationRecord
     self.obsession.user
   end
 
-  def done # returns true if plan consists of at least 1 step and all steps are completed (step's status = 1)
-    self.steps.count > 0 && self.steps.all? {|step| step.complete?}
-  end
-
   def self.by_obsession(the_obsession_id)
     self.where(obsession_id: the_obsession_id)
   end
