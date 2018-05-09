@@ -166,6 +166,8 @@ class PlansController < ApplicationController
   def update
     authorize @plan
     if @plan.update(plan_params)
+      @plan.finish_plan
+      @plan.save
       redirect_to plan_path(@plan), notice: "This ERP plan was successfully updated!"
     else
       flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
