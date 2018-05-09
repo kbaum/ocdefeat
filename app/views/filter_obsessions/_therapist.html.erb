@@ -5,8 +5,6 @@
   <br><br>
   <%= select_tag "consumed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Most to Least Time-Consuming Obsessions" %>
   <br><br>
-  <%= select_tag "desensitization", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Degree of Desensitization to Obsessions" %>
-  <br><br>
   <%= select_tag "planless", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Obsessions Without ERP Plans" %>
   <br><br>
   <%= select_tag "ocd_subset", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Subset" %>
