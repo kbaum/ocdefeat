@@ -99,7 +99,7 @@ class ObsessionsController < ApplicationController
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least time-consuming, as each obsession consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} daily."
             else # patient has multiple obsessions that do not all take up the same amount of time
               @obsessions = patient_picked.obsessions.most_to_least_time_consuming # stores 'array' of the selected patient's obsessions ordered from most to least time-consuming
-              flash.now[:notice] = "#{patient_picked.name}'s obsessions are ordered from most to least time-consuming. Prioritize treating obsessions that most severely compromise the patient's time management!"
+              flash.now[:notice] = "#{patient_picked.name}'s obsessions are ordered from most to least time-consuming, so you can prioritize treating obsessions that waste the most time!"
             end
           end
         end
