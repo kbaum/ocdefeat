@@ -8,6 +8,10 @@ class Plan < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
 
+  def done?
+    true if steps.count > 1 && steps.all? {|step| step.complete?} # instance method returns true if plan consists of at least 2 steps (repeated exposure) and all steps are completed (each step's status = 1)
+  end
+
   def designer
     self.obsession.user
   end
