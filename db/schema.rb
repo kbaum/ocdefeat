@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509143417) do
+ActiveRecord::Schema.define(version: 20180508152424) do
 
   create_table "obsession_themes", force: :cascade do |t|
     t.integer "obsession_id"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20180509143417) do
     t.integer "obsession_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "finished", default: false
   end
 
   create_table "steps", force: :cascade do |t|
