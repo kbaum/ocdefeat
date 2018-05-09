@@ -67,13 +67,13 @@ class UsersController < ApplicationController
             @filtered_users = users.with_obsession_without_plan
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} reported at least one obsession that lacks ERP plans."
           end
-        #elsif params[:desensitization_deficiency] == "Patients with preliminary plans"
-          #if users.patients_planning_preliminarily.empty?
-            #flash.now[:alert] = "No patients designed preliminary ERP plans, i.e., plans sans steps."
-          #else
-            #@filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
-            #flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} designed at least one preliminary ERP plan."
-          #end
+        elsif params[:desensitization_degree] == "Developing Desensitization Plans" # Therapist filters patients by those with at least 1 preliminary ERP plan (i.e. plan that lacks steps)
+          if users.patients_planning_preliminarily.empty?
+            flash.now[:alert] = "No patients designed preliminary ERP plans, i.e., plans sans steps."
+          else
+            @filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} designed at least one preliminary ERP plan."
+          end
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
         if users.all? {|user| user.obsessions.empty?} # If none of the patients have obsessions
