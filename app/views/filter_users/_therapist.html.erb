@@ -28,6 +28,7 @@
   ]),
   prompt: "OCD Severity and Variant" %>
   <br><br>
+  <%= select_tag "desensitization_degree", options_for_select(["Not Desensitized", "Developing Desensitization Goals", "Deficient ERP Plan Performance", "Done Desensitizing"]), prompt: "Degree of Desensitization" %>
   <br><br>
   <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms in Patients" %>
   <br><br>
