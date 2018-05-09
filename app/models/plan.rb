@@ -12,6 +12,14 @@ class Plan < ApplicationRecord
     steps.count > 1 && steps.all? {|step| step.complete?} # instance method returns true if plan consists of at least 2 steps (repeated exposure) and all steps are completed (each step's status = 1)
   end
 
+  def self.finished_by(user_id) # returns an array of string titles of plans completed by the selected patient
+    User.patients.find(user_id).plans.select {|plan| plan.done?}.pluck(:title)
+  end
+
+  def self.unfinished_by(user_id) # returns an array of string titles of plans NOT yet completed by the selected patient
+    User.patients.find(user_id).plans.reject {|plan| plan.done?}.pluck(:title)
+  end
+
   def designer
     self.obsession.user
   end
