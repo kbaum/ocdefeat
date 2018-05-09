@@ -88,7 +88,7 @@ class ObsessionsController < ApplicationController
       elsif !params[:consumed].blank? # Therapist filters obsessions by a patient's obsessions ordered from most to least time-consuming
         patient_picked = @patients.find(params[:consumed]) # params[:consumed] is the ID of the user whose obsessions we're ordering from most to least time-consuming
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "#{patient_picked.name} has some worry-free time, as this patient is not obsessing about anything!"
+          flash.now[:alert] = "#{patient_picked.name} has time to meditate with a worry-free mind, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
           first_timeframe = patient_picked.obsessions.first.time_consumed
           if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
