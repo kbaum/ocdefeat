@@ -101,6 +101,9 @@ class User < ApplicationRecord
     patients_with_populated_plan.select {|user| user.plans.any? {|plan| !plan.done?}}
   end
 
+  def self.patients_fully_desensitized # returns array of users who have obsessions, who have no obsessions that lack ERP plans, and whose ERP plans are all completed
+  end
+
   def num_plans_designed
     self.plans.count if self.patient?
   end
