@@ -47,7 +47,7 @@ class User < ApplicationRecord
   end
 
   def self.asymptomatic # returns all users who have obsessions that are symptomless
-    joins(:obsessions).merge(Obsession.symptomless).distinct
+    patients_obsessing.merge(Obsession.symptomless)
   end
 
   def self.recent_ruminators # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
