@@ -65,7 +65,7 @@ class UsersController < ApplicationController
             flash.now[:alert] = "Patients are becoming desensitized to their obsessions. No obsessions lack ERP plans!"
           else
             @filtered_users = users.with_obsession_without_plan
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} not fully desensitized to all obsessions, having reported at least one obsession that lacks ERP plans."
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} not fully desensitized to obsessions, having reported at least one obsession that lacks ERP plans."
           end
         elsif params[:desensitization_degree] == "Developing Desensitization Plans" # Therapist filters patients by those with at least 1 preliminary ERP plan (i.e. plan that lacks steps)
           if users.patients_planning_preliminarily.empty?
