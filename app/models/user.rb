@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
   def self.recent_ruminators # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
     interval = (Time.now.midnight - 1.day)..Time.now.midnight
-    joins(:obsessions).where(obsessions: {created_at: interval}).distinct
+    patients_obsessing.where(obsessions: { created_at: interval })
   end
 
   def self.with_obsession_without_plan # Returns all users who have at least 1 obsession for which no ERP plans were designed
