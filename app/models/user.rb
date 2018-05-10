@@ -10,9 +10,9 @@ class User < ApplicationRecord
   scope :patients_traditional, -> { patients.where(variant: "Traditional") }
   scope :patients_purely_obsessional, -> { patients.where(variant: "Purely Obsessional") }
 
-  scope :patients_sans_plans, -> { patients.includes(:plans).where(plans: { id: nil }) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
+  scope :patients_sans_plans, -> { patients.includes(:plans).where(plans: { id: nil }) }
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
