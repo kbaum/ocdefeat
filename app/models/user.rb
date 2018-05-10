@@ -21,7 +21,7 @@ class User < ApplicationRecord
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
   validates :variant, inclusion: { in: ["Traditional", "Purely Obsessional", "Both", "Neither"], message: "must be selected from the available OCD variants" }
   validates :severity, inclusion: { in: ["Mild", "Moderate", "Severe", "Extreme", "Nonobsessive"], message: "must be selected from the available OCD severities" }
-  validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles", on: :create }
+  validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles" }, on: :create
 
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
