@@ -93,7 +93,7 @@ class User < ApplicationRecord
     joins(:plans).merge(Plan.stepless)
   end
 
-  def self.with_populated_plan # returns AR::Relation of users who have at least 1 plan populated with steps
+  def self.patients_with_populated_plan # returns AR::Relation of users who have at least 1 plan populated with steps
     joins(:plans).merge(Plan.procedural)
   end
 
