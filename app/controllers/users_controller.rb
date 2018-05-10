@@ -86,7 +86,7 @@ class UsersController < ApplicationController
             flash.now[:alert] = "No patient is fully desensitized to all OCD triggers."
           else
             @filtered_users = users.patients_fully_desensitized
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} fully desensitized to OCD triggers, having implemented and fulfilled an ERP plan for each obsession!"
+            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} fully desensitized to OCD triggers, having implemented an ERP plan for each obsession!"
           end
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
