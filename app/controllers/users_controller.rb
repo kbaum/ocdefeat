@@ -126,10 +126,10 @@ class UsersController < ApplicationController
             flash.now[:alert] = "Patients cannot be ordered by obsession count, as all patients have #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
           elsif params[:num_obsessions] == "Least to Most Obsessions"
             @filtered_users = users.least_to_most_obsessions # stores array of patients ordered by those w/ least to most obsessions
-            flash.now[:notice] = "Patients are ordered by ascending obsession count!"
+            flash.now[:notice] = "Patients are ordered from least to most obsessive!"
           else
             @filtered_users = users.most_to_least_obsessions # stores array of patients ordered by those w/ most to least obsessions
-            flash.now[:notice] = "Patients are ordered by descending obsession count!"
+            flash.now[:notice] = "Patients are ordered from most to least obsessive!"
           end
         end
       else
