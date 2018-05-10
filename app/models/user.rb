@@ -103,6 +103,7 @@ class User < ApplicationRecord
   end
 
   def self.patients_fully_desensitized # returns array of users who have obsessions, who have no obsessions that lack ERP plans, and whose ERP plans are all completed
+    patients_obsessing.reject {|patient| with_obsession_without_plan.include?(patient)}.reject {|patient| patients_with_unfinished_plan.include?(patient)}
   end
 
   def num_plans_designed
