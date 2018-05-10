@@ -97,6 +97,10 @@ class User < ApplicationRecord
     joins(:plans).merge(Plan.procedural)
   end
 
+  def self.patients_with_finished_plan # returns AR::Relation of users who have at least 1 plan that is finished
+    patients_with_populated_plan.select {|user| user.plans.any? {|plan| plan.done?}}
+  end
+
   def num_plans_designed
     self.plans.count if self.patient?
   end
