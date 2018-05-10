@@ -56,7 +56,7 @@ class User < ApplicationRecord
   end
 
   def self.with_obsession_without_plan # Returns all users who have at least 1 obsession for which no ERP plans were designed
-    joins(:obsessions).merge(Obsession.sans_plans)
+    patients_obsessing.merge(Obsession.sans_plans)
   end
 
   def self.by_role(string_role)
