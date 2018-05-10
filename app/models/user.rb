@@ -92,7 +92,7 @@ class User < ApplicationRecord
   end
 
   def self.patients_planning_preliminarily # returns AR::Relation of users who have at least 1 plan that lacks steps
-    joins(:plans).merge(Plan.stepless)
+    patients_planning.merge(Plan.stepless)
   end
 
   def self.patients_with_populated_plan # returns AR::Relation of users who have at least 1 plan populated with steps
