@@ -21,7 +21,7 @@ class User < ApplicationRecord
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
   validates :variant, inclusion: { in: ["Traditional", "Purely Obsessional", "Both", "Neither"], message: "must be selected from the available OCD variants" }
   validates :severity, inclusion: { in: ["Mild", "Moderate", "Severe", "Extreme", "Nonobsessive"], message: "must be selected from the available OCD severities" }
-  validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles" }, allow_blank: true
+  validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles", on: :create }
 
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
@@ -64,7 +64,7 @@ class User < ApplicationRecord
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
-    self.where.not(role_requested: rejected_roles, role: role_number)
+    self.where.not(role_requested: "").where.not(role_requested: rejected_roles, role: role_number)
   end
 
   def self.by_ocd_severity(severity)
