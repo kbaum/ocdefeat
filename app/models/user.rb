@@ -97,10 +97,6 @@ class User < ApplicationRecord
     joins(:plans).merge(Plan.procedural)
   end
 
-  def self.patients_with_finished_plan # returns array of users who have at least 1 plan that is finished
-    patients_with_populated_plan.select {|user| user.plans.any? {|plan| plan.done?}}
-  end
-
   def self.patients_with_unfinished_plan # returns array of users who have at least 1 plan that is unfinished
     patients_with_populated_plan.select {|user| user.plans.any? {|plan| !plan.done?}}
   end
