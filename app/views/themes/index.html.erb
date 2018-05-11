@@ -1,25 +1,27 @@
-<h2>OCD Themes</h2>
+<% if !@themes.empty? %>
+  <h2>OCD Themes</h2>
 
-<h4><em>Discover the prevalence of a particular type of OCD in patients!</em></h4>
+  <h4><em>Discover the prevalence of a particular type of OCD in patients!</em></h4>
 
-<br>
+  <br>
 
-<label>Filter OCD Themes by:</label>
+  <label>Filter OCD Themes by:</label>
 
-<br><br>
-
-<%= form_tag(themes_path, method: "get") do %>
-  <%= select_tag "prevalence", options_for_select(["Least to Most Prevalent", "Most to Least Prevalent"]), prompt: "Prevalence of OCD Theme in Patients" %>
   <br><br>
-  <%= select_tag "obsession_count", options_for_select(["Least to Most Obsessions per Theme", "Most to Least Obsessions per Theme"]), prompt: "Number of Obsessions per Theme" %>
-  <br><br>
-  <%= submit_tag "Filter Themes" %>
-<% end %>
 
-<hr>
+  <%= form_tag(themes_path, method: "get") do %>
+    <%= select_tag "prevalence", options_for_select(["Least to Most Prevalent", "Most to Least Prevalent"]), prompt: "Prevalence of OCD Theme in Patients" %>
+    <br><br>
+    <%= select_tag "obsession_count", options_for_select(["Least to Most Obsessions per Theme", "Most to Least Obsessions per Theme"]), prompt: "Number of Obsessions per Theme" %>
+    <br><br>
+    <%= submit_tag "Filter Themes" %>
+  <% end %>
 
-<% if @theme %>
-  <%= render @theme %>
-<% elsif @themes %>
-  <%= render(@themes) || "The Index of OCD Themes is currently empty." %>
+  <hr>
+
+  <% if @theme %>
+    <%= render @theme %>
+  <% elsif @themes %>
+    <%= render(@themes) %>
+  <% end %>
 <% end %>
