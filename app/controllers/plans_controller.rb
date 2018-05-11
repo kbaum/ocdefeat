@@ -5,7 +5,7 @@ class PlansController < ApplicationController
 
   def index
     plans = policy_scope(Plan)
-    @patients = User.where(role: 1)
+    @patients = User.patients
     @themes = Theme.all
 
     if current_user.patient?
