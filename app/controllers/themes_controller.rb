@@ -1,6 +1,15 @@
 class ThemesController < ApplicationController
   before_action :require_themes, only: :index
 
+  def create
+    @theme = Theme.new(theme_params)
+    if @theme.save
+      redirect_to themes_path, notice: "You created the new OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!"
+    else
+      redirect_to themes_path, alert: "Notwithstanding your psychological expertise, your attempt to create a new, unique OCD theme was unsuccessful. Please try again."
+    end
+  end
+
   def index
     themes = policy_scope(Theme)
     @new_theme = Theme.new # instance for form_for to wrap around when therapist creates new theme on themes index page
@@ -54,7 +63,7 @@ class ThemesController < ApplicationController
     def require_themes # private method called before themes#index ensures that there is at least 1 existing theme when patient/admin views index
       if Theme.all.empty? # If there are no OCD themes
         if current_user.therapist?
-          flash[:alert] = "The Index of OCD Themes is currently empty. You may add a new theme commonly seen among your patients."
+          flash[:alert] = "The Index of OCD Themes is currently empty. Add a new theme commonly seen among your patients!"
         else
           redirect_to root_url, alert: "The Index of OCD Themes is currently empty."
         end
