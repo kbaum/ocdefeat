@@ -54,7 +54,7 @@ class ThemesController < ApplicationController
     def require_themes # private method called before themes#index ensures that there is at least 1 existing theme when patient/admin views index
       if Theme.all.empty? # If there are no OCD themes
         if current_user.therapist?
-          flash[:alert] = "The Index of OCD Themes is currently empty. You may create a new theme in which to classify patients' obsessions."
+          flash[:alert] = "The Index of OCD Themes is currently empty. You may add a new theme commonly seen among your patients."
         else
           redirect_to root_url, alert: "The Index of OCD Themes is currently empty."
         end
