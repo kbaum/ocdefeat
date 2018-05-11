@@ -75,7 +75,11 @@ class UsersController < ApplicationController
             flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} designed at least one preliminary ERP plan."
           end
         elsif params[:desensitization_degree] == "Deficient ERP Plan Performance" # Therapist filters patients by those who have at least 1 incomplete ERP plan
-          if users.patients_with_unfinished_plan.empty?
+          if users.patients_planning.empty?
+            flash.now[:alert] = "Patients are not implementing ERP plans; the Index of ERP Plans is currently empty."
+          elsif users.patients_with_populated_plan.empty?
+            flash.now[:alert] = "Patients have only brainstormed the titles and goals of ERP plans. An ERP plan must contain a step-by-step procedure before its status of completion can be determined."
+          elsif users.patients_with_unfinished_plan.empty?
             flash.now[:alert] = "Patients proficiently performed all ERP plans; no plans were left unfinished."
           else
             @filtered_users = users.patients_with_unfinished_plan
