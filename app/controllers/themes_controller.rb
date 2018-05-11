@@ -4,7 +4,7 @@ class ThemesController < ApplicationController
   def index
     themes = policy_scope(Theme)
     @new_theme = Theme.new # instance for form_for to wrap around when therapist creates new theme on themes index page
-    patients = User.where(role: 1)
+    patients = User.patients
 
     if !params[:prevalence].blank? # Filtering OCD themes by prevalence of theme among patients
       primary_prevalence = themes.first.prevalence_in_patients # stores the number of distinct users obsessing about the 1st theme
