@@ -103,12 +103,11 @@ class User < ApplicationRecord
     patients_with_populated_plan.select {|user| user.plans.any? {|plan| !plan.done?}}
   end
 
-  def self.patients_fully_desensitized # returns array of users who have obsessions, who have no obsessions that lack ERP plans, and whose ERP plans are all completed
-    #patients_obsessing.reject {|patient| with_obsession_without_plan.include?(patient)}.reject {|patient| patients_with_unfinished_plan.include?(patient)}
+  def self.patients_fully_desensitized # returns array of users who have obsessions, whose obsessions do NOT lack ERP plans, and whose ERP plans are all completed
     obsessing = User.patients_obsessing
-    obsessing_but_fully_planning = obsessing.reject {|u| obsessing.with_obsession_without_plan.include?(u)}
+    obsessing_but_fully_planning = obsessing.reject {|user| obsessing.with_obsession_without_plan.include?(user)}
     obsessing_but_fully_planning_with_steps = obsessing_but_fully_planning.reject {|user| user.plans.any? {|plan| plan.steps.empty?}}
-    obsessing_but_fully_planning_with_steps.select {|patient| patient.plans.all? {|plan| plan.done?}}
+    obsessing_but_fully_planning_with_steps.select {|user| user.plans.all? {|plan| plan.done?}}
   end
 
   def num_plans_designed
