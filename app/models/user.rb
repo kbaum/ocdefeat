@@ -96,7 +96,7 @@ class User < ApplicationRecord
   end
 
   def self.patients_with_populated_plan # returns AR::Relation of users who have at least 1 plan populated with steps
-    joins(:plans).merge(Plan.procedural)
+    patients_planning.merge(Plan.procedural)
   end
 
   def self.patients_with_unfinished_plan # returns array of users who have at least 1 plan that is unfinished
