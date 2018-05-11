@@ -1,5 +1,5 @@
 class Plan < ApplicationRecord
-  scope :procedural, -> { joins(:steps).distinct } # returns AR:Relation of all plans that have steps
+  scope :procedural, -> { includes(:steps).where.not(steps: { id: nil }) }
   scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
 
   belongs_to :obsession
