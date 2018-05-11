@@ -60,4 +60,8 @@ class ThemesController < ApplicationController
         end
       end
     end
+
+    def theme_params # private method returns sanitized, strong params
+      params.require(:theme).permit(:name, :obsession_ids => [])
+    end
 end
