@@ -6,7 +6,7 @@ class PlansController < ApplicationController
   def index
     plans = policy_scope(Plan)
     @patients = User.patients
-    @themes = Theme.all
+    @themes = policy_scope(Theme)
 
     if current_user.patient?
       if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores unique title of plan
