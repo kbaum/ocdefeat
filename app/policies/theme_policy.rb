@@ -7,8 +7,8 @@ class ThemePolicy < ApplicationPolicy
     end
   end
 
-  def create? # only patients can create a new OCD theme (in the form to create a new obsession)
-    user.patient?
+  def create? # Patients create new theme in the form to create new obsession; therapists create new theme on themes index page
+    user.patient? || user.therapist?
   end
 
   def destroy? # only therapists can remove OCD themes (b/c they can judge whether a proposed OCD theme is an accurate type of OCD)
