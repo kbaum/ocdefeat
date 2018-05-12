@@ -9,7 +9,9 @@ class PlansController < ApplicationController
     @themes = policy_scope(Theme)
 
     if current_user.patient?
-      if !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
+      if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
+        @plans = plans.find(params[:title])
+      elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
         thought = current_user.obsessions.find(params[:obsession_targeted]).intrusive_thought
         @plans = current_user.obsessions.find(params[:obsession_targeted]).plans
         if @plans.empty? # If no plans for that obsession were found
