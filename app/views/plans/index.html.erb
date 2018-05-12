@@ -10,10 +10,8 @@
 
 <br>
 
-<% if @plan %>
-  <p><%= link_to @plan.title, plan_path(@plan) %></p>
-<% elsif @plans %>
-  <%= render partial: "plans_ul", locals: { plans: @plans } %>
+<% if @plans %>
+  <%= render partial: "plan_div", locals: { plans: @plans } %>
 <% elsif @completed || @not_yet_completed %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
   <%= render partial: "plan_progress_div", locals: { completed: @completed, not_yet_completed: @not_yet_completed } %>
 <% end %>
