@@ -188,14 +188,16 @@ class PlansController < ApplicationController
     def require_plans # private method called before plans#index
       plans = policy_scope(Plan)
       # When viewer is admin/therapist, plans = Plan.all (all ERP plans designed by all patients)
-      # when viewer is patient, plans stores 'array' of only that patient's plans
-      if current_user.admin? || current_user.therapist?
-        if plans.empty?
-          redirect_to user_path(current_user), alert: "The index of all patients' ERP plans is empty."
-        end
-      elsif current_user.patient?
-        if plans.empty?
-          redirect_to new_plan_path, alert: "Looks like you didn't desensitize lately! Your index of ERP plans is currently empty."
+      # When viewer is patient, plans stores 'array' of only that patient's plans
+      if plans.empty?
+        if current_user.admin? || current_user.therapist?
+          redirect_to root_path, alert: "Patients are not implementing ERP plans; the Index of ERP plans is currently empty."
+        elsif current_user.patient?
+          if current_user.obsessions.empty? # If the user has no plans but also has no obsessions
+            redirect_to user_path(current_user), alert: "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
+          else # the patient has obsessions for which no plans were designed
+            redirect_to new_plan_path, alert: "Looks like you're obsessing and need to implement some exposure exercises. Why not design a new ERP plan now?"
+          end
         end
       end
     end
