@@ -28,10 +28,6 @@ class Plan < ApplicationRecord
     self.where(obsession_id: the_obsession_id)
   end
 
-  def self.by_title(the_title)
-    self.find_by(title: the_title)
-  end
-
   def self.by_theme(theme_id)
     self.where("obsession_id IN (?)", Theme.find(theme_id).obsession_ids)
   end
