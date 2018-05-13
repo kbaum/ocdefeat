@@ -25,7 +25,12 @@ class PlansController < ApplicationController
       end
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
-        
+        if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
+          flash.now[:alert] = "No ERP plans were designed by patient #{@patients.find(params[:designer]).name}."
+        else
+          @plans = plans.designed_by(params[:designer])
+          flash.now[:notice] = "You found #{@plans.count} ERP #{'plan'.pluralize(@plans.count)} designed by patient #{@plans.first.designer.name}!"
+        end
       elsif !params[:subset].blank? # Therapist filters plans by OCD subset -- params[:subset] is the ID of the theme
         string_subset = Theme.find(params[:subset]).name
         @plans = plans.by_theme(params[:subset])
