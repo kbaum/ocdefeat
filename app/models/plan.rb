@@ -20,8 +20,8 @@ class Plan < ApplicationRecord
     User.patients.find(user_id).plans.reject {|plan| plan.done?}.pluck(:title)
   end
 
-  def designer
-    self.obsession.user
+  def designer # instance method called on plan instance (implicit self) returns user who designed the plan
+    obsession.user
   end
 
   def self.by_obsession(the_obsession_id)
