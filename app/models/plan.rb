@@ -24,7 +24,7 @@ class Plan < ApplicationRecord
     obsession.user
   end
 
-  def self.by_designer(designer_id)
+  def self.designed_by(designer_id)
     User.patients.find(designer_id).plans
   end
 
