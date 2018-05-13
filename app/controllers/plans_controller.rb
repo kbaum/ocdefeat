@@ -32,14 +32,7 @@ class PlansController < ApplicationController
           flash.now[:notice] = "You found #{@plans.count} ERP #{'plan'.pluralize(@plans.count)} designed by patient #{@plans.first.designer.name}!"
         end
       elsif !params[:subset].blank? # Therapist filters plans by OCD subset -- params[:subset] is the ID of the theme
-        string_subset = Theme.find(params[:subset]).name
-        @plans = plans.by_theme(params[:subset])
-        if @plans.empty? # No plans are classified in the selected OCD subset
-          flash.now[:alert] = "No ERP plans pertain to '#{string_subset}.'"
-        else
-          @plans
-          flash.now[:notice] = "You found ERP plans pertaining to '#{string_subset}!'"
-        end
+        
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's preliminary plans (plans w/o steps)
         patient_name = @patients.find(params[:patient_planning]).name
         if @patients.find(params[:patient_planning]).plans.empty? # the patient selected has no ERP plans
