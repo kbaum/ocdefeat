@@ -13,12 +13,11 @@ class PlansController < ApplicationController
         @plans = plans.find(params[:title])
       elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
         thought = current_user.obsessions.find(params[:obsession_targeted]).intrusive_thought
-        @plans = current_user.obsessions.find(params[:obsession_targeted]).plans
-        if @plans.empty? # If no plans for that obsession were found
-          flash.now[:alert] = "No ERP plans were found for the obsession \"#{thought}\""
+        if current_user.obsessions.find(params[:obsession_targeted]).plans.empty? # If no plans for the selected obsession were found
+          flash.now[:alert] = "No ERP plans target the obsession \"#{thought}\""
         else
-          @plans # stores 'array' of plans belonging to the obsession selected
-          flash.now[:notice] = "You found ERP plans targeting the obsession \"#{thought}!\""
+          @plans = current_user.obsessions.find(params[:obsession_targeted]).plans # stores 'array' of plans belonging to the obsession selected
+          flash.now[:notice] = "You can implement #{@plans.count} ERP #{'plan'.pluralize(@plans.count)} to expose yourself to the obsession \"#{thought}!\""
         end
       else # Patient did not choose a filter, so @plans stores 'array' of only plans designed by the patient
         @plans = plans
