@@ -20,8 +20,8 @@ class Plan < ApplicationRecord
     User.patients.find(designer_id).plans
   end
 
-  def self.by_theme(theme_id)
-    self.where("obsession_id IN (?)", Theme.find(theme_id).obsession_ids)
+  def self.by_subset(subset_id)
+    where("obsession_id IN (?)", Theme.find(subset_id).obsession_ids)
   end
 
   def self.with_steps # class method returns all plan instances that have 1 or more steps
