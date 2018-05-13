@@ -32,10 +32,6 @@ class Plan < ApplicationRecord
     self.where("obsession_id IN (?)", Theme.find(theme_id).obsession_ids)
   end
 
-  def self.by_designer(designer_id)
-    User.where(role: 1).find(designer_id).plans
-  end
-
   def self.with_steps # class method returns all plan instances that have 1 or more steps
     self.all.select {|plan| plan.steps.count >= 1}
   end
