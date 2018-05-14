@@ -24,6 +24,10 @@ class Plan < ApplicationRecord
     where("obsession_id IN (?)", Theme.find(subset_id).obsession_ids)
   end
 
+  def self.finished # class method returns AR::Relation of all plans (with at least 1 step) that are completed
+    procedural.merge(includes(:steps).where(steps: { status: 1 }))
+  end
+
   def self.plans_completed_by_patient(patient_id) # returns 'array' of all completed plans designed by a particular patient
     User.where(role: 1).find(patient_id).plans.select {|plan| plan.done?}
   end
