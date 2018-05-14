@@ -39,7 +39,15 @@ class PlansController < ApplicationController
           flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} will expose patients to \"#{Theme.find(params[:subset]).name}!\""
         end
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's preliminary plans (plans w/o steps)
-        
+        patient_name = @patients.find(params[:patient_planning]).name
+        if @patients.find(params[:patient_planning]).plans.empty? # If the selected patient has no ERP plans
+          flash.now[:alert] = "No ERP plans, including preliminary plans, were designed by patient #{patient_name}."
+        elsif @patients.find(params[:patient_planning]).plans.stepless.empty? # The patient has plans, but all of these plans have steps
+          flash.now[:alert] = "No preliminary plans were found for #{patient_name}, as all plans designed by this patient contain steps."
+        else # The patient has plans without steps
+          @plans = @patients.find(params[:patient_planning]).plans.stepless
+          flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{@plans.count} preliminary ERP #{'plan'.pluralize(@plans.count)}!"
+        end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
         patient_progressing = @patients.find(params[:patient_progressing])
         if patient_progressing.plans.empty? # the patient selected has no ERP plans
