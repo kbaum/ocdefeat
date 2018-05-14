@@ -48,25 +48,8 @@ class PlansController < ApplicationController
           @plans = @patients.find(params[:patient_planning]).plans.stepless
           flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{@plans.count} preliminary ERP #{'plan'.pluralize(@plans.count)}!"
         end
-      elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion
-        patient_progressing = @patients.find(params[:patient_progressing])
-        if patient_progressing.plans.empty? # the patient selected has no ERP plans
-          @plans = nil
-          flash.now[:alert] = "Patient #{patient_progressing.name} must design ERP plans in order to make progress!"
-        elsif patient_progressing.plans.with_steps.empty? # the patient has plans, but none of the plans have steps
-          @plans = nil
-          flash.now[:alert] = "Progress can only be made if plans contain steps! #{patient_progressing.name} should add ERP exercises to each preliminary plan!"
-        else # the patient has plans with steps
-          if !patient_progressing.plans.completed.empty? # If the patient has completed ERP plans
-            @completed = patient_progressing.plans.completed # @completed stores the patient's completed plans
-          end
-
-          if !patient_progressing.plans.not_yet_completed.empty? # If the patient has incomplete ERP plans
-            @not_yet_completed = patient_progressing.plans.not_yet_completed # @not_yet_completed stores the patient's incomplete plans
-          end
-
-          flash.now[:notice] = "You retrieved #{patient_progressing.name}'s ERP progress report, which identifies this patient's completed and/or incomplete ERP plans!"
-        end
+      elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
+        
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
