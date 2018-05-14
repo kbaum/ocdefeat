@@ -24,14 +24,6 @@ class Plan < ApplicationRecord
     where("obsession_id IN (?)", Theme.find(subset_id).obsession_ids)
   end
 
-  def self.completed # class method returns 'array' of all plans (with at least 1 step) that are completed
-    self.with_steps.reject {|plan| !plan.done?}
-  end
-
-  def self.not_yet_completed # class method returns 'array' of all plans (with at least 1 step) that are not completed
-    self.with_steps.reject {|plan| plan.done?}
-  end
-
   def self.plans_completed_by_patient(patient_id) # returns 'array' of all completed plans designed by a particular patient
     User.where(role: 1).find(patient_id).plans.select {|plan| plan.done?}
   end
