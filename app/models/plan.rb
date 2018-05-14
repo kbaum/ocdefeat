@@ -24,10 +24,6 @@ class Plan < ApplicationRecord
     where("obsession_id IN (?)", Theme.find(subset_id).obsession_ids)
   end
 
-  def self.with_steps # class method returns all plan instances that have 1 or more steps
-    self.all.select {|plan| plan.steps.count >= 1}
-  end
-
   def self.completed # class method returns 'array' of all plans (with at least 1 step) that are completed
     self.with_steps.reject {|plan| !plan.done?}
   end
