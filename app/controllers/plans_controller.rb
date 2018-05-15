@@ -89,7 +89,21 @@ class PlansController < ApplicationController
           end
         end # closes logic for params[:date]
       elsif !params[:population].blank? # Admin filters plans by preliminary plans (without steps) vs. populated plans (with steps)
-                
+        if params[:population] == "Preliminary Plans (sans steps)"
+          if plans.stepless.empty? # If all plans HAVE steps
+            flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
+          else
+            @plans = plans.stepless
+            flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} lacking steps!"
+          end
+        elsif params[:population] == "Plans Populated with Steps"
+          if plans.procedural.empty? # If no plans have steps
+            flash.now[:alert] = "No populated plans were found; all ERP plans lack steps."
+          else
+            @plans = plans.procedural
+            flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} populated with steps!"
+          end
+        end
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
         if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
           @plans = nil
