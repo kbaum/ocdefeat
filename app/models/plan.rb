@@ -25,7 +25,11 @@ class Plan < ApplicationRecord
   end
 
   def self.finished # class method returns AR::Relation of all plans (with at least 1 step) that are completed
-    joins(:steps).distinct.where(steps: { status: 1 })
+    procedural.joins(:steps).distinct.where(steps: { status: 1 })
+  end
+
+  def self.unfinished # class method returns an array of titles of unfinished plans
+    procedural.select {|plan| !plan.done?}.pluck(:title)
   end
 
   def self.plans_completed_by_patient(patient_id) # returns 'array' of all completed plans designed by a particular patient
