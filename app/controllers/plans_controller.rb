@@ -88,8 +88,8 @@ class PlansController < ApplicationController
             flash.now[:notice] = "You found #{@plans.count} ERP #{'plan'.pluralize(@plans.count)} from the past!"
           end
         end # closes logic for params[:date]
-      elsif !params[:stepless].blank? # Admin filters plans by preliminary plans (plans without steps)
-        
+      elsif !params[:population].blank? # Admin filters plans by preliminary plans (without steps) vs. populated plans (with steps)
+                
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
         if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
           @plans = nil
