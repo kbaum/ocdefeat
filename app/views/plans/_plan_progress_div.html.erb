@@ -1,0 +1,24 @@
+<div class="well well-lg">
+  <h4>ERP Progress Report</h4>
+
+  <br>
+
+  <% if finished %> <!--If the patient selected has finished ERP plans-->
+    <p><em>Finished ERP Plans:</em></p>
+    <ul>
+      <% finished.each do |finished_plan| %>
+        <li><%= link_to finished_plan.title, plan_path(finished_plan) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if unfinished %> <!--If the patient selected has unfinished ERP plans-->
+    <p><em>Unfinished ERP Plans:</em></p>
+    <ul>
+      <% unfinished.each do |unfinished_plan_title| %>
+        <li><%= link_to unfinished_plan_title, plan_path(Plan.find_by(title: unfinished_plan_title)) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+</div>
