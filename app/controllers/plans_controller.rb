@@ -69,27 +69,11 @@ class PlansController < ApplicationController
           end
         end
       else # Therapist did not choose a filter for filtering plans
-        @plans = plans
+        @plans = plans # stores all plans designed by all patients
       end # closes logic about filter selected
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters plans by date created
-        if params[:date] == "Today"
-          @plans = plans.from_today
-          if @plans.empty? # If no plans were created today
-            flash.now[:alert] = "No ERP plans were created today."
-          else
-            @plans
-            flash.now[:notice] = "You found ERP plans designed today!"
-          end
-        elsif params[:date] == "Past Plans"
-          @plans = plans.past_plans
-          if @plans.empty? # If no plans were created prior to today
-            flash.now[:alert] = "No ERP plans were created prior to today."
-          else
-            @plans
-            flash.now[:notice] = "You found ERP plans from the past!"
-          end
-        end # closes logic for params[:date]
+        
       elsif !params[:stepless].blank? # Admin filters plans by preliminary plans (plans without steps)
         @plans = plans.stepless
         if @plans.empty? # all plans HAVE steps
