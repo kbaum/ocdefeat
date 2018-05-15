@@ -28,8 +28,8 @@ class Plan < ApplicationRecord
     procedural.joins(:steps).distinct.where(steps: { status: 1 })
   end
 
-  def self.unfinished # class method returns an array of titles of unfinished plans
-    procedural.select {|plan| !plan.done?}.pluck(:title)
+  def self.unfinished # class method returns an array of unfinished plans
+    procedural.select {|plan| !plan.done?}
   end
 
   def self.from_today
