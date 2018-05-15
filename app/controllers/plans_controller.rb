@@ -105,28 +105,7 @@ class PlansController < ApplicationController
           end
         end
       elsif !params[:completion].blank? # Admin filters plans by whether or not plan is completed
-        if plans.with_steps.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
-          @plans = nil
-          flash.now[:alert] = "ERP plans must have at least one step before assessing status of completion."
-        else # Plans with at least 1 step were found
-          if params[:completion] == "Completed"
-            @plans = plans.completed
-            if @plans.empty? # this means that plans with at least 1 step were found, but none of these plans were completed
-              flash.now[:alert] = "Completed ERP plans were not found."
-            else
-              @plans # stores array of completed plans (each containing at least 1 step)
-              flash.now[:notice] = "You found completed ERP plans!"
-            end
-          elsif params[:completion] == "Not Yet Completed"
-            @plans = plans.not_yet_completed
-            if @plans.empty? # plans with at least 1 step were found, but these plans were completed
-              flash.now[:alert] = "Unfinished ERP plans were not found."
-            else
-              @plans # stores array of incomplete plans (each containing at least 1 step)
-              flash.now[:notice] = "You found ERP plans that are not yet completed!"
-            end
-          end # closes logic starting with if params[:completion] == "Completed"
-        end # closes logic from if @plans = plans.with_steps.empty?
+        
       else # Admin did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
