@@ -1,6 +1,9 @@
 <%= form_tag("/plans", method: "get") do %>
   <%= select_tag "date", options_for_select(["Today", "Past Plans"]), prompt: "Date Created" %>
+  <br><br>
   <%= select_tag "population", options_for_select(["Preliminary Plans (sans steps)", "Procedural Plans (populated with steps)"]), prompt: "Preliminary vs. Procedural Plans" %>
+  <br><br>
   <%= select_tag "completion", options_for_select(["Finished", "Unfinished"]), prompt: "Progress Toward Completion" %>
+  <br><br>
   <%= submit_tag "Filter Plans" %>
 <% end %>
