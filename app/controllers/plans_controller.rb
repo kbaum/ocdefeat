@@ -59,12 +59,13 @@ class PlansController < ApplicationController
         else # If the patient has plans with steps
           @finished = patient_progressing.plans.finished if !patient_progressing.plans.finished.empty?
           @unfinished = patient_progressing.plans.unfinished if !patient_progressing.plans.unfinished.empty?
+          flash.now[:notice] = "You retrieved #{patient_progressing.name}'s ERP progress report, which identifies this patient's finished and/or unfinished ERP plans!"
           if @finished && @unfinished # If the patient has both finished and unfinished plans
-            flash.now[:notice] = "#{patient_progressing.name} finished #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
+            @report = "finished #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
           elsif @finished.nil? # If the patient did not finish any ERP plans
-            flash.now[:notice] = "Patient #{patient_progressing.name} failed to finish any ERP plans and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
+            @report = "failed to finish any ERP plans and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
           elsif @unfinished.nil? # If the patient only has finished ERP plans
-            flash.now[:notice] = "Patient #{patient_progressing.name} achieved desensitization by implementing #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} from start to finish!"
+            @report = "achieved desensitization by implementing #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} from start to finish!"
           end
         end
       else # Therapist did not choose a filter for filtering plans
