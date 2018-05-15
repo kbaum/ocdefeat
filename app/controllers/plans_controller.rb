@@ -88,7 +88,7 @@ class PlansController < ApplicationController
             flash.now[:notice] = "You found #{@plans.count} ERP #{'plan'.pluralize(@plans.count)} from the past!"
           end
         end # closes logic for params[:date]
-      elsif !params[:population].blank? # Admin filters plans by preliminary plans (without steps) vs. populated plans (with steps)
+      elsif !params[:population].blank? # Admin filters plans by preliminary plans (without steps) vs. procedural plans (with steps)
         if params[:population] == "Preliminary Plans (sans steps)"
           if plans.stepless.empty? # If all plans HAVE steps
             flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
@@ -96,9 +96,9 @@ class PlansController < ApplicationController
             @plans = plans.stepless
             flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} lacking steps!"
           end
-        elsif params[:population] == "Plans Populated with Steps"
+        elsif params[:population] == "Procedural Plans (populated with steps)"
           if plans.procedural.empty? # If no plans have steps
-            flash.now[:alert] = "No populated plans were found; all ERP plans lack steps."
+            flash.now[:alert] = "No procedural plans were found; all ERP plans lack steps."
           else
             @plans = plans.procedural
             flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} populated with steps!"
