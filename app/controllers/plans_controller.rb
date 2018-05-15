@@ -51,7 +51,7 @@ class PlansController < ApplicationController
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
         patient_progressing = @patients.find(params[:patient_progressing])
         if patient_progressing.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's not concerning because this patient is not obsessing!"
+          flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
         elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
           flash.now[:alert] = "Patient #{patient_progressing.name} must design ERP plans to make progress in overcoming OCD!"
         elsif patient_progressing.plans.procedural.empty? # the patient has plans, but none of the plans have steps
