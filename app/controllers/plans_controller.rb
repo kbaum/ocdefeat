@@ -49,7 +49,24 @@ class PlansController < ApplicationController
           flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{@plans.count} preliminary ERP #{'plan'.pluralize(@plans.count)}!"
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
-        
+        patient_progressing = @patients.find(params[:patient_progressing])
+        if patient_progressing.obsessions.empty? # If the selected patient has no obsessions
+          flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's not concerning because this patient is not obsessing!"
+        elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
+          flash.now[:alert] = "Patient #{patient_progressing.name} must design ERP plans to make progress in overcoming OCD!"
+        elsif patient_progressing.plans.procedural.empty? # the patient has plans, but none of the plans have steps
+          flash.now[:alert] = "Progress can only be made if ERP plans contain exposure exercises! #{patient_progressing.name} should add ERP exercises to each preliminary plan!"
+        else # If the patient has plans with steps
+          @finished = patient_progressing.plans.finished if !patient_progressing.plans.finished.empty?
+          @unfinished = patient_progressing.plans.unfinished if !patient_progressing.plans.unfinished.empty?
+          if @finished && @unfinished # If the patient has both finished and unfinished plans
+            flash.now[:notice] = "#{patient_progressing.name} finished #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
+          elsif !@finished # If the patient did not finish any ERP plans
+            flash.now[:notice] = "Patient #{patient_progressing.name} failed to finish any ERP plan and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
+          elsif !@unfinished # If the patient only has finished ERP plans
+            flash.now[:notice] = "Patient #{patient_progressing.name} achieved desensitization by implementing #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} from start to finish!"
+          end
+        end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans
       end # closes logic about filter selected
