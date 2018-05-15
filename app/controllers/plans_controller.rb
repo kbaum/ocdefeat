@@ -62,7 +62,7 @@ class PlansController < ApplicationController
           if @finished && @unfinished # If the patient has both finished and unfinished plans
             flash.now[:notice] = "#{patient_progressing.name} finished #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
           elsif !@finished # If the patient did not finish any ERP plans
-            flash.now[:notice] = "Patient #{patient_progressing.name} failed to finish any ERP plan and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
+            flash.now[:notice] = "Patient #{patient_progressing.name} failed to finish any ERP plans and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
           elsif !@unfinished # If the patient only has finished ERP plans
             flash.now[:notice] = "Patient #{patient_progressing.name} achieved desensitization by implementing #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} from start to finish!"
           end
