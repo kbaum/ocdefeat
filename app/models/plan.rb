@@ -32,14 +32,6 @@ class Plan < ApplicationRecord
     procedural.select {|plan| !plan.done?}.pluck(:title)
   end
 
-  def self.plans_completed_by_patient(patient_id) # returns 'array' of all completed plans designed by a particular patient
-    User.where(role: 1).find(patient_id).plans.select {|plan| plan.done?}
-  end
-
-  def self.plans_pending_completion_by_patient(patient_id) # returns 'array' of all plans designed by a particular patient that are incomplete
-    User.where(role: 1).find(patient_id).plans.reject {|plan| plan.done?}
-  end
-
   def self.from_today
     where("created_at >=?", Time.zone.today.beginning_of_day)
   end
