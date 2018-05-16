@@ -4,11 +4,9 @@ class Obsession < ApplicationRecord
   has_many :themes, through: :obsession_themes, dependent: :destroy
   has_many :plans, dependent: :destroy
 
-  scope :most_unnerving, -> { where('anxiety_rating >= ?', 5) }
   scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
-  scope :with_enough_exposure, -> { joins(:plans).merge(Plan.completed_plans) }
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
@@ -30,14 +28,10 @@ class Obsession < ApplicationRecord
     end
   end
 
-  def self.most_debilitating # returns AR::Relation 'array' of obsessions where anxiety_rating is > 5 and time_consumed > 6
-    most_unnerving.most_consuming
-  end
-
   def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
     where(anxiety_rating: anxiety_amount)
   end
-  
+
   def self.least_to_most_distressing
     order(:anxiety_rating)
   end
