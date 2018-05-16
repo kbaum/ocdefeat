@@ -36,8 +36,8 @@ class Obsession < ApplicationRecord
 
   def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
     where(anxiety_rating: anxiety_amount)
-  end # returns ActiveRecord::Relation ('array') of obsessions w/ given anxiety_rating
-  # or an empty 'array' #<ActiveRecord::Relation []> if no obsessions are found w/ that anxiety_rating
+  end
+  
   def self.least_to_most_distressing
     order(:anxiety_rating)
   end
