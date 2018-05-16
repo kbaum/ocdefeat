@@ -119,7 +119,7 @@ class PlansController < ApplicationController
             if plans.unfinished.empty? # If there are no unfinished plans, i.e., all plans were finished
               flash.now[:alert] = "All ERP plans were fully implemented."
             else
-              @plans = plans.unfinished # stores 'array' of unfinished plans (each containing at least 1 step)
+              @plans = plans.unfinished # stores array of unfinished plans (each containing at least 1 step)
               flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} left unfinished!"
             end
           end # closes logic starting with if params[:completion] == "Finished"
