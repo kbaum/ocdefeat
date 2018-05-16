@@ -106,7 +106,7 @@ class ObsessionsController < ApplicationController
       elsif !params[:planless].blank? # Therapist filters obsessions by a patient's obsessions that lack ERP plans
         patient_picked = @patients.find(params[:planless]) # params[:planless] is the ID of the user
         if patient_picked.obsessions.empty? # If the selected user has no obsessions
-          flash.now[:alert] = "#{patient_picked.name} has no obsessions, so there is no need for this patient to practice desensitization."
+          flash.now[:alert] = "#{patient_picked.name} has no obsessions, so there is no need for this patient to practice Exposure and Response Prevention (ERP)."
         elsif patient_picked.obsessions.sans_plans.empty? # If the selected patient has obsessions, but all of these obsessions have ERP plans
           flash.now[:alert] = "Patient #{patient_picked.name} diligently designed ERP plans for every obsession."
         else # If the patient has obsessions for which no ERP plans were designed
