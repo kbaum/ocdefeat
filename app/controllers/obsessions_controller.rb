@@ -41,10 +41,10 @@ class ObsessionsController < ApplicationController
             flash.now[:alert] = "Your obsessions cannot be ranked by amount of time spent obsessing, as each of your obsessions takes up #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of your time daily!"
           elsif params[:time_taken] == "Least to Most Time-Consuming"
             @obsessions = obsessions.least_to_most_time_consuming
-            flash.now[:notice] = "Your obsessions are listed in order of least to most time-consuming, measured in hours per day!"
+            flash.now[:notice] = "Your obsessions are ordered from least to most time-consuming!"
           else
             @obsessions = obsessions.most_to_least_time_consuming
-            flash.now[:notice] = "Your obsessions are listed in order of most to least time-consuming, measured in hours per day!"
+            flash.now[:notice] = "Your obsessions are ordered from most to least time-consuming!"
           end
         end
       elsif !params[:ocd_theme].blank? # Patient filters her own obsessions by OCD theme - params[:ocd_theme] is the ID of the theme in which the obsessions we're searching for are classified
