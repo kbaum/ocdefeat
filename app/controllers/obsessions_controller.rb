@@ -91,14 +91,14 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "#{patient_picked.name} has time to meditate with a worry-free mind, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
           first_timeframe = patient_picked.obsessions.first.time_consumed
-          if patient_picked.obsession_count == 1 # If the selected patient only has one obsession
-            @obsessions = patient_picked.obsessions
-            flash.now[:notice] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of the patient's time."
+          if patient_picked.obsession_count == 1 # If the selected patient only has 1 obsession
+            @obsessions = patient_picked.obsessions # stores AR::Relation containing 1 obsession
+            flash.now[:notice] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of the patient's time daily."
           else # If the selected patient has more than 1 obsession
             if patient_picked.obsessions.all? {|o| o.time_consumed == first_timeframe} # all of the selected patient's obsessions consume the same amount of time daily, so none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least time-consuming, as each obsession consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} daily."
-            else # patient has multiple obsessions that do not all take up the same amount of time
-              @obsessions = patient_picked.obsessions.most_to_least_time_consuming # stores 'array' of the selected patient's obsessions ordered from most to least time-consuming
+            else # The patient has multiple obsessions that do NOT all take up the same amount of time
+              @obsessions = patient_picked.obsessions.most_to_least_time_consuming # stores AR::Relation of the selected patient's obsessions ordered from most to least time-consuming
               flash.now[:notice] = "#{patient_picked.name}'s obsessions are ordered from most to least time-consuming, so you can prioritize treating the obsessions that waste the most time!"
             end
           end
