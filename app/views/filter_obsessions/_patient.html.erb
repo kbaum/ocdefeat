@@ -4,9 +4,9 @@
   <br><br>
   <%= select_tag "anxiety_ranking", options_for_select(["Least to Most Distressing", "Most to Least Distressing"]), prompt: "Anxiety Ranking" %>
   <br><br>
-  <%= select_tag "ocd_theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
-  <br><br>
   <%= select_tag "time_taken", options_for_select(["Least to Most Time-Consuming", "Most to Least Time-Consuming"]), prompt: "Time Consumed" %>
+  <br><br>
+  <%= select_tag "ocd_theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
   <br><br>
   <%= submit_tag "Filter Obsessions" %>
 <% end %>
