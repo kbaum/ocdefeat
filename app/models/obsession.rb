@@ -52,8 +52,8 @@ class Obsession < ApplicationRecord
     where(id: Theme.find(theme_id).obsession_ids)
   end
 
-  def self.by_patient(patient_id)
-    where(user_id: patient_id)
+  def self.by_patient(patient)
+    where(user: patient)
   end
 
   def self.from_today
