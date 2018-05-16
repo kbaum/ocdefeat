@@ -12,8 +12,8 @@ class ObsessionsController < ApplicationController
         if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
           flash.now[:alert] = "None of your obsessions were rated at anxiety level #{params[:anxiety_amount]}."
         else
-          @obsessions = obsessions.by_anxiety_amount(params[:anxiety_amount]) # stores 'array' of the patient's obsessions with the selected anxiety_rating
-          flash.now[:notice] = "You rated #{@obsessions.count} #{'obsession'.pluralize(@obsessions.count)} at anxiety level #{params[:anxiety_amount]}!"
+          @obsessions = obsessions.by_anxiety_amount(params[:anxiety_amount]) # stores AR::Relation of the patient's obsessions with the selected anxiety_rating
+          flash.now[:notice] = "You rated #{plural_inflection(@obsessions)} at anxiety level #{params[:anxiety_amount]}!"
         end
       elsif !params[:ocd_theme].blank? # Patient filters her own obsessions by OCD theme - params[:ocd_theme] is the ID of the theme in which the obsessions we're searching for are classified
         themed_obsessions = obsessions.by_theme(params[:ocd_theme])
