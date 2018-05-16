@@ -8,6 +8,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def sv_agreement(collection)
+      case collection
+      when @plans
+        "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)}"
+      end
+    end
+
     def user_not_authorized(exception)
       policy_name = exception.policy.class.to_s.underscore
       flash[:alert] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
