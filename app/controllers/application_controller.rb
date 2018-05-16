@@ -8,6 +8,17 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def plural_inflection(collection)
+      case collection
+      when @filtered_users
+        "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)}"
+      when @obsessions
+        "#{@obsessions.count} #{'obsession'.pluralize(@obsessions.count)}"
+      when @plans
+        "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)}"
+      end
+    end
+
     def sv_agreement(collection)
       case collection
       when @plans
