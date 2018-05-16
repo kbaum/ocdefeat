@@ -40,16 +40,16 @@ class Obsession < ApplicationRecord
     order(anxiety_rating: :desc)
   end
 
-  def self.by_theme(theme_id) # returns 'array' of obsessions classified in selected theme, or empty 'array' if none are found
-    where("id IN (?)", Theme.find(theme_id).obsession_ids)
-  end
-
   def self.least_to_most_time_consuming
     order(:time_consumed)
   end
 
   def self.most_to_least_time_consuming
     order(time_consumed: :desc)
+  end
+
+  def self.by_theme(theme_id) # returns 'array' of obsessions classified in selected theme, or empty 'array' if none are found
+    where("id IN (?)", Theme.find(theme_id).obsession_ids)
   end
 
   def self.by_patient(patient_id)
