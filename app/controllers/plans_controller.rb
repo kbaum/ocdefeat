@@ -113,7 +113,8 @@ class PlansController < ApplicationController
               flash.now[:alert] = "Not a single ERP plan was performed from start to finish."
             else
               @plans = plans.finished # stores 'array' of finished plans (each containing at least 1 step)
-              flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} fully implemented!"
+              flash.now[:notice] = "#{sv_agreement(@plans)} fully implemented!"
+              #flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} fully implemented!"
             end
           elsif params[:completion] == "Unfinished"
             if plans.unfinished.empty? # If there are no unfinished plans, i.e., all plans were finished
