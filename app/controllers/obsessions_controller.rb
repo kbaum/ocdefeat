@@ -17,18 +17,18 @@ class ObsessionsController < ApplicationController
         end
       elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
         if current_user.obsession_count == 1 # If the patient only has 1 obsession
-          @obsessions = current_user.obsessions # @obsessions is AR::Relation 'array' that stores 1 single obsession
+          @obsessions = current_user.obsessions # @obsessions is AR::Relation storing 1 obsession
           flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsessions.first.anxiety_rating}!"
-        else # the patient has more than 1 obsession
+        else # If the patient has more than 1 obsession
           distress_degree = current_user.obsessions.first.anxiety_rating # stores the patient's first obsession's anxiety_rating
           if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree} # all of the patient's obsessions have the same anxiety_rating, so none are displayed
             flash.now[:alert] = "Your obsessions cannot be ranked in order of anxiety rating, as you rated each obsession at anxiety level #{distress_degree}!"
           elsif params[:anxiety_ranking] == "Least to Most Distressing"
             @obsessions = obsessions.least_to_most_distressing
-            flash.now[:notice] = "Your obsessions are listed in order of ascending anxiety rating!"
+            flash.now[:notice] = "Your obsessions are ordered from least to most distressing!"
           else
             @obsessions = obsessions.most_to_least_distressing
-            flash.now[:notice] = "Your obsessions are listed in order of descending anxiety rating!"
+            flash.now[:notice] = "Your obsessions are ordered from most to least distressing!"
           end
         end
       elsif !params[:time_taken].blank? # Patient filters her own obsessions by time_consumed (hrs/day)
