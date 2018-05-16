@@ -57,6 +57,7 @@ class ObsessionsController < ApplicationController
         end
       else # Patient did not choose a filter, so all of her own obsessions are listed
         @obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
+        flash.now[:notice] = "Your history of obsessions is recorded in the log below."
       end
     elsif current_user.therapist?
       if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the patient selected from dropdown
