@@ -60,12 +60,12 @@ class ObsessionsController < ApplicationController
         flash.now[:notice] = "Your history of obsessions is recorded below."
       end
     elsif current_user.therapist?
-      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the patient selected from dropdown
-        if @patients.find(params[:patient]).obsessions.empty? # if the selected patient has no obsessions
-          flash.now[:alert] = "Patient #{@patients.find(params[:patient]).name} currently has no obsessions!"
+      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
+        if @patients.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
+          flash.now[:alert] = "Patient #{@patients.find(params[:patient]).name} is not obsessing!"
         else
-          @obsessions = obsessions.by_patient(params[:patient]) # stores 'array' of all the selected patient's obsessions
-          flash.now[:notice] = "You found patient #{@patients.find(params[:patient]).name}'s obsessions!"
+          @obsessions = obsessions.by_patient(params[:patient]) # stores AR::Relation of all the selected patient's obsessions
+          flash.now[:notice] = "Patient #{@patients.find(params[:patient]).name} has #{plural_inflection(@obsessions)}!"
         end
       elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's obsessions ordered by descending distress degree (i.e. from highest to lowest anxiety_rating)
         patient_picked = @patients.find(params[:distressed]) # params[:distressed] is the ID of the user whose obsessions we're ordering by descending distress degree
