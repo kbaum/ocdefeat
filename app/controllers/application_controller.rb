@@ -21,7 +21,11 @@ class ApplicationController < ActionController::Base
 
     def sv_agreement(collection)
       case collection
-      when @plans
+      when @filtered_users # returns string such as "1 patient is" or "2 patients are"
+        "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)}"
+      when @obsessions # returns string such as "1 obsession is" or "2 obsessions are"
+        "#{@obsessions.count} #{'obsession'.pluralize(@obsessions.count)} #{'is'.pluralize(@obsessions.count)}"
+      when @plans # returns string such as "1 ERP plan is" or "2 ERP plans are"
         "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)}"
       end
     end
