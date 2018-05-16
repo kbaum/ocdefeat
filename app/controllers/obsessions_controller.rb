@@ -4,7 +4,7 @@ class ObsessionsController < ApplicationController
 
   def index
     obsessions = policy_scope(Obsession) # patient only sees her own obsessions; admins and therapists see all
-    @patients = User.where(role: 1)
+    @patients = User.patients
     @themes = policy_scope(Theme) # patients, therapists and admins see all themes
 
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
