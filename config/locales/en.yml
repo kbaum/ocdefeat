@@ -3,7 +3,7 @@ en:
     default: "You have requested a page that you cannot access."
     obsession_policy:
       new?: "Access denied! Only patients are authorized to create new obsessions."
-      show?: "Access denied! Fellow patients' obsessions are confidential!"
+      show?: "Access denied! OCDefeat will not disclose details of obsessions to preserve patient privacy and confidentiality!"
       edit?: "Access denied! An obsession is patient property; you are not authorized to edit this obsession."
     plan_policy:
       new?: "Access denied! Only patients are authorized to create new ERP plans."
