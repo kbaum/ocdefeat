@@ -148,7 +148,7 @@ class ObsessionsController < ApplicationController
       elsif !params[:date].blank? # Admin filters obsessions by date created
         if params[:date] == "Today"
           if obsessions.from_today.empty? # If no obsessions were created today
-            flash.now[:alert] = "No obsessions were created today."
+            flash.now[:alert] = "No obsessions were reported today."
           else
             @obsessions = obsessions.from_today # stores all obsessions created today
             flash.now[:notice] = "You found obsessions created today!"
