@@ -134,7 +134,7 @@ class ObsessionsController < ApplicationController
         else # > 1 obsession, some of which have ERP plans, exist
           first_plan_count = obsessions.first.plans_per_obsession
           if obsessions.all? {|o| o.plans_per_obsession == first_plan_count}
-            flash.now[:alert] = "Patients' obsessions cannot be ordered by ERP plan count, as all obsessions are targeted by #{first_plan_count} ERP #{'plan'.pluralize(first_plan_count)}."
+            flash.now[:alert] = "Patients' obsessions cannot be sorted by number of ERP plans per obsession, as all obsessions are targeted by #{first_plan_count} ERP #{'plan'.pluralize(first_plan_count)}."
           else # There are multiple obsessions, and NOT all obsessions have the same number of ERP plans
             if params[:plan_productivity] == "Least to Most ERP Plans"
               @obsessions = obsessions.least_to_most_plans
