@@ -125,7 +125,7 @@ class ObsessionsController < ApplicationController
         flash.now[:notice] = "A full psychiatric history of all patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
-      if !params[:plan_productivity].blank? # Admin filters obsessions by number of ERP plans per obsession
+      if !params[:plan_production].blank? # Admin filters obsessions by number of ERP plans per obsession
         if obsessions == obsessions.sans_plans # If all obsessions have 0 plans
           flash.now[:alert] = "No ERP plans were designed for any single obsession!"
         elsif obsessions.count == 1 # Only 1 obsession exists, but this obsession has some number of plan(s)
@@ -136,7 +136,7 @@ class ObsessionsController < ApplicationController
           if obsessions.all? {|o| o.plans_per_obsession == first_plan_count}
             flash.now[:alert] = "Patients' obsessions cannot be sorted by number of ERP plans per obsession, as all obsessions are targeted by #{first_plan_count} ERP #{'plan'.pluralize(first_plan_count)}."
           else # There are multiple obsessions, and NOT all obsessions have the same number of ERP plans
-            if params[:plan_productivity] == "Least to Most ERP Plans"
+            if params[:plan_production] == "Least to Most ERP Plans"
               @obsessions = obsessions.least_to_most_plans
               flash.now[:notice] = "Patients' obsessions are ordered from least to most ERP plans per obsession!"
             else
