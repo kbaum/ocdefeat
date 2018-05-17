@@ -158,7 +158,7 @@ class ObsessionsController < ApplicationController
             flash.now[:alert] = "No obsessions were reported prior to today."
           else
             @obsessions = obsessions.old_obsessions # stores AR::Relation of all obsessions created prior to today
-            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported prior to today!"
+            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} previously reported!"
           end
         end
       else # Admin did not choose a filter
