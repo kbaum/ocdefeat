@@ -122,7 +122,7 @@ class ObsessionsController < ApplicationController
         end
       else # Therapist did not select a filter
         @obsessions = obsessions # stores all patients' obsessions
-        flash.now[:notice] = "All patients' obsessions are recorded below!"
+        flash.now[:notice] = "A full psychiatric history of all patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
       if !params[:plan_productivity].blank? # Admin filters obsessions by number of ERP plans per obsession
