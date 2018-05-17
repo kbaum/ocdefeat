@@ -24,6 +24,15 @@ class StepsController < ApplicationController
   end
 
   private
+
+    def check_completion
+      @plan = Plan.find(params[:plan_id])
+      @step = @plan.steps.find(params[:id])
+      if @step.complete?
+        redirect_to plan_path(@plan), alert: "You already performed this ERP exercise, so there is no need to modify this step!"
+      end
+    end
+    
     # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
     def set_step_and_parent_plan # called before steps#edit, steps#update, steps#destroy
       @plan = Plan.find(params[:plan_id])
