@@ -10,8 +10,6 @@
 
 <hr>
 
-<% if @obsessions %>
-  <% @obsessions.each do |obsession| %>
-    <%= render partial: "obsession_div", locals: { obsession: obsession } %>
-  <% end %>
+<% @obsessions.each do |obsession| %>
+  <%= render partial: "obsession_div", locals: { obsession: obsession } %>
 <% end %>
