@@ -17,6 +17,18 @@ class StepsController < ApplicationController
     authorize @step
   end
 
+  def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
+    authorize @step
+    if @step.update(step_params) == @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
+      redirect_to plan_path(@step.plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
+    elsif @step.update(instructions: params[:step][:instructions], duration: params[:step][:duration], discomfort_degree: params[:step][:discomfort_degree])
+      redirect_to plan_path(@step.plan), notice: "You successfully modified a step in this ERP plan!"
+    else
+      flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
+      render :edit
+    end
+  end
+
   def destroy # deleting a step - DELETE request to "/plans/:plan_id/steps/:id" mapped to steps#destroy
     authorize @step
     @step.destroy
@@ -32,7 +44,7 @@ class StepsController < ApplicationController
         redirect_to plan_path(@plan), alert: "You already performed this ERP exercise, so there is no need to modify this step!"
       end
     end
-    
+
     # Finding an associated step - only finding step that already belongs to that plan - 2 queries but protecting against URL hack
     def set_step_and_parent_plan # called before steps#edit, steps#update, steps#destroy
       @plan = Plan.find(params[:plan_id])
