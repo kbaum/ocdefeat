@@ -1,4 +1,5 @@
 class StepsController < ApplicationController
+  before_action :check_completion, only: [:edit, :update]
   before_action :set_step_and_parent_plan, only: [:show, :destroy]
 
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
