@@ -1,5 +1,5 @@
 <%= form_tag("/obsessions", method: "get") do %>
-  <%= select_tag "plan_productivity", options_for_select(["Least to Most ERP Plans", "Most to Least ERP Plans"]), prompt: "Plan Productivity" %>
-  <%= select_tag "date", options_for_select(["Today", "Old Obsessions"]), prompt: "Date Created" %>
+  <%= select_tag "plan_production", options_for_select(["Least to Most ERP Plans", "Most to Least ERP Plans"]), prompt: "Plan Production" %>
+  <%= select_tag "date", options_for_select(["Today", "Old Obsessions"]), prompt: "Date Reported" %>
   <%= submit_tag "Filter Obsessions" %>
 <% end %>
