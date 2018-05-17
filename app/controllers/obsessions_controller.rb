@@ -151,7 +151,7 @@ class ObsessionsController < ApplicationController
             flash.now[:alert] = "No obsessions were reported today."
           else
             @obsessions = obsessions.from_today # stores AR::Relation of all obsessions created today
-            flash.now[:notice] = "Patients reported #{plural_inflection(@obsessions)} today!"
+            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported today!"
           end
         elsif params[:date] == "Old Obsessions"
           if obsessions.old_obsessions.empty? # If no obsessions were created prior to today
