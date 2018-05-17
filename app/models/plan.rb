@@ -8,6 +8,10 @@ class Plan < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
 
+  def step_count # instance method called on plan instance returns the number of steps comprising the plan
+    steps.count
+  end
+
   def done?
     steps.count > 0 && steps.all? {|step| step.complete?} # instance method returns true if plan consists of at least 2 steps (repeated exposure) and all steps are completed (each step's status = 1)
   end
