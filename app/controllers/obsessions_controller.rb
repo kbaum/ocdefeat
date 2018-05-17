@@ -162,7 +162,8 @@ class ObsessionsController < ApplicationController
           end
         end
       else # Admin did not choose a filter
-        @obsessions = obsessions # stores all patients' obsessions
+        @obsessions = obsessions # stores AR::Relation of all patients' obsessions
+        flash.now[:notice] = "OCD spikes are sparsely detailed and displayed anonymously to preserve patient confidentiality."
       end
     end
   end
