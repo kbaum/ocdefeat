@@ -19,7 +19,7 @@
 <div class="well well-lg">
   <%= form_tag "/users", method: "get" do %>
     <%= label_tag "role", "Filter Users by Role:" %><br><br>
-    <%= select_tag "role", options_for_select(["patient", "therapist", "admin"]), prompt: "Select Role" %>
+    <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
     <%= submit_tag "Filter Users" %>
   <% end %>
 
