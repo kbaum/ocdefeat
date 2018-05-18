@@ -7,7 +7,7 @@ class UserPolicy < ApplicationPolicy
         scope.where(role: 1)
       elsif user.patient? # patients can only view therapists on users index page
         scope.where(role: 2)
-      elsif user.unassigned_user?
+      elsif user.unassigned?
         scope.none
       end
     end
@@ -20,7 +20,7 @@ class UserPolicy < ApplicationPolicy
       oneself || record.patient?
     elsif user.patient? # a patient can see his own show page and all therapists' show pages
       oneself || record.therapist?
-    elsif user.unassigned_user? # an unassigned user can only see his own preliminary profile page
+    elsif user.unassigned? # an unassigned user can only see his own preliminary profile page
       oneself
     end
   end
