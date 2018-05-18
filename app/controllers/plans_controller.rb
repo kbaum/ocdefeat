@@ -15,12 +15,12 @@ class PlansController < ApplicationController
       elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
         thought = current_user.obsessions.find(params[:obsession_targeted]).intrusive_thought
         if current_user.obsessions.find(params[:obsession_targeted]).plans.empty? # If no plans for the selected obsession were found
-          flash.now[:alert] = "No ERP plans target the obsession \"#{thought}\""
+          flash.now[:alert] = "No ERP plans target the obsession: \"#{thought}\""
         else
-          @plans = current_user.obsessions.find(params[:obsession_targeted]).plans # stores 'array' of plans belonging to the obsession selected
-          flash.now[:notice] = "You can implement #{@plans.count} ERP #{'plan'.pluralize(@plans.count)} to expose yourself to the obsession \"#{thought}!\""
+          @plans = current_user.obsessions.find(params[:obsession_targeted]).plans # stores AR::Relation of plans belonging to the obsession selected
+          flash.now[:notice] = "You can implement #{plural_inflection(@plans)} to expose yourself to the obsession: \"#{thought}\""
         end
-      else # Patient did not choose a filter, so @plans stores 'array' of only plans designed by the patient
+      else # Patient did not choose a filter, so @plans stores AR::Relation of only plans designed by the patient
         @plans = plans
       end
     elsif current_user.therapist?
