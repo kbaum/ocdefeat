@@ -19,10 +19,12 @@ class StepsController < ApplicationController
 
   def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
     authorize @step
-    if @step.update(step_params) == @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
-      redirect_to plan_path(@step.plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
-    elsif @step.update(instructions: params[:step][:instructions], duration: params[:step][:duration], discomfort_degree: params[:step][:discomfort_degree])
-      redirect_to plan_path(@step.plan), notice: "You successfully modified a step in this ERP plan!"
+    if @step.update(step_params)
+      if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
+        redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
+      else
+        redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
+      end
     else
       flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
       render :edit
@@ -41,7 +43,7 @@ class StepsController < ApplicationController
       @plan = Plan.find(params[:plan_id])
       @step = @plan.steps.find(params[:id])
       if @step.complete?
-        redirect_to plan_path(@plan), alert: "You already performed this ERP exercise, so there is no need to modify this step!"
+        redirect_to plans_path, alert: "You already performed this ERP exercise, so there is no need to modify this step!"
       end
     end
 
