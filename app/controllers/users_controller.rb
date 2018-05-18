@@ -186,7 +186,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    if current_user.unassigned_user?
+    if current_user.unassigned?
       redirect_to root_path, notice: "Your preliminary profile was successfully deleted."
     elsif current_user.patient?
       redirect_to root_path, notice: "We hope that your experience with OCDefeat was productive and meaningful, and that you have acquired the skillset necessary to defeat OCD!"
