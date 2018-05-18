@@ -198,8 +198,8 @@ class UsersController < ApplicationController
     def show_template # this method returns the string name of the show template to render, which depends on the user's role
       set_user # calling private method defined above
       case set_user.role
-      when set_user.unassigned_user?
-        "unassigned_user"
+      when set_user.unassigned?
+        "unassigned"
       when set_user.patient?
         "patient"
       when set_user.therapist?
