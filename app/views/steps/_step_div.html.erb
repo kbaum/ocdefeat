@@ -9,13 +9,13 @@
     <% if current_user.patient? %>
       <% if step.discomfort_degree %>
         <p><strong>Degree of Discomfort:</strong> <%= step.discomfort_degree %></p>
+        <p>
+          <em>Check the box below once you have completed this ERP exercise:</em>
+          <%= set_step_status(step) %>
+        </p>
       <% else %>
         <p><%= link_to "Rate your level of discomfort", edit_plan_step_path(step.plan, step) %> when performing this ERP exercise.</p>
       <% end %>
-      <p>
-        <em>Check the box below once you have completed this ERP exercise:</em>
-        <%= set_step_status(step) %>
-      </p>
     <% elsif current_user.therapist? || current_user.admin? %>
       <% if step.complete? %>
         <p><strong>Status:</strong> The patient has completed this ERP exercise.</p>
