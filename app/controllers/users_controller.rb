@@ -17,12 +17,20 @@ class UsersController < ApplicationController
       @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
       @aspiring_admins = users.awaiting_assignment(%w(Patient Therapist), 3)
 
-      if !params[:role].blank? # Admin filters users by role ("patient", "therapist" or "admin")
+      if !params[:role].blank? # Admin filters users by role ("unassigned", "patient", "therapist" or "admin")
         if users.by_role(params[:role]).empty? # If there are no users with the selected role
-          flash.now[:alert] = "No #{params[:role]}s were found."
-        else
-          @filtered_users = users.by_role(params[:role]) # stores 'array' of all users with the selected role
-          flash.now[:notice] = "You found #{@filtered_users.count} #{params[:role].pluralize(@filtered_users.count)}!"
+          if params[:role] == "unassigned"
+            flash.now[:alert] = "All users have been assigned roles."
+          else
+            flash.now[:alert] = "No #{params[:role]}s were found."
+          end
+        else # If users with the selected role were found
+          @filtered_users = users.by_role(params[:role]) # stores 'AR::Relation' of all users with the selected role
+          if params[:role] == "unassigned"
+            flash.now[:notice] = "#{@filtered_users.count} #{"user".pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} not yet assigned a role."
+          else
+            flash.now[:notice] = "You found #{@filtered_users.count} #{params[:role].pluralize(@filtered_users.count)}!"
+          end
         end
       else
         @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
