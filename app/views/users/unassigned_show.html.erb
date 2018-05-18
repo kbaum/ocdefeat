@@ -16,4 +16,6 @@
   </div>
 <% end %>
 
+<%= link_to "Edit Account", edit_user_path(@user) %>
+
 <%= button_to "Delete Account", user_path(@user), method: :delete, data: { confirm: "Your account will be permanently deleted. Are you sure you want to leave the OCDefeat community?" } %>
