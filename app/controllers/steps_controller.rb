@@ -43,7 +43,7 @@ class StepsController < ApplicationController
       @plan = Plan.find(params[:plan_id])
       @step = @plan.steps.find(params[:id])
       if @step.complete?
-        redirect_to plans_path, alert: "You already performed this ERP exercise, so there is no need to modify this step!"
+        redirect_to plan_path(@plan), alert: "You already performed this ERP exercise, so there is no need to modify this step!"
       end
     end
 
