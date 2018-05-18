@@ -1,7 +1,7 @@
 class ThemePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.unassigned_user? || user.patient? || user.therapist? || user.admin?
+      if user.unassigned? || user.patient? || user.therapist? || user.admin?
         scope.all # all users can view the themes index page
       end
     end
