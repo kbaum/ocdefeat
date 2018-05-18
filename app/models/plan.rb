@@ -21,7 +21,7 @@ class Plan < ApplicationRecord
   end
 
   def self.by_subset(subset_id)
-    where("obsession_id IN (?)", Theme.find(subset_id).obsession_ids)
+    where(obsession_id: Theme.find(subset_id).obsession_ids)
   end
 
   def self.finished # class method returns AR::Relation of all plans (with at least 1 step) that are completed
