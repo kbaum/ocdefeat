@@ -22,7 +22,7 @@ class User < ApplicationRecord
   validates :variant, presence: true, variant: true
   validates :severity, presence: true, severity: true
   validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles" }, on: :create
-
+  
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   # when a user edits their user information, they don't have to retype their password
