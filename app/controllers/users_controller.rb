@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       if !params[:role].blank? # Admin filters users by role ("unassigned", "patient", "therapist" or "admin")
         if users.by_role(params[:role]).empty? # If there are no users with the selected role
           if params[:role] == "unassigned"
-            flash.now[:alert] = "No unassigned users were found; each user was assigned a role."
+            flash.now[:alert] = "No unassigned users were found."
           else
             flash.now[:alert] = "No #{params[:role]}s were found."
           end
