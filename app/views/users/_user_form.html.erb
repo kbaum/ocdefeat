@@ -40,10 +40,9 @@
 
   <br>
 
-  <div class="field">
-    <%= f.label :role_requested, "Request a Role: " %>
-    <%= f.select :role_requested, options_for_select(["Patient", "Therapist", "Admin"]), include_blank: true %>
-  </div>
+  <%= f.label :role_requested, "Request a Role: " %>
+
+  <%= f.select :role_requested, options_for_select(["Patient", "Therapist", "Admin"]), include_blank: true %>
 
   <hr>
 
