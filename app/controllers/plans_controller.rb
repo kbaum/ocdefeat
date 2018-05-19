@@ -47,7 +47,7 @@ class PlansController < ApplicationController
           flash.now[:alert] = "No preliminary plans were found for #{patient_name}, as all plans designed by this patient contain steps."
         else # The patient has plans without steps
           @plans = @patients.find(params[:patient_planning]).plans.stepless
-          flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{@plans.count} preliminary ERP #{'plan'.pluralize(@plans.count)}!"
+          flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{plural_inflection(@plans)}!"
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
         patient_progressing = @patients.find(params[:patient_progressing])
