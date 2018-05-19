@@ -28,7 +28,9 @@ class Plan < ApplicationRecord
     procedural.joins(:steps).distinct.where(steps: { status: 1 })
   end
 
-  
+  def self.unfinished # class method returns AR::Relation of unfinished plans. A plan is unfinished if it contains at least 1 step w/ status = 0
+    procedural.merge(Step.not_performed)
+  end
 
   def self.from_today
     where("created_at >=?", Time.zone.today.beginning_of_day)
