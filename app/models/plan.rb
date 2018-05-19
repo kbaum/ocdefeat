@@ -28,9 +28,7 @@ class Plan < ApplicationRecord
     procedural.joins(:steps).distinct.where(steps: { status: 1 })
   end
 
-  def self.unfinished # class method returns an array of unfinished plans
-    procedural.select {|plan| !plan.done?}
-  end
+  
 
   def self.from_today
     where("created_at >=?", Time.zone.today.beginning_of_day)
