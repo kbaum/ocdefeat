@@ -55,7 +55,7 @@ class PlansController < ApplicationController
           flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
         elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
           flash.now[:alert] = "Patient #{patient_progressing.name} should design ERP plans to overcome obsessions."
-        elsif patient_progressing.plans.procedural.empty? # the patient has plans, but none of the plans have steps
+        elsif patient_progressing.plans.procedural.empty? # If the patient has plans, but none of the plans have steps
           flash.now[:alert] = "Progress can only be made if ERP plans contain exposure exercises! #{patient_progressing.name} should add ERP exercises to each preliminary plan!"
         else # If the patient has plans with steps
           @finished = patient_progressing.plans.finished if !patient_progressing.plans.finished.empty?
