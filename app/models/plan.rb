@@ -24,10 +24,6 @@ class Plan < ApplicationRecord
     where(obsession_id: Theme.find(subset_id).obsession_ids)
   end
 
-  def self.finished # class method returns AR::Relation of all plans (with at least 1 step) that are completed
-    procedural.joins(:steps).distinct.where(steps: { status: 1 })
-  end
-
   def self.unfinished # class method returns AR::Relation of unfinished plans. A plan is unfinished if it contains at least 1 step w/ status = 0
     procedural.merge(Step.not_performed)
   end
