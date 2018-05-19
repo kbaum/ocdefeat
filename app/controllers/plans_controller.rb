@@ -36,8 +36,8 @@ class PlansController < ApplicationController
         if plans.by_subset(params[:subset]).empty? # If no plans are classified in the selected OCD subset
           flash.now[:alert] = "No ERP plans pertain to \"#{Theme.find(params[:subset]).name}.\""
         else
-          @plans = plans.by_subset(params[:subset]) # stores 'array' of plans that thematically relate to the selected subset
-          flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} will expose patients to \"#{Theme.find(params[:subset]).name}!\""
+          @plans = plans.by_subset(params[:subset]) # stores AR::Relation of plans that thematically relate to the selected subset
+          flash.now[:notice] = "#{plural_inflection(@plans)} will help patients confront obsessions about \"#{Theme.find(params[:subset]).name}!\""
         end
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's preliminary plans (plans w/o steps)
         patient_name = @patients.find(params[:patient_planning]).name
