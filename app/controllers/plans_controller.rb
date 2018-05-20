@@ -71,7 +71,7 @@ class PlansController < ApplicationController
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans # stores all plans designed by all patients
-        flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to obsessions to develop anxiety tolerance."
+        flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions to develop anxiety tolerance."
       end # closes logic about filter selected
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters plans by date created
@@ -128,7 +128,7 @@ class PlansController < ApplicationController
         end # closes logic from if plans.procedural.empty?
       else # Admin did not choose a filter for filtering plans
         @plans = plans # stores AR::Relation of all ERP plans designed by all patients
-        flash.now[:notice] = "Patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions to develop anxiety tolerance."
+        flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions to develop anxiety tolerance."
       end # closes logic about filter selected
     end # closes logic about filterer's role
   end # closes #index action
