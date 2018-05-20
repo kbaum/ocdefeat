@@ -71,6 +71,7 @@ class PlansController < ApplicationController
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans # stores all plans designed by all patients
+        flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to obsessions to develop anxiety tolerance."
       end # closes logic about filter selected
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters plans by date created
