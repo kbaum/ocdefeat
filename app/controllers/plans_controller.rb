@@ -107,23 +107,22 @@ class PlansController < ApplicationController
           end
         end
       elsif !params[:completion].blank? # Admin filters plans by finished/unfinished plans
-        if plans.procedural.empty? # If NO plans with at least 1 step were found (i.e. all plans have no steps)
+        if plans.procedural.empty? # If NO plans with at least 1 step were found (i.e. all plans have NO steps)
           flash.now[:alert] = "ERP plans must have at least one step before determining status of completion."
         else # Plans with at least 1 step were found
           if params[:completion] == "Finished"
             if plans.finished.empty? # If no finished plans were found
               flash.now[:alert] = "Not a single ERP plan was performed from start to finish."
             else
-              @plans = plans.finished # stores 'array' of finished plans (each containing at least 1 step)
+              @plans = plans.finished # stores AR::Relation of finished plans
               flash.now[:notice] = "#{sv_agreement(@plans)} fully implemented!"
-              #flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} fully implemented!"
             end
           elsif params[:completion] == "Unfinished"
             if plans.unfinished.empty? # If there are no unfinished plans, i.e., all plans were finished
               flash.now[:alert] = "All ERP plans were fully implemented."
             else
-              @plans = plans.unfinished # stores array of unfinished plans (each containing at least 1 step)
-              flash.now[:notice] = "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)} #{'is'.pluralize(@plans.count)} left unfinished!"
+              @plans = plans.unfinished # stores AR::Relation of unfinished plans
+              flash.now[:notice] = "#{sv_agreement(@plans)} left unfinished!"
             end
           end # closes logic starting with if params[:completion] == "Finished"
         end # closes logic from if plans.procedural.empty?
