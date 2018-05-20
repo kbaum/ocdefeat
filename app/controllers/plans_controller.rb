@@ -87,7 +87,7 @@ class PlansController < ApplicationController
             flash.now[:alert] = "No ERP plans were designed before today."
           else
             @plans = plans.past_plans
-            flash.now[:notice] = "You found #{plural_inflection(@plans)} from the past!"
+            flash.now[:notice] = "You found #{plural_inflection(@plans)} designed before today!"
           end
         end # closes logic for params[:date]
       elsif !params[:population].blank? # Admin filters plans by preliminary plans (without steps) vs. procedural plans (with steps)
