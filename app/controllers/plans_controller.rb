@@ -127,7 +127,8 @@ class PlansController < ApplicationController
           end # closes logic starting with if params[:completion] == "Finished"
         end # closes logic from if plans.procedural.empty?
       else # Admin did not choose a filter for filtering plans
-        @plans = plans # stores 'array' of all ERP plans designed by all patients
+        @plans = plans # stores AR::Relation of all ERP plans designed by all patients
+        flash.now[:notice] = "Patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions to develop anxiety tolerance."
       end # closes logic about filter selected
     end # closes logic about filterer's role
   end # closes #index action
