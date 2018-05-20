@@ -84,7 +84,7 @@ class PlansController < ApplicationController
           end
         elsif params[:date] == "Past Plans"
           if plans.past_plans.empty? # If no plans were created prior to today
-            flash.now[:alert] = "No ERP plans were created prior to today."
+            flash.now[:alert] = "No ERP plans were designed before today."
           else
             @plans = plans.past_plans
             flash.now[:notice] = "You found #{plural_inflection(@plans)} from the past!"
