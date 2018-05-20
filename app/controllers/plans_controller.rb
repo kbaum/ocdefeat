@@ -103,7 +103,7 @@ class PlansController < ApplicationController
             flash.now[:alert] = "No procedural plans were found; all ERP plans lack steps."
           else
             @plans = plans.procedural # stores AR::Relation of plans that have at least 1 step
-            flash.now[:notice] = "#{sv_agreement(@plans)} contain ERP exercises!"
+            flash.now[:notice] = "#{sv_agreement(@plans)} populated with steps!"
           end
         end
       elsif !params[:completion].blank? # Admin filters plans by finished/unfinished plans
