@@ -107,8 +107,8 @@ class PlansController < ApplicationController
             if plans.finished.empty? # If no finished plans were found
               flash.now[:alert] = "Not a single ERP plan was performed from start to finish."
             else
-              @plans = plans.finished # stores AR::Relation of finished plans
-              flash.now[:notice] = "#{@plans.to_ary.count} ERP #{'plan'.pluralize(@plans.to_ary.count)} #{'is'.pluralize(@plans.to_ary.count)} fully implemented!"
+              @plans = plans.finished # stores array of finished plans
+              flash.now[:notice] = "#{sv_agreement(@plans)} fully implemented!"
             end
           elsif params[:completion] == "Unfinished Plans"
             if plans.unfinished.empty? # If there are no unfinished plans, i.e., all plans were finished
