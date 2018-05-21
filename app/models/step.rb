@@ -3,8 +3,7 @@ class Step < ApplicationRecord
     :incomplete => 0,
     :complete => 1
   }
-
-  scope :performed, -> { group(:plan_id).having(status: 1) }
+  
   scope :not_performed, -> { where(status: 0) }
 
   belongs_to :plan # therefore, steps table has plan_id foreign key column
