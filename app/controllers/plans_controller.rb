@@ -66,7 +66,7 @@ class PlansController < ApplicationController
           elsif @finished.nil? # If the patient did not finish any ERP plans
             @report = "failed to finish any ERP plans and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
           elsif @unfinished.nil? # If the patient only has finished ERP plans
-            @report = "achieved desensitization by implementing #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} from start to finish!"
+            @report = "achieved desensitization by implementing #{@finished.to_ary.count} ERP #{'plan'.pluralize(@finished.to_ary.count)} from start to finish!"
           end
         end
       else # Therapist did not choose a filter for filtering plans
