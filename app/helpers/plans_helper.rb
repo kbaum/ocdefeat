@@ -4,7 +4,7 @@ module PlansHelper
     if plan.steps.empty?
       "In Development (must add steps)"
     elsif plan.done?
-      "Finished! (Fully performed and desensitization achieved)"
+      "Finished (fully performed and desensitization achieved)"
     else
       "Unfinished (must execute all ERP exercises)"
     end
