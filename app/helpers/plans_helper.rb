@@ -3,8 +3,10 @@ module PlansHelper
   def status_of(plan)
     if plan.steps.empty?
       "In Development (must add steps)"
+    elsif plan.done?
+      "Finished! (Fully performed and desensitization achieved)"
     else
-      plan.done? ? "Finished! (Fully performed and desensitization achieved)" : "Unfinished (must execute all ERP exercises)"
+      "Unfinished (must execute all ERP exercises)"
     end
   end
 
