@@ -62,7 +62,7 @@ class PlansController < ApplicationController
           @unfinished = patient_progressing.plans.unfinished if !patient_progressing.plans.unfinished.empty?
           flash.now[:notice] = "You retrieved #{patient_progressing.name}'s ERP progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
           if @finished && @unfinished # If the patient has both finished and unfinished plans
-            @report = "finished #{@finished.count} ERP #{'plan'.pluralize(@finished.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
+            @report = "finished #{@finished.to_ary.count} ERP #{'plan'.pluralize(@finished.to_ary.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
           elsif @finished.nil? # If the patient did not finish any ERP plans
             @report = "failed to finish any ERP plans and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
           elsif @unfinished.nil? # If the patient only has finished ERP plans
