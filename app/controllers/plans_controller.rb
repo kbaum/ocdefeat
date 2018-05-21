@@ -58,16 +58,8 @@ class PlansController < ApplicationController
         elsif patient_progressing.plans.procedural.empty? # If the patient has plans, but none of the plans have steps
           flash.now[:alert] = "Progress can only be made if ERP plans contain exposure exercises! #{patient_progressing.name} should add ERP exercises to each preliminary plan!"
         else # If the patient has plans with steps
-          @finished = patient_progressing.plans.finished if !patient_progressing.plans.finished.empty?
-          @unfinished = patient_progressing.plans.unfinished if !patient_progressing.plans.unfinished.empty?
+          
           flash.now[:notice] = "You retrieved #{patient_progressing.name}'s ERP progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
-          if @finished && @unfinished # If the patient has both finished and unfinished plans
-            @report = "finished #{@finished.to_ary.count} ERP #{'plan'.pluralize(@finished.to_ary.count)} and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished!"
-          elsif @finished.nil? # If the patient did not finish any ERP plans
-            @report = "failed to finish any ERP plans and left #{@unfinished.count} ERP #{'plan'.pluralize(@unfinished.count)} unfinished."
-          elsif @unfinished.nil? # If the patient only has finished ERP plans
-            @report = "achieved desensitization by implementing #{@finished.to_ary.count} ERP #{'plan'.pluralize(@finished.to_ary.count)} from start to finish!"
-          end
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans # stores all plans designed by all patients
