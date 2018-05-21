@@ -8,4 +8,8 @@ module PlansHelper
     end
   end
 
+  def planner(finished, unfinished)
+    finished.blank? ? "#{unfinished.first.designer.name}" : "#{finished.first.designer.name}"
+  end
+
 end
