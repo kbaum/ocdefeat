@@ -8,7 +8,7 @@
   <%= render partial: filters, locals: { plans: policy_scope(Plan), patients: @patients, themes: @themes, your_obsessions: @your_obsessions } %>
 </div>
 
-<br>
+<hr>
 
 <% if @plans %>
   <%= render partial: "plans_div", locals: { plans: @plans } %>
