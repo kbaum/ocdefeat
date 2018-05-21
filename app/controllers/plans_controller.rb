@@ -103,14 +103,14 @@ class PlansController < ApplicationController
         if plans.procedural.empty? # If NO plans with at least 1 step were found (i.e. all plans have NO steps)
           flash.now[:alert] = "ERP plans must have at least one step before determining status of completion."
         else # Plans with at least 1 step were found
-          if params[:completion] == "Finished"
+          if params[:completion] == "Finished Plans"
             if plans.finished.empty? # If no finished plans were found
               flash.now[:alert] = "Not a single ERP plan was performed from start to finish."
             else
               @plans = plans.finished # stores AR::Relation of finished plans
               flash.now[:notice] = "#{@plans.to_ary.count} ERP #{'plan'.pluralize(@plans.to_ary.count)} #{'is'.pluralize(@plans.to_ary.count)} fully implemented!"
             end
-          elsif params[:completion] == "Unfinished"
+          elsif params[:completion] == "Unfinished Plans"
             if plans.unfinished.empty? # If there are no unfinished plans, i.e., all plans were finished
               flash.now[:alert] = "All ERP plans were fully implemented."
             else
