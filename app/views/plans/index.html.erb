@@ -13,5 +13,5 @@
 <% if @plans %>
   <%= render partial: "plans_div", locals: { plans: @plans } %>
 <% elsif @finished || @unfinished %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
-  <%= render partial: "plan_progress_div", locals: { finished: @finished, unfinished: @unfinished, report: @report } %>
+  <%= render partial: "plan_progress_div", locals: { finished: @finished, unfinished: @unfinished } %>
 <% end %>
