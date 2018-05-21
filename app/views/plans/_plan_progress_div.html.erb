@@ -6,19 +6,11 @@
 
   <% if finished %> <!--If the patient selected has finished ERP plans-->
     <p><em>Finished ERP Plans:</em></p>
-    <ul>
-      <% finished.each do |finished_plan| %>
-        <li><%= link_to finished_plan.title, plan_path(finished_plan) %></li>
-      <% end %>
-    </ul>
+    <%= render partial: "plans_ul", locals: { plans: finished } %>
   <% end %>
 
   <% if unfinished %> <!--If the patient selected has unfinished ERP plans-->
     <p><em>Unfinished ERP Plans:</em></p>
-    <ul>
-      <% unfinished.each do |unfinished_plan| %>
-        <li><%= link_to unfinished_plan.title, plan_path(unfinished_plan) %></li>
-      <% end %>
-    </ul>
+    <%= render partial: "plans_ul", locals: { plans: unfinished } %>
   <% end %>
 </div>
