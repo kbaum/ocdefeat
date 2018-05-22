@@ -20,6 +20,10 @@ module StepsHelper
     step.updated_at.strftime("Last modified on %A, %B %e, at %l:%M %p")
   end
 
+  def position_in_plan(step)
+    step.plan.steps.find_index(step).to_i + 1
+  end
+
 end
 # Explanation of #div_class_for_step(step):
 # Calling #complete? on step instance returns true if status attribute value of step instance = 1
