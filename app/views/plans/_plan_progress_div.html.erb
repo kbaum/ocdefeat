@@ -5,11 +5,11 @@
 
   <% if finished %> <!-- If the patient selected has finished ERP plans -->
     <p><em>Finished ERP Plans:</em></p>
-    <%= list_plans(finished) %>
+    <%= present_plans(finished) %>
   <% end %>
 
   <% if unfinished %> <!-- If the patient selected has unfinished ERP plans -->
     <p><em>Unfinished ERP Plans:</em></p>
-    <%= list_plans(unfinished) %>
+    <%= present_plans(unfinished) %>
   <% end %>
 </div>
