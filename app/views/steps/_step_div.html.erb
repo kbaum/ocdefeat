@@ -1,6 +1,6 @@
 <%= div_for_step(step) do %>
   <div class="well well-lg">
-    <h4>STEP #<%= step.plan.steps.find_index(step).to_i + 1 %></h4>
+    <h4>STEP #<%= position_in_plan(step) %></h4>
     <em><%= last_updated(step) %></em>
     <br><br>
     <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
