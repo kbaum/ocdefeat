@@ -2,3 +2,7 @@ div.report {
   background-color: #ffffb3;
   border: 5px solid #d9edf7;
 }
+
+ul.plans-ul {
+  color: #31708f;
+}
