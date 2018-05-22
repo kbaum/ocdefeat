@@ -3,13 +3,13 @@
   <p>The report indicates that patient <%= planner(finished, unfinished) %> <%= report(finished, unfinished) %></p>
   <br>
 
-  <% if finished %> <!--If the patient selected has finished ERP plans-->
+  <% if finished %> <!-- If the patient selected has finished ERP plans -->
     <p><em>Finished ERP Plans:</em></p>
-    <%= render partial: "plans_ul", locals: { plans: finished } %>
+    <%= list_plans(finished) %>
   <% end %>
 
-  <% if unfinished %> <!--If the patient selected has unfinished ERP plans-->
+  <% if unfinished %> <!-- If the patient selected has unfinished ERP plans -->
     <p><em>Unfinished ERP Plans:</em></p>
-    <%= render partial: "plans_ul", locals: { plans: unfinished } %>
+    <%= list_plans(unfinished) %>
   <% end %>
 </div>
