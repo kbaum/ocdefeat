@@ -24,4 +24,12 @@ module PlansHelper
     end
   end
 
+  def list_plans(plans)
+    content_tag(:ul, class: "plans-ul") do
+      plans.each do |plan|
+        concat(content_tag(:li, link_to(plan.title, plan_path(plan))))
+      end
+    end
+  end
+
 end
