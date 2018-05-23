@@ -24,6 +24,22 @@ module StepsHelper
     step.plan.steps.find_index(step).to_i + 1
   end
 
+  def display_discomfort(step)
+    if current_user.patient?
+      if step.discomfort_degree
+        "Your discomfort peaked at level #{step.discomfort_degree}."
+      else
+        link_to("Rate your degree of discomfort", edit_plan_step_path(step.plan, step)) << " while performing this step!"
+      end
+    elsif current_user.therapist? || current_user.admin?
+      if step.discomfort_degree
+        "The patient experienced maximum discomfort at level #{step.discomfort_degree} while performing this step."
+      else
+        "The patient has not rated their level of discomfort yet."
+      end
+    end
+  end
+
 end
 # Explanation of #div_class_for_step(step):
 # Calling #complete? on step instance returns true if status attribute value of step instance = 1
