@@ -29,8 +29,12 @@ class UserPolicy < ApplicationPolicy
     user.admin? || oneself
   end
 
-  def destroy? # Only admins and the user who owns his account can delete his account
-    user.admin? || oneself
+  def destroy? # Only admins and the user who owns her account can delete her account
+    if user.unassigned? || user.patient? || user.therapist?
+      oneself
+    elsif user.admin?
+      true unless oneself # An admin cannot delete her own account
+    end
   end
 
   private
