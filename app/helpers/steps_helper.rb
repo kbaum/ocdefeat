@@ -36,7 +36,6 @@ module StepsHelper
     end
   end
 
-
   def show_status(step)
     if step.incomplete?
       if current_user.patient?
