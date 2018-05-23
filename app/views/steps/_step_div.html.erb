@@ -1,39 +1,18 @@
 <%= div_for_step(step) do %>
-  <div class="well well-lg">
-    <h4>STEP #<%= position_in_plan(step) %></h4>
-    <em><%= last_updated(step) %></em>
-    <br><br>
-    <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
-    <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
+  <h4>STEP #<%= position_in_plan(step) %></h4>
+  <em><%= last_updated(step) %></em>
+  <br><br>
+  <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
+  <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
+  <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
+  <p><strong>Status:</strong> <%= show_status(step) %></p>
+  <%= set_step_status(step) if current_user.patient? && step.discomfort_degree %>
 
-    <% if current_user.patient? %>
-      <% if step.discomfort_degree %>
-        <p><strong>Degree of Discomfort:</strong> <%= step.discomfort_degree %></p>
-        <p>
-          <em>Check the box below once you have completed this ERP exercise:</em>
-          <%= set_step_status(step) %>
-        </p>
-      <% else %>
-        <p><%= link_to "Rate your level of discomfort", edit_plan_step_path(step.plan, step) %> when performing this ERP exercise.</p>
-      <% end %>
-    <% elsif current_user.therapist? || current_user.admin? %>
-      <% if step.complete? %>
-        <p><strong>Status:</strong> The patient has completed this ERP exercise.</p>
-      <% else %>
-        <p><strong>Status:</strong> The patient has not completed this exercise yet.</p>
-      <% end %>
+  <% if policy(step).update? %>
+    <p><%= link_to "Edit Step", edit_plan_step_path(step.plan, step) %></p>
+  <% end %>
 
-      <% if step.discomfort_degree %>
-        <p><strong>Discomfort Degree:</strong> The patient rated their discomfort at level <%= step.discomfort_degree %>.</p>
-      <% end %>
-    <% end %>
-
-    <% if policy(step).update? %>
-      <p><%= link_to "Edit Step", edit_plan_step_path(step.plan, step) %></p>
-    <% end %>
-
-    <% if policy(step).destroy? %>
-      <%= button_to "Delete Step", plan_step_path(step.plan, step), :method => "delete", data: { confirm: "Are you sure you want to remove this ERP exercise?" } %>
-    <% end %>
-  </div>
+  <% if policy(step).destroy? %>
+    <%= button_to "Delete Step", plan_step_path(step.plan, step), :method => "delete", data: { confirm: "Are you sure you want to remove this ERP exercise?" } %>
+  <% end %>
 <% end %>
