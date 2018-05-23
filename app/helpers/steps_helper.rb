@@ -1,11 +1,11 @@
 module StepsHelper
 
   def div_class_for_step(step)
-    "completed" if step.complete?
+    "incomplete" if step.incomplete?
   end
 
   def div_for_step(step)
-    div_for(step, class: div_class_for_step(step)) do
+    div_for(step, class: "#{div_class_for_step(step)} well well-lg") do
       yield
     end
   end
