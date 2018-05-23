@@ -6,3 +6,5 @@
   <p><strong>Email Address:</strong> <%= @user.email %></p>
   <br>
 </div>
+
+<%= render partial: "manage_account", locals: { user: @user } %>
