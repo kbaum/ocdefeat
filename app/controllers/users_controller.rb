@@ -185,6 +185,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find(params[:id])
+    authorize user
+    user.destroy
+    redirect_to root_url, notice: @message
+  end
+
   private
 
     def set_user
