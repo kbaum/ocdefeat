@@ -25,26 +25,23 @@ module StepsHelper
   end
 
   def display_discomfort(step)
-    if current_user.patient?
-      if step.discomfort_degree
-        "Your discomfort peaked at level #{step.discomfort_degree}."
-      else
-        link_to("Rate your degree of discomfort", edit_plan_step_path(step.plan, step)) << " while performing this step!"
+    if step.discomfort_degree.nil?
+      if current_user.patient?
+        link_to("Rate your degree of discomfort", edit_plan_step_path(step.plan, step)) << " when performing this ERP exercise!"
+      elsif current_user.therapist? || current_user.admin?
+        "Not yet rated."
       end
-    elsif current_user.therapist? || current_user.admin?
-      if step.discomfort_degree
-        "The patient experienced maximum discomfort at level #{step.discomfort_degree} while performing this step."
-      else
-        "The patient has not rated their level of discomfort yet."
-      end
+    else
+      "#{step.discomfort_degree}"
     end
   end
+
 
   def show_status(step)
     if step.incomplete?
       if current_user.patient?
         if step.discomfort_degree.nil?
-          "You must rate your discomfort while performing this step before you can mark it as complete!"
+          "You must rate your discomfort when performing this step before you can mark it as complete!"
         else
           "Check the box below once you finish practicing this exposure exercise!"
         end
