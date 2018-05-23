@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
     users = policy_scope(User) # we're filtering users - users stores the array of user instances available to the type of viewer
@@ -189,6 +189,7 @@ class UsersController < ApplicationController
     if current_user == user && current_user.admin?
       redirect_to user_path(current_user), alert: "As an admin, you cannot delete your own account!"
     else
+      authorize user
       user.destroy
       redirect_to users_path, notice: "The user's account was successfully deleted!"
     end
