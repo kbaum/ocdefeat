@@ -184,17 +184,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.find(params[:id])
-    if current_user == user && current_user.admin?
-      redirect_to user_path(current_user), alert: "As an admin, you cannot delete your own account!"
-    else
-      authorize user
-      user.destroy
-      redirect_to users_path, notice: "The user's account was successfully deleted!"
-    end
-  end
-
   private
 
     def set_user
@@ -228,5 +217,19 @@ class UsersController < ApplicationController
         :severity,
         :role
       )
+    end
+
+    def deletion_msg
+      @message =
+        case current_user.role
+        when "unassigned"
+          "Your preliminary profile was successfully deleted."
+        when "patient"
+          "We hope that your experience with OCDefeat was productive and meaningful, and that you acquired the skillset necessary to defeat OCD!"
+        when "therapist"
+          "We hope that your experience working as an OCDefeat Therapy Forum Facilitator was rewarding. Thank you for helping our patients defeat OCD!"
+        when "admin"
+          "The user's account was successfully deleted."
+        end
     end
 end
