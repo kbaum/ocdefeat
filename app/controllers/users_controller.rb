@@ -48,13 +48,13 @@ class UsersController < ApplicationController
         if users.by_variant(params[:variant]).empty? # If no patients have the specified OCD variant
           flash.now[:alert] = "No patients with that variant of OCD were found."
         else
-          @filtered_users = users.by_variant(params[:variant]) # stores 'array' of all patients with a specific OCD variant
+          @filtered_users = users.by_variant(params[:variant]) # stores AR::Relation of all patients with a specific OCD variant
           if params[:variant] == "Both"
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} both traditionally and purely obsessive."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} both traditionally and purely obsessive."
           elsif params[:variant] == "Purely Obsessional"
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} purely obsessive."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} purely obsessive."
           else
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} traditionally obsessive."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} traditionally obsessive."
           end
         end
       elsif !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "Purely Obsessional", "Both")
