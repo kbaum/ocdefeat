@@ -68,7 +68,7 @@ class UsersController < ApplicationController
         end
       elsif !params[:desensitization_degree].blank? # Therapist filters patients by degree of desensitization
         if users.all? {|user| user.obsessions.empty?} # If no patient is obsessing about anything at all
-          flash.now[:alert] = "No patients are obsessing, so there is no need to practice desensitization."
+          flash.now[:alert] = "No patients are obsessing, so there is no need to develop desensitization through repeated exposure exercises."
         elsif params[:desensitization_degree] == "Not Desensitized" # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed
           if users.with_obsession_without_plan.empty?
             flash.now[:alert] = "Patients are becoming desensitized to their obsessions. No obsessions lack ERP plans!"
