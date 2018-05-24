@@ -81,7 +81,7 @@ class UsersController < ApplicationController
             flash.now[:alert] = "No patients designed preliminary ERP plans, i.e., plans sans steps."
           else
             @filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} designed at least one preliminary ERP plan."
+            flash.now[:notice] = "#{plural_inflection(@filtered_users)} designed at least one preliminary ERP plan."
           end
         elsif params[:desensitization_degree] == "Deficient ERP Plan Performance" # Therapist filters patients by those who have at least 1 incomplete ERP plan
           if users.patients_planning.empty?
