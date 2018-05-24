@@ -63,8 +63,8 @@ class UsersController < ApplicationController
         if users.by_severity_and_variant(severity, variant).empty?
           flash.now[:alert] = "There are no patients with #{severity.downcase} OCD and #{variant.downcase} types of compulsions."
         else
-          @filtered_users = users.by_severity_and_variant(severity, variant)
-          flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
+          @filtered_users = users.by_severity_and_variant(severity, variant) # stores AR::Relation of all patients with a specific OCD severity and variant combination
+          flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
         end
       elsif !params[:desensitization_degree].blank? # Therapist filters patients by degree of desensitization
         if users.all? {|user| user.obsessions.empty?} # If no patient is obsessing about anything at all
