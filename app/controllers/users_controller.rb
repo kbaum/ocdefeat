@@ -110,14 +110,14 @@ class UsersController < ApplicationController
             flash.now[:alert] = "No patients present with physical symptoms of OCD distress."
           else
             @filtered_users = users.symptomatic
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} physically symptomatic of OCD distress."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} physically symptomatic of OCD distress."
           end
         elsif params[:symptoms_presence] == "Asymptomatic patients"
           if users.asymptomatic.empty?
             flash.now[:alert] = "All patients with obsessions present with physical symptoms of OCD distress."
           else
             @filtered_users = users.asymptomatic
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} asymptomatic."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} asymptomatic."
           end
         end
       elsif !params[:ruminating_recently].blank? # Therapist filters patients by those who created new obsessions yesterday
