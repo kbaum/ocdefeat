@@ -125,7 +125,7 @@ class UsersController < ApplicationController
           flash.now[:alert] = "No patients reported new obsessions yesterday."
         else
           @filtered_users = users.recent_ruminators
-          flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} reported new obsessions yesterday!"
+          flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions yesterday!"
         end
       elsif !params[:num_obsessions].blank? # Therapist filters patients by obsession count
         if users.all? {|user| user.obsessions.empty?} # If no patient has obsessions
