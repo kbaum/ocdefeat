@@ -83,7 +83,7 @@ class UsersController < ApplicationController
             @filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
             flash.now[:notice] = "#{plural_inflection(@filtered_users)} designed at least one preliminary ERP plan."
           end
-        elsif params[:desensitization_degree] == "Deficient ERP Plan Performance" # Therapist filters patients by those who have at least 1 incomplete ERP plan
+        elsif params[:desensitization_degree] == "Deficient ERP Plan Performance" # Therapist filters patients by those who have at least 1 unfinished ERP plan
           if users.patients_planning.empty?
             flash.now[:alert] = "Patients are not implementing ERP plans; the Index of ERP Plans is currently empty."
           elsif users.patients_with_populated_plan.empty?
@@ -92,7 +92,7 @@ class UsersController < ApplicationController
             flash.now[:alert] = "Patients proficiently performed all ERP plans; no plans were left unfinished."
           else
             @filtered_users = users.patients_with_unfinished_plan
-            flash.now[:notice] = "You found #{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} with at least one unfinished ERP plan."
+            flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with at least one unfinished ERP plan."
           end
         elsif params[:desensitization_degree] == "Done Desensitizing" # Therapist filters patients by those who have obsessions, who have NO obsessions that lack ERP plans, and whose ERP plans are all completed
           if users.patients_fully_desensitized.empty?
