@@ -94,12 +94,12 @@ class UsersController < ApplicationController
             @filtered_users = users.patients_with_unfinished_plan
             flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with at least one unfinished ERP plan."
           end
-        elsif params[:desensitization_degree] == "Done Desensitizing" # Therapist filters patients by those who have obsessions, who have NO obsessions that lack ERP plans, and whose ERP plans are all completed
+        elsif params[:desensitization_degree] == "Done Desensitizing" # Therapist filters patients by those who have obsessions, who have NO obsessions that lack ERP plans, and whose ERP plans are all finished
           if users.patients_fully_desensitized.empty?
             flash.now[:alert] = "No patient is fully desensitized to all OCD triggers."
           else
             @filtered_users = users.patients_fully_desensitized
-            flash.now[:notice] = "#{@filtered_users.count} #{'patient'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} fully desensitized to OCD triggers, having implemented an ERP plan for each obsession!"
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} fully desensitized to OCD triggers, having implemented an ERP plan for each obsession!"
           end
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
