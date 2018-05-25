@@ -120,17 +120,17 @@ class UsersController < ApplicationController
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} asymptomatic."
           end
         end
-      elsif !params[:ruminating_recently].blank? # Therapist filters patients by those who reported new obsessions yesterday or today
+      elsif !params[:recent_ruminators].blank? # Therapist filters patients by those who reported new obsessions yesterday or today
         if users.ruminating_yesterday.empty? && users.ruminating_today.empty?
           flash.now[:alert] = "No patients reported new obsessions yesterday or today."
-        elsif params[:ruminating_recently] == "Patients who reported new obsessions yesterday"
+        elsif params[:recent_ruminators] == "Patients who reported new obsessions yesterday"
           if users.ruminating_yesterday.empty?
             flash.now[:alert] = "No patients reported new obsessions yesterday."
           else
             @filtered_users = users.ruminating_yesterday
             flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions yesterday!"
           end
-        elsif params[:ruminating_recently] == "Patients who reported new obsessions today"
+        elsif params[:recent_ruminators] == "Patients who reported new obsessions today"
           if users.ruminating_today.empty?
             flash.now[:alert] = "No patients reported new obsessions today."
           else
