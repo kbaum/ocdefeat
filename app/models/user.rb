@@ -50,9 +50,13 @@ class User < ApplicationRecord
     patients_obsessing.merge(Obsession.symptomless)
   end
 
-  def self.ruminating_yesterday # find all users who have obsessions that were created yesterday by nesting hash conditions and using SQL BETWEEN expression
+  def self.ruminating_yesterday # find all users who created obsessions yesterday by nesting hash conditions and using SQL BETWEEN expression
     interval = (Time.now.midnight - 1.day)..Time.now.midnight
     patients_obsessing.where(obsessions: { created_at: interval })
+  end
+
+  def self.ruminating_today # find all users who created obsessions today
+    patients_obsessing.select {|patient| !patient.obsessions.from_today.empty?}
   end
 
   def self.with_obsession_without_plan # Returns all users who have at least 1 obsession for which no ERP plans were designed
