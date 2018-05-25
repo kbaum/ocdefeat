@@ -140,7 +140,7 @@ class UsersController < ApplicationController
         end
       elsif !params[:num_obsessions].blank? # Therapist filters patients by obsession count
         if users.all? {|user| user.obsessions.empty?} # If no patient has obsessions
-          flash.now[:alert] = "The OCD volume is low. Not a single patient has obsessions!"
+          flash.now[:alert] = "Not a single patient has obsessions!"
         else # Patients have obsessions
           first_obsession_count = users.first.obsession_count
           if users.count == 1 # If there is only 1 patient
