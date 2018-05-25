@@ -144,23 +144,23 @@ class UsersController < ApplicationController
         else # Patients have obsessions
           first_obsession_count = users.first.obsession_count
           if users.count == 1 # If there is only 1 patient
-            @filtered_users = users # AR::Relation 'array' of 1 user instance
+            @filtered_users = users # AR::Relation containing 1 user instance
             flash.now[:notice] = "A single patient was found who has #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
           elsif users.all? {|user| user.obsession_count == first_obsession_count} # > 1 patient, but all patients have the same number of obsessions
-            flash.now[:alert] = "Patients cannot be ordered by obsession count, as all patients have #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
+            flash.now[:alert] = "Patients cannot be ordered by number of obsessions, as all patients reported #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
           elsif params[:num_obsessions] == "Least to Most Obsessions"
-            @filtered_users = users.least_to_most_obsessions # stores array of patients ordered by those w/ least to most obsessions
+            @filtered_users = users.least_to_most_obsessions # stores AR::Relation of users ordered by those w/ least to most obsessions
             flash.now[:notice] = "Patients are ordered from least to most obsessive!"
           else
-            @filtered_users = users.most_to_least_obsessions # stores array of patients ordered by those w/ most to least obsessions
+            @filtered_users = users.most_to_least_obsessions # stores AR::Relation of users ordered by those w/ most to least obsessions
             flash.now[:notice] = "Patients are ordered from most to least obsessive!"
           end
         end
       else
-        @filtered_users = users # @filtered_users stores array of all patients if no filter was applied when therapist views page
+        @filtered_users = users # @filtered_users stores AR::Relation of all patients if no filter was applied when therapist views page
       end
     elsif current_user.patient?
-      @therapists = users # @therapists stores 'array' of all therapists when patient views users index page
+      @therapists = users # @therapists stores AR::Relation of all therapists when patient views users index page
     end
   end
 
