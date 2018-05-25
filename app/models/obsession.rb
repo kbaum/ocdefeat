@@ -7,7 +7,7 @@ class Obsession < ApplicationRecord
   scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
-
+  
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
   validates :time_consumed, presence: true, inclusion: { in: 0..24 }
