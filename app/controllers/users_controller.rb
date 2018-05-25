@@ -162,6 +162,7 @@ class UsersController < ApplicationController
       end
     elsif current_user.patient?
       @therapists = users # @therapists stores AR::Relation of all therapists when patient views users index page
+      flash.now[:notice] = "#{@therapists.count} #{'therapist'.pluralize(@therapists.count)} #{'is'.pluralize(@therapists.count)} available to guide you through your OCD treatment."
     end
   end
 
