@@ -28,13 +28,13 @@
   ]),
   prompt: "OCD Severity and Variant" %>
   <br><br>
-  <%= select_tag "desensitization_degree", options_for_select(["Not Desensitized", "Developing Desensitization Plans", "Deficient ERP Plan Performance", "Done Desensitizing"]), prompt: "Degree of Desensitization" %>
-  <br><br>
-  <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms in Patients" %>
-  <br><br>
   <%= select_tag "recent_ruminators", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
   <br><br>
+  <%= select_tag "desensitization_degree", options_for_select(["Not Desensitized", "Developing Desensitization Plans", "Deficient ERP Plan Performance", "Done Desensitizing"]), prompt: "Degree of Desensitization" %>
+  <br><br>
   <%= select_tag "num_obsessions", options_for_select(["Least to Most Obsessions", "Most to Least Obsessions"]), prompt: "Number of Obsessions" %>
+  <br><br>
+  <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms" %>
   <br><br>
   <%= submit_tag "Filter Patients" %>
 <% end %>
