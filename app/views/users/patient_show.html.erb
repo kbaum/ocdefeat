@@ -9,9 +9,10 @@
 
   <br>
 
-  <p>Fixated on something else? <%= link_to "Report a new obsession", new_obsession_path %> that you'll surely overcome!</p>
-
-  <br>
+  <% if policy(Obsession).create? %>
+    <p>Fixated on something else? <%= link_to "Report a new obsession", new_obsession_path %> that you'll surely overcome!</p>
+    <br>
+  <% end %>
 
   <p>
     <strong>Number of ERP Plans Designed:</strong>
