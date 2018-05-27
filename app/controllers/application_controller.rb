@@ -66,5 +66,5 @@ class ApplicationController < ActionController::Base
     # #to_partial_path called on the filter instance returns the string name of the partial that will be rendered
     # In this case, it returns the string "filter_users/therapist"
     # We're rendering app/views/filter_users/_therapist.html.erb partial from the users index page
-    helper_method :current_user, :logged_in?, :filters # makes methods accessible to views
+    helper_method :current_user, :logged_in?, :filters, :plural_inflection(collection) # makes methods accessible to views
 end
