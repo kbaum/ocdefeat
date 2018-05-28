@@ -18,9 +18,10 @@
 
   <br>
 
-  <p>Need more practice? Become desensitized to your OCD triggers by developing a <%= link_to "new ERP plan", new_plan_path %>!</p>
-
-  <br>
+  <% if policy(Plan).create? %>
+    <p>Need more practice? Become desensitized to your OCD triggers by developing a <%= link_to "new ERP plan", new_plan_path %>!</p>
+    <br>
+  <% end %>
 
 </div>
 
