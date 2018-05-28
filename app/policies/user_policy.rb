@@ -25,8 +25,16 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
-  def update? # Admins can edit any user's information (e.g. role), and all other user types can only edit their own show pgs
-    user.admin? || oneself
+  def permitted_attributes
+    if oneself
+      [:name, :email, :password, :password_confirmation, :severity, :variant]
+    elsif user.admin?
+      [:role]
+    end
+  end
+
+  def update?
+    oneself || user.admin?
   end
 
   def destroy? # Only admins and the user who owns her account can delete her account
