@@ -1,9 +1,9 @@
 module UsersHelper
   def obsession_pronouns
     if current_user.patient?
-      "You are"
+      "You are currently conquering"
     elsif current_user.therapist?
-      "The patient is"
+      "The patient is currently conquering"
     end
   end
 
