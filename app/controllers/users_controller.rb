@@ -190,6 +190,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    authorize @user
     if @user.update_attributes(permitted_attributes(@user))
       redirect_to user_path(@user), notice: "User information was successfully updated!"
     else
