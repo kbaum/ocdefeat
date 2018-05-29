@@ -190,7 +190,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if @user.update_attributes(permitted_attributes(@user))
       redirect_to user_path(@user), notice: "User information was successfully updated!"
     else
       flash.now[:error] = "Your attempt to edit user information was unsuccessful. Please try again."
