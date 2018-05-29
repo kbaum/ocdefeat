@@ -1,12 +1,8 @@
 <h2><strong>Patient Profile</strong></h2>
 
-<% unless @user.severity == "Nonobsessive" %>
-  <h4><%= @user.name %> vs. <%= @user.severity %> OCD</h4>
-<% end %>
+<h4><%= @user.name %> vs. <%= @user.severity %> OCD</h4>
 
-<% unless @user.variant == "Neither" %>
-  <p><strong>OCD Variant</strong>: <%= @user.variant %></p>
-<% end %>
+<p><strong>OCD Variant</strong>: <%= @user.variant %></p>
 
 <br>
 
