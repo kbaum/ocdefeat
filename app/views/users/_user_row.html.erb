@@ -2,9 +2,13 @@
   <td><%= user.id %></td>
   <td><%= link_to user.name, user_path(user) %></td>
   <td>
-    <%= form_for(user) do |f| %>
-      <%= f.select(:role, User.roles.keys.map {|role| [role.titleize, role]}) %>
-      <%= f.submit "Revise Role" %>
+    <% if user.unassigned? %>
+      <%= form_for(user) do |f| %>
+        <%= f.select(:role, User.roles.keys.map {|role| [role.titleize, role]}) %>
+        <%= f.submit "Revise Role" %>
+      <% end %>
+    <% else %>
+      <%= user.role.capitalize %>
     <% end %>
   </td>
   <td>
