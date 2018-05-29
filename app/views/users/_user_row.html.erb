@@ -18,11 +18,11 @@
 
 <!--Explanation of form allowing admin to change a user's role:
 calling User.roles returns this hash:
-{"unassigned_user"=>0, "patient"=>1, "therapist"=>2, "admin"=>3}
+{"unassigned"=>0, "patient"=>1, "therapist"=>2, "admin"=>3}
 Then, calling User.roles.keys returns this array:
-["unassigned_user", "patient", "therapist", "admin"]
-And then, ["unassigned_user", "patient", "therapist", "admin"].map {|role| [role.titleize, role]}
+["unassigned", "patient", "therapist", "admin"]
+And then, ["unassigned", "patient", "therapist", "admin"].map {|role| [role.titleize, role]}
 will return:
-[["Unassigned User", "unassigned_user"], ["Patient", "patient"], ["Therapist", "therapist"], ["Admin", "admin"]]
-So in the dropdown menu, we'll have something like <option value="unassigned_user">Unassigned User</option>
+[["Unassigned", "unassigned_user"], ["Patient", "patient"], ["Therapist", "therapist"], ["Admin", "admin"]]
+So in the dropdown menu, we'll have something like <option value="unassigned">Unassigned</option>
 -->
