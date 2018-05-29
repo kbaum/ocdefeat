@@ -38,18 +38,17 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
-  <hr>
-
-  <label>Request a Role in the OCDefeat Community:</label>
-
-  <br><br>
-
-  <%= f.radio_button :role_requested, "Patient" %>
-  <%= f.label :role_requested_patient, "Patient:" %> As a patient, you can defeat OCD by creating and implementing custom ERP plans tailored to your obsessions!<br>
-  <%= f.radio_button :role_requested, "Therapist" %>
-  <%= f.label :role_requested_therapist, "Therapist:" %> As a therapist, you can facilitate our mental health forum by devising exposure activities and modifying patients' ERP plans!<br>
-  <%= f.radio_button :role_requested, "Admin" %>
-  <%= f.label :role_requested_admin, "Admin:" %> As an admin, you can manage users' accounts and change their roles as needed!
+  <% if !@user.valid? %>
+    <hr>
+    <label>Request a Role in the OCDefeat Community:</label>
+    <br><br>
+    <%= f.radio_button :role_requested, "Patient" %>
+    <%= f.label :role_requested_patient, "Patient:" %> As a patient, you can defeat OCD by creating and implementing custom ERP plans tailored to your obsessions!<br>
+    <%= f.radio_button :role_requested, "Therapist" %>
+    <%= f.label :role_requested_therapist, "Therapist:" %> As a therapist, you can facilitate our mental health forum by devising exposure activities and modifying patients' ERP plans!<br>
+    <%= f.radio_button :role_requested, "Admin" %>
+    <%= f.label :role_requested_admin, "Admin:" %> As an admin, you can manage users' accounts and change their roles as needed!
+  <% end %>
 
   <hr>
 
