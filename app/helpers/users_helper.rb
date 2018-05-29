@@ -30,4 +30,20 @@ module UsersHelper
       "Now that #{user.name}'s role was changed, this patient must report a valid OCD variant."
     end
   end
+
+  def patient_severity(user)
+    if ["Mild", "Moderate", "Severe", "Extreme"].include?(user.severity)
+      "#{user.name} vs. #{user.severity} OCD"
+    else
+      "#{select_severity(user)}"
+    end
+  end
+
+  def patient_variant(user)
+    if ["Traditional", "Purely Obsessional", "Both"].include?(user.variant)
+      "#{user.variant}"
+    else
+      "#{vary_variant(user)}"
+    end
+  end
 end
