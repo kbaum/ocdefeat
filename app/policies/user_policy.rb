@@ -25,8 +25,12 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def edit?
+    oneself
+  end
+
   def permitted_attributes
-    if oneself && user.unassigned? && user.provider == "twitter"
+    if oneself && record.unassigned? && record.provider == "twitter"
       [:name, :email, :password, :password_confirmation, :role_requested, :severity, :variant]
     elsif oneself
       [:name, :email, :password, :password_confirmation, :severity, :variant]
