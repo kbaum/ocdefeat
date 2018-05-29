@@ -26,7 +26,9 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    if oneself
+    if oneself && user.provider == "twitter"
+      [:name, :email, :password, :password_confirmation, :role_requested, :severity, :variant]
+    elsif oneself
       [:name, :email, :password, :password_confirmation, :severity, :variant]
     elsif user.admin?
       [:role]
