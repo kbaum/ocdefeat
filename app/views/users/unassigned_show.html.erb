@@ -9,10 +9,8 @@
 
 <% if @user.provider == "twitter" %>
   <div class="unassigned well">
-    <h4 class="unassigned">Thanks for logging in with Twitter!</h4>
-    <p class="unassigned">You automatically registered as a prospective <strong>patient</strong> who has <strong>mild</strong>, <strong>traditional</strong> OCD.</p>
-    <p class="unassigned">If this is an inaccurate OCD diagnosis and/or you prefer a different role,</p>
-    <p class="unassigned">you can <%= link_to "override OCDefeat's default settings!", edit_user_path(@user) %></p>
+    <h4 class="unassigned">Thanks for logging in with Twitter as an OCDefeat patient!</h4>
+    <p class="unassigned">Review and edit the details of your diagnosis <%= link_to "here!", edit_user_path(@user) %></p>
   </div>
 <% end %>
 
