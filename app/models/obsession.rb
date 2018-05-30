@@ -1,14 +1,13 @@
 class Obsession < ApplicationRecord
   scope :very_unnerving, -> { where("anxiety_rating > ?", 5) }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
+  scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
+  scope :symptomless, -> { where(symptoms: ["", " "]) }
 
   belongs_to :user # obsessions table has user_id foreign key column
   has_many :obsession_themes
   has_many :themes, through: :obsession_themes, dependent: :destroy
   has_many :plans, dependent: :destroy
-
-  scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
-  scope :symptomless, -> { where(symptoms: ["", " "]) }
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
