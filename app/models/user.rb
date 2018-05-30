@@ -13,7 +13,6 @@ class User < ApplicationRecord
   scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
-  scope :patients_sans_plans, -> { patients.includes(:plans).where(plans: { id: nil }) }
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
