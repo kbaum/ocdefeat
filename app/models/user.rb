@@ -44,12 +44,12 @@ class User < ApplicationRecord
     end
   end
 
-  def self.symptomatic # returns 'array' of users who have obsessions w/ symptoms attribute != empty string
+  def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
     patients_obsessing.merge(Obsession.presenting_symptoms)
   end
 
-  def self.asymptomatic # returns all users who have obsessions that are symptomless
-    patients_obsessing.merge(Obsession.symptomless)
+  def self.asymptomatic # returns AR::Relation of users whose obsessions ALL have symptoms attribute = blank string
+    patients_obsessing.where(_not_exists(Obsession.where("obsessions.user_id = users.id").presenting_symptoms))
   end
 
   def self.ruminating_yesterday # find all users who created obsessions yesterday by nesting hash conditions and using SQL BETWEEN expression
