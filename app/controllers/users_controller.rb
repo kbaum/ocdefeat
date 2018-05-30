@@ -107,14 +107,14 @@ class UsersController < ApplicationController
           flash.now[:notice] = "All patients are asymptomatic since nobody is obsessing!"
         elsif params[:symptoms_presence] == "Symptomatic patients"
           if users.symptomatic.empty?
-            flash.now[:alert] = "No patients present with physical symptoms of OCD distress."
+            flash.now[:alert] = "No patients present with physical symptoms of OCD."
           else
             @filtered_users = users.symptomatic
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} physically symptomatic of OCD distress."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} physically symptomatic of OCD."
           end
         elsif params[:symptoms_presence] == "Asymptomatic patients"
           if users.asymptomatic.empty?
-            flash.now[:alert] = "All patients with obsessions present with physical symptoms of OCD distress."
+            flash.now[:alert] = "All patients with obsessions present with physical symptoms of OCD."
           else
             @filtered_users = users.asymptomatic
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} asymptomatic."
