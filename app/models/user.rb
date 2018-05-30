@@ -140,6 +140,10 @@ class User < ApplicationRecord
   def self._exists(scope)
     "EXISTS(#{scope.to_sql})"
   end
+
+  def self._not_exists(scope)
+    "NOT #{_exists(scope)}"
+  end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
   # so if we're looking for all unassigned_users who want to be patients, we call
