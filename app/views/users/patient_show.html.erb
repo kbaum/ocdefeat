@@ -23,7 +23,6 @@
   <% if policy(Plan).create? %>
     <p>Need more practice? Develop a <%= link_to "new ERP plan", new_plan_path %> to expose yourself to OCD triggers to achieve desensitization!</p>
   <% end %>
-
 </div>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
