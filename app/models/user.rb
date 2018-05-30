@@ -61,7 +61,7 @@ class User < ApplicationRecord
     patients_obsessing.select {|patient| !patient.obsessions.from_today.empty?}
   end
 
-  def self.with_obsession_without_plan # Returns all users who have at least 1 obsession for which no ERP plans were designed
+  def self.unexposed_to_obsession # Returns all users who have at least 1 obsession for which no ERP plans were designed
     patients_obsessing.merge(Obsession.sans_plans)
   end
 
