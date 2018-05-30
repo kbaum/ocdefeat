@@ -52,13 +52,14 @@ class User < ApplicationRecord
     patients_obsessing.where(_not_exists(Obsession.where("obsessions.user_id = users.id").presenting_symptoms))
   end
 
-  def self.ruminating_yesterday # find all users who created obsessions yesterday by nesting hash conditions and using SQL BETWEEN expression
+  def self.ruminating_yesterday # returns AR::Relation of users who created obsessions yesterday
     interval = (Time.now.midnight - 1.day)..Time.now.midnight
     patients_obsessing.where(obsessions: { created_at: interval })
   end
 
-  def self.ruminating_today # find all users who created obsessions today
-    patients_obsessing.select {|patient| !patient.obsessions.from_today.empty?}
+  def self.ruminating_today # returns AR::Relation of users who created obsessions today
+    interval = Time.now.midnight..Time.now
+    patients_obsessing.where(obsessions: { created_at: interval })
   end
 
   def self.unexposed_to_obsession # Returns all users who have at least 1 obsession for which no ERP plans were designed
