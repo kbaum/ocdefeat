@@ -66,8 +66,8 @@ class User < ApplicationRecord
     patients_obsessing.merge(Obsession.sans_plans)
   end
 
-  def self.by_role(string_role)
-    where(role: self.roles[string_role]) # self.roles returns this hash: {"unassigned" => 0, "patient" => 1, "therapist" => 2, "admin" => 3}
+  def self.by_role(the_role)
+    where(role: the_role)
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
