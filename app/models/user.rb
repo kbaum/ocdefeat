@@ -1,8 +1,11 @@
 class User < ApplicationRecord
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
+  scope :unassigned, -> { where(role: 0) }
   scope :patients, -> { where(role: 1) }
   scope :therapists, -> { where(role: 2) }
+  scope :admins, -> { where(role: 3) }
+  
   scope :patients_mildly_obsessive, -> { patients.where(severity: "Mild") }
   scope :patients_moderately_obsessive, -> { patients.where(severity: "Moderate") }
   scope :patients_severely_obsessive, -> { patients.where(severity: "Severe") }
