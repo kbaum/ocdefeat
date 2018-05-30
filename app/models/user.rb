@@ -1,11 +1,9 @@
 class User < ApplicationRecord
-  enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
-
   scope :unassigned, -> { where(role: 0) }
   scope :patients, -> { where(role: 1) }
   scope :therapists, -> { where(role: 2) }
   scope :admins, -> { where(role: 3) }
-  
+
   scope :patients_mildly_obsessive, -> { patients.where(severity: "Mild") }
   scope :patients_moderately_obsessive, -> { patients.where(severity: "Moderate") }
   scope :patients_severely_obsessive, -> { patients.where(severity: "Severe") }
@@ -16,6 +14,8 @@ class User < ApplicationRecord
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
   scope :patients_sans_plans, -> { patients.includes(:plans).where(plans: { id: nil }) }
+
+  enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
