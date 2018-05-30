@@ -10,6 +10,7 @@ class User < ApplicationRecord
   scope :patients_traditional, -> { patients.where(variant: 'Traditional') }
   scope :patients_purely_obsessional, -> { patients.where(variant: 'Purely Obsessional') }
   scope :patients_doubly_diagnosed, -> { patients.where(variant: 'Both') }
+  scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
 
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
