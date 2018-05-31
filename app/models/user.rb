@@ -71,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
-    self.where.not(role_requested: "").where.not(role_requested: rejected_roles, role: role_number)
+    where.not(role_requested: rejected_roles, role: role_number)
   end
 
   def self.by_ocd_severity(severity)
