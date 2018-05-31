@@ -74,7 +74,7 @@ class User < ApplicationRecord
     where(severity: severity)
   end
 
-  def self.by_variant(variant)
+  def self.by_ocd_variant(variant)
     where(variant: variant)
   end
 
