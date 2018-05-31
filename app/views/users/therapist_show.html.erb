@@ -6,4 +6,11 @@
   <p><strong>Email Address:</strong> <%= @user.email %></p>
 </div>
 
+<% if policy(@user).edit? %>
+  <div class="well well-sm">
+    <h4>Priority Patients to Monitor for High Anxiety:</h4>
+    <%= priority_patients %>
+  </div>
+<% end %>
+
 <%= render partial: "manage_account", locals: { user: @user } %>
