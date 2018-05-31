@@ -45,10 +45,10 @@ class UsersController < ApplicationController
           flash.now[:notice] = "#{sv_agreement(@filtered_users)} diagnosed with #{params[:severity]} OCD!"
         end
       elsif !params[:variant].blank? # Therapist filters patients by OCD variant
-        if users.by_variant(params[:variant]).empty? # If no patients have the specified OCD variant
+        if users.by_ocd_variant(params[:variant]).empty? # If no patients have the specified OCD variant
           flash.now[:alert] = "No patients with that variant of OCD were found."
         else
-          @filtered_users = users.by_variant(params[:variant]) # stores AR::Relation of all patients with a specific OCD variant
+          @filtered_users = users.by_ocd_variant(params[:variant]) # stores AR::Relation of all patients with a specific OCD variant
           if params[:variant] == "Both"
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} both traditionally and purely obsessive."
           elsif params[:variant] == "Purely Obsessional"
