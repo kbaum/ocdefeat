@@ -3,10 +3,9 @@ class User < ApplicationRecord
   scope :admins, -> { where(role: 3) }
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
-  scope :patients_mildly_obsessive, -> { patients.where(severity: 'Mild') }
-  scope :patients_moderately_obsessive, -> { patients.where(severity: 'Moderate') }
-  scope :patients_severely_obsessive, -> { patients.where(severity: 'Severe') }
-  scope :patients_extremely_obsessive, -> { patients.where(severity: 'Extreme') }
+  ["Mild", "Moderate", "Severe", "Extreme"].each do |severity|
+    scope "patients_#{severity.downcase}ly_obsessive", -> { patients.where(severity: severity) }
+  end
   scope :patients_traditional, -> { patients.where(variant: 'Traditional') }
   scope :patients_purely_obsessional, -> { patients.where(variant: 'Purely Obsessional') }
   scope :patients_doubly_diagnosed, -> { patients.where(variant: 'Both') }
