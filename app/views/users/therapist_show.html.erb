@@ -22,6 +22,9 @@
     <div class="well well-sm">
       <h4><u>Breakdown by OCD Variant</u></h4>
       <br>
+      <% ["Traditional", "Purely Obsessional", "Both"].each do |variant| %>
+        <%= sort_variant_diagnosees(variant) %>
+      <% end %>
     </div>
 
     <p><strong>Patients to Monitor for High Anxiety:</strong></p>
