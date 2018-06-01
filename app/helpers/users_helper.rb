@@ -47,12 +47,7 @@ module UsersHelper
         content_tag(:em, "No patients were diagnosed with #{severity} OCD.")
       end
     else
-      content_tag(:ul) do
-        User.by_ocd_severity(severity).each do |user|
-          concat(content_tag(:li, link_to(user.name, user_path(user))))
-        end
-      end
+      render partial: "users_ul", locals: { users: User.by_ocd_severity(severity) }
     end
   end
-
 end
