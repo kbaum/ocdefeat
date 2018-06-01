@@ -171,12 +171,12 @@ class ObsessionsController < ApplicationController
   def new
     @obsession = Obsession.new # @obsession instance for form_for to wrap around
     authorize @obsession
-    @themes = Theme.all # @themes stores all OCD themes so user can select which existing theme their new obsession pertains to
+    @themes = policy_scope(Theme) # @themes stores all OCD themes so user can select which existing theme their new obsession pertains to
   end
 
   def create
     @obsession = current_user.obsessions.build(obsession_params)
-    @obsession.obsessify(@obsession.intrusive_thought)
+    #@obsession.obsessify(@obsession.intrusive_thought)
     authorize @obsession
 
     if @obsession.save
