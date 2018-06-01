@@ -6,12 +6,16 @@
   <p><strong>Email Address:</strong> <%= @user.email %></p>
 </div>
 
-<% if policy(@user).edit? %>
-  <div class="well well-sm">
-    <h4>Your Patient Caseload</h4>
-    <h5>Patients to Monitor for High Anxiety:</h5>
-    <%= priority_patients %>
-  </div>
-<% end %>
+<div class="well well-lg">
+  <% if policy(@user).edit? %>
+    <h3>Patient Management</h3>
+    <h4>Your Current Caseload: <%= User.patients.count %></h4>
+    <br>
+    <hr>
+
+    <p><strong>Patients to Monitor for High Anxiety:</strong></p>
+    <%= panicky_patients %>
+  <% end %>
+</div>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
