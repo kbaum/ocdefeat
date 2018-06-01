@@ -176,7 +176,6 @@ class ObsessionsController < ApplicationController
 
   def create
     @obsession = current_user.obsessions.build(obsession_params)
-    #@obsession.obsessify(@obsession.intrusive_thought)
     authorize @obsession
 
     if @obsession.save
