@@ -3,9 +3,6 @@ class User < ApplicationRecord
   scope :admins, -> { where(role: 3) }
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
-  ["Mild", "Moderate", "Severe", "Extreme"].each do |severity|
-    scope "patients_#{severity.downcase}ly_obsessive", -> { patients.where(severity: severity) }
-  end
   scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
