@@ -37,4 +37,22 @@ module UsersHelper
       "Hybrid of Traditional and Pure-O"
     end
   end
+
+  def sort_severity(severity)
+    content_tag(:p) do
+      content_tag(:strong, "#{severity}ly Obsessive Patients:")
+    end +
+    if User.by_ocd_severity(severity).empty?
+      content_tag(:p) do
+        content_tag(:em, "No patients were diagnosed with #{severity} OCD.")
+      end
+    else
+      content_tag(:ul) do
+        User.by_ocd_severity(severity).each do |user|
+          concat(content_tag(:li, link_to(user.name, user_path(user))))
+        end
+      end
+    end
+  end
+
 end
