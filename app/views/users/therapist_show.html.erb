@@ -11,6 +11,13 @@
     <h3>Patient Management</h3>
     <h4>Your Current Caseload: <%= User.patients.count %></h4>
     <br>
+    <div class="well well-sm">
+      <h4><u>Breakdown by OCD Severity</u></h4>
+      <br>
+      <% ["Mild", "Moderate", "Severe", "Extreme"].each do |severity| %>
+        <%= sort_severity_diagnosees(severity) %>
+      <% end %>
+    </div>
     <hr>
 
     <p><strong>Patients to Monitor for High Anxiety:</strong></p>
