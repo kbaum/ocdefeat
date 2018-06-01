@@ -38,7 +38,7 @@ module UsersHelper
     end
   end
 
-  def sort_severity(severity)
+  def sort_severity_diagnosees(severity)
     content_tag(:p) do
       content_tag(:strong, "#{severity}ly Obsessive Patients:")
     end +
