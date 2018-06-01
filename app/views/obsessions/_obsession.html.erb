@@ -66,11 +66,10 @@
 
     <%= obsession_builder.collection_check_boxes(:theme_ids, themes, :id, :name) do |b| %>
       <p>
-        <%= b.label :class => "red-outline" %>
+        <%= b.label, class: "red-outline" %>
         <%= b.check_box %>
       </p>
     <% end %>
-
     <br>
   <% end %>
 
