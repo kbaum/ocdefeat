@@ -26,4 +26,15 @@ module UsersHelper
       end
     end
   end
+
+  def vary_variant(user)
+    case user.variant
+    when "Traditional"
+      "Traditional"
+    when "Purely Obsessional"
+      "Pure-O"
+    when "Both"
+      "Hybrid of Traditional and Pure-O"
+    end
+  end
 end
