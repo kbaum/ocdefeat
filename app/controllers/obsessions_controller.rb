@@ -192,7 +192,7 @@ class ObsessionsController < ApplicationController
 
   def edit
     authorize @obsession
-    @themes = Theme.all
+    @themes = policy_scope(Theme)
   end
 
   def update
