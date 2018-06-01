@@ -77,9 +77,11 @@ class Obsession < ApplicationRecord
     all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
   end
 
-  def obsessify(thought) # instance method called on obsession instance takes string argument, sets intrusive_thought attribute of obsession to formatted string
-    self.intrusive_thought = "What if I " << "#{thought}?"
-  end
+  private
+    def hypotheticalize # sets intrusive_thought attribute of obsession = to formatted string "What if I...?"
+      idea = self.intrusive_thought.downcase.split(/\A\bwhat\b\s+\bif\b\s+\bi\b\s+/).join("").split("?").join("")
+      self.intrusive_thought = "What if I " << "#{idea}?"
+    end
 end
   # Explanation of #themes_attributes=(themes_attributes):
   # themes_attributes is a hash that looks like {"name" => "Contamination OCD"}
