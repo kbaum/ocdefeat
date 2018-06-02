@@ -25,4 +25,8 @@
   <% end %>
 </div>
 
+<% if current_user.therapist? %>
+  <%= render partial: "therapy_tips", locals: { user: @user, tip: Tip.new } %>
+<% end %>
+
 <%= render partial: "manage_account", locals: { user: @user } %>
