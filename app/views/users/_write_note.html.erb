@@ -1,10 +1,10 @@
 <%= form_for [user, note] do |note_builder| %>
   <div class="field">
-    <%= note_builder.label :content %><br>
-    <%= note_builder.text_area :content, :placeholder => (note.errors.full_messages_for(:content).first) %>
+    <%= note_builder.label :content, label_note %><br>
+    <%= note_builder.text_area :content, :placeholder => (note.errors.full_messages_for(:content).first || placefill_note) %>
   </div>
 
   <div class="actions">
-    <%= note_builder.submit %>
+    <%= note_builder.submit label_submit_btn %>
   </div>
 <% end %>
