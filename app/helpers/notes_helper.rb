@@ -6,4 +6,20 @@ module NotesHelper
       "Voice your concerns to a counselor:"
     end
   end
+
+  def placefill_note
+    if current_user.therapist?
+      "Add mental health tips..."
+    elsif current_user.patient?
+      "Feel free to vent here..."
+    end
+  end
+
+  def label_submit_btn
+    if current_user.therapist?
+      "Share Your Advice"
+    elsif current_user.patient?
+      "Share Your Troubles"
+    end
+  end
 end
