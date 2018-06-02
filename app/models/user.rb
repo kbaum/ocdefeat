@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
-  has_many :tips
+  has_many :notes
 
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
