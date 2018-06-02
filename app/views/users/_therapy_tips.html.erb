@@ -1,0 +1,10 @@
+<%= form_for [user, tip] do |tip_builder| %>
+  <div class="field">
+    <%= tip_builder.label :content, "Give this patient some therapy pointers:" %><br>
+    <%= tip_builder.text_area :content, :placeholder => (tip.errors.full_messages_for(:content).first || "Add your advice here...") %>
+  </div>
+
+  <div class="actions">
+    <%= tip_builder.submit "Submit Advice" %>
+  </div>
+<% end %>
