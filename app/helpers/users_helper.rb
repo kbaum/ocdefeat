@@ -21,7 +21,7 @@ module UsersHelper
     else
       content_tag(:ul) do
         User.patients_very_unnerved.each do |user|
-          concat(content_tag(:li, user.name))
+          concat(content_tag(:li, link_to(user.name, user_path(user))))
         end
       end
     end
