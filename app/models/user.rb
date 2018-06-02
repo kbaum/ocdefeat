@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def self.by_severity_and_variant(severity, variant)
-    self.send("patients_#{severity.downcase}ly_obsessive").by_ocd_variant(variant)
+    by_ocd_severity(severity).by_ocd_variant(variant)
   end
 
   def obsession_count
