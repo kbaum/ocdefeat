@@ -187,6 +187,7 @@ class ObsessionsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
     authorize @obsession
   end
 
