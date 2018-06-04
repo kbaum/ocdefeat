@@ -183,7 +183,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @note = @user.notes.build # instantiating new note instance for user show page
     render show_template # private method #show_template returns string name of view file to be rendered
   end
 
