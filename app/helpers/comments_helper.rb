@@ -6,4 +6,12 @@ module CommentsHelper
       "Voice your concerns to a counselor:"
     end
   end
+
+  def placefill_comment
+    if current_user.therapist?
+      "Add mental health tips..."
+    elsif current_user.patient?
+      "Tell me your troubles..."
+    end
+  end
 end
