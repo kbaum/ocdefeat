@@ -13,3 +13,12 @@
   <h4>Comment on This Obsession</h4>
   <%= render partial: "comments/form", locals: { obsession: @obsession, comment: @comment } %>
 </div>
+
+<% if policy(obsession).update? %>
+  <br>
+  <p><%= link_to "Edit Obsession", edit_obsession_path(obsession) %></p>
+<% end %>
+
+<% if policy(obsession).destroy? %>
+  <%= button_to "Delete Obsession", obsession_path(obsession), method: :delete, data: { confirm: "Are you sure you want to delete this obsession?" } %>
+<% end %>
