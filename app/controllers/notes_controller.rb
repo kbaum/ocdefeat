@@ -1,6 +1,10 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:edit, :update, :destroy]
 
+  def create
+    binding.pry
+  end
+
   def edit
   end
 
