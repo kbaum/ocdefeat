@@ -1,8 +1,10 @@
 class NotesController < ApplicationController
-  def new
-    @note = Note.new
+  def edit
   end
 
-  def edit
+  def update
+  end
+
+  def destroy
   end
 end
