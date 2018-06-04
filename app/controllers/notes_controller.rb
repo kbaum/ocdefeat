@@ -15,4 +15,8 @@ class NotesController < ApplicationController
     def set_note
       @note = User.find(params[:user_id]).notes.find(params[:id])
     end
+
+    def note_params
+      params.require(:note).permit(:content, :user_id)
+    end
 end
