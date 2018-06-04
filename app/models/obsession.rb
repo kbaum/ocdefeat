@@ -9,7 +9,7 @@ class Obsession < ApplicationRecord
   has_many :obsession_themes
   has_many :themes, through: :obsession_themes, dependent: :destroy
   has_many :plans, dependent: :destroy
-  has_many :notes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
