@@ -10,7 +10,7 @@
       The intrusive thought "<%= @obsession.intrusive_thought %>" was manufactured by my OCD
       and is not a true reflection of me.
     </li>
-    
+
     <br>
 
     <li>
@@ -25,4 +25,8 @@
       rather than avoiding them or engaging in rituals such as <%= @obsession.rituals %>.
     </li>
   </ul>
+</div>
+
+<div class="well well-sm">
+  <%= render partial: "comments/form", locals: { obsession: @obsession, comment: @comment } %>
 </div>
