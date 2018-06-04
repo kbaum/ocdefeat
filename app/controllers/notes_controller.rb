@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:edit, :update, :destroy]
-  
+
   def edit
   end
 
@@ -9,4 +9,10 @@ class NotesController < ApplicationController
 
   def destroy
   end
+
+  private
+
+    def set_note
+      @note = User.find(params[:user_id]).notes.find(params[:id])
+    end
 end
