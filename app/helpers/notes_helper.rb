@@ -11,7 +11,7 @@ module NotesHelper
     if current_user.therapist?
       "Add mental health tips..."
     elsif current_user.patient?
-      "Feel free to vent here..."
+      "Tell me your troubles..."
     end
   end
 
