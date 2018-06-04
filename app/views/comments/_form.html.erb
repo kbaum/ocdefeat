@@ -1,0 +1,13 @@
+<h4>Comment on This Obsession</h4>
+
+<%= form_for [obsession, comment] do |f| %>
+  <div class="field">
+    <%= f.label :content, label_comment %><br>
+    <%= f.text_area :content, :placeholder => (comment.errors.full_messages_for(:content).first || placefill_comment) %>
+  </div>
+
+  <div class="actions">
+    <%= f.hidden_field :obsession_id, value: obsession.id %>
+    <%= f.submit label_submit_btn %>
+  </div>
+<% end %>
