@@ -14,4 +14,12 @@ module CommentsHelper
       "Tell me your troubles..."
     end
   end
+
+  def label_submit_btn
+    if current_user.therapist?
+      "Share Your Advice"
+    elsif current_user.patient?
+      "Share Your Troubles"
+    end
+  end
 end
