@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     resources :notes, only: [:new, :edit, :update, :destroy]
   end
 
-  resources :obsessions
+  resources :obsessions do
+    resources :notes, only: [:create]
+  end
 
   resources :plans do
     resources :steps
