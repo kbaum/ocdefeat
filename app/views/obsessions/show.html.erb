@@ -1,3 +1,9 @@
+<h4>OCD Spike: <span class="obsession">"<%= obsession.intrusive_thought %>"</span></h4>
+
+<% unless obsession.patient_variant == "Both" %>
+  <p><em>A permutation of <%= obsession.patient_variant %> OCD content</em></p>
+<% end %>
+
 <h1>Self-Help Guide</h1>
 
 <div class="well well-sm">
