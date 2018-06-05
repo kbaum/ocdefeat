@@ -51,6 +51,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def show_comments?
+    user.therapist? || oneself
+  end
+
   private
 
     def oneself # the user logged in is the selfsame user (record) whose profile is being viewed
