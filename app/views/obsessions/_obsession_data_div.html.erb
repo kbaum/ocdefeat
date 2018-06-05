@@ -11,6 +11,6 @@
     <br>
     <li>Produces the urge to perform rituals like <%= obsession.rituals %></li>
     <br>
-    <li>Consumes <%= obsession.time_consumed %> hours/day</li>
+    <li>Consumes <%= obsession.time_consumed %> <%= 'hour'.pluralize(obsession.time_consumed) %>/day</li>
   </ul>
 </div>
