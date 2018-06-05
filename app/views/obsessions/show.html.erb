@@ -4,9 +4,11 @@
   <p><em>A permutation of <%= @obsession.patient_variant %> OCD content</em></p>
 <% end %>
 
-<div class="well well-sm">
-  <h4>Deconstructing the Obsession</h4>
-</div>
+<p><em>Reported by <%= @obsession.patient_name %> on <%= originated_on(@obsession) %></em></p>
+
+<br>
+
+<%= render partial: "obsession_data_div", locals: { obsession: @obsession } %>
 
 <div class="well well-sm">
   <h4>Self-Help Guide</h4>
