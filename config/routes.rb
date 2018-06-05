@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update, :destroy]
 
   resources :obsessions do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :index]
   end
 
   resources :plans do
