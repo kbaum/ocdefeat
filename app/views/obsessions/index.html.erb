@@ -11,7 +11,9 @@
 <hr>
 
 <% if @obsessions %>
+<ul>
   <% @obsessions.each do |obsession| %>
-    <%= render partial: "obsession_div", locals: { obsession: obsession } %>
+    <li><%= link_to obsession.intrusive_thought, obsession_path(obsession) %></li>
   <% end %>
+</ul>
 <% end %>
