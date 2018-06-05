@@ -8,14 +8,10 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    patient_obsessing || comment_owner
+    comment_owner
   end
 
   private
-
-    def patient_obsessing
-      record.obsession.user == user
-    end
 
     def comment_owner
       record.user == user
