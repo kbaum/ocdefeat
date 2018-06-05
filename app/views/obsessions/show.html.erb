@@ -24,6 +24,10 @@
   </div>
 <% end %>
 
+<% if policy_scope(Comment) %>
+  <%= link_to "Read comments", obsession_comments_path(@obsession) %>
+<% end %>
+
 <% if policy(@obsession).update? %>
   <br>
   <p><%= link_to "Edit Obsession", edit_obsession_path(@obsession) %></p>
