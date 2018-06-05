@@ -188,6 +188,7 @@ class ObsessionsController < ApplicationController
 
   def show
     @comment = Comment.new
+    @obsession_comments = @obsession.comments # stores all comments belonging to the obsession
     authorize @obsession
   end
 
