@@ -17,10 +17,12 @@
   </div>
 <% end %>
 
-<div class="well well-sm">
-  <h4>Comment on This Obsession</h4>
-  <%= render partial: "comments/form", locals: { obsession: @obsession, comment: @comment } %>
-</div>
+<% if policy(@comment).create? %>
+  <div class="well well-sm">
+    <h4>Comment on This Obsession</h4>
+    <%= render partial: "comments/form", locals: { obsession: @obsession, comment: @comment } %>
+  </div>
+<% end %>
 
 <% if policy(@obsession).update? %>
   <br>
