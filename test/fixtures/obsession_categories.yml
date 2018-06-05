@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  obsession_id: 1
-  category_id: 1
-
-two:
-  obsession_id: 1
-  category_id: 1
