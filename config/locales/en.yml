@@ -3,6 +3,7 @@ en:
     default: "You have requested a page that you cannot access."
     user_policy:
       destroy?: "As an admin, you cannot delete your own account!"
+      show_comments?: "Access denied! You cannot read comments about another patient's obsessions!"
     obsession_policy:
       new?: "Access denied! Only patients are authorized to create new obsessions."
       show?: "Access denied! OCDefeat will not disclose details of obsessions to preserve patient privacy and confidentiality!"
