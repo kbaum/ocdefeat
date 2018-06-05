@@ -7,12 +7,10 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
 
-  resources :users, only: [:index, :show, :edit, :update, :destroy] do
-    resources :notes, only: [:new, :edit, :update, :destroy]
-  end
+  resources :users, only: [:index, :show, :edit, :update, :destroy]
 
   resources :obsessions do
-    resources :notes, only: [:create]
+    resources :comments, only: [:create]
   end
 
   resources :plans do
