@@ -4,8 +4,8 @@
     <li>Triggered by <%= obsession.triggers %></li>
     <br>
     <li>Induces anxiety at level <%= obsession.anxiety_rating %></li>
-    <br>
     <% if !obsession.symptoms.blank? %>
+      <br>
       <li>Manifests as physical symptoms such as <%= obsession.symptoms %></li>
     <% end %>
     <br>
