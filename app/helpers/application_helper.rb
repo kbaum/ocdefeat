@@ -11,4 +11,8 @@ module ApplicationHelper
     end
   end
 
+  def created_on(instance)
+    instance.created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
+  end
+
 end
