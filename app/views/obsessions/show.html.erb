@@ -24,4 +24,8 @@
   </div>
 <% end %>
 
-<p><%= link_to "Read comments about this obsession!", obsession_comments_path(@obsession) %></p>
+<div class="well well-sm">
+  <h3>All Comments</h3>
+  <%= render(@comments) || "No comments were found..." %>
+  <p>Filter comments <%= link_to "here!", obsession_comments_path(@obsession) %></p>
+</div>
