@@ -80,6 +80,14 @@ class Obsession < ApplicationRecord
     all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
   end
 
+  def self.search_thoughts(search)
+    if search
+      where('intrusive_thought LIKE ?', "%#{search}%")
+    else
+      all
+    end
+  end
+
   private
     def hypotheticalize # sets intrusive_thought attribute of obsession = to formatted string "What if I...?"
       idea = self.intrusive_thought.downcase.split(/\A\bwhat\b\s+\bif\b\s+\bi\b\s+/).join("").split("?").join("")
