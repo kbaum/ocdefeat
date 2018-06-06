@@ -1,3 +1,11 @@
+<%= form_tag obsessions_path, method: :get do %>
+  <%= label_tag :search, "Search your thoughts:" %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Search", name: nil %>
+<% end %>
+
+<br>
+
 <%= form_tag("/obsessions", method: "get") do %>
   <%= label_tag "anxiety_amount", "Amount of Anxiety Induced:" %>
   <%= number_field_tag "anxiety_amount", nil, in: 1..10 %>
