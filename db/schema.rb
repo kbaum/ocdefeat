@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606210716) do
+ActiveRecord::Schema.define(version: 20180606210943) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -54,7 +54,8 @@ ActiveRecord::Schema.define(version: 20180606210716) do
     t.integer "max_anxiety_rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "time_range"
+    t.float "min_time_consumed"
+    t.float "max_time_consumed"
   end
 
   create_table "steps", force: :cascade do |t|
