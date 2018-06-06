@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606192805) do
+ActiveRecord::Schema.define(version: 20180606203923) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20180606192805) do
 
   create_table "searches", force: :cascade do |t|
     t.string "key_terms"
-    t.integer "theme_id"
+    t.integer "user_id"
     t.integer "min_anxiety_rating"
     t.integer "max_anxiety_rating"
     t.datetime "created_at", null: false
