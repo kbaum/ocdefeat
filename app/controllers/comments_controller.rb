@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: [:edit, :update, :destroy]
+
   def create
     @comment = current_user.comments.build(comment_params)
     if @comment.save
@@ -35,6 +37,11 @@ class CommentsController < ApplicationController
   end
 
   private
+
+    def set_comment
+      @obsession = Obsession.find(params[:obsession_id])
+      @comment = @obsession.comments.find(params[:id])
+    end
 
     def comment_params
       params.require(:comment).permit(:content, :obsession_id, :user_id)
