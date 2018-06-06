@@ -1,0 +1,9 @@
+<h3>Comments on Obsession: <em>"<%= @obsession.intrusive_thought %>"</em></h3>
+
+<br>
+
+<%= render partial: "filter_comments", locals: { obsession: @obsession } %>
+
+<br>
+
+<%= render(@comments) || "No comments were found." %>
