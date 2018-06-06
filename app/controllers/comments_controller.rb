@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to obsession_path(@obsession), notice: "Your comment was successfully updated!"
     else
-      flash.now[:error] = "Your attempt to edit the comment was unsuccessful. Please try again."
+      flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
       render :edit
     end
   end
