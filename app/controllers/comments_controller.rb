@@ -47,12 +47,4 @@ class CommentsController < ApplicationController
         "Thank you for reaching out to our therapy team so we can effectively address your concerns!"
       end
     end
-
-    def commenter
-      if current_user.patient?
-        "You"
-      elsif current_user.therapist?
-        "The patient"
-      end
-    end
 end
