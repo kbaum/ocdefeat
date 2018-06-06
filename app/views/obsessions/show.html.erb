@@ -24,6 +24,4 @@
   </div>
 <% end %>
 
-<% if policy_scope(Comment) %>
-  <%= link_to "Read comments", obsession_comments_path(@obsession) %>
-<% end %>
+<p><%= link_to "Read comments about this obsession!", obsession_comments_path(@obsession) %></p>
