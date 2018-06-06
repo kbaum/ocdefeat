@@ -14,6 +14,16 @@ class CommentsController < ApplicationController
   def edit  # GET "/obsessions/:obsession_id/comments/:id/edit maps to comments#edit
   end
 
+  def update
+    authorize @comment
+    if @comment.update(comment_params)
+      redirect_to obsession_path(@obsession), notice: "Your comment was successfully updated!"
+    else
+      flash.now[:error] = "Your attempt to edit the comment was unsuccessful. Please try again."
+      render :edit
+    end
+  end
+
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
     @obsession = Obsession.find(params[:obsession_id])
     @comments = @obsession.comments
