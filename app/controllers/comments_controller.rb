@@ -11,6 +11,9 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit  # GET "/obsessions/:obsession_id/comments/:id/edit maps to comments#edit
+  end
+
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
     @obsession = Obsession.find(params[:obsession_id])
     @comments = @obsession.comments
