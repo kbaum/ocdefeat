@@ -11,8 +11,6 @@ class Search < ApplicationRecord
       obsessions = obsessions.where(user_id: user_id) if user_id.present?
       obsessions = obsessions.where("anxiety_rating >= ?", min_anxiety_rating) if min_anxiety_rating.present?
       obsessions = obsessions.where("anxiety_rating <= ?", max_anxiety_rating) if max_anxiety_rating.present?
-      obsessions = obsessions.where("time_consumed >= ?", min_time_consumed) if min_time_consumed.present?
-      obsessions = obsessions.where("time_consumed <= ?", max_time_consumed) if max_time_consumed.present?
       obsessions
     end
 end
