@@ -3,16 +3,3 @@
   <%= select_tag "type", options_for_select(["Patient Concerns", "Advice from Therapists"]), prompt: "Type" %>
   <%= submit_tag "Filter Comments" %>
 <% end %>
-
-<!--
-<form action="/obsessions/1/comments" accept-charset="UTF-8" method="get">
-  <input name="utf8" type="hidden" value="✓">
-  <label for="type">Filter Comments by</label>
-  <select name="type" id="type">
-    <option value="">Type</option>
-    <option value="Patient Concerns">Patient Concerns</option>
-    <option value="Advice from Therapists">Advice from Therapists</option>
-  </select>
-  <input type="submit" name="commit" value="Filter Comments" data-disable-with="Filter Comments">
-</form>
--->
