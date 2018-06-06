@@ -24,6 +24,12 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    authorize @comment
+    @comment.destroy
+    redirect_to obsession_path(@obsession), notice: "Your comment was successfully deleted!"
+  end
+
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
     @obsession = Obsession.find(params[:obsession_id])
     @comments = @obsession.comments
