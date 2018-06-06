@@ -4,10 +4,8 @@ class SearchesController < ApplicationController
   end
 
   def create
-    @search = Search.new(search_params)
-    if @search.save
-      redirect_to search_path(@search), notice: "Your search results are displayed below."
-    end
+    @search = Search.create(search_params)
+    redirect_to search_path(@search), notice: "Your search results are displayed below."
   end
 
   def show
