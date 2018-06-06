@@ -9,8 +9,8 @@
   <br>
 
   <div class="field">
-    <%= f.label :theme_id, "Theme Classification:" %><br>
-    <%= f.collection_select :theme_id, Theme.order(:name), :id, :name, include_blank: true %><br>
+    <%= f.label :user_id, "Patient Identity:" %><br>
+    <%= f.collection_select :user_id, User.patients.order(:name), :id, :name, include_blank: true %><br>
   </div>
 
   <br>
@@ -19,6 +19,14 @@
     <%= f.label :min_anxiety_rating, "Range of Anxiety" %><br>
     <%= f.text_field :min_anxiety_rating, size: 5 %> -
     <%= f.text_field :max_anxiety_rating, size: 5 %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= f.label :min_time_consumed, "Time Range" %><br>
+    <%= f.text_field :min_time_consumed, size: 5 %> -
+    <%= f.text_field :max_time_consumed, size: 5 %>
   </div>
 
   <br>
