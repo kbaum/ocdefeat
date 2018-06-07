@@ -4,6 +4,10 @@ module Wizard
 
     class Base
       include ActiveModel::Model # I can use instances of wizard form classes in Rails forms and access default Rails validations
+
+      def initialize(user_properties)
+        @user = ::User.new(user_properties)
+      end
     end
   end
 end
