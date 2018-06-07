@@ -6,9 +6,15 @@ class ObsessionsController < ApplicationController
     obsessions = policy_scope(Obsession) # patient only sees her own obsessions; admins and therapists see all
     @patients = User.patients
     @themes = policy_scope(Theme) # patients, therapists and admins see all themes
-
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
-      if !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
+      if !params[:search].blank? # Patient filters obsessions by intrusive thought in simple search form
+        if obsessions.search_thoughts(params[:search]).empty?
+          flash.now[:alert] = "You never recorded that intrusive thought in your Obsessions Log!"
+        else
+          @obsessions = obsessions.search_thoughts(params[:search])
+          flash.now[:notice] = "A thought popped into your head (and search results)!"
+        end
+      elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
         if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
           flash.now[:alert] = "None of your obsessions were rated at anxiety level #{params[:anxiety_amount]}."
         else
@@ -125,46 +131,47 @@ class ObsessionsController < ApplicationController
         flash.now[:notice] = "A full psychiatric history of all patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
-      if !params[:plan_production].blank? # Admin filters obsessions by number of ERP plans per obsession
-        if obsessions == obsessions.sans_plans # If all obsessions have 0 plans
-          flash.now[:alert] = "No ERP plans were designed for any single obsession!"
-        elsif obsessions.count == 1 # Only 1 obsession exists, but this obsession has some number of plan(s)
-          @obsessions = obsessions # stores AR::Relation containing 1 obsession
-          flash.now[:notice] = "The Obsessions Log only contains one obsession, which is targeted by #{@obsessions.first.plans_per_obsession} ERP #{'plan'.pluralize(@obsessions.first.plans_per_obsession)}."
-        else # > 1 obsession, some of which have ERP plans, exist
-          first_plan_count = obsessions.first.plans_per_obsession
-          if obsessions.all? {|o| o.plans_per_obsession == first_plan_count}
-            flash.now[:alert] = "Patients' obsessions cannot be sorted by number of ERP plans per obsession, as all obsessions are targeted by #{first_plan_count} ERP #{'plan'.pluralize(first_plan_count)}."
-          else # There are multiple obsessions, and NOT all obsessions have the same number of ERP plans
-            if params[:plan_production] == "Least to Most ERP Plans"
-              @obsessions = obsessions.least_to_most_plans
-              flash.now[:notice] = "Patients' obsessions are ordered from least to most ERP plans per obsession!"
-            else
-              @obsessions = obsessions.most_to_least_plans
-              flash.now[:notice] = "Patients' obsessions are ordered from most to least ERP plans per obsession!"
-            end
-          end
-        end
-      elsif !params[:date].blank? # Admin filters obsessions by date created
-        if params[:date] == "Today"
-          if obsessions.from_today.empty? # If no obsessions were created today
-            flash.now[:alert] = "No new obsessions were reported today."
-          else
-            @obsessions = obsessions.from_today # stores AR::Relation of all obsessions created today
-            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported today!"
-          end
-        elsif params[:date] == "Old Obsessions"
-          if obsessions.old_obsessions.empty? # If no obsessions were created prior to today
-            flash.now[:alert] = "No obsessions were reported before today."
-          else
-            @obsessions = obsessions.old_obsessions # stores AR::Relation of all obsessions created prior to today
-            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported before today!"
-          end
-        end
-      else # Admin did not choose a filter
-        @obsessions = obsessions # stores AR::Relation of all patients' obsessions
-        flash.now[:notice] = "OCD spikes are sparsely detailed and displayed anonymously to preserve patient confidentiality."
-      end
+      @obsessions = obsessions.search_mind(params[:search])
+      #if !params[:plan_production].blank? # Admin filters obsessions by number of ERP plans per obsession
+        #if obsessions == obsessions.sans_plans # If all obsessions have 0 plans
+          #flash.now[:alert] = "No ERP plans were designed for any single obsession!"
+        #elsif obsessions.count == 1 # Only 1 obsession exists, but this obsession has some number of plan(s)
+          #@obsessions = obsessions # stores AR::Relation containing 1 obsession
+          #flash.now[:notice] = "The Obsessions Log only contains one obsession, which is targeted by #{@obsessions.first.plans_per_obsession} ERP #{'plan'.pluralize(@obsessions.first.plans_per_obsession)}."
+        #else # > 1 obsession, some of which have ERP plans, exist
+          #first_plan_count = obsessions.first.plans_per_obsession
+          #if obsessions.all? {|o| o.plans_per_obsession == first_plan_count}
+            #flash.now[:alert] = "Patients' obsessions cannot be sorted by number of ERP plans per obsession, as all obsessions are targeted by #{first_plan_count} ERP #{'plan'.pluralize(first_plan_count)}."
+          #else # There are multiple obsessions, and NOT all obsessions have the same number of ERP plans
+            #if params[:plan_production] == "Least to Most ERP Plans"
+              #@obsessions = obsessions.least_to_most_plans
+              #flash.now[:notice] = "Patients' obsessions are ordered from least to most ERP plans per obsession!"
+            #else
+              #@obsessions = obsessions.most_to_least_plans
+              #flash.now[:notice] = "Patients' obsessions are ordered from most to least ERP plans per obsession!"
+            #end
+          #end
+        #end
+      #elsif !params[:date].blank? # Admin filters obsessions by date created
+        #if params[:date] == "Today"
+          #if obsessions.from_today.empty? # If no obsessions were created today
+            #flash.now[:alert] = "No new obsessions were reported today."
+          #else
+            #@obsessions = obsessions.from_today # stores AR::Relation of all obsessions created today
+            #flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported today!"
+          #end
+        #elsif params[:date] == "Old Obsessions"
+          #if obsessions.old_obsessions.empty? # If no obsessions were created prior to today
+            #flash.now[:alert] = "No obsessions were reported before today."
+          #else
+            #@obsessions = obsessions.old_obsessions # stores AR::Relation of all obsessions created prior to today
+            #flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported before today!"
+          #end
+        #end
+      #else # Admin did not choose a filter
+        #@obsessions = obsessions # stores AR::Relation of all patients' obsessions
+        #flash.now[:notice] = "OCD spikes are sparsely detailed and displayed anonymously to preserve patient confidentiality."
+      #end
     end
   end
 
