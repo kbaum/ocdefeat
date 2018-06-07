@@ -1,5 +1,5 @@
 class WizardsController < ApplicationController
-  before_action :instantiate_current_user_part, only: [:part1, :part2, :part3, :create]
+  before_action :set_present_part, only: [:part1, :part2, :part3, :create]
 
   def part1 # implicitly renders app/views/wizards/part1.html.erb (1st part of signup form)
   end
