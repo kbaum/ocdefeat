@@ -23,7 +23,7 @@ class WizardsController < ApplicationController
       @present_part = instantiate_part(action_name)
     end
 
-    def proceeding_part(string_part)
+    def next_part(string_part)
       Wizard::User::PARTS[Wizard::User::PARTS.index(string_part) + 1]
     end
     # Wizard::User::PARTS = ["part1", "part2", "part3"]
@@ -36,7 +36,7 @@ class WizardsController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :role_requested
+        :role_requested,
         :severity,
         :variant
       )
