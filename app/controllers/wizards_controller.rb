@@ -3,6 +3,7 @@ class WizardsController < ApplicationController
 
   def validate_part
     present_part = params[:present_part] # comes from f.hidden_field in form
+    @present_part = instantiate_part(present_part)
   end
 
   def part1 # implicitly renders app/views/wizards/part1.html.erb (1st part of signup form)
