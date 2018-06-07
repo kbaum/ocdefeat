@@ -23,6 +23,18 @@ class WizardsController < ApplicationController
       @present_part = instantiate_part(action_name)
     end
 
+    def present_part_params
+      params.require(:present_part).permit(
+        :name,
+        :email,
+        :password,
+        :password_confirmation,
+        :role_requested
+        :severity,
+        :variant
+      )
+    end
+
     class InvalidPart < StandardError; end
 
 end
