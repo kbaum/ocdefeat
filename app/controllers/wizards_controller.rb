@@ -2,6 +2,7 @@ class WizardsController < ApplicationController
   before_action :set_present_part, only: [:part1, :part2, :part3, :create]
 
   def validate_part
+    present_part = params[:present_part] # comes from f.hidden_field in form
   end
 
   def part1 # implicitly renders app/views/wizards/part1.html.erb (1st part of signup form)
