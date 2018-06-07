@@ -15,8 +15,9 @@ class WizardsController < ApplicationController
 
   private
     def instantiate_part(string_part) # valid argument = "part1", "part2" or "part3"
-      raise InvalidPart unless string_part.in?(Wizard::User::PARTS)
-      "Wizard::User::#{part.camelize}".constantize.new(session[:user_properties])
+      #raise InvalidPart unless string_part.in?(Wizard::User::PARTS)
+      raise InvalidPart unless Wizard::User::PARTS.include?(string_part)
+      "Wizard::User::#{string_part.camelize}".constantize.new(session[:user_properties])
     end
 
     def set_present_part
