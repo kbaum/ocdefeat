@@ -19,6 +19,10 @@ class WizardsController < ApplicationController
       "Wizard::User::#{part.camelize}".constantize.new(session[:user_properties])
     end
 
+    def set_present_part
+      @present_part = instantiate_part(action_name)
+    end
+
     class InvalidPart < StandardError; end
 
 end
