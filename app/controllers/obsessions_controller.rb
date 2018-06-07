@@ -9,10 +9,10 @@ class ObsessionsController < ApplicationController
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
       if !params[:search].blank? # Patient filters obsessions by intrusive thought in simple search form
         if obsessions.search_thoughts(params[:search]).empty?
-          flash.now[:alert] = "You never recorded that intrusive thought in your Obsessions Log!"
+          flash.now[:alert] = "You never recorded that thought in your Obsessions Log!"
         else
           @obsessions = obsessions.search_thoughts(params[:search])
-          flash.now[:notice] = "A thought popped into your head (and search results)!"
+          flash.now[:notice] = "A thought popped into your head (and your search results)!"
         end
       elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
         if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
