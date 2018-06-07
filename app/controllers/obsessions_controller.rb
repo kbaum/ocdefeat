@@ -9,7 +9,7 @@ class ObsessionsController < ApplicationController
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
       if !params[:search].blank? # Patient filters obsessions by intrusive thought in simple search form
         if obsessions.search_thoughts(params[:search]).empty?
-          flash.now[:alert] = "You never recorded that thought in your Obsessions Log!"
+          flash.now[:alert] = "That thought content is not recorded in your Obsessions Log!"
         else
           @obsessions = obsessions.search_thoughts(params[:search])
           flash.now[:notice] = "A thought popped into your head (and your search results)!"
@@ -58,8 +58,7 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "None of your obsessions pertain to \"#{Theme.find(params[:ocd_theme]).name}.\""
         else # 1 or more of the patient's obsessions are classified in the selected theme
           @obsessions = obsessions.by_theme(params[:ocd_theme]) # stores AR::Relation of the patient's obsessions that are classified in the selected OCD theme
-          flash.now[:notice] = "The content of your obsessions revolves around \"#{Theme.find(params[:ocd_theme]).name}.\"
-          Accordingly, #{sv_agreement(@obsessions)} classified in this OCD theme."
+          flash.now[:notice] = "The content of your obsessions revolves around \"#{Theme.find(params[:ocd_theme]).name}.\" #{sv_agreement(@obsessions)} classified in this OCD theme."
         end
       else # Patient did not choose a filter, so all of her own obsessions are listed
         @obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
