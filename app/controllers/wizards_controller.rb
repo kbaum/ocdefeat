@@ -23,6 +23,13 @@ class WizardsController < ApplicationController
       @present_part = instantiate_part(action_name)
     end
 
+    def proceeding_part(string_part)
+      Wizard::User::PARTS[Wizard::User::PARTS.index(string_part) + 1]
+    end
+    # Wizard::User::PARTS = ["part1", "part2", "part3"]
+    # If I'm currently on "part1," that's at index 0 of the array,
+    # so the next part that I proceed to is found at Wizard::User:PARTS[1], which is "part2"
+
     def present_part_params
       params.require(:present_part).permit(
         :name,
@@ -36,7 +43,6 @@ class WizardsController < ApplicationController
     end
 
     class InvalidPart < StandardError; end
-
 end
 # instantiate_user_part(string_part) explanation:
 # "part1".camelize returns "Part1", "part2".camelize returns "Part2", "part3".camelize returns "Part3"
