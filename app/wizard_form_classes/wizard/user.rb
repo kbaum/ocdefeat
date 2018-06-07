@@ -3,7 +3,7 @@ module Wizard
     PARTS = %w(part1 part2 part3).freeze # PARTS stores the immutable array ["part1", "part2", "part3"]
 
     class Base
-      include ActiveModel::Model # I can use instances of wizard form classes in Rails forms and access default Rails validations
+      include ActiveModel::Model # I can use instances of 3 classes below in Rails forms and access default Rails validations
       attr_accessor :user # store AR user instance in user attribute to easily access the instance and save it on the final part of wizard form
 
       delegate *::User.attribute_names.collect {|attr_name| [attr_name, "#{attr_name}="]}.flatten, to: :user
@@ -11,6 +11,13 @@ module Wizard
       def initialize(user_properties)
         @user = ::User.new(user_properties)
       end
+    end
+
+    class Part1 < Base
+      validates :name, presence: true
+      validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
+      has_secure_password
+      validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
     end
   end
 end
