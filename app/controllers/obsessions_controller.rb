@@ -9,7 +9,7 @@ class ObsessionsController < ApplicationController
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
       if !params[:search].blank? # Patient filters obsessions by intrusive thought in simple search form
         if obsessions.search_thoughts(params[:search]).empty?
-          flash.now[:alert] = "You never recorded that thought content in your Obsessions Log!"
+          flash.now[:alert] = "You never recorded that thought in your Obsessions Log!"
         else
           @obsessions = obsessions.search_thoughts(params[:search])
           flash.now[:notice] = "A thought popped into your head (and your search results)!"
