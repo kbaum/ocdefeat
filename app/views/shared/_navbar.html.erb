@@ -28,7 +28,7 @@
           <li><%= link_to "Index of OCD Themes", themes_path %></li>
           <li><%= link_to "Log Out", logout_path, method: :delete %></li>
         <% else %>
-            <li class="active"><%= link_to "Sign Up", signup_path %></li>
+            <li class="active"><%= link_to "Sign Up", part1_wizard_path %></li>
             <li><%= link_to "Log In with OCDefeat", login_path %></li>
             <li><%= link_to "Log In with Twitter", "/auth/twitter" %></li>
         <% end %>
