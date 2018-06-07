@@ -2,8 +2,10 @@ class WizardsController < ApplicationController
   before_action :set_present_part, only: [:part1, :part2, :part3, :create]
 
   def validate_part
-    present_part = params[:present_part] # comes from f.hidden_field in form
-    @present_part = instantiate_part(present_part)
+    current_part = params[:current_part] # comes from f.hidden_field in form and is the string "part1", "part2" or "part3"
+    @present_part = instantiate_part(current_part) # @present_part has an @user property = the user instance who's signing up
+    @present_part.user.attributes = present_part_params # calling #attributes= on the user to mass assign all its attributes from the hash (strong params from form submission)
+    session[:user_properties] = @present_part.user.attributes # storing user's attribute data from this form part submission in sessions hash
   end
 
   def part1 # implicitly renders app/views/wizards/part1.html.erb (1st part of signup form)
@@ -19,8 +21,8 @@ class WizardsController < ApplicationController
   end
 
   private
+
     def instantiate_part(string_part) # valid argument = "part1", "part2" or "part3"
-      #raise InvalidPart unless string_part.in?(Wizard::User::PARTS)
       raise InvalidPart unless Wizard::User::PARTS.include?(string_part)
       "Wizard::User::#{string_part.camelize}".constantize.new(session[:user_properties])
     end
@@ -42,8 +44,11 @@ class WizardsController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :role_requested,
+        :uid,
+        :provider,
         :severity,
+        :role,
+        :role_requested,
         :variant
       )
     end
