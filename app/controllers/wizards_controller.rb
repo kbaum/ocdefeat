@@ -7,4 +7,8 @@ class WizardsController < ApplicationController
 
   def part3 # implicitly renders app/views/wizards/part3.html.erb (3rd part of signup form)
   end
+
+  private
+
+    class InvalidPart < StandardError; end
 end
