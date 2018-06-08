@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  before_action :login_required, except: [:part1, :part2, :part3, :validate_part, :new, :create, :home, :privacy, :terms]
+  before_action :login_required, except: [:new, :create, :home, :privacy, :terms]
 
   private
 
