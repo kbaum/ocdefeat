@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   root 'welcome#home'
 
-  resource :wizard do
-    get :part1
-    get :part2
-    get :part3
-    post :validate_part
-  end
+  #resource :wizard do
+    #get :part1
+    #get :part2
+    #get :part3
+    #post :validate_part
+  #end
   # Explanation of routes generated above:
   # #part1_wizard_path returns GET "/wizard/part1", which maps to wizards#part1
   # part2_wizard_path returns GET "/wizard/part2", which maps to wizards#part2
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
 
   resources :users, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+  resources :wizard_parts
 
   resources :obsessions do
     resources :comments, only: [:create, :index, :edit, :update, :destroy]
