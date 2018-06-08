@@ -2,5 +2,5 @@ class Treatment < ApplicationRecord
   has_many :user_treatments
   has_many :users, through: :user_treatments
 
-  validates :type, presence: true
+  validates :treatment_type, presence: true
 end
