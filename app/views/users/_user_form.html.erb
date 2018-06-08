@@ -97,6 +97,17 @@
     <br>
     <li><em>Aspiring therapists, describe the efficacy of the treatment plans you implement based on patient outcomes.</em></li>
     <br>
+    <%= f.fields_for :treatments do |t| %>
+      <%= t.label :type %>:
+      <%= t.text_field :type %>
+      <%= t.fields_for :user_treatments do |ut| %>
+        <%= ut.label :efficacy %>:
+        <%= ut.text_field :efficacy %>
+        <%= ut.label :duration %>:
+        <%= ut.text_field :duration %>
+        <br><br>
+      <% end %>
+    <% end %>
   </div>
 
   <br>
