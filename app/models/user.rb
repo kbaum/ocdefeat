@@ -20,7 +20,7 @@ class User < ApplicationRecord
   validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles" }, on: :create
 
   has_secure_password
-  #validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
+  validates :password, length: { minimum: 8 }, allow_nil: true
   # when a user edits their user information, they don't have to retype their password
   def self.find_or_create_by_omniauth(auth_hash)
     self.where(provider: auth_hash["provider"], uid: auth_hash["uid"]).first_or_create do |user|
