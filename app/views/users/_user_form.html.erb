@@ -1,3 +1,7 @@
+<h1>Register Now!</h1>
+
+<h3>General Information</h3>
+
 <%= form_for @user do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -38,59 +42,8 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
-  <% if @user.role_requested.nil? || (@user.unassigned? && @user.provider == "twitter") %>
-    <hr>
-    <label>Request a Role in the OCDefeat Community:</label>
-    <br><br>
-    <%= f.radio_button :role_requested, "Patient" %>
-    <%= f.label :role_requested_patient, "Patient:" %> As a patient, you can defeat OCD by creating and implementing custom ERP plans tailored to your obsessions!<br>
-    <%= f.radio_button :role_requested, "Therapist" %>
-    <%= f.label :role_requested_therapist, "Therapist:" %> As a therapist, you can facilitate our mental health forum by devising exposure activities and modifying patients' ERP plans!<br>
-    <%= f.radio_button :role_requested, "Admin" %>
-    <%= f.label :role_requested_admin, "Admin:" %> As an admin, you can manage users' accounts and change their roles as needed!
-  <% end %>
-
-  <hr>
-
-  <label>Rate the severity of your OCD based on the amount of time you obsess daily:</label>
-
-  <br><br>
-
-  <%= f.radio_button :severity, 'Mild' %>
-  <%= f.label :ocd_severity_mild, "Mild:" %> <%= "less than 1 hr/day" %><br>
-  <%= f.radio_button :severity, 'Moderate' %>
-  <%= f.label :ocd_severity_moderate, "Moderate:" %> <%= "1-3 hrs/day" %><br>
-  <%= f.radio_button :severity, 'Severe' %>
-  <%= f.label :ocd_severity_severe, "Severe:" %> <%= "3-8 hrs/day" %><br>
-  <%= f.radio_button :severity, 'Extreme' %>
-  <%= f.label :ocd_severity_extreme, "Extreme:" %> <%= "more than 8 hrs/day" %><br>
-  <%= f.radio_button :severity, 'Nonobsessive' %>
-  <%= f.label :ocd_severity_nonobsessive, "N/A:" %> <%= "I requested the role of therapist/admin" %><br>
-
-  <hr>
-
-  <label>Describe your OCD diagnosis:</label>
-
-  <br><br>
-
-  <%= f.radio_button :variant, 'Traditional' %>
-  <%= f.label :ocd_variant_traditional, "Traditional:" %>
-  <p>I perform outward compulsive behaviors, such as repetitively washing my hands or touching the doorknob a certain number of times.</p>
   <br>
-  <%= f.radio_button :variant, 'Purely Obsessional' %>
-  <%= f.label :ocd_variant_purely_obsessional, "Purely Obsessional (Pure-O):" %>
-  <p>My rituals take place primarily in my own mind, such as mental review of events and prolonged periods of rumination.</p>
-  <br>
-  <%= f.radio_button :variant, 'Both' %>
-  <%= f.label :ocd_variant_both, "Both Traditional and Pure-O Variants:" %>
-  <p>I perform a combination of overtly compulsive behaviors and primarily obsessional mental exercises.</p>
-  <br>
-  <%= f.radio_button :variant, 'Neither' %>
-  <%= f.label :ocd_variant_neither, "Neither Traditional nor Pure-O Variants:" %>
-  <p>N/A (I requested the role of therapist/admin.)</p>
-  <hr>
 
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
