@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
 
-  resources :users, only: [:index, :show, :edit, :update, :destroy]
+  resources :users, only: [:new, :create, :index, :show, :edit, :update, :destroy]
 
   resources :obsessions do
     resources :comments, only: [:create, :index, :edit, :update, :destroy]
