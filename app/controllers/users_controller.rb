@@ -238,7 +238,8 @@ class UsersController < ApplicationController
         :role_requested,
         :variant,
         :severity,
-        :role
+        :role,
+        :treatments_attributes => [:type, :user_treatments => [:duration, :efficacy]]
       )
     end
 
