@@ -20,10 +20,9 @@ class User < ApplicationRecord
   validates :variant, presence: true, variant: true
   validates :severity, presence: true, severity: true
   validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles" }, on: :create
-
   has_secure_password
-  validates :password, length: { minimum: 8 }, allow_nil: true
-  # when a user edits their user information, they don't have to retype their password
+  validates :password, length: { minimum: 8 }, allow_nil: true # when a user edits their user information, they don't have to retype their password
+
   def self.find_or_create_by_omniauth(auth_hash)
     self.where(provider: auth_hash["provider"], uid: auth_hash["uid"]).first_or_create do |user|
       user.name = auth_hash["info"]["name"] # "Jenna Leopold"
@@ -38,6 +37,9 @@ class User < ApplicationRecord
       # by default, just set their role_requested to "patient" and their OCD severity to "mild"
       # as these can be edited, and the majority of app users will presumably be patients
     end
+  end
+
+  def treatments_attributes=(treatments_attributes)
   end
 
   def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
