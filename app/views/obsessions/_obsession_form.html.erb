@@ -60,17 +60,10 @@
   <br>
 
   <% if !themes.empty? %>
-    <label>Select OCD subset(s) in which to classify your obsession:</label>
-
-    <br><br>
-
-    <%= obsession_builder.collection_check_boxes(:theme_ids, themes, :id, :name) do |b| %>
-      <p>
-        <%= b.label :class => "red-outline" %>
-        <%= b.check_box %>
-      </p>
-    <% end %>
-    <br>
+    <div class="field">
+      <%= obsession_builder.label :theme_ids, "Select OCD subset(s) in which to classify your obsession:" %>
+      <%= obsession_builder.select :theme_ids, Theme.all.pluck(:name, :id), {}, { multiple: true, class: "selectize" } %>
+    </div>
   <% end %>
 
   <label>Create a new OCD subset in which to classify your obsession:</label>
