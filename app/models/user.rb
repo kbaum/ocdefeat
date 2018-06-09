@@ -1,7 +1,4 @@
 class User < ApplicationRecord
-  scope :unassigned_users, -> { where(role: 0) }
-  scope :admins, -> { where(role: 3) }
-  scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
   scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
@@ -40,6 +37,12 @@ class User < ApplicationRecord
   end
 
   def treatments_attributes=(treatments_attributes)
+    treatments_attributes.values.each do |treatments_attribute|
+      if !treatments_attribute["treatment_type"].blank?
+        treatment = Treatment.find_or_create_by(treatment_type: treatments_attribute["treatment_type"])
+        self.user_treatments.build(user: self, treatment: treatment, efficacy: treatments_attribute["user_treatments"]["efficacy"], duration: treatments_attribute["user_treatments"]["duration"])
+      end
+    end
   end
 
   def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
@@ -66,6 +69,10 @@ class User < ApplicationRecord
 
   def self.by_role(the_role)
     where(role: the_role)
+  end
+
+  def self.by_role(string_role)
+    where(role: User.roles[string_role])
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
