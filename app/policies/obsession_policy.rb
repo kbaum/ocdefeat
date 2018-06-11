@@ -17,8 +17,12 @@ class ObsessionPolicy < ApplicationPolicy
     user.patient?
   end
 
-  def show? # Therapists can view all obsession show pages. A patient can only view his own obsessions' show pages.
-    user.therapist? || obsession_owner
+  def show?
+    if user.patient? # A patient can only see her own obsessions' show pages
+      obsession_owner
+    elsif user.therapist? # A therapist can only see obsessions that belong to her own patients
+      record.user.in?(user.counselees)
+    end
   end
 
   def edit?
