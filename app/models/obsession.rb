@@ -6,8 +6,6 @@ class Obsession < ApplicationRecord
 
   belongs_to :user # obsessions table has user_id foreign key column
   delegate :name, :variant, to: :user, prefix: :patient # I can call #patient_name on obsession instance to return the name attribute value of user instance to which obsession belongs. I can also call #patient_variant on obsession to return OCD variant of user to which obsession belongs
-  has_many :obsession_themes
-  has_many :themes, through: :obsession_themes, dependent: :destroy
   has_many :plans, dependent: :destroy
   has_many :comments, dependent: :destroy
 
