@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611133936) do
+ActiveRecord::Schema.define(version: 20180611154633) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20180611133936) do
     t.string "role_requested"
     t.string "provider"
     t.string "variant"
-    t.integer "mentor_id"
+    t.integer "counselor_id"
   end
 
 end
