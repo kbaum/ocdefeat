@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
     users = policy_scope(User) # we're filtering users - users stores the array of user instances available to the type of viewer
+    @themes = policy_scope(Theme)
     # when an admin views the users index, @users stores 'array' of ALL user instances (for the table)
     # when a therapist views the users index, @users stores 'array' of only patients
     # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
@@ -102,6 +103,13 @@ class UsersController < ApplicationController
             @filtered_users = users.patients_fully_desensitized
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} fully desensitized to OCD triggers, having implemented an ERP plan for each obsession!"
           end
+        end
+      elsif !params[:obsessional_theme].blank? # Find therapist's patients who have at least 1 obsession that's classified in the obsessional theme
+        if users.obsessing_about(params[:obsessional_theme]).empty?
+          flash.now[:alert] = "None of your patients have obsessions that revolve around \"#{Theme.find(params[:obsessional_theme]).name}.\""
+        else
+          @filtered_users = users.obsessing_about(params[:obsessional_theme])
+          flash.now[:notice] = "#{sv_agreement(@filtered_users)} preoccupied with \"#{Theme.find(params[:obsessional_theme]).name}.\""
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
         if users.all? {|user| user.obsessions.empty?} # If none of the patients have obsessions
