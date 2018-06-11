@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611192636) do
+ActiveRecord::Schema.define(version: 20180611235701) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -83,8 +83,5 @@ ActiveRecord::Schema.define(version: 20180611192636) do
     t.datetime "updated_at", null: false
     t.string "duration"
   end
-
-# Could not dump table "users" because of following StandardError
-#   Unknown type 'counselor' for column 'references'
 
 end
