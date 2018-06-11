@@ -130,7 +130,6 @@ class ObsessionsController < ApplicationController
         flash.now[:notice] = "A full psychiatric history of all patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
-      @obsessions = obsessions.search_mind(params[:search])
       if !params[:plan_production].blank? # Admin filters obsessions by number of ERP plans per obsession
         if obsessions == obsessions.sans_plans # If all obsessions have 0 plans
           flash.now[:alert] = "No ERP plans were designed for any single obsession!"
