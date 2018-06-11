@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611011357) do
+ActiveRecord::Schema.define(version: 20180611014301) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20180611011357) do
     t.integer "obsession_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "difficulty"
+    t.boolean "challenging"
   end
 
   create_table "searches", force: :cascade do |t|
