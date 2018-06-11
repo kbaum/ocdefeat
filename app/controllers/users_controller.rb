@@ -239,7 +239,8 @@ class UsersController < ApplicationController
         :variant,
         :severity,
         :role,
-        :treatments_attributes => [:type, :user_treatments => [:duration, :efficacy]]
+        :mentor_id,
+        :treatments_attributes => [:treatment_type, :user_treatments => [:duration, :efficacy]]
       )
     end
 
