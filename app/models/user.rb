@@ -1,15 +1,11 @@
 class User < ApplicationRecord
+  scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
   scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
-
-  belongs_to :mentor, class_name: "User", foreign_key: :mentor_id # A user can belong to a mentor who is actually a user instance
-  has_many :mentees, class_name: "User", foreign_key: :mentor_id # Each mentee is a user instance
-  # There is a self-reference here:
-  # The users table now has a mentor_id, which is a reference to the foreign key from the primary key of users
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
