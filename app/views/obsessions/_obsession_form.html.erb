@@ -59,22 +59,9 @@
 
   <br>
 
-  <% if !themes.empty? %>
-    <div class="field">
-      <%= obsession_builder.label :theme_ids, "Select OCD subset(s) in which to classify your obsession:" %>
-      <%= obsession_builder.select :theme_ids, Theme.all.pluck(:name, :id), {}, { multiple: true, class: "selectize" } %>
-    </div>
-  <% end %>
-
-  <label>Create a new OCD subset in which to classify your obsession:</label>
-
-  <br><br>
-
-  <div class="field">
-    <%= obsession_builder.fields_for :themes, Theme.new do |theme_builder| %>
-      <%= theme_builder.label :name, "OCD Theme:" %><br>
-      <%= theme_builder.text_field :name, :value => '', placeholder: "I classify my OCD as..." %>
-    <% end %>
+  <div>
+    <%= obsession_builder.label :theme_id, "Which OCD theme most accurately describes the content of your obsession?" %><br>
+    <%= obsession_builder.select(:theme_id, Theme.all.map {|theme| [theme.name, theme.id]}, prompt: "Select a Theme") %>
   </div>
 
   <br>
