@@ -6,6 +6,11 @@ class User < ApplicationRecord
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
+  belongs_to :mentor, class_name: "User", foreign_key: :mentor_id # A user can belong to a mentor who is actually a user instance
+  has_many :mentees, class_name: "User", foreign_key: :mentor_id # Each mentee is a user instance
+  # There is a self-reference here:
+  # The users table now has a mentor_id, which is a reference to the foreign key from the primary key of users
+
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
   has_many :comments
