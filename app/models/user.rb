@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
+  belongs_to :counselor, class_name: "User", foreign_key: :counselor_id, optional: true
+  has_many :counselees, class_name: "User", foreign_key: :counselor_id
+
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
   has_many :comments
