@@ -14,13 +14,13 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    if user.admin? # admins can see every user's show page
+    if user.admin? # Admins can see every user's show page since they control accounts
       true
-    elsif user.therapist? # therapists can see their own show page and all patients' show pages
-      oneself || record.patient?
-    elsif user.patient? # a patient can see his own show page and all therapists' show pages
+    elsif user.therapist? # A therapist can see her own show page and her own patients' show pages
+      oneself || record.counselor_id == user.id
+    elsif user.patient? # A patient can see her own show page and all therapists' show pages
       oneself || record.therapist?
-    elsif user.unassigned? # an unassigned user can only see his own preliminary profile page
+    elsif user.unassigned? # An unassigned user can only see her own preliminary profile page
       oneself
     end
   end
