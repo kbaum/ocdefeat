@@ -4,7 +4,8 @@ class Obsession < ApplicationRecord
   scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
 
-  belongs_to :user # obsessions table has user_id foreign key column
+  belongs_to :theme
+  belongs_to :user
   delegate :name, :variant, to: :user, prefix: :patient # I can call #patient_name on obsession instance to return the name attribute value of user instance to which obsession belongs. I can also call #patient_variant on obsession to return OCD variant of user to which obsession belongs
   has_many :plans, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -15,20 +16,6 @@ class Obsession < ApplicationRecord
   validates :anxiety_rating, presence: true, inclusion: { in: 1..10 }
   validates :rituals, presence: true
   before_validation :hypotheticalize, on: [ :create, :update ]
-
-  accepts_nested_attributes_for :themes, reject_if: proc { |attributes| attributes['name'].blank? }
-  # defines attribute writer method #themes_attributes= called on an obsession instance
-  # obsession record will not be built for the attributes hash if name of theme is blank
-  def themes_attributes=(themes_attributes)
-    themes_attributes.values.each do |theme_attribute|
-      if theme_attribute[:name].present?
-        theme = Theme.find_or_create_by(theme_attribute)
-        if !self.themes.include?(theme)
-          self.obsession_themes.build(:theme => theme)
-        end
-      end
-    end
-  end
 
   def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
     where(anxiety_rating: anxiety_amount)
