@@ -2,6 +2,7 @@ en:
   pundit:
     default: "You have requested a page that you cannot access."
     user_policy:
+      show?: "Access denied to prevent a breach of doctor-patient confidentiality!"
       destroy?: "As an admin, you cannot delete your own account!"
       show_comments?: "Access denied! You cannot read comments about another patient's obsessions!"
     obsession_policy:
