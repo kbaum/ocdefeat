@@ -246,8 +246,7 @@ class ObsessionsController < ApplicationController
         :anxiety_rating,
         :symptoms,
         :rituals,
-        :theme_ids => [],
-        :themes_attributes => [:name]
+        :theme_id
       )
     end
 end
