@@ -38,16 +38,7 @@
     <%= f.text_field :goal, :placeholder => (@plan.errors.full_messages_for(:goal).first || "Enter your plan's goal...") %>
   </div>
 
-  <br>
-
-  <div class="field">
-    <%= f.label :difficulty, "How challenging will your ERP plan be?" %><br>
-    <%= f.select(:difficulty) do %>
-      <% [['Easy', 1], ['Medium', 2], ['Hard', 3]].each do |difficulty| %>
-        <%= content_tag(:option, difficulty.first, value: difficulty.last) %>
-      <% end %>
-    <% end %>
-  </div>
+  <br><br>
 
   <br>
 
