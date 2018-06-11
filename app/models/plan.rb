@@ -1,4 +1,6 @@
 class Plan < ApplicationRecord
+  scope :flooding, -> { where(flooded: true) }
+  scope :graded_exposure, -> { where(flooded: false) }
   scope :procedural, -> { includes(:steps).where.not(steps: { id: nil }) }
   scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
 
