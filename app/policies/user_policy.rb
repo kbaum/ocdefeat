@@ -17,7 +17,7 @@ class UserPolicy < ApplicationPolicy
     if user.admin? # Admins can see every user's show page since they control accounts
       true
     elsif user.therapist? # A therapist can see her own show page and her own patients' show pages
-      oneself || record.counselor_id == user.id
+      record.therapist? || record.counselor_id == user.id
     elsif user.patient? # A patient can see her own show page and all therapists' show pages
       oneself || record.therapist?
     elsif user.unassigned? # An unassigned user can only see her own preliminary profile page
