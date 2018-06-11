@@ -210,6 +210,7 @@ class PlansController < ApplicationController
       params.require(:plan).permit(
         :title,
         :goal,
+        :flooded,
         :obsession_id
       )
     end
