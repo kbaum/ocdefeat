@@ -40,6 +40,14 @@
 
   <br><br>
 
+  <div class="field">
+    <%= f.label :flooded, "Your ERP plan favors flooding over graduated exposure to triggers." %><br><br>
+    <%= f.radio_button :flooded, 'true' %>
+    <%= f.label :flooded_true, "True:" %> I will immediately flood myself with exposures that produce the most discomfort.<br><br>
+    <%= f.radio_button :flooded, 'false' %>
+    <%= f.label :flooded_false, "False:" %> I will construct a progression of exposures to gradually face my fears.<br><br>
+  </div>
+
   <br>
 
   <div class="actions">
