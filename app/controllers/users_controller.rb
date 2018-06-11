@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     # change users' roles, delete accounts. There is also 1 filter to filter users by current role
     # The first 4 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
     if current_user.admin?
+      @therapists = User.therapists
       @table_users = users # @table_users stores array of all user instances
       @filtered_users = users
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
@@ -239,7 +240,7 @@ class UsersController < ApplicationController
         :variant,
         :severity,
         :role,
-        :mentor_id,
+        :counselor_id,
         :treatments_attributes => [:treatment_type, :user_treatments => [:duration, :efficacy]]
       )
     end
