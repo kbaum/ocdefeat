@@ -59,7 +59,7 @@
 
   <br>
 
-  <div>
+  <div class="field">
     <%= obsession_builder.label :theme_id, "Which OCD theme most accurately describes the content of your obsession?" %><br>
     <%= obsession_builder.select(:theme_id, Theme.all.map {|theme| [theme.name, theme.id]}, prompt: "Select a Theme") %>
   </div>
