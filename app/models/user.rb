@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
-  belongs_to :counselor, class_name: "User", foreign_key: :counselor_id, optional: true
+  belongs_to :counselor, class_name: "User" , foreign_key: :counselor_id, optional: true
   has_many :counselees, class_name: "User", foreign_key: :counselor_id
 
   has_many :obsessions, dependent: :destroy
@@ -47,6 +47,10 @@ class User < ApplicationRecord
         self.user_treatments.build(user: self, treatment: treatment, efficacy: treatments_attribute["user_treatments"]["efficacy"], duration: treatments_attribute["user_treatments"]["duration"])
       end
     end
+  end
+
+  def self.obsessing_about(theme_id)
+    joins(obsessions: :theme).where(themes: { id: theme_id} ).distinct
   end
 
   def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
