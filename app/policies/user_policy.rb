@@ -35,7 +35,7 @@ class UserPolicy < ApplicationPolicy
     elsif oneself
       [:name, :email, :password, :password_confirmation, :severity, :variant]
     elsif user.admin?
-      [:role]
+      [:role, :counselor_id]
     end
   end
 
