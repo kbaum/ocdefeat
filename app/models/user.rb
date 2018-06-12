@@ -108,6 +108,10 @@ class User < ApplicationRecord
     obsessions.count
   end
 
+  def plan_count
+    plans.count
+  end
+
   def self.least_to_most_obsessions
     patients.sort_by(&:obsession_count) # equivalent to: patients.sort_by {|patient| patient.obsession_count}
   end
