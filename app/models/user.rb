@@ -3,7 +3,6 @@ class User < ApplicationRecord
   scope :patients, -> { where(role: 1) }
   scope :patients_overanxious, -> { patients.joins(:obsessions).merge(Obsession.above_average_anxiety_inducers).distinct }
   scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
-  scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
 
@@ -158,14 +157,6 @@ class User < ApplicationRecord
 
   def self.num_users_obsessing_about(theme_id)
     self.patients.select {|p| p.obsessions.any? {|o| o.theme_ids.include?(theme_id)}}.count
-  end
-
-  def self._exists(scope)
-    "EXISTS(#{scope.to_sql})"
-  end
-
-  def self._not_exists(scope)
-    "NOT #{_exists(scope)}"
   end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
