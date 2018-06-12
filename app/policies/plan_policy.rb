@@ -38,6 +38,6 @@ class PlanPolicy < ApplicationPolicy
   private
 
     def plan_owner
-      user == record.designer # instance method #designer called on plan instance (record) returns user who created plan
+      user == record.user # instance method #designer called on plan instance (record) returns user who created plan
     end
 end
