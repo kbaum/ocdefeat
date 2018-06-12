@@ -1,14 +1,15 @@
 class User < ApplicationRecord
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
+  scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
   scope :patients_very_unnerved, -> { patients.where(_exists(Obsession.where("obsessions.user_id = users.id").very_unnerving)) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
-  belongs_to :counselor, class_name: "User", foreign_key: :counselor_id, optional: true
-  has_many :counselees, class_name: "User", foreign_key: :counselor_id
+  has_many :counselees, class_name: "User", foreign_key: "counselor_id"
+  belongs_to :counselor, class_name: "User", optional: true
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
