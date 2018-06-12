@@ -75,6 +75,19 @@ class Obsession < ApplicationRecord
     end
   end
 
+  def self.above_average_anxiety_inducers
+    joins(
+      "INNER JOIN (" +
+        self.
+          select("user_id, AVG(anxiety_rating) as average").
+          group("user_id").
+          to_sql +
+      ") anxiety_ratings " \
+      "ON anxiety_ratings.user_id = obsessions.user_id"
+    ).
+    where("obsessions.anxiety_rating > anxiety_ratings.average")
+  end
+
   private
     def hypotheticalize # sets intrusive_thought attribute of obsession = to formatted string "What if I...?"
       idea = self.intrusive_thought.downcase.split(/\A\bwhat\b\s+\bif\b\s+\bi\b\s+/).join("").split("?").join("")
