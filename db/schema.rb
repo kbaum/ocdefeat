@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612001015) do
+ActiveRecord::Schema.define(version: 20180612004703) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -93,7 +93,9 @@ ActiveRecord::Schema.define(version: 20180612001015) do
     t.string "role_requested"
     t.string "variant"
     t.string "severity"
-    t.integer "role"
+    t.integer "role", default: 0
+    t.integer "counselor_id"
+    t.index ["counselor_id"], name: "index_users_on_counselor_id"
   end
 
 end
