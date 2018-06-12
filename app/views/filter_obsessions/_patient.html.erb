@@ -7,6 +7,9 @@
 <br>
 
 <%= form_tag("/obsessions", method: "get") do %>
+  <%= label_tag "approach", "ERP Treatment Approach:" %>
+  <%= select_tag "approach", options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
+  <br><br>
   <%= label_tag "anxiety_amount", "Amount of Anxiety Induced:" %>
   <%= number_field_tag "anxiety_amount", nil, in: 1..10 %>
   <br><br>
