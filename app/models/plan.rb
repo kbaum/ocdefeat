@@ -10,7 +10,6 @@ class Plan < ApplicationRecord
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
-  validates :flooded, presence: true
 
   def done?
     steps.count > 0 && steps.all? {|step| step.complete?} # instance method returns true if plan consists of at least 1 step and all steps are completed (each step's status = 1)
