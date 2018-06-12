@@ -1,7 +1,6 @@
 class Obsession < ApplicationRecord
   scope :defeatable_by_flooding, -> { joins(:plans).where(plans: { flooded: true }).distinct }
   scope :defeatable_by_graded_exposure, -> { joins(:plans).where(plans: { flooded: false }).distinct }
-  scope :very_unnerving, -> { where("anxiety_rating > ?", 5) }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
   scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
   scope :symptomless, -> { where(symptoms: ["", " "]) }
@@ -21,6 +20,12 @@ class Obsession < ApplicationRecord
 
   def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
     where(anxiety_rating: anxiety_amount)
+  end
+
+  def self.average_anxiety_by_patient # returns a hash where keys = patient's name and values = average anxiety_rating for that patient
+    joins(:user).
+    group("users.name").
+    average(:anxiety_rating)
   end
 
   def self.least_to_most_distressing
