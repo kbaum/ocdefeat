@@ -1,11 +1,12 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
-  before_action :require_obsessions, only: :index
+  before_action :require_obsessions, only: [:index]
 
   def index
-    obsessions = policy_scope(Obsession) # patient only sees her own obsessions; admins and therapists see all
+    obsessions = policy_scope(Obsession)
     @patients = User.patients
-    @themes = policy_scope(Theme) # patients, therapists and admins see all themes
+    @themes = policy_scope(Theme)
+
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
       if !params[:search].blank? # Patient filters obsessions by intrusive thought in simple search form
         if obsessions.search_thoughts(params[:search]).empty?
@@ -13,6 +14,22 @@ class ObsessionsController < ApplicationController
         else
           @obsessions = obsessions.search_thoughts(params[:search])
           flash.now[:notice] = "A thought popped into your head (and your search results)!"
+        end
+      elsif !params[:approach].blank?
+        if params[:approach] == "Flooding"
+          if obsessions.defeatable_by_flooding.empty?
+            flash.now[:alert] = "None of your ERP plans use a flooding approach to defeat OCD."
+          else
+            @obsessions = obsessions.defeatable_by_flooding
+            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by flooding yourself with the exposures that engender the most anxiety first."
+          end
+        elsif params[:approach] == "Graded Exposure"
+          if obsessions.defeatable_by_graded_exposure.empty?
+            flash.now[:alert] = "None of your ERP plans use a graded exposure approach to defeat OCD."
+          else
+            @obsessions = obsessions.defeatable_by_graded_exposure
+            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by constructing a hierachy of exposures and gradually performing the most to least tolerable exercises."
+          end
         end
       elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
         if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
@@ -249,4 +266,4 @@ class ObsessionsController < ApplicationController
         :theme_id
       )
     end
-end
+  end
