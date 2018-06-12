@@ -54,6 +54,10 @@ class User < ApplicationRecord
     joins(obsessions: :theme).where(themes: { id: theme_id} ).distinct
   end
 
+  def self.count_counselees # returns a hash. keys = string name counselor, values = number of counselees assigned to that counselor
+    therapists.left_outer_joins(:counselees).group("users.name").count("counselees_users.id")
+  end
+
   def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
     patients_obsessing.merge(Obsession.presenting_symptoms)
   end
