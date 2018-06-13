@@ -14,6 +14,6 @@ class StepPolicy < ApplicationPolicy # A step does not exist outside the context
   private
 
   def plan_possessor
-    user == record.plan.designer
+    user == record.plan.user
   end
 end
