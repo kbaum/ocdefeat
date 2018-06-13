@@ -4,6 +4,6 @@
 
 <p><em>"<%= @obsession.intrusive_thought %>"</em></p>
 
-<p><em>Our team of OCD specialists will refine its steps to maximize your personal progress as you strive to defeat OCD!</em></p>
-
 <br>
+
+<%= render partial: "plan", locals: { obsession: @obsession, plan: @plan } %>
