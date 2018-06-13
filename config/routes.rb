@@ -7,12 +7,11 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
 
   resources :users, except: :new
-  resources :obsessions, only: :index
   resources :plans, only: :index
   resources :themes, only: [:index, :new, :create]
 
   resources :obsessions, shallow: true do
-    resources :comments, only: [:index, :new, :create]
+    resources :comments, except: :show
     resources :plans do
       resources :steps
     end
