@@ -13,6 +13,8 @@
     </div>
   <% end %>
 
+  <%= plan_builder.hidden_field :obsession_id, value: obsession.id %>
+
   <div class="field">
     <%= plan_builder.label :title, "What's the title of your ERP plan?" %><br>
     <%= plan_builder.text_field :title, :placeholder => (plan.errors.full_messages_for(:title).first || "Enter your plan's title...") %>
