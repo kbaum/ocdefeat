@@ -7,20 +7,20 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
 
-  resources :users, shallow: true do
-    resources :obsessions do
-      resources :comments, only: [:index, :new, :create]
-      resources :plans do
-        resources :steps
-      end
-    end
+  resources :users
+
+  resources :obsessions do
+    resources :comments, only: [:index, :new, :create]
+  end
+
+  resources :plans do
+    resources :steps
   end
 
   resources :themes, only: [:index, :new, :create]
   resources :searches
 
   get '/auth/twitter/callback' => 'sessions#create'
-
   get '/privacy' => 'welcome#privacy'
   get '/terms' => 'welcome#terms'
 end
