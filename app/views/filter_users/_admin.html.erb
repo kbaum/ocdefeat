@@ -8,12 +8,12 @@
       <th scope="col">User ID #</th>
       <th scope="col">Profile Page</th>
       <th scope="col">Review or Revise Role</th>
-      <th scope="col">Assign Mentor</th>
+      <th scope="col">Control Counseling</th>
       <th scope="col">Manage Account</th>
     </tr>
   </thead>
   <tbody>
-    <%= render partial: "users/user_row", collection: table_users, as: :user %>
+    <%= render partial: "users/user_row", collection: table_users, as: :user, locals: { therapists: @therapists } %>
   </tbody>
 </table>
 
@@ -39,7 +39,7 @@ The above render call works, but this works too:
 <br>
 
 <div class="well well-lg">
-  <label>Users Awaiting Role Assignment:</strong></label>
+  <label>Users Awaiting Role Assignment:</label>
 
   <br><br>
 
@@ -54,4 +54,14 @@ The above render call works, but this works too:
   <p><em>Aspiring Admins:</em></p>
 
   <%= render partial: "users/users_ul", locals: { users: aspiring_admins } %>
+</div>
+
+<div class="well well-lg">
+  <label>Patient Caseload by Therapist:</label>
+
+  <br><br>
+
+  <% User.count_counselees.each do |name, number| %>
+    <p><%= name %> | <%= number %></p>
+  <% end %>
 </div>
