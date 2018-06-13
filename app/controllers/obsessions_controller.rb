@@ -210,7 +210,6 @@ class ObsessionsController < ApplicationController
 
   def show
     authorize @obsession
-    @plan = Plan.new # instance for form_for to wrap around to create an ERP plan that targets the obsession
     @comments = @obsession.comments
     @comment = Comment.new
   end
