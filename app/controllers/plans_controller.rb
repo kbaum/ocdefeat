@@ -130,6 +130,7 @@ class PlansController < ApplicationController
     if current_user.patient? && current_user.obsessions.empty?
       redirect_to new_obsession_path, alert: "You currently have no obsessions! You must first create an obsession before designing an ERP plan in which to tackle that obsession!"
     else
+      @obsession = Obsession.find(params[:obsession_id]) # @obsession is the parent. The form to create a new plan for an obsession is found at: "/obsessions/:obsession_id/plans/new"
       @plan = Plan.new # instance for form_for to wrap around
       authorize @plan
     end
