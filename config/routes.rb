@@ -10,4 +10,11 @@ Rails.application.routes.draw do
   resources :obsessions, only: :index
   resources :plans, only: :index
   resources :themes, only: [:index, :new, :create]
+
+  resources :obsessions, shallow: true do
+    resources :comments, only: [:index, :new, :create]
+    resources :plans do
+      resources :steps
+    end
+  end
 end
