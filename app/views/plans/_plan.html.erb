@@ -1,56 +1,43 @@
-<%= form_for @plan do |f| %>
-  <% if @plan.errors.any? %>
+<%= form_for [obsession, plan] do |plan_builder| %>
+  <% if plan.errors.any? %>
     <div id="error_explanation">
       <h2>
-        <%= pluralize(@plan.errors.count, "error") %> prohibited this ERP plan from being saved:
+        <%= pluralize(plan.errors.count, "error") %> prohibited this ERP plan from being saved:
       </h2>
 
       <ul>
-        <% @plan.errors.full_messages.each do |message| %>
+        <% plan.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <% if !@plan.obsession %>
-    <p><strong>Which of your obsessions will your ERP plan target?</strong></p>
-
-    <%= select("plan", "obsession_id", current_user.obsessions.map {|o| [o.intrusive_thought, o.id]}, {prompt: 'Select Obsession'}) %>
-    <!-- above generates this HTML code for dropdown menu to select which obsession the ERP plan 'belongs_to'
-    <select name="plan[obsession_id]" id="plan_obsession_id">
-      <option value="">Select Obsession</option>
-      <option value="1">left the stove on when I left the house</option>
-    </select>
-    -->
-    <br><br>
-  <% end %>
-
   <div class="field">
-    <%= f.label :title, "What's the title of your ERP plan?" %><br>
-    <%= f.text_field :title, :placeholder => (@plan.errors.full_messages_for(:title).first || "Enter your plan's title...") %>
+    <%= plan_builder.label :title, "What's the title of your ERP plan?" %><br>
+    <%= plan_builder.text_field :title, :placeholder => (plan.errors.full_messages_for(:title).first || "Enter your plan's title...") %>
   </div>
 
   <br>
 
   <div class="field">
-    <%= f.label :goal, "What's the intended goal of your ERP plan?" %><br>
-    <%= f.text_field :goal, :placeholder => (@plan.errors.full_messages_for(:goal).first || "Enter your plan's goal...") %>
+    <%= plan_builder.label :goal, "What's the intended goal of your ERP plan?" %><br>
+    <%= plan_builder.text_field :goal, :placeholder => (plan.errors.full_messages_for(:goal).first || "Enter your plan's goal...") %>
   </div>
 
   <br><br>
 
   <div class="field">
-    <%= f.label :flooded, "Your ERP plan favors flooding over graduated exposure to triggers." %><br><br>
-    <%= f.radio_button :flooded, 'true' %>
-    <%= f.label :flooded_true, "True:" %> I will immediately flood myself with exposures that produce the most discomfort.<br><br>
-    <%= f.radio_button :flooded, 'false' %>
-    <%= f.label :flooded_false, "False:" %> I will construct a progression of exposures to gradually face my fears.<br><br>
+    <%= plan_builder.label :flooded, "Will your ERP plan favor flooding over graded exposure to triggers?" %><br><br>
+    <%= plan_builder.radio_button :flooded, 'true' %>
+    <%= plan_builder.label :flooded_true, "Yes" %>, I will immediately flood myself with exposures that produce the most discomfort.<br><br>
+    <%= plan_builder.radio_button :flooded, 'false' %>
+    <%= plan_builder.label :flooded_false, "No" %>, I will construct a progression of exposures to gradually face my fears.<br><br>
   </div>
 
   <br>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= plan_builder.submit %>
   </div>
 <% end %>
