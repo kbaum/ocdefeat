@@ -5,4 +5,9 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/auth/twitter/callback' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
+
+  resources :users, except: :new
+  resources :obsessions, only: :index
+  resources :plans, only: :index
+  resources :themes, only: [:index, :new, :create]
 end
