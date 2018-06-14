@@ -4,6 +4,11 @@ class Plan < ApplicationRecord
   scope :procedural, -> { includes(:steps).where.not(steps: { id: nil }) }
   scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
 
+  PLAN_PROGRESS = {
+    :unaccomplished => 0,
+    :accomplished => 1
+  }
+
   belongs_to :obsession
   delegate :user, to: :obsession, allow_nil: true # I can call #user on plan instance to return user instance to which the plan belongs
   has_many :steps, dependent: :destroy
