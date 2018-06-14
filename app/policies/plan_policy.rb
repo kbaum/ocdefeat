@@ -27,7 +27,13 @@ class PlanPolicy < ApplicationPolicy
     user.therapist? || plan_owner
   end
 
-  def update? # Only therapists and patient who developed plan can edit preliminary plan title and goal
+  def permitted_attributes # once the plan's :obsession_id was assigned in plans#create, it cannot be changed
+    if user.therapist? || plan_owner
+      [:title, :goal, :flooded]
+    end
+  end
+
+  def update? # Only therapists and patient who developed plan can edit preliminary plan title, goal, flooded
     user.therapist? || plan_owner
   end
 
