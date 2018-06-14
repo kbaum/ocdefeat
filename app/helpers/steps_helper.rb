@@ -10,8 +10,8 @@ module StepsHelper
     end
   end
 
-  def set_step_status(step)
-    form_for([step.plan, step]) do |f|
+  def set_step_status(step) # PATCH "/steps/:id" maps to steps#update
+    form_for(step) do |f|
       f.check_box :status, :class => "toggle", :checked => step.complete?
     end
   end
@@ -27,7 +27,7 @@ module StepsHelper
   def display_discomfort(step)
     if step.discomfort_degree.nil?
       if current_user.patient?
-        link_to("Rate your degree of discomfort", edit_plan_step_path(step.plan, step)) << " when performing this ERP exercise!"
+        link_to("Rate your degree of discomfort", edit_step_path(step)) << " when performing this ERP exercise!"
       elsif current_user.therapist? || current_user.admin?
         "Not yet rated."
       end
