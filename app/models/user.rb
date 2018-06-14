@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
-  scope :patients_overanxious, -> { patients.joins(:obsessions).merge(Obsession.above_average_anxiety_inducers).distinct }
+  scope :patients_overanxious, -> { patients.joins(:obsessions).where("obsessions.anxiety_rating > ?", Obsession.average_anxiety_rating).distinct }
   scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
