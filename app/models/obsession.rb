@@ -80,17 +80,8 @@ class Obsession < ApplicationRecord
     end
   end
 
-  def self.above_average_anxiety_inducers
-    joins(
-      "INNER JOIN (" +
-        self.
-          select("user_id, AVG(anxiety_rating) as average").
-          group("user_id").
-          to_sql +
-      ") anxiety_ratings " \
-      "ON anxiety_ratings.user_id = obsessions.user_id"
-    ).
-    where("obsessions.anxiety_rating > anxiety_ratings.average")
+  def self.average_anxiety_rating # Find the average anxiety_rating for all obsessions
+    average(:anxiety_rating)
   end
 
   private
