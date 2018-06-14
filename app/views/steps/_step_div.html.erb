@@ -6,7 +6,7 @@
   <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
   <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
   <p><strong>Status:</strong> <%= show_status(step) %></p>
-  <%= set_step_status(step) if current_user.patient? && step.discomfort_degree %>
+  <%= set_step_status(step) %>
 
   <% if policy(step).update? %>
     <p><%= link_to "Edit Step", edit_step_path(step) %></p>
