@@ -32,7 +32,7 @@ module StepsHelper
         "Not yet rated."
       end
     else
-      "#{step.discomfort_degree}"
+      step.discomfort_degree
     end
   end
 
