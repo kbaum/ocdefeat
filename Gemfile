@@ -35,8 +35,6 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'selectize-rails'
-
 #gem 'wicked'
 
 # Use Capistrano for deployment
@@ -64,7 +62,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
-gem 'bootstrap', '~> 4.1.1'
+
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 gem 'pundit'
 
