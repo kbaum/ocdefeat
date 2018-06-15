@@ -215,7 +215,7 @@ class PlansController < ApplicationController
         :goal,
         :flooded,
         :obsession_id,
-        :done
+        :progress
       )
     end
 end
