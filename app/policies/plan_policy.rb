@@ -31,7 +31,7 @@ class PlanPolicy < ApplicationPolicy
     if user.therapist?
       [:title, :goal, :flooded]
     elsif plan_owner
-      [:title, :goal, :flooded, :done]
+      [:title, :goal, :flooded, :progress]
     end
   end
 
