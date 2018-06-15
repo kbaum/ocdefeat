@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180615005240) do
+ActiveRecord::Schema.define(version: 20180615005452) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -33,8 +33,14 @@ ActiveRecord::Schema.define(version: 20180615005240) do
     t.integer "theme_id"
   end
 
-# Could not dump table "plans" because of following StandardError
-#   Unknown type 'progress' for column 'accomplished'
+  create_table "plans", force: :cascade do |t|
+    t.string "title"
+    t.string "goal"
+    t.integer "obsession_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "flooded", default: false
+  end
 
   create_table "searches", force: :cascade do |t|
     t.string "key_terms"
