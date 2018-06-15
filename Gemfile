@@ -65,6 +65,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 
+gem 'bootstrap', '~> 4.1.1'
+
 gem 'pundit'
 
 gem 'record_tag_helper', '~> 1.0'
