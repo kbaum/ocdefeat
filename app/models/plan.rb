@@ -16,6 +16,14 @@ class Plan < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
 
+  def unaccomplished? # an unaccomplished plan (self) has a progress attribute value = 0
+    self.progress == PLAN_PROGRESS[:unaccomplished]
+  end
+
+  def accomplished? # an accomplished plan (self) has a progress attribute value = 1
+    self.progress == PLAN_PROGRESS[:accomplished]
+  end
+
   def done?
     steps.count > 0 && steps.all? {|step| step.complete?} # instance method returns true if plan consists of at least 1 step and all steps are completed (each step's status = 1)
   end
