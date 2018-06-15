@@ -17,6 +17,10 @@ class Plan < ApplicationRecord
   validates :goal, presence: true
   validates :progress, progress: true
 
+  def step_count
+    steps.count
+  end
+
   def unaccomplished? # an unaccomplished plan (self) has a progress attribute value = 0
     self.progress == PLAN_PROGRESS[:unaccomplished]
   end
