@@ -2,12 +2,7 @@
   <div class="panel-heading">
     <h3 class="panel-title"><%= @plan.title %></h3><br>
     <label><em>An ERP plan designed by <%= @plan.user.name %></em></label><br>
-    <div class="form-check">
-      <%= form_for(@plan) do |f| %>
-        <%= f.label :progress, "Check the box once you finish this ERP plan", class: "form-check-label" %>
-        <%= f.check_box :progress, class: "form-check-input toggle", checked: @plan.accomplished? %>
-      <% end %>
-    </div>
+    <%= render partial: "finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
   </div>
 
   <div class="panel-body">
