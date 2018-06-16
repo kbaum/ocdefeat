@@ -7,8 +7,8 @@ class Plan < ApplicationRecord
   scope :stepless, -> { where(nonexistent(Step.where("steps.plan_id = plans.id"))) }
 
   PLAN_PROGRESS = {
-    :unaccomplished => 0,
-    :accomplished => 1
+    :unfinished => 0,
+    :finished => 1
   }
 
   belongs_to :obsession
