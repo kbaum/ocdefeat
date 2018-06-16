@@ -9,11 +9,11 @@
 
   <%= render partial: "steps/set_step_status", locals: { step: step } if current_user.patient? %>
 
-  <% if policy(step).update? %>
+  <% if policy(step).update? && step.plan.unfinished? %>
     <p><%= link_to "Edit Step", edit_step_path(step) %></p>
   <% end %>
 
-  <% if policy(step).destroy? %>
+  <% if policy(step).destroy? && step.plan.unfinished? %>
     <%= button_to "Delete Step", step_path(step), :method => "delete", data: { confirm: "Are you sure you want to remove this ERP exercise?" } %>
   <% end %>
 <% end %>
