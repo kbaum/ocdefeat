@@ -1,4 +1,5 @@
 class StepsController < ApplicationController
+  before_action :check_plan_completion
   before_action :check_completion, only: [:edit, :update]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
@@ -18,13 +19,13 @@ class StepsController < ApplicationController
     authorize @step
   end
 
-  def update # PATCH request to "/plans/:plan_id/steps/:id" maps to steps#update
+  def update # PATCH or PUT request to "/steps/:id" maps to steps#update
     authorize @step
-    if @step.update(step_params)
+    if @step.update_attributes(permitted_attributes(@step))
       if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
-        redirect_to plan_path(@step.plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
+        redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
       else
-        redirect_to plan_path(@step.plan), notice: "You successfully modified a step in this ERP plan!"
+        redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
       end
     else
       flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
@@ -39,6 +40,10 @@ class StepsController < ApplicationController
   end
 
   private
+
+    def check_plan_completion
+      redirect_to plans_path, alert: "The steps that comprise an ERP plan cannot be changed once that plan is marked as finished."
+    end
 
     def check_completion
       @step = Step.find(params[:id])
