@@ -1,0 +1,8 @@
+<div class="form-check">
+  <%= form_for(step) do |f| %>
+    <%= f.label :status, "Check the box once you complete this step:", class: "form-check-label" %>
+    <%= f.check_box :status, class: "form-check-input toggle", checked: step.complete? %>
+  <% end %>
+</div>
+
+<!-- # PATCH "/steps/:id" maps to steps#update due to shallow nesting -->
