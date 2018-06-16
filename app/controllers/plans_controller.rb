@@ -2,6 +2,7 @@ class PlansController < ApplicationController
   before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_obsessions, only: [:index]
   before_action :require_plans, only: [:index]
+  before_action :preserve_plan, only: [:edit, :update, :destroy]
 
   def index
     plans = policy_scope(Plan)
@@ -160,10 +161,14 @@ class PlansController < ApplicationController
     @obsession = @plan.obsession
   end
 
-  def update
+  def update # PATCH or PUT request to "/plans/:id" maps to plans#update
     authorize @plan
     if @plan.update_attributes(permitted_attributes(@plan))
-      redirect_to plan_path(@plan), notice: "This ERP plan was successfully updated!"
+      if @plan.finished? # If the plan is updated from unfinished (progress = 0) to finished (progress = 1)
+        redirect_to plan_path(@plan), notice: "Congratulations on developing anxiety tolerance by finishing this ERP plan!"
+      else
+        redirect_to plan_path(@plan), notice: "An overview of this ERP plan was successfully updated!"
+      end
     else
       flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
       render :edit
@@ -177,6 +182,13 @@ class PlansController < ApplicationController
   end
 
   private
+    def preserve_plan
+      @plan = Plan.find(params[:id])
+      if @plan.finished?
+        redirect_to plan_path(@plan), alert: "You already accomplished and archived this ERP plan, so no further edits are permitted!"
+      end
+    end
+
     def prepare_plan
       @plan = Plan.find(params[:id])
     end
