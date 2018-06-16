@@ -10,12 +10,6 @@ module StepsHelper
     end
   end
 
-  def set_step_status(step) # PATCH "/steps/:id" maps to steps#update due to shallow nesting
-    form_for(step) do |f|
-      f.check_box :status, :class => "toggle", :checked => step.complete?
-    end
-  end
-
   def last_updated(step)
     step.updated_at.strftime("Last modified on %A, %B %e, at %l:%M %p")
   end
