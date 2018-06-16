@@ -1,11 +1,4 @@
 module PlansHelper
-
-  def put_plan_progress(plan) # PATCH request to "/plans/:id" maps to plans#update
-    form_for(plan) do |f|
-      f.check_box :progress, :class => "toggle", :checked => plan.accomplished?
-    end
-  end
-
   def status_of(plan)
     if plan.steps.empty?
       "In Development (must add steps)"
