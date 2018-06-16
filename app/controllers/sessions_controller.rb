@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
     end
 
     def destroy # logging out the user
-      reset_session # session[:user_id] = nil
+      session.clear # session[:user_id] = nil
       redirect_to root_url, notice: "Thanks for using OCDefeat! Goodbye for now."
     end
 end
