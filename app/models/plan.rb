@@ -19,12 +19,12 @@ class Plan < ApplicationRecord
   validates :goal, presence: true
   validates :progress, progress: true
 
-  def unaccomplished? # an unaccomplished plan (self) has a progress attribute value = 0
-    self.progress == PLAN_PROGRESS[:unaccomplished]
+  def unfinished? # an unfinished plan (self) has a progress attribute value = 0
+    self.progress == PLAN_PROGRESS[:unfinished]
   end
 
-  def accomplished? # an accomplished plan (self) has a progress attribute value = 1
-    self.progress == PLAN_PROGRESS[:accomplished]
+  def finished? # a finished plan (self) has a progress attribute value = 1
+    self.progress == PLAN_PROGRESS[:finished]
   end
 
   def self.designed_by(designer_id)
