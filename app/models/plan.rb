@@ -33,14 +33,6 @@ class Plan < ApplicationRecord
     where(obsession_id: Theme.find(subset_id).obsession_ids)
   end
 
-  def self.finished # class method returns finished plans. A plan is finished if it contains at least 1 step and all steps have status = 1
-    procedural.select {|plan| plan.done?}
-  end
-
-  def self.unfinished # class method returns AR::Relation of unfinished plans. A plan is unfinished if it contains at least 1 step w/ status = 0
-    procedural.merge(Step.not_performed)
-  end
-
   def self.from_today
     where("created_at >=?", Time.zone.today.beginning_of_day)
   end
