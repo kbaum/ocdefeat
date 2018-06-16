@@ -4,7 +4,6 @@ class Plan < ApplicationRecord
   scope :finished, -> { where(progress: 1) }
   scope :unfinished, -> { where(progress: 0) }
   scope :procedural, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
-  scope :stepless, -> { includes(:steps).where(steps: { id: nil }) } # returns AR::Relation of all plans that have no steps (i.e.'array' of preliminary plans)
 
   PLAN_PROGRESS = {
     :unaccomplished => 0,
@@ -41,5 +40,13 @@ class Plan < ApplicationRecord
 
   def self.past_plans
     where("created_at <?", Time.zone.today.beginning_of_day)
+  end
+
+  def self.existing(scope)
+    "EXISTS(#{scope.to_sql})"
+  end
+
+  def self.nonexistent(scope)
+    "NOT #{existing(scope)}"
   end
 end
