@@ -1,8 +1,8 @@
 class Plan < ApplicationRecord
   scope :flooding, -> { where(flooded: true) }
   scope :graded_exposure, -> { where.not(flooded: true) }
-  scope :finished, -> { where(progress: 1) }
-  scope :unfinished, -> { where(progress: 0) }
+  scope :accomplished, -> { where(progress: 1) }
+  scope :unaccomplished, -> { where(progress: 0) }
   scope :procedural, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
   scope :stepless, -> { where(nonexistent(Step.where("steps.plan_id = plans.id"))) }
 
