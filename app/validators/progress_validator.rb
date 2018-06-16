@@ -3,7 +3,7 @@ class ProgressValidator < ActiveModel::EachValidator
     if value == 1 && record.steps.empty?
       record.errors[attribute] << (options[:message] || "cannot be made unless you add exposure exercises to your ERP plan!")
     elsif value == 1 && !record.steps.all? {|step| step.complete?}
-      record.errors[attribute] << (options[:message] || "toward completion of this ERP plan can only be achieved if each step comprising the plan is marked complete!")
+      record.errors[attribute] << (options[:message] || "toward completion of this plan can only be achieved if each step is marked complete!")
     end
   end
 end
