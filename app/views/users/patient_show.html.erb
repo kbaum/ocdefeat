@@ -1,6 +1,6 @@
 <h2>Patient Profile</h2>
 
-<h4><%= @user.name %> vs. <%= @user.severity %> OCD</h4>
+<%= show_severity(@user) %>
 
 <p><strong>OCD Variant</strong>: <%= vary_variant(@user) %></p>
 
@@ -19,10 +19,6 @@
   <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.num_plans_designed, "ERP plan") %> thus far.</p>
 
   <br>
-
-  <% if policy(Plan).create? %>
-    <p>Need more practice? Develop a <%= link_to "new ERP plan", new_plan_path %> to expose yourself to OCD triggers to achieve desensitization!</p>
-  <% end %>
 </div>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
