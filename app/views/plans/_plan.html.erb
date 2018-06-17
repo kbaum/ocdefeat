@@ -13,6 +13,11 @@
     </div>
   <% end %>
 
+  <% if plan && (plan.steps.empty? || plan.steps.detect {|step| step.incomplete?}) %>
+    <p><strong><%= add_or_perform_steps(plan) %> <%= link_to "here!", plan_path(plan) %></strong></p>
+    <br>
+  <% end %>
+
   <div class="field">
     <%= plan_builder.label :title, "What's the title of your ERP plan?" %><br>
     <%= plan_builder.text_field :title, :placeholder => (plan.errors.full_messages_for(:title).first || "Enter your plan's title...") %>
