@@ -12,13 +12,13 @@ class Plan < ApplicationRecord
   }
 
   belongs_to :obsession
-  delegate :user, to: :obsession, allow_nil: true # I can call #user on plan instance to return user instance to which the plan belongs
+  delegate :user, to: :obsession # I can call #user on plan instance to return user instance to which the plan belongs. I don't use allow_nil: true b/c a plan belongs to an obsession and not having an obsession is an error condition
   has_many :steps, dependent: :destroy
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
   validates :flooded, inclusion: { in: [true, false] }
-  validates :progress, progress: true, on: :update
+  validates :progress, progress: true
 
   def unfinished? # an unfinished plan (self) has a progress attribute value = 0
     self.progress == PLAN_PROGRESS[:unfinished]
