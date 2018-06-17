@@ -1,12 +1,12 @@
 class StepsController < ApplicationController
-  before_action :check_plan_completion
-  before_action :check_completion, only: [:edit, :update]
+  before_action :check_plan_completion, only: [:create, :edit, :update, :destroy]
+  before_action :check_completion, only: [:edit, :update, :destroy]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
-  def new # GET "/plans/:plan_id/steps/new"
+  def new # GET "/plans/:plan_id/steps/new" maps to steps#new
     @plan = Plan.find(params[:plan_id])
     @step = Step.new
-  end 
+  end
 
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
     @step = Step.new(step_params)
@@ -47,7 +47,15 @@ class StepsController < ApplicationController
   private
 
     def check_plan_completion
-      redirect_to plans_path, alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished."
+      if action_name == "create" # If I'm creating a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
+        @step = Plan.find(params[:plan_id]).steps.build
+      else
+        @step = Step.find(params[:id]) # due to shallow nesting
+      end
+
+      if @step.plan.finished?
+        redirect_to plan_path(@step.plan), alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished."
+      end
     end
 
     def check_completion
