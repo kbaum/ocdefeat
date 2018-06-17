@@ -2,7 +2,7 @@
   <div class="panel-heading">
     <h3 class="panel-title"><%= @plan.title %></h3><br>
     <label><em>An ERP plan designed by <%= @plan.user.name %></em></label><br>
-    <%= render partial: "finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
+    <%= render partial: "plans/finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
   </div>
 
   <div class="panel-body">
