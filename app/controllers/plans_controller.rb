@@ -185,7 +185,7 @@ class PlansController < ApplicationController
     def preserve_plan
       @plan = Plan.find(params[:id])
       if @plan.finished?
-        redirect_to plan_path(@plan), alert: "You already accomplished and archived this ERP plan, so it is ineditable!"
+        redirect_to plan_path(@plan), alert: "You already accomplished and archived this ERP plan!"
       end
     end
 
