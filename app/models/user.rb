@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  scope :unassigned_users, -> { where(role: 0) }
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
   scope :patients_overanxious, -> { patients.joins(:obsessions).where("obsessions.anxiety_rating > ?", Obsession.average_anxiety_rating).distinct }
@@ -89,7 +90,7 @@ class User < ApplicationRecord
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
-    where.not(role_requested: rejected_roles, role: role_number)
+    unassigned_users.where.not(role_requested: rejected_roles, role: role_number)
   end
 
   def self.by_ocd_severity(severity)
