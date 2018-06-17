@@ -3,6 +3,11 @@ class StepsController < ApplicationController
   before_action :check_completion, only: [:edit, :update]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
+  def new # GET "/plans/:plan_id/steps/new"
+    @plan = Plan.find(params[:plan_id])
+    @step = Step.new
+  end 
+
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
     @step = Step.new(step_params)
     authorize @step
