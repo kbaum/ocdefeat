@@ -1,8 +1,12 @@
 module PlansHelper
+  def add_or_perform_steps(plan)
+    plan.steps.empty? ? "Delineate the steps to be taken" : "Execute exposure exercises" if plan
+  end
+
   def status_of(plan)
     if plan.steps.empty?
       "In Development (must add steps)"
-    elsif plan.done?
+    elsif plan.finished?
       "Finished (fully performed and desensitization achieved)"
     else
       "Unfinished (must execute all ERP exercises)"
