@@ -1,4 +1,19 @@
 module UsersHelper
+  def show_severity(user) # user is the patient whose profile is being viewed
+    if user.severity.in?(%w[Mild Moderate Severe Extreme])
+      content_tag(:h4, "#{user.name} vs. #{user.severity} OCD")
+    elsif current_user.patient?
+      content_tag(:div, class: "alert alert-warning", role: "alert") do
+        content_tag(:label, "Please indicate your OCD severity in") +
+        link_to(" your account information", edit_user_path(user), class: "alert-link") + "."
+      end
+    else
+      content_tag(:div, class: "alert alert-info", role: "alert") do
+        content_tag(:label, "Severity:") + " The patient has been notified to submit an accurate OCD severity diagnosis."
+      end
+    end
+  end
+  
   def anxiety_amount(user)
     Obsession.average_anxiety_by_patient[user.name].nil? ?
     "Not anxious" : Obsession.average_anxiety_by_patient[user.name].to_i
