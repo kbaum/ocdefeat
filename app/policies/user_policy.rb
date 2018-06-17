@@ -7,8 +7,8 @@ class UserPolicy < ApplicationPolicy
         scope.where(id: user.counselee_ids)
       elsif user.patient? # patients can only view therapists on users index page (therapist directory)
         scope.where(role: 2)
-      elsif user.unassigned?
-        scope.none
+      #elsif user.unassigned?
+        #scope.none
       end
     end
   end
@@ -30,7 +30,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    if oneself && record.unassigned? && record.provider == "twitter"
+    if oneself && record.unassigned?
       [:name, :email, :password, :password_confirmation, :role_requested, :severity, :variant]
     elsif oneself
       [:name, :email, :password, :password_confirmation, :severity, :variant]
