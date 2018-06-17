@@ -20,6 +20,21 @@ module UsersHelper
     end
   end
 
+  def vary_variant(user)
+    if user.variant.in?(["Traditional", "Purely Obsessional", "Both"])
+      case user.variant
+      when "Traditional"
+        content_tag(:p, content_tag(:strong, "Traditional"))
+      when "Purely Obsessional"
+        content_tag(:p, content_tag(:strong, "Pure-O"))
+      when "Both"
+        content_tag(:p, content_tag(:strong, "Hybrid of Traditional and Pure-O"))
+      end
+    else
+      demand_data("variant")
+    end
+  end
+
   def anxiety_amount(user)
     Obsession.average_anxiety_by_patient[user.name].nil? ?
     "Not anxious" : Obsession.average_anxiety_by_patient[user.name].to_i
