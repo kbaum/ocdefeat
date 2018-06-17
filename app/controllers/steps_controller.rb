@@ -42,7 +42,7 @@ class StepsController < ApplicationController
   private
 
     def check_plan_completion
-      redirect_to plans_path, alert: "The steps that comprise an ERP plan cannot be changed once that plan is marked as finished."
+      redirect_to plans_path, alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished."
     end
 
     def check_completion
