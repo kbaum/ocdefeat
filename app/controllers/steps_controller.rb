@@ -1,5 +1,5 @@
 class StepsController < ApplicationController
-  before_action :check_plan_completion, only: [:create, :edit, :update, :destroy]
+  before_action :prevent_changes_if_plan_performed, only: [:create, :edit, :update, :destroy]
   before_action :check_completion, only: [:edit, :update, :destroy]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
@@ -46,8 +46,8 @@ class StepsController < ApplicationController
 
   private
 
-    def check_plan_completion
-      if action_name == "create" # If I'm creating a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
+    def prevent_changes_if_plan_performed
+      if action_name == "create" # If I'm trying to create a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
         @step = Plan.find(params[:plan_id]).steps.build
       else
         @step = Step.find(params[:id]) # due to shallow nesting
