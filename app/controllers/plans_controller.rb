@@ -2,7 +2,7 @@ class PlansController < ApplicationController
   before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_obsessions, only: [:index]
   before_action :require_plans, only: [:index]
-  before_action :preserve_plan, only: [:edit, :update, :destroy]
+  before_action :preserve_plan, only: [:edit, :update]
 
   def index
     plans = policy_scope(Plan)
@@ -163,6 +163,7 @@ class PlansController < ApplicationController
 
   def update # PATCH or PUT request to "/plans/:id" maps to plans#update
     authorize @plan
+
     if @plan.update_attributes(permitted_attributes(@plan))
       if @plan.finished? # If the plan is updated from unfinished (progress = 0) to finished (progress = 1)
         redirect_to plan_path(@plan), notice: "Congratulations on developing anxiety tolerance by finishing this ERP plan!"
