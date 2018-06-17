@@ -1,4 +1,4 @@
-<%= form_for [obsession, plan] do |plan_builder| %>
+<%= form_with(model: plan, local: true, url: (plan.new_record? ? [obsession, plan]: plan)) do |plan_builder| %>
   <% if plan.errors.any? %>
     <div id="error_explanation">
       <h2>
@@ -12,8 +12,6 @@
       </ul>
     </div>
   <% end %>
-
-  <%= plan_builder.hidden_field :obsession_id, value: obsession.id %>
 
   <div class="field">
     <%= plan_builder.label :title, "What's the title of your ERP plan?" %><br>
