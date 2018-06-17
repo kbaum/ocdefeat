@@ -1,19 +1,25 @@
 module UsersHelper
-  def show_severity(user) # user is the patient whose profile is being viewed
-    if user.severity.in?(%w[Mild Moderate Severe Extreme])
-      content_tag(:h4, "#{user.name} vs. #{user.severity} OCD")
-    elsif current_user.patient?
+  def demand_data(attribute_name) # argument is the string "severity" or "variant"
+    if current_user.patient?
       content_tag(:div, class: "alert alert-warning", role: "alert") do
-        content_tag(:label, "Please indicate your OCD severity in") +
-        link_to(" your account information", edit_user_path(user), class: "alert-link") + "."
+        content_tag(:label, "Please indicate your OCD #{attribute_name} in") +
+        link_to(" your account information", edit_user_path(current_user), class: "alert-link") + "."
       end
     else
       content_tag(:div, class: "alert alert-info", role: "alert") do
-        content_tag(:label, "Severity:") + " The patient has been notified to submit an accurate OCD severity diagnosis."
+        content_tag(:label, "#{attribute_name.capitalize}:") + " The patient has been instructed to comply by entering appropriate information."
       end
     end
   end
-  
+
+  def show_severity(user) # user is the patient whose profile is being viewed
+    if user.severity.in?(%w[Mild Moderate Severe Extreme])
+      content_tag(:h4, "#{user.name} vs. #{user.severity} OCD")
+    else
+      demand_data("severity")
+    end
+  end
+
   def anxiety_amount(user)
     Obsession.average_anxiety_by_patient[user.name].nil? ?
     "Not anxious" : Obsession.average_anxiety_by_patient[user.name].to_i
@@ -48,17 +54,6 @@ module UsersHelper
           concat(content_tag(:li, link_to(user.name, user_path(user))))
         end
       end
-    end
-  end
-
-  def vary_variant(user)
-    case user.variant
-    when "Traditional"
-      "Traditional"
-    when "Purely Obsessional"
-      "Pure-O"
-    when "Both"
-      "Hybrid of Traditional and Pure-O"
     end
   end
 
