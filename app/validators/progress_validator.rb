@@ -1,7 +1,7 @@
 class ProgressValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     if value == 1 && record.steps.empty?
-      record.errors[attribute] << (options[:message] || "cannot be made unless you add exposure exercises to your ERP plan!")
+      record.errors[attribute] << (options[:message] || "cannot be made unless you add steps to your ERP plan!")
     elsif value == 1 && !record.steps.all? {|step| step.complete?}
       record.errors[attribute] << (options[:message] || "toward completion of this plan can only be achieved if each step is marked complete!")
     end
@@ -14,7 +14,7 @@ end
 # but the plan does NOT contain any steps at all,
 # the user will be UNABLE to update the plan as finished
 # and will instead receive the error message:
-# "Progress cannot be made unless you add exposure exercises to your ERP plan!"
+# "Progress cannot be made unless you add steps to your ERP plan!"
 
 # If the user checks the progress checkbox (on the plan show page) to indicate that the plan is finished,
 # (trying to set the plan's progress attribute value = 1)
