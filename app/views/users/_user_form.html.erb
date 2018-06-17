@@ -42,7 +42,7 @@
 
   <hr>
 
-  <% if @user.role_requested.nil? || (@user.unassigned? && @user.provider == "twitter") %>
+  <% if @user.role_requested.nil? || @user.unassigned? %>
     <div class="well well-lg">
       <h4>Request a Role in the OCDefeat Community:</h4>
       <br>
