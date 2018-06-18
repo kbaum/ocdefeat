@@ -1,8 +1,6 @@
+<h2>Index of ERP Plans</h2>
+
 <div>
-  <h3>Filter ERP Plans by...</h3>
-
-  <br>
-
   <%= render partial: filters, locals: { plans: policy_scope(Plan), counselees: @counselees, patients: @patients, themes: @themes, your_obsessions: @your_obsessions } %>
 </div>
 
