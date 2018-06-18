@@ -28,9 +28,13 @@ class Plan < ApplicationRecord
     self.progress == PLAN_PROGRESS[:finished]
   end
 
-  def self.delineated_but_unaccomplished
-    with_steps.unaccomplished
+  def unachieved?
+    steps.empty? || steps.detect {|step| step.incomplete?}
   end
+
+  #def self.delineated_but_unaccomplished
+    #with_steps.unaccomplished
+  #end
 
   def self.designed_by(designer_id)
     User.patients.find(designer_id).plans
