@@ -4,7 +4,7 @@ class PlanPolicy < ApplicationPolicy
       if user.admin? # An admin views an index of all plan titles
         scope.all
       elsif user.therapist? # A therapist views an index of her own patients' plans
-        scope.where(obsession_id: [user.counselees.map {|counselee| counselee.obsession_ids}.flatten])
+        scope.where(obsession: user.counselees.map {|counselee| counselee.obsessions}.flatten)
       elsif user.patient? # A patient views an index of her own plans
         scope.where(obsession_id: user.obsession_ids)
       end
@@ -20,7 +20,11 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def show?
-    user.therapist? || plan_owner
+    if user.therapist? # A therapist views the show pages of plans designed by her own patients
+      record.obsession.in?(user.counselees.map {|counselee| counselee.obsessions}.flatten)
+    elsif user.patient? # A patient sees her own plans
+      plan_owner
+    end
   end
 
   def edit? # Only therapists and patient who developed plan can view form to edit plan title and goal
