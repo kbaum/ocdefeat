@@ -1,4 +1,4 @@
-<%= form_tag("/plans", method: "get") do %>
+<%= form_tag(plans_path, method: "get") do %>
   <%= select_tag "designer", options_from_collection_for_select(patients, "id", "name"), prompt: "Plan Designer" %>
   <br><br>
   <%= select_tag "subset", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Subset" %>
