@@ -43,8 +43,8 @@ class PlanPolicy < ApplicationPolicy
     user.therapist? || plan_owner
   end
 
-  def destroy? # Only patient who created ERP plan or therapist can delete it
-    user.therapist? || plan_owner
+  def destroy? # Only patient who created the ERP plan can delete it
+    plan_owner
   end
 
   private
