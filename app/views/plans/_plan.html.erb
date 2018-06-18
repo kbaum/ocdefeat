@@ -1,5 +1,5 @@
 <%= form_with(model: plan, local: true, url: (plan.new_record? ? [obsession, plan]: plan)) do |plan_builder| %>
-  <% if plan.errors.any? && plan.errors[:progress].empty? %>
+  <% if plan.errors.any? %>
     <div id="error_explanation">
       <h2>
         <%= pluralize(plan.errors.count, "error") %> prohibited this ERP plan from being saved:
@@ -14,12 +14,14 @@
   <% end %>
 
   <% if !plan.new_record? && (plan.steps.empty? || plan.in?(Plan.delineated_but_unaccomplished)) %>
+    <br>
     <%= content_tag(:div, class: "alert alert-warning", role: "alert") do %>
       <%= content_tag(:h4, "This ERP plan remains unfinished!", class: "alert-heading") %>
       <%= content_tag(:p, content_tag(:strong, reason_why_unachieved(plan))) %>
       <hr>
       <%= content_tag(:span, add_or_perform_steps(plan)) + link_to(" here!", plan_path(plan)) %>
     <% end %>
+    <br>
   <% end %>
 
   <div class="field">
