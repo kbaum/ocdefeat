@@ -3,7 +3,7 @@ class Plan < ApplicationRecord
   scope :graded_exposure, -> { where.not(flooded: true) }
   scope :accomplished, -> { where(progress: 1) }
   scope :unaccomplished, -> { where(progress: 0) }
-  scope :procedural, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
+  scope :delineated, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
   scope :stepless, -> { where(nonexistent(Step.where("steps.plan_id = plans.id"))) }
 
   PLAN_PROGRESS = {
@@ -26,6 +26,10 @@ class Plan < ApplicationRecord
 
   def finished? # a finished plan (self) has a progress attribute value = 1
     self.progress == PLAN_PROGRESS[:finished]
+  end
+
+  def self.delineated_but_unaccomplished
+    unaccomplished.delineated
   end
 
   def self.designed_by(designer_id)
