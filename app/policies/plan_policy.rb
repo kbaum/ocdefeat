@@ -21,14 +21,14 @@ class PlanPolicy < ApplicationPolicy
 
   def show?
     if user.therapist? # A therapist views the show pages of plans designed by her own patients
-      record.obsession.in?(user.counselees.map {|counselee| counselee.obsessions}.flatten)
+      plans_by_patient_caseload
     elsif user.patient? # A patient sees her own plans
       plan_owner
     end
   end
 
   def edit?
-    user.therapist? || plan_owner
+    plans_by_patient_caseload || plan_owner
   end
 
   def permitted_attributes # once the plan's :obsession_id was assigned in plans#create, it cannot be changed
