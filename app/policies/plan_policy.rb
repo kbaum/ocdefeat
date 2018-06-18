@@ -1,21 +1,21 @@
 class PlanPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.therapist? || user.admin? # Therapists and admins can see the index of all ERP plans
+      if user.admin? # An admin views an index of all plan titles
         scope.all
-      elsif user.patient? # A patient can only view an index of HIS OWN plans
-        scope.where("obsession_id IN (?)", user.obsession_ids)
+      elsif user.therapist? # A therapist views an index of her own patients' plans
+        scope.where(obsession_id: [user.counselees.map {|counselee| counselee.obsession_ids}.flatten])
+      elsif user.patient? # A patient views an index of her own plans
+        scope.where(obsession_id: user.obsession_ids)
       end
     end
-    # a plan belongs to an obsession, so a plan instance has obsession_id foreign key.
-    # a user has many obsessions, so user.obsession_ids returns array of IDs of obsessions belonging to that user
   end
 
   def new? # Only patients can view the form to create an ERP plan
     user.patient?
   end
 
-  def create? # Only patients can create a preliminary plan, including title and goal
+  def create? # Only patients can create an ERP plan overview (title, goal, obsession_id, flooded, progress)
     user.patient?
   end
 
@@ -46,6 +46,6 @@ class PlanPolicy < ApplicationPolicy
   private
 
     def plan_owner
-      user == record.user # instance method #designer called on plan instance (record) returns user who created plan
+      user == record.user
     end
 end
