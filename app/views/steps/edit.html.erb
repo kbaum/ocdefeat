@@ -1,1 +1,5 @@
+<p><%= link_to "Go back to plan", plan_path(@plan) %></p>
+
 <h1>Editing ERP Exercise</h1>
+
+<%= render partial: "step", locals: { step: @step, plan: @plan } %>
