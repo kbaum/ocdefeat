@@ -29,7 +29,7 @@ class Plan < ApplicationRecord
   end
 
   def self.delineated_but_unaccomplished
-    
+    with_steps.unaccomplished
   end
 
   def self.designed_by(designer_id)
