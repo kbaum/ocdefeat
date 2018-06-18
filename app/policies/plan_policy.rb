@@ -34,7 +34,7 @@ class PlanPolicy < ApplicationPolicy
   def permitted_attributes # once the plan's :obsession_id was assigned in plans#create, it cannot be changed
     if user.therapist?
       [:title, :goal, :flooded]
-    elsif plan_owner
+    elsif user.patient?
       [:title, :goal, :flooded, :progress]
     end
   end
