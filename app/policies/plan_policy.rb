@@ -19,8 +19,8 @@ class PlanPolicy < ApplicationPolicy
     user.patient?
   end
 
-  def show? # Admins and therapists can see every patient's plans. Patients can only see their own plans
-    user.admin? || user.therapist? || plan_owner
+  def show?
+    user.therapist? || plan_owner
   end
 
   def edit? # Only therapists and patient who developed plan can view form to edit plan title and goal
