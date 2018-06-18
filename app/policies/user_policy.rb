@@ -7,17 +7,15 @@ class UserPolicy < ApplicationPolicy
         scope.where(id: user.counselee_ids)
       elsif user.patient? # patients can only view therapists on users index page (therapist directory)
         scope.where(role: 2)
-      #elsif user.unassigned?
-        #scope.none
       end
     end
   end
 
   def show?
-    if user.admin? # Admins can see every user's show page since they control accounts
+    if user.admin?
       true
     elsif user.therapist? # A therapist can see her own show page and her own patients' show pages
-      record.therapist? || record.counselor_id == user.id
+      oneself || record.counselor_id == user.id
     elsif user.patient? # A patient can see her own show page and all therapists' show pages
       oneself || record.therapist?
     elsif user.unassigned? # An unassigned user can only see her own preliminary profile page
