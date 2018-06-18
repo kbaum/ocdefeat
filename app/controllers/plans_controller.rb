@@ -31,11 +31,11 @@ class PlansController < ApplicationController
           flash.now[:alert] = "No ERP plans were designed by patient #{@patients.find(params[:designer]).name}."
         else
           @plans = plans.designed_by(params[:designer])
-          flash.now[:notice] = "You found #{plural_inflection(@plans)} designed by patient #{@plans.first.designer.name}!"
+          flash.now[:notice] = "You found #{plural_inflection(@plans)} designed by patient #{@plans.first.user.name}!"
         end
       elsif !params[:subset].blank? # Therapist filters plans by OCD subset -- params[:subset] is the ID of the theme
         if plans.by_subset(params[:subset]).empty? # If no plans are classified in the selected OCD subset
-          flash.now[:alert] = "No ERP plans pertain to \"#{Theme.find(params[:subset]).name}.\""
+          flash.now[:alert] = "No ERP plans target obsessions that pertain to \"#{Theme.find(params[:subset]).name}.\""
         else
           @plans = plans.by_subset(params[:subset]) # stores AR::Relation of plans that thematically relate to the selected subset
           flash.now[:notice] = "#{plural_inflection(@plans)} will help patients confront obsessions about \"#{Theme.find(params[:subset]).name}!\""
