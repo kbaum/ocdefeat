@@ -16,7 +16,7 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def create? # Only patients can create an ERP plan overview (title, goal, obsession_id, flooded, progress)
-    user.patient?
+    new?
   end
 
   def show?
@@ -40,7 +40,7 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def update?
-    user.therapist? || plan_owner
+    edit?
   end
 
   def destroy? # Only patient who created the ERP plan can delete it
