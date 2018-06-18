@@ -1,4 +1,8 @@
 module PlansHelper
+  def reason_why_unachieved(plan)
+    plan.steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all its steps are completed!"
+  end
+
   def add_or_perform_steps(plan)
     plan.steps.empty? ? "Delineate the steps to be taken" : "Execute exposure exercises" if plan
   end
