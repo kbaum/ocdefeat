@@ -27,7 +27,7 @@ class PlanPolicy < ApplicationPolicy
     end
   end
 
-  def edit? # Only therapists and patient who developed plan can view form to edit plan title and goal
+  def edit?
     user.therapist? || plan_owner
   end
 
@@ -39,7 +39,7 @@ class PlanPolicy < ApplicationPolicy
     end
   end
 
-  def update? # Only therapists and patient who developed plan can edit preliminary plan title, goal, flooded
+  def update?
     user.therapist? || plan_owner
   end
 
@@ -51,5 +51,11 @@ class PlanPolicy < ApplicationPolicy
 
     def plan_owner
       user == record.user
+    end
+
+    def plans_by_patient_caseload
+      if user.therapist?
+        record.obsession.in?(user.counselees.map {|counselee| counselee.obsessions}.flatten)
+      end
     end
 end
