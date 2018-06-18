@@ -6,6 +6,7 @@ class PlansController < ApplicationController
 
   def index
     plans = policy_scope(Plan)
+    @counselees = policy_scope(User) # used in app/views/filter_plans/_therapist.html.erb to store AR::Relation of the patients (counselees) that the therapist was assigned
     @patients = User.patients
     @themes = policy_scope(Theme)
 
