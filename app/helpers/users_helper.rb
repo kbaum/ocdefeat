@@ -22,13 +22,14 @@ module UsersHelper
 
   def vary_variant(user)
     if user.variant.in?(["Traditional", "Purely Obsessional", "Both"])
+      content_tag(:label, "OCD Variant:") +
       case user.variant
       when "Traditional"
-        content_tag(:p, content_tag(:strong, "Traditional"))
+        " Traditional"
       when "Purely Obsessional"
-        content_tag(:p, content_tag(:strong, "Pure-O"))
+        " Pure-O"
       when "Both"
-        content_tag(:p, content_tag(:strong, "Hybrid of Traditional and Pure-O"))
+        " Hybrid of Traditional and Pure-O"
       end
     else
       demand_data("variant")
