@@ -1,6 +1,6 @@
 module PlansHelper
   def reason_why_unachieved(plan)
-    plan.steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all its steps are completed!"
+    plan.steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all of its steps are completed!"
   end
 
   def add_or_perform_steps(plan)
