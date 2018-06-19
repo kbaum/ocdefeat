@@ -23,7 +23,7 @@ module PlansHelper
 
   def report(accomplished, unaccomplished)
     if accomplished && unaccomplished # If the patient has both finished AND unfinished plans
-      "finished #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
+      "marked #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} as finished and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
     elsif accomplished.nil? # If the patient did NOT finish any ERP plans
       "failed to finish any ERP plans and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
     elsif unaccomplished.nil? # If the patient only has finished ERP plans
