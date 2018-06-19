@@ -6,9 +6,7 @@
   <br><br>
   <%= select_tag "subset", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Subset" %>
   <br><br>
-  <%= select_tag "patient_planner", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Stepless Plans" %>
-  <br><br>
-  <%= select_tag "patient_progressing", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Progress Toward Completion" %>
+  <%= select_tag "patient_progressing", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Progress" %>
   <br><br>
   <%= submit_tag "Filter Plans" %>
 <% end %>
