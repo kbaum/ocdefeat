@@ -4,7 +4,7 @@ class Plan < ApplicationRecord
   scope :accomplished, -> { where(progress: 1) }
   scope :unaccomplished, -> { where(progress: 0) }
   scope :with_steps, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
-  scope :stepless, -> { where(nonexistent(Step.where("steps.plan_id = plans.id"))) }
+  scope :stepless, -> { where.not(id: Step.all.map {|step| step.plan_id}) }
 
   PLAN_PROGRESS = {
     :unfinished => 0,
