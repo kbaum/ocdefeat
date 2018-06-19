@@ -51,12 +51,4 @@ class Plan < ApplicationRecord
   def self.past_plans
     where("created_at <?", Time.zone.today.beginning_of_day)
   end
-
-  def self.existing(scope)
-    "EXISTS(#{scope.to_sql})"
-  end
-
-  def self.nonexistent(scope)
-    "NOT #{existing(scope)}"
-  end
 end
