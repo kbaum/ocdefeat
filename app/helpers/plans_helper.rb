@@ -1,4 +1,20 @@
 module PlansHelper
+  def progress(plan)
+    if plan.finished?
+      "Accomplished! (Fully implemented and marked as finished)"
+    else
+      if plan.steps.empty?
+        "Preliminary Design (lacks steps)"
+      else
+        if plan.steps.all? {|step| step.complete?}
+          "Development or Pending Submission (Fully performed but not marked finished)"
+        else
+          "Development or Implementation (contains at least one incomplete step)"
+        end
+      end
+    end
+  end
+
   def treatment_approach(plan)
     plan.flooded? ? "Flooding" : "Graded Exposure"
   end
