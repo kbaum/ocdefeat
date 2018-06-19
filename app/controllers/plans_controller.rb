@@ -39,7 +39,7 @@ class PlansController < ApplicationController
           flash.now[:alert] = "None of your patients' ERP plans target obsessions that revolve around \"#{Theme.find(params[:subset]).name}.\""
         else
           @plans = plans.by_subset(params[:subset]) # stores AR::Relation of plans that thematically relate to the selected subset
-          flash.now[:notice] = "#{plural_inflection(@plans)} will help patients confront obsessions about \"#{Theme.find(params[:subset]).name}.\""
+          flash.now[:notice] = "#{plural_inflection(@plans)} will help your patients confront obsessions about \"#{Theme.find(params[:subset]).name}.\""
         end
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's stepless plans
         patient_name = @counselees.find(params[:patient_planning]).name
