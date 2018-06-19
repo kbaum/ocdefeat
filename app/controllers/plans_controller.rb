@@ -117,7 +117,7 @@ class PlansController < ApplicationController
         end
       else # Admin did not choose a filter for filtering plans
         @plans = plans # stores AR::Relation of all ERP plans designed by all patients
-        flash.now[:notice] = "Collectively, OCDefeat patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
+        flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
       end # closes logic about filter selected
     end # closes logic about filterer's role
   end # closes #index action
