@@ -88,10 +88,10 @@ class PlansController < ApplicationController
           if plans.stepless.empty? # If all plans HAVE steps
             flash.now[:alert] = "All ERP plans have at least one step."
           else
-            @plans = plans.stepless # stores AR::Relation of preliminary plans, i.e., plans without steps
+            @plans = plans.stepless # stores AR::Relation of stepless plans
             flash.now[:notice] = "#{sv_agreement(@plans)} lacking steps!"
           end
-        elsif params[:delineation] == "Procedural Plans (populated with steps)"
+        elsif params[:delineation] == "Plans with Steps"
           if plans.procedural.empty? # If no plans have steps
             flash.now[:alert] = "No procedural plans were found; all ERP plans lack steps."
           else
