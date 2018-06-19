@@ -86,7 +86,7 @@ class PlansController < ApplicationController
       elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
         if params[:delineation] == "Stepless Plans"
           if plans.stepless.empty? # If all plans HAVE steps
-            flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
+            flash.now[:alert] = "All ERP plans have at least one step."
           else
             @plans = plans.stepless # stores AR::Relation of preliminary plans, i.e., plans without steps
             flash.now[:notice] = "#{sv_agreement(@plans)} lacking steps!"
