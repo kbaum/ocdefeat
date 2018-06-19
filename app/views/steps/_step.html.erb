@@ -1,4 +1,14 @@
 <%= form_with(model: step, local: true, url: (step.new_record? ? [plan, step]: step)) do |step_builder| %>
+  <% if step.errors.any? %>
+    <h2>
+      <%= pluralize(step.errors.count, "error") %> prohibited this ERP exercise from being saved:
+    </h2>
+    <ul>
+      <% step.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
   <div class="field">
     <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
     <%= step_builder.text_area :instructions, :placeholder => (step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
@@ -13,12 +23,16 @@
 
   <br>
 
-  <div class="field">
-    <%= step_builder.label :discomfort_degree, "On a scale of 1-10, rate your degree of discomfort while undertaking this exercise:" %>
-    <%= step_builder.number_field :discomfort_degree, min: 1, max: 10 %>
-  </div>
+  <% if !step.new_record? %>
+    <div class="field">
+      <%= step_builder.label :discomfort_degree, "On a scale of 1-10, rate your degree of discomfort while undertaking this exercise:" %>
+      <%= step_builder.number_field :discomfort_degree, in: 1..10 %>
+    </div>
+  <% end %>
 
   <br>
+
+  <%= step_builder.hidden_field :plan_id, value: plan.id %>
 
   <div class="actions">
     <%= step_builder.submit %>
