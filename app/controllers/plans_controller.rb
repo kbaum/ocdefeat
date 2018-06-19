@@ -84,7 +84,7 @@ class PlansController < ApplicationController
           end
         end # closes logic for params[:date]
       elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
-        if params[:delineation] == "Preliminary Plans (sans steps)"
+        if params[:delineation] == "Stepless Plans"
           if plans.stepless.empty? # If all plans HAVE steps
             flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
           else
