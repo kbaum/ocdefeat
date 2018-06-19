@@ -1,20 +1,14 @@
 module PlansHelper
+  def treatment_approach(plan)
+    plan.flooded? ? "Flooding" : "Graded Exposure"
+  end
+
   def reason_why_unachieved(plan)
     plan.steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all of its steps are completed!"
   end
 
   def add_or_perform_steps(plan)
     plan.steps.empty? ? "Delineate the steps to be taken" : "Execute exposure exercises" if plan
-  end
-
-  def status_of(plan)
-    if plan.steps.empty?
-      "In Development (must add steps)"
-    elsif plan.finished?
-      "Finished (fully performed and desensitization achieved)"
-    else
-      "Unfinished (must execute all ERP exercises)"
-    end
   end
 
   def planner(accomplished, unaccomplished)
