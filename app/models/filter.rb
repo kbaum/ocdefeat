@@ -12,7 +12,7 @@ class Filter # Filter is NOT an ActiveRecord model b/c there is no DB table
   end
 
   def self.all # calling #all on Filter class returns an array of all filter instances
-    filterers = User.roles.keys.delete_if {|role| role == "unassigned_user"} #=> ["patient", "therapist", "admin"]
+    filterers = User.roles.keys.delete_if {|role| role == "unassigned"} #=> ["patient", "therapist", "admin"]
     filterers.map {|filterer| [Filter.new(filterer, "obsessions"), Filter.new(filterer, "plans"), Filter.new(filterer, "users")]}.flatten
   end
 end
@@ -20,8 +20,8 @@ end
 # Explanation of #to_partial_path called on filter instance:
 # My index views of obsessions/ERP plans/users differ drastically depending on the viewer's role
 # For example, when considering a users index,
-# an admin views an index of ALL users - unassigned_users, patients, therapists and admins alike,
-# a therapist views a users index consisting ONLY of patients,
+# an admin views an index of ALL users - unassigned users, patients, therapists and admins alike,
+# a therapist views a users index consisting ONLY of THEIR OWN patients,
 # a patient views a users index consisting ONLY of therapists (i.e. a therapy directory)
 # Because the content on these index view files would be drastically different,
 # I decided to dynamically render different index view files depending on the viewer's role:
@@ -29,14 +29,14 @@ end
 # ActionPack uses this to find a suitable partial to represent the object.
 # For example, where theme is an instance of my Theme model,
 # theme.to_partial_path returns "themes/theme"
-# So I can override #to_partial_path method
-# since I want to have different index pages (with different filters)
+# So I can override #to_partial_path method as it pertains to filter instances
+# since I want to have different index pages (with different select_tag filters)
 # dependending on the user viewing the page
 
 # Explanation of class method #all called on Filter class:
-# User.roles returns this hash: {"unassigned_user"=>0, "patient"=>1, "therapist"=>2, "admin"=>3}
-# User.roles.keys returns this array: ["unassigned_user", "patient", "therapist", "admin"]
-# User.roles.keys.delete_if {|role| role == "unassigned_user"} returns ["patient", "therapist", "admin"]
+# User.roles returns this hash: {"unassigned"=>0, "patient"=>1, "therapist"=>2, "admin"=>3}
+# User.roles.keys returns this array: ["unassigned", "patient", "therapist", "admin"]
+# User.roles.keys.delete_if {|role| role == "unassigned"} returns ["patient", "therapist", "admin"]
 # We are calling #map on filterers array: ["patient", "therapist", "admin"]
 # #map returns an array of values resulting from invoking the block once on each array element, so
 # for each string element in filterers array, we are creating an ARRAY consisting of THREE filter instances:
