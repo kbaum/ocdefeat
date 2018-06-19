@@ -57,12 +57,10 @@ class PlansController < ApplicationController
           flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
         elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
           flash.now[:alert] = "Patient #{patient_progressing.name} should design ERP plans to overcome obsessions."
-        elsif patient_progressing.plans.with_steps.empty? # If the patient has plans, but none of the plans have steps
-          flash.now[:alert] = "Progress can only be made if ERP plans contain exposure exercises! #{patient_progressing.name} should delineate the steps of each plan!"
-        else # If the patient has plans with steps
+        else # If the patient has plans
           @accomplished = patient_progressing.plans.accomplished if !patient_progressing.plans.accomplished.blank?
           @unaccomplished = patient_progressing.plans.unaccomplished if !patient_progressing.plans.unaccomplished.blank?
-          flash.now[:notice] = "You retrieved #{patient_progressing.name}'s ERP progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
+          flash.now[:notice] = "You retrieved #{patient_progressing.name}'s progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans # stores all plans designed by the therapist's patients
