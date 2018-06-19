@@ -29,30 +29,30 @@ class PlansController < ApplicationController
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
         if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
-          flash.now[:alert] = "No ERP plans were designed by patient #{@patients.find(params[:designer]).name}."
+          flash.now[:alert] = "No ERP plans were designed by patient #{@counselees.find(params[:designer]).name}."
         else
           @plans = plans.designed_by(params[:designer])
           flash.now[:notice] = "You found #{plural_inflection(@plans)} designed by patient #{@plans.first.user.name}!"
         end
       elsif !params[:subset].blank? # Therapist filters plans by OCD subset -- params[:subset] is the ID of the theme
         if plans.by_subset(params[:subset]).empty? # If no plans are classified in the selected OCD subset
-          flash.now[:alert] = "No ERP plans target obsessions that pertain to \"#{Theme.find(params[:subset]).name}.\""
+          flash.now[:alert] = "No ERP plans target obsessions that revolve around \"#{Theme.find(params[:subset]).name}.\""
         else
           @plans = plans.by_subset(params[:subset]) # stores AR::Relation of plans that thematically relate to the selected subset
           flash.now[:notice] = "#{plural_inflection(@plans)} will help patients confront obsessions about \"#{Theme.find(params[:subset]).name}!\""
         end
       elsif !params[:patient_planning].blank? # Therapist filters plans by patient's stepless plans
-        patient_name = @patients.find(params[:patient_planning]).name
-        if @patients.find(params[:patient_planning]).plans.empty? # If the selected patient has no ERP plans
+        patient_name = @counselees.find(params[:patient_planning]).name
+        if @counselees.find(params[:patient_planning]).plans.empty? # If the selected patient has no ERP plans
           flash.now[:alert] = "No ERP plans were designed by patient #{patient_name}."
-        elsif @patients.find(params[:patient_planning]).plans.stepless.empty? # The patient has plans, but all of these plans have steps
+        elsif @counselees.find(params[:patient_planning]).plans.stepless.empty? # The patient has plans, but all of these plans have steps
           flash.now[:alert] = "All plans designed by patient #{patient_name} contain steps."
         else # The patient has plans without steps
-          @plans = @patients.find(params[:patient_planning]).plans.stepless
+          @plans = @counselees.find(params[:patient_planning]).plans.stepless
           flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{plural_inflection(@plans)}!"
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
-        patient_progressing = @patients.find(params[:patient_progressing])
+        patient_progressing = @counselees.find(params[:patient_progressing])
         if patient_progressing.obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
         elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
