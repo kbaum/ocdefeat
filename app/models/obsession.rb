@@ -1,5 +1,5 @@
 class Obsession < ApplicationRecord
-  scope :defeatable_by_flooding, -> { joins(:plans).where(plans: { flooded: true }).distinct }
+  scope :defeatable_by_flooding, -> { joins(:plans).merge(Plan.flooding).distinct }
   scope :defeatable_by_graded_exposure, -> { joins(:plans).where(plans: { flooded: false }).distinct }
   scope :sans_plans, -> { includes(:plans).where(plans: { id: nil }) }
   scope :presenting_symptoms, -> { where.not(symptoms: ["", " "]) }
