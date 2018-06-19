@@ -2,4 +2,9 @@
   <h4>ERP Progress Report</h4>
   <p>The report indicates that patient <%= planner(accomplished, unaccomplished) %> <%= report(accomplished, unaccomplished) %></p>
   <br>
+
+  <% if accomplished %> <!-- If the patient selected has finished ERP plans -->
+    <p><strong><u>Finished Plans</u></strong></p>
+    <%= present_plans(accomplished) %>
+  <% end %>
 </div>
