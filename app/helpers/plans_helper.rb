@@ -21,13 +21,13 @@ module PlansHelper
     accomplished.blank? ? "#{unaccomplished.first.user.name}" : "#{accomplished.first.user.name}"
   end
 
-  def report(finished, unfinished)
-    if finished && unfinished # If the patient has both finished AND unfinished plans
-      "finished #{finished.count} ERP #{'plan'.pluralize(finished.count)} and left #{unfinished.count} ERP #{'plan'.pluralize(unfinished.count)} unfinished."
-    elsif finished.nil? # If the patient did NOT finish any ERP plans
-      "failed to finish any ERP plans and left #{unfinished.count} ERP #{'plan'.pluralize(unfinished.count)} unfinished."
-    elsif unfinished.nil? # If the patient only has finished ERP plans
-      "achieved desensitization by implementing #{finished.count} ERP #{'plan'.pluralize(finished.count)} from start to finish!"
+  def report(accomplished, unaccomplished)
+    if accomplished && unaccomplished # If the patient has both finished AND unfinished plans
+      "finished #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
+    elsif accomplished.nil? # If the patient did NOT finish any ERP plans
+      "failed to finish any ERP plans and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
+    elsif unaccomplished.nil? # If the patient only has finished ERP plans
+      "achieved desensitization by implementing #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} from start to finish!"
     end
   end
 
