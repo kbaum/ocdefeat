@@ -1,7 +1,7 @@
 <%= form_tag("/plans", method: "get") do %>
   <%= select_tag "date", options_for_select(["Today", "Past Plans"]), prompt: "Date Designed" %>
   <br><br>
-  
+  <%= select_tag "delineation", options_for_select(["Plans with Steps", "Stepless Plans"]), prompt: "Delineated vs. Undelineated Plans" %>
   <br><br>
   <%= select_tag "completion", options_for_select(["Finished Plans", "Unfinished Plans"]), prompt: "Progress Toward Completion" %>
   <br><br>
