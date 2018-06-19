@@ -7,7 +7,7 @@
   <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
   <p><strong>Status:</strong> <%= show_status(step) %></p>
 
-  <%= render partial: "steps/set_step_status", locals: { step: step } if current_user.patient? %>
+  <%= render partial: "steps/set_step_status", locals: { step: step } if current_user.patient? && step.discomfort_degree %>
 
   <% if policy(step).update? && step.plan.unfinished? %>
     <p><%= link_to "Edit Step", edit_step_path(step) %></p>
