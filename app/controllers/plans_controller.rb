@@ -41,14 +41,14 @@ class PlansController < ApplicationController
           @plans = plans.by_subset(params[:subset]) # stores AR::Relation of plans that thematically relate to the selected subset
           flash.now[:notice] = "#{plural_inflection(@plans)} will help your patients confront obsessions about \"#{Theme.find(params[:subset]).name}.\""
         end
-      elsif !params[:stepless_planner].blank? # Therapist filters plans by patient's stepless plans
-        patient_name = @counselees.find(params[:stepless_planner]).name
-        if @counselees.find(params[:patient_planning]).plans.empty? # If the selected patient has no ERP plans
+      elsif !params[:patient_planner].blank? # Therapist filters plans by patient's stepless plans
+        patient_name = @counselees.find(params[:patient_planner]).name
+        if @counselees.find(params[:patient_planner]).plans.empty? # If the selected patient has no ERP plans
           flash.now[:alert] = "No ERP plans were designed by patient #{patient_name}."
-        elsif @counselees.find(params[:stepless_planner]).plans.stepless.empty? # The patient has plans, but all of these plans have steps
+        elsif @counselees.find(params[:patient_planner]).plans.stepless.empty? # The patient has plans, but all of these plans have steps
           flash.now[:alert] = "All plans designed by patient #{patient_name} contain steps."
         else # The patient has plans without steps
-          @plans = @counselees.find(params[:stepless_planner]).plans.stepless
+          @plans = @counselees.find(params[:patient_planner]).plans.stepless
           flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{plural_inflection(@plans)}!"
         end
       elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
