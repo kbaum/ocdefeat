@@ -17,8 +17,8 @@ module PlansHelper
     end
   end
 
-  def planner(finished, unfinished)
-    finished.blank? ? "#{unfinished.first.designer.name}" : "#{finished.first.designer.name}"
+  def planner(accomplished, unaccomplished)
+    accomplished.blank? ? "#{unaccomplished.first.user.name}" : "#{accomplished.first.user.name}"
   end
 
   def report(finished, unfinished)
