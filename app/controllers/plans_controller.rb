@@ -83,15 +83,15 @@ class PlansController < ApplicationController
             flash.now[:notice] = "You found #{plural_inflection(@plans)} designed before today!"
           end
         end # closes logic for params[:date]
-      elsif !params[:population].blank? # Admin filters plans by preliminary plans (without steps) vs. procedural plans (with steps)
-        if params[:population] == "Preliminary Plans (sans steps)"
+      elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
+        if params[:delineation] == "Preliminary Plans (sans steps)"
           if plans.stepless.empty? # If all plans HAVE steps
             flash.now[:alert] = "No preliminary plans were found; all ERP plans have at least one step."
           else
             @plans = plans.stepless # stores AR::Relation of preliminary plans, i.e., plans without steps
             flash.now[:notice] = "#{sv_agreement(@plans)} lacking steps!"
           end
-        elsif params[:population] == "Procedural Plans (populated with steps)"
+        elsif params[:delineation] == "Procedural Plans (populated with steps)"
           if plans.procedural.empty? # If no plans have steps
             flash.now[:alert] = "No procedural plans were found; all ERP plans lack steps."
           else
