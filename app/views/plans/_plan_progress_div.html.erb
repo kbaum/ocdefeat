@@ -17,5 +17,15 @@
         The patient must complete each step in every plan and then mark each plan as finished!
       <% end %>
     </p>
+
+    <% if !unaccomplished.with_steps.blank? %>
+      <p><em>~Delineated Plans:</em></p>
+      <%= present_plans(unaccomplished.with_steps) %>
+    <% end %>
+
+    <% if !unaccomplished.stepless.blank? %>
+      <p><em>~Stepless Plans:</em></p>
+      <%= present_plans(unaccomplished.stepless) %>
+    <% end %>
   <% end %>
 </div>
