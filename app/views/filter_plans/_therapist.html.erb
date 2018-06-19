@@ -1,9 +1,12 @@
+<br>
+<h4>Filter Your Patients' Plans by...</h4>
+<br>
 <%= form_tag(plans_path, method: "get") do %>
   <%= select_tag "designer", options_from_collection_for_select(counselees, "id", "name"), prompt: "Plan Designer" %>
   <br><br>
   <%= select_tag "subset", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Subset" %>
   <br><br>
-  <%= select_tag "patient_planning", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Preliminary Plans" %>
+  <%= select_tag "patient_planning", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Stepless Plans" %>
   <br><br>
   <%= select_tag "patient_progressing", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Progress Toward Completion" %>
   <br><br>
