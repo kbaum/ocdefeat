@@ -18,8 +18,8 @@ class Obsession < ApplicationRecord
   validates :rituals, presence: true
   before_validation :hypotheticalize, on: [ :create, :update ]
 
-  def self.by_anxiety_amount(anxiety_amount) # anxiety_amount is an integer in the range 1-10
-    where(anxiety_rating: anxiety_amount)
+  def self.by_anxiety_rating(anxiety_rating)
+    where(anxiety_rating: anxiety_rating)
   end
 
   def self.average_anxiety_by_patient # returns a hash where keys = patient's name and values = average anxiety_rating for that patient
