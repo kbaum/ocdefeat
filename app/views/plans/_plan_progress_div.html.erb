@@ -9,7 +9,9 @@
   <% end %>
 
   <% if unaccomplished %> <!-- If the patient selected has unfinished ERP plans -->
-    <p><em>Unfinished Plans Without Steps:</em></p>
-    <%= present_plans(accomplished.stepless)
+    <p><em>Unfinished Plans without Steps:</em></p>
+    <%= present_plans(unaccomplished.stepless) %>
+    <p><em>Unfinished Plans with Steps:</em></p>
+    <%= present_plans(unaccomplished.with_steps) %>
   <% end %>
 </div>
