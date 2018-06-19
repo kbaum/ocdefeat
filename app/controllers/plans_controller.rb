@@ -99,15 +99,15 @@ class PlansController < ApplicationController
             flash.now[:notice] = "#{sv_agreement(@plans)} populated with steps!"
           end
         end
-      elsif !params[:completion].blank? # Admin filters plans by finished/unfinished plans
-        if params[:completion] == "Accomplished Plans"
+      elsif !params[:accomplishment].blank? # Admin filters plans by finished/unfinished plans
+        if params[:accomplishment] == "Accomplished Plans"
             if plans.accomplished.empty? # If no plans were marked finished
               flash.now[:alert] = "Not a single ERP plan was marked as finished."
             else
               @plans = plans.accomplished # stores AR::Relation of plans marked finished
               flash.now[:notice] = "#{sv_agreement(@plans)} marked finished!"
             end
-        elsif params[:completion] == "Unaccomplished Plans"
+        elsif params[:accomplishment] == "Unaccomplished Plans"
           if plans.unaccomplished.empty? # If all plans were marked finished
             flash.now[:alert] = "All ERP plans were fully implemented and marked as finished."
           else
