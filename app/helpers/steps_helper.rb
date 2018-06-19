@@ -22,7 +22,7 @@ module StepsHelper
     if step.discomfort_degree.nil?
       if current_user.patient?
         "You must " << link_to("rate your discomfort", edit_step_path(step)) << " when performing this step before you can mark it as complete!"
-      elsif current_user.therapist && step.plan.user.in?(current_user.counselees)
+      elsif current_user.therapist? && step.plan.user.in?(current_user.counselees)
         "Not yet rated."
       end
     else
