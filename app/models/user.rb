@@ -77,12 +77,16 @@ class User < ApplicationRecord
     patients_obsessing.where(obsessions: { created_at: interval })
   end
 
-  def self.unexposed_to_obsession # Returns all users who have at least 1 obsession for which no ERP plans were designed
+  def self.unexposed_to_obsession # Returns AR::Relation of users who have at least 1 obsession for which no ERP plans were designed
     patients_obsessing.merge(Obsession.sans_plans)
   end
 
   def self.patients_planning_or_practicing_erp
     patients_planning.merge(Plan.unaccomplished)
+  end
+
+  def self.exposed_to_obsession # Returns AR::Relation of users who designed at least 1 plan that was marked as finished
+    patients_planning.merge(Plan.accomplished)
   end
 
   def self.by_role(the_role)
