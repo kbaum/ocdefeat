@@ -70,15 +70,15 @@ class UsersController < ApplicationController
           @filtered_users = users.by_severity_and_variant(severity, variant) # stores AR::Relation of all patients with a specific OCD severity and variant combination
           flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
         end
-      elsif !params[:desensitization_degree].blank? # Therapist filters patients by degree of desensitization
-        if users.all? {|user| user.obsessions.empty?} # If no patient is obsessing about anything at all
-          flash.now[:alert] = "No patients are obsessing, so there is no need to develop desensitization through repeated exposure exercises."
-        elsif params[:desensitization_degree] == "Not Desensitized" # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed
+      elsif !params[:extent_of_exposure].blank?
+        if users.all? {|user| user.obsessions.empty?} # If none of the therapist's patients are obsessing about anything at all
+          flash.now[:alert] = "None of your patients are obsessing, so there is no need to practice exposure exercises."
+        elsif params[:extent_of_exposure] == "Unexposed" # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed
           if users.unexposed_to_obsession.empty?
-            flash.now[:alert] = "Patients are developing anxiety tolerance and may have become desensitized to their obsessions! No obsessions lack ERP plans!"
+            flash.now[:alert] = "All of your patients designed at least one ERP plan to target each of their obsessions!"
           else
             @filtered_users = users.unexposed_to_obsession
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} not fully desensitized to obsessions, having reported at least one obsession that lacks ERP plans."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} unexposed to obsessions, having reported at least one obsession that lacks ERP plans."
           end
         elsif params[:desensitization_degree] == "Developing Desensitization Plans" # Therapist filters patients by those with at least 1 preliminary ERP plan (i.e. plan that lacks steps)
           if users.patients_planning_preliminarily.empty?
