@@ -129,14 +129,6 @@ class User < ApplicationRecord
     patients_planning.merge(Plan.procedural)
   end
 
-  def self.sort_by_ascending_plan_count
-    self.patients.sort_by {|patient| patient.num_plans_designed}
-  end
-
-  def self.sort_by_descending_plan_count
-    self.sort_by_ascending_plan_count.reverse
-  end
-
   def self.num_users_obsessing_about(theme_id)
     self.patients.select {|p| p.obsessions.any? {|o| o.theme_ids.include?(theme_id)}}.count
   end
