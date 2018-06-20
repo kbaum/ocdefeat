@@ -129,14 +129,6 @@ class User < ApplicationRecord
     patients_planning.merge(Plan.procedural)
   end
 
-  def num_plans_designed
-    self.plans.count if self.patient?
-  end
-
-  def num_plans_completed
-    self.plans.select {|plan| plan.done?}.count if self.patient?
-  end
-
   def self.sort_by_ascending_plan_count
     self.patients.sort_by {|patient| patient.num_plans_designed}
   end
