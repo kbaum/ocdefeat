@@ -87,7 +87,7 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
         else
           @obsessions = obsessions.by_patient(params[:patient]) # stores AR::Relation of all the selected patient's obsessions
-          flash.now[:notice] = "Patient #{@counselees.find(params[:patient]).name} has #{plural_inflection(@obsessions)}!"
+          flash.now[:notice] = "Patient #{@obsessions.first.patient_name} has #{plural_inflection(@obsessions)}!"
         end
       elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's obsessions ordered from highest to lowest anxiety_rating.
         patient_picked = @counselees.find(params[:distressed]) # params[:distressed] is the ID of the user whose obsessions we're ordering by descending distress degree.
