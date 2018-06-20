@@ -125,10 +125,6 @@ class User < ApplicationRecord
     patients_planning.merge(Plan.stepless)
   end
 
-  def self.patients_with_populated_plan # returns AR::Relation of users who have at least 1 plan populated with steps
-    patients_planning.merge(Plan.procedural)
-  end
-
   def self.num_users_obsessing_about(theme_id)
     self.patients.select {|p| p.obsessions.any? {|o| o.theme_ids.include?(theme_id)}}.count
   end
