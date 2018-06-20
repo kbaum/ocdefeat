@@ -87,23 +87,12 @@ class UsersController < ApplicationController
             @filtered_users = users.patients_planning_or_practicing_erp
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently developing ERP plans or undergoing exposure therapy."
           end
-        elsif params[:desensitization_degree] == "Deficient ERP Plan Performance" # Therapist filters patients by those who have at least 1 unfinished ERP plan
-          if users.patients_planning.empty?
-            flash.now[:alert] = "Patients are not implementing ERP plans; the Index of ERP Plans is currently empty."
-          elsif users.patients_with_populated_plan.empty?
-            flash.now[:alert] = "Patients have only brainstormed the titles and goals of ERP plans. An ERP plan must contain a step-by-step procedure before its status of completion can be determined."
-          elsif users.patients_with_unfinished_plan.empty?
-            flash.now[:alert] = "Patients proficiently performed all ERP plans; no plans were left unfinished."
+        elsif params[:extent_of_exposure] == "Patients who finished an ERP plan" # Therapist filters their patients by those who designed at least 1 plan that is marked as finished
+          if users.with_finished_plan.empty?
+            flash.now[:alert] = "None of your patients marked an ERP plan as finished."
           else
-            @filtered_users = users.patients_with_unfinished_plan
-            flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with at least one unfinished ERP plan."
-          end
-        elsif params[:desensitization_degree] == "Done Desensitizing" # Therapist filters patients by those who have obsessions, who have NO obsessions that lack ERP plans, and whose ERP plans are all finished
-          if users.patients_fully_desensitized.empty?
-            flash.now[:alert] = "No patient is fully desensitized to all OCD triggers."
-          else
-            @filtered_users = users.patients_fully_desensitized
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} fully desensitized to OCD triggers, having implemented an ERP plan for each obsession!"
+            @filtered_users = users.with_finished_plan
+            flash.now[:notice] = "#{plural_inflection(@filtered_users)} marked at least one ERP plan as finished!"
           end
         end
       elsif !params[:obsessional_theme].blank? # Find therapist's patients who have at least 1 obsession that's classified in the obsessional theme
