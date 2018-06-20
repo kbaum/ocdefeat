@@ -1,4 +1,5 @@
 class Obsession < ApplicationRecord
+  extend Datable
   scope :defeatable_by_flooding, -> { joins(:plans).merge(Plan.flooding).distinct }
   scope :defeatable_by_graded_exposure, -> { joins(:plans).merge(Plan.graded_exposure).distinct }
   scope :sans_plans, -> { where.not(id: Plan.all.map {|plan| plan.obsession_id}) }
@@ -44,14 +45,6 @@ class Obsession < ApplicationRecord
 
   def self.by_patient(patient)
     where(user: patient)
-  end
-
-  def self.from_today
-    where("created_at >=?", Time.zone.today.beginning_of_day)
-  end
-
-  def self.old_obsessions
-    where("created_at <?", Time.zone.today.beginning_of_day)
   end
 
   def plans_per_obsession # instance method called on obsession instance.
