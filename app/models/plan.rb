@@ -33,6 +33,10 @@ class Plan < ApplicationRecord
     with_steps.merge(Step.not_performed)
   end
 
+  def self.unfinished_but_with_all_steps_completed
+    unaccomplished.joins(:steps).where.not(steps: { status: 0 }).distinct
+  end
+
   def unachieved?
     steps.empty? || steps.detect {|step| step.incomplete?}
   end
