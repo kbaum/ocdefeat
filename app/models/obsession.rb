@@ -39,18 +39,6 @@ class Obsession < ApplicationRecord
     where(user: patient)
   end
 
-  def plans_per_obsession # instance method called on obsession instance.
-    plans.count
-  end
-
-  def self.least_to_most_plans
-    all.sort_by(&:plans_per_obsession) # self.all.sort_by {|o| o.plans_per_obsession}
-  end
-
-  def self.most_to_least_plans
-    all.sort {|a,b| b.plans_per_obsession <=> a.plans_per_obsession}
-  end
-
   def self.search_thoughts(search)
     if search
       where('intrusive_thought LIKE ?', "%#{search}%")
