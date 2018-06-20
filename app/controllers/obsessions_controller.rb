@@ -83,14 +83,14 @@ class ObsessionsController < ApplicationController
       end
     elsif current_user.therapist?
       if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
-        if @patients.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "Patient #{@patients.find(params[:patient]).name} is not obsessing!"
+        if @counselees.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
+          flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
         else
           @obsessions = obsessions.by_patient(params[:patient]) # stores AR::Relation of all the selected patient's obsessions
-          flash.now[:notice] = "Patient #{@patients.find(params[:patient]).name} has #{plural_inflection(@obsessions)}!"
+          flash.now[:notice] = "Patient #{@counselees.find(params[:patient]).name} has #{plural_inflection(@obsessions)}!"
         end
       elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's obsessions ordered from highest to lowest anxiety_rating.
-        patient_picked = @patients.find(params[:distressed]) # params[:distressed] is the ID of the user whose obsessions we're ordering by descending distress degree.
+        patient_picked = @counselees.find(params[:distressed]) # params[:distressed] is the ID of the user whose obsessions we're ordering by descending distress degree.
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
@@ -108,7 +108,7 @@ class ObsessionsController < ApplicationController
           end
         end
       elsif !params[:consumed].blank? # Therapist filters obsessions by a patient's obsessions ordered from most to least time-consuming
-        patient_picked = @patients.find(params[:consumed]) # params[:consumed] is the ID of the user whose obsessions we're ordering from most to least time-consuming
+        patient_picked = @counselees.find(params[:consumed]) # params[:consumed] is the ID of the user whose obsessions we're ordering from most to least time-consuming
         if patient_picked.obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "#{patient_picked.name} has time to meditate with a worry-free mind, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
@@ -126,7 +126,7 @@ class ObsessionsController < ApplicationController
           end
         end
       elsif !params[:planless].blank? # Therapist filters obsessions by a patient's obsessions that lack ERP plans
-        patient_picked = @patients.find(params[:planless]) # params[:planless] is the ID of the user
+        patient_picked = @counselees.find(params[:planless]) # params[:planless] is the ID of the user
         if patient_picked.obsessions.empty? # If the selected user has no obsessions
           flash.now[:alert] = "#{patient_picked.name} has no obsessions, so there is no need for this patient to practice Exposure and Response Prevention (ERP)."
         elsif patient_picked.obsessions.sans_plans.empty? # If the selected patient has obsessions, but all of these obsessions have ERP plans
