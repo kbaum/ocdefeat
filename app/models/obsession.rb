@@ -22,12 +22,6 @@ class Obsession < ApplicationRecord
     where(anxiety_rating: anxiety_rating)
   end
 
-  def self.average_anxiety_by_patient # returns a hash where keys = patient's name and values = average anxiety_rating for that patient
-    joins(:user).
-    group("users.name").
-    average(:anxiety_rating)
-  end
-
   def self.least_to_most_distressing
     order(:anxiety_rating)
   end
