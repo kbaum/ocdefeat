@@ -113,14 +113,6 @@ class User < ApplicationRecord
     plans.count
   end
 
-  def self.least_to_most_obsessions
-    patients.sort_by(&:obsession_count) # equivalent to: patients.sort_by {|patient| patient.obsession_count}
-  end
-
-  def self.most_to_least_obsessions
-    patients.sort {|a,b| b.obsession_count <=> a.obsession_count}
-  end
-
   def self.patients_planning_preliminarily # returns AR::Relation of users who have at least 1 plan that lacks steps
     patients_planning.merge(Plan.stepless)
   end
