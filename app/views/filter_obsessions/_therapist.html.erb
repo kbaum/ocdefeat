@@ -1,4 +1,4 @@
-<%= form_tag("/obsessions", method: "get") do %>
+<%= form_tag(obsessions_path, method: "get") do %>
   <%= select_tag "patient", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient" %>
   <br><br>
   <%= select_tag "distressed", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Most to Least Distressing Obsessions" %>
