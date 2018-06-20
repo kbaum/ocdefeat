@@ -85,7 +85,7 @@ class User < ApplicationRecord
     patients_planning.merge(Plan.unaccomplished)
   end
 
-  def self.exposed_to_obsession # Returns AR::Relation of users who designed at least 1 plan that was marked as finished
+  def self.with_finished_plan # Returns AR::Relation of users who designed at least 1 plan that was marked as finished
     patients_planning.merge(Plan.accomplished)
   end
 
