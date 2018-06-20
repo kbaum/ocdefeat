@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :deletion_msg, only: [:destroy]
+  before_action :reset_role_requested, only: [:edit, :update]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
     users = policy_scope(User) # we're filtering users - users stores the array of user instances available to the type of viewer
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
     # change users' roles, delete accounts. There is also 1 filter to filter users by current role
     # The first 4 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
     if current_user.admin?
+      @patients_without_counselor = User.patients_uncounseled
       @therapists = User.therapists
       @table_users = users # @table_users stores array of all user instances
       @filtered_users = users
@@ -147,24 +149,6 @@ class UsersController < ApplicationController
             flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions today!"
           end
         end
-      elsif !params[:num_obsessions].blank? # Therapist filters patients by obsession count
-        if users.all? {|user| user.obsessions.empty?} # If no patient has obsessions
-          flash.now[:alert] = "Not a single patient has obsessions!"
-        else # Patients have obsessions
-          first_obsession_count = users.first.obsession_count
-          if users.count == 1 # If there is only 1 patient
-            @filtered_users = users # AR::Relation containing 1 user instance
-            flash.now[:notice] = "A single patient was found who has #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
-          elsif users.all? {|user| user.obsession_count == first_obsession_count} # > 1 patient, but all patients have the same number of obsessions
-            flash.now[:alert] = "Patients cannot be ordered by number of obsessions, as all patients reported #{first_obsession_count} #{'obsession'.pluralize(first_obsession_count)}!"
-          elsif params[:num_obsessions] == "Least to Most Obsessions"
-            @filtered_users = users.least_to_most_obsessions # stores AR::Relation of users ordered by those w/ least to most obsessions
-            flash.now[:notice] = "Patients are ordered from least to most obsessive!"
-          else
-            @filtered_users = users.most_to_least_obsessions # stores AR::Relation of users ordered by those w/ most to least obsessions
-            flash.now[:notice] = "Patients are ordered from most to least obsessive!"
-          end
-        end
       else
         @filtered_users = users # @filtered_users stores AR::Relation of all patients if no filter was applied when therapist views page
         flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently seeking your psychological expertise."
@@ -221,6 +205,14 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def reset_role_requested
+      @user = User.find(params[:id])
+      if @user.patient? && @user.role_requested.in?(%w[Therapist Admin])
+        @user.role_requested = "Patient"
+        @user.save
+      end
     end
 
     def show_template # this method returns the string name of the show template to render, which depends on the user's role
