@@ -4,7 +4,7 @@ class ObsessionsController < ApplicationController
 
   def index
     obsessions = policy_scope(Obsession)
-    @patients = User.patients
+    @counselees = policy_scope(User)
     @themes = policy_scope(Theme)
 
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
