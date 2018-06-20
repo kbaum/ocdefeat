@@ -73,7 +73,7 @@ class UsersController < ApplicationController
       elsif !params[:extent_of_exposure].blank?
         if users.all? {|user| user.obsessions.empty?} # If none of the therapist's patients are obsessing about anything at all
           flash.now[:alert] = "None of your patients are obsessing, so there is no need to practice exposure exercises."
-        elsif params[:extent_of_exposure] == "Unexposed" # Therapist filters by patients who have at least 1 obsession for which no ERP plans were designed
+        elsif params[:extent_of_exposure] == "Patients who are unexposed to an obsession" # Therapist filters their patients by those who have at least 1 obsession for which no ERP plans were designed
           if users.unexposed_to_obsession.empty?
             flash.now[:alert] = "All of your patients designed at least one ERP plan to target each of their obsessions!"
           else
