@@ -1,4 +1,5 @@
 class Plan < ApplicationRecord
+  extend Datable
   scope :flooding, -> { where(flooded: true) }
   scope :graded_exposure, -> { where.not(flooded: true) }
   scope :accomplished, -> { where(progress: 1) }
@@ -42,13 +43,5 @@ class Plan < ApplicationRecord
 
   def self.by_subset(subset_id)
     where(obsession_id: Theme.find(subset_id).obsession_ids)
-  end
-
-  def self.from_today
-    where("created_at >=?", Time.zone.today.beginning_of_day)
-  end
-
-  def self.past_plans
-    where("created_at <?", Time.zone.today.beginning_of_day)
   end
 end
