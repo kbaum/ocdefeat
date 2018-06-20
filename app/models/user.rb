@@ -81,6 +81,10 @@ class User < ApplicationRecord
     patients_obsessing.merge(Obsession.sans_plans)
   end
 
+  def self.patients_planning_or_practicing_erp
+    patients_planning.merge(Plan.unaccomplished)
+  end
+
   def self.by_role(the_role)
     where(role: the_role)
   end
