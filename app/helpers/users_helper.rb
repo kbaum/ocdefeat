@@ -36,11 +36,6 @@ module UsersHelper
     end
   end
 
-  def anxiety_amount(user)
-    Obsession.average_anxiety_by_patient[user.name].nil? ?
-    "Not anxious" : Obsession.average_anxiety_by_patient[user.name].to_i
-  end
-
   def clinical_features(user)
     user.in?(User.symptomatic) ? "Symptomatic" : "Asymptomatic"
   end
