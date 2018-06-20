@@ -34,11 +34,6 @@ class User < ApplicationRecord
       user.role_requested = "Patient"
       user.severity = "Mild"
       user.variant = "Traditional"
-      # we can't add a default role_requested value of "patient" in users table because
-      # our admin and therapists don't want to be patients (see seed data)
-      # If a brand new user signs on via Twitter (user cannot be found in the DB),
-      # by default, just set their role_requested to "patient" and their OCD severity to "mild"
-      # as these can be edited, and the majority of app users will presumably be patients
     end
   end
 
