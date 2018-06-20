@@ -29,13 +29,13 @@ class Plan < ApplicationRecord
     self.progress == PLAN_PROGRESS[:finished]
   end
 
+  def self.with_incomplete_step # Returns AR::Relation of plans with steps where at least 1 step in each plan is incomplete
+    with_steps.merge(Step.not_performed)
+  end
+
   def unachieved?
     steps.empty? || steps.detect {|step| step.incomplete?}
   end
-
-  #def self.delineated_but_unaccomplished
-    #with_steps.unaccomplished
-  #end
 
   def self.designed_by(designer_id)
     User.patients.find(designer_id).plans
