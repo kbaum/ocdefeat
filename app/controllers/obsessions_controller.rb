@@ -143,8 +143,8 @@ class ObsessionsController < ApplicationController
           flash.now[:notice] = "The content of #{plural_inflection(@obsessions)} revolves around \"#{Theme.find(params[:ocd_subset]).name}.\""
         end
       else # Therapist did not select a filter
-        @obsessions = obsessions # stores all patients' obsessions
-        flash.now[:notice] = "A full psychiatric history of all patients' obsessions is recorded below!"
+        @obsessions = obsessions # stores the therapist's patients' obsessions
+        flash.now[:notice] = "A full psychiatric history of your patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
       if !params[:plan_production].blank? # Admin filters obsessions by number of ERP plans per obsession
