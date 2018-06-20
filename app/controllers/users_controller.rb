@@ -78,14 +78,14 @@ class UsersController < ApplicationController
             flash.now[:alert] = "All of your patients designed at least one ERP plan to target each of their obsessions!"
           else
             @filtered_users = users.unexposed_to_obsession
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} unexposed to obsessions, having reported at least one obsession that lacks ERP plans."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} unexposed to an obsession, having reported at least one obsession that lacks ERP plans."
           end
         elsif params[:extent_of_exposure] == "Patients who are planning or practicing exposure exercises" # Therapist filters their patients by those with unfinished plans
           if users.patients_planning_or_practicing_erp.empty?
             flash.now[:alert] = "None of your patients are currently designing or implementing ERP plans."
           else
             @filtered_users = users.patients_planning_or_practicing_erp
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently developing ERP plans or undergoing exposure therapy."
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently developing or performing an ERP plan."
           end
         elsif params[:extent_of_exposure] == "Patients who finished an ERP plan" # Therapist filters their patients by those who designed at least 1 plan that is marked as finished
           if users.with_finished_plan.empty?
