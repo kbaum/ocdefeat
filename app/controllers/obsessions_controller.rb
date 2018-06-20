@@ -32,10 +32,10 @@ class ObsessionsController < ApplicationController
           end
         end
       elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
-        if obsessions.by_anxiety_amount(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
+        if obsessions.by_anxiety_rating(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
           flash.now[:alert] = "None of your obsessions were rated at anxiety level #{params[:anxiety_amount]}."
         else
-          @obsessions = obsessions.by_anxiety_amount(params[:anxiety_amount]) # stores AR::Relation of the patient's obsessions with the selected anxiety_rating
+          @obsessions = obsessions.by_anxiety_rating(params[:anxiety_amount]) # stores AR::Relation of the patient's obsessions with the selected anxiety_rating
           flash.now[:notice] = "You rated #{plural_inflection(@obsessions)} at anxiety level #{params[:anxiety_amount]}!"
         end
       elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
