@@ -80,12 +80,12 @@ class UsersController < ApplicationController
             @filtered_users = users.unexposed_to_obsession
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} unexposed to obsessions, having reported at least one obsession that lacks ERP plans."
           end
-        elsif params[:desensitization_degree] == "Developing Desensitization Plans" # Therapist filters patients by those with at least 1 preliminary ERP plan (i.e. plan that lacks steps)
-          if users.patients_planning_preliminarily.empty?
-            flash.now[:alert] = "No patients designed preliminary ERP plans, i.e., plans sans steps."
+        elsif params[:extent_of_exposure] == "Planning or Practicing Exposure Exercises" # Therapist filters patients by those with unfinished plans (stepless plans, plans w/ steps where at least 1 step is incomplete, plans w/ all steps completed that are not marked finished)
+          if users.patients_planning_or_practicing_erp.empty?
+            flash.now[:alert] = "None of your patients are currently designing or implementing ERP plans."
           else
-            @filtered_users = users.patients_planning_preliminarily # stores AR::Relation of patients who have preliminary ERP plans
-            flash.now[:notice] = "#{plural_inflection(@filtered_users)} designed at least one preliminary ERP plan."
+            @filtered_users = users.patients_planning_or_practicing_erp
+            flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently developing ERP plans or undergoing exposure therapy."
           end
         elsif params[:desensitization_degree] == "Deficient ERP Plan Performance" # Therapist filters patients by those who have at least 1 unfinished ERP plan
           if users.patients_planning.empty?
