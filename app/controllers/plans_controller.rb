@@ -76,10 +76,10 @@ class PlansController < ApplicationController
             flash.now[:notice] = "You found #{plural_inflection(@plans)} designed today!"
           end
         elsif params[:date] == "Past Plans"
-          if plans.past_plans.empty? # If no plans were created prior to today
+          if plans.before_today.empty? # If no plans were created prior to today
             flash.now[:alert] = "No ERP plans were designed before today."
           else
-            @plans = plans.past_plans
+            @plans = plans.before_today
             flash.now[:notice] = "You found #{plural_inflection(@plans)} designed before today!"
           end
         end # closes logic for params[:date]
