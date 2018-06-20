@@ -1,5 +1,5 @@
 <%= form_tag("/obsessions", method: "get") do %>
-  <%= select_tag "patient", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient" %>
+  <%= select_tag "patient", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient" %>
   <br><br>
   <%= select_tag "distressed", options_from_collection_for_select(patients, "id", "name"), prompt: "Patient's Most to Least Distressing Obsessions" %>
   <br><br>
@@ -13,5 +13,3 @@
 <% end %>
 
 <br><br>
-
-<p>As a therapist, you can <%= link_to "perform an advanced search", new_search_path %> for patients' obsessions!</p>
