@@ -1,18 +1,4 @@
 <%= form_with(model: plan, local: true, url: (plan.new_record? ? [obsession, plan]: plan)) do |plan_builder| %>
-  <% if plan.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(plan.errors.count, "error") %> prohibited this ERP plan from being saved:
-      </h2>
-
-      <ul>
-        <% plan.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <% if !plan.new_record? && plan.unachieved? %>
     <br>
     <%= content_tag(:div, class: "alert alert-warning", role: "alert") do %>
