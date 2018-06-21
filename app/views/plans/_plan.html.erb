@@ -1,6 +1,8 @@
 <%= form_with(model: plan, local: true, url: (plan.new_record? ? [obsession, plan]: plan)) do |plan_builder| %>
   <%= validation_errors_for(@plan) %>
-  
+
+  <br>
+
   <% if !plan.new_record? && plan.unachieved? %>
     <br>
     <%= content_tag(:div, class: "alert alert-warning", role: "alert") do %>
