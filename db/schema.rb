@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180615005846) do
+ActiveRecord::Schema.define(version: 20180621152827) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 20180615005846) do
 
   create_table "obsessions", force: :cascade do |t|
     t.string "intrusive_thought"
-    t.text "triggers"
+    t.string "triggers"
     t.integer "anxiety_rating"
     t.string "symptoms"
-    t.text "rituals"
+    t.string "rituals"
     t.integer "user_id"
     t.float "time_consumed"
     t.datetime "created_at", null: false
