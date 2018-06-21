@@ -1,16 +1,5 @@
 <%= form_for @obsession do |obsession_builder| %>
-  <% if @obsession.errors.any? %>
-    <div id= "error_explanation">
-      <h2>
-        <%= pluralize(@obsession.errors.count, "error") %> prohibited this obsession from being saved:
-      </h2>
-      <ul>
-        <% @obsession.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= validation_errors_for(@obsession) %>
 
   <div class="field">
     <%= obsession_builder.label :intrusive_thought, "Identify the anxiety-inducing intrusive idea:" %>
@@ -29,9 +18,8 @@
   <br>
 
   <div class="field">
-    <%= obsession_builder.label :time_consumed, "On average, how much time is consumed by this obsession daily?" %>
-    <br>
-    <%= obsession_builder.number_field :time_consumed, in: 0..24, step: :any %> <strong>hour(s)</strong>
+    <%= obsession_builder.label :time_consumed, "On average, how much time (in hours) is consumed by this obsession daily?" %>
+    <%= obsession_builder.number_field :time_consumed, in: 0..24, step: :any %>
   </div>
 
   <br>
@@ -46,7 +34,7 @@
   <div class="field">
     <%= obsession_builder.label :symptoms, "How (if at all) does your OCD manifest physically?" %>
     <br>
-    <%= obsession_builder.text_field :symptoms, placeholder: "I experience..." %>
+    <%= obsession_builder.text_area :symptoms, placeholder: "I experience..." %>
   </div>
 
   <br>
