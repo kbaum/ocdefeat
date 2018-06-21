@@ -53,8 +53,10 @@ class Obsession < ApplicationRecord
 
   private
     def hypotheticalize # sets intrusive_thought attribute of obsession = to formatted string "What if I...?"
-      idea = self.intrusive_thought.downcase.split(/\A\bwhat\b\s+\bif\b\s+\bi\b\s+/).join("").split("?").join("")
-      self.intrusive_thought = "What if I " << "#{idea}?"
+      if !self.intrusive_thought.blank?
+        idea = self.intrusive_thought.downcase.split(/\A\bwhat\b\s+\bif\b\s+\bi\b\s+/).join("").split("?").join("")
+        self.intrusive_thought = "What if I " << "#{idea}?"
+      end
     end
 end
   # Explanation of #themes_attributes=(themes_attributes):
