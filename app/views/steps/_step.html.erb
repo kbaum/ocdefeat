@@ -1,14 +1,5 @@
 <%= form_with(model: step, local: true, url: (step.new_record? ? [plan, step]: step)) do |step_builder| %>
-  <% if step.errors.any? %>
-    <h2>
-      <%= pluralize(step.errors.count, "error") %> prohibited this ERP exercise from being saved:
-    </h2>
-    <ul>
-      <% step.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  
   <div class="field">
     <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
     <%= step_builder.text_area :instructions, :placeholder => (step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
