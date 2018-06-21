@@ -1,7 +1,7 @@
 <h1>Register Now!</h1>
 
 <%= form_for @user do |f| %>
-  
+  <%= validation_errors_for(@user) %>
 
   <div class="field">
     <%= f.label :name %><br>
