@@ -14,7 +14,7 @@ class Obsession < ApplicationRecord
 
   validates :intrusive_thought, presence: true, uniqueness: true
   validates :triggers, presence: true
-  validates :time_consumed, presence: true, inclusion: { in: 0..24 }
+  validates :time_consumed, inclusion: { in: 0..24, message: "is not a valid timeframe" }
   validates :anxiety_rating, presence: true, inclusion: { in: 1..10 }
   validates :rituals, presence: true
   before_validation :hypotheticalize, on: [ :create, :update ]
