@@ -1,5 +1,8 @@
 <%= form_with(model: step, local: true, url: (step.new_record? ? [plan, step]: step)) do |step_builder| %>
-  
+  <%= validation_errors_for(@step) %>
+
+  <br>
+
   <div class="field">
     <%= step_builder.label :instructions, "In a procedural fashion, explain how to perform this exposure exercise:" %><br>
     <%= step_builder.text_area :instructions, :placeholder => (step.errors.full_messages_for(:instructions).first || "Provide instructions...") %>
