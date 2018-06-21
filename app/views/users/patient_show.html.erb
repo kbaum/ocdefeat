@@ -4,11 +4,11 @@
 
 <br>
 
-<%= vary_variant(@user) %>
-
-<br>
-
 <div class="well well-lg">
+  <%= vary_variant(@user) %>
+
+  <br><br>
+
   <p><strong>Obsession Count:</strong> <%= obsession_pronouns %> <%= pluralize(@user.obsession_count, "obsession") %>.</p>
 
   <br>
@@ -18,7 +18,7 @@
     <br>
   <% end %>
 
-  <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.num_plans_designed, "ERP plan") %> thus far.</p>
+  <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.plan_count, "ERP plan") %>.</p>
 
   <br>
 </div>
