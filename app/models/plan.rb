@@ -46,6 +46,6 @@ class Plan < ApplicationRecord
   end
 
   def self.by_subset(subset_id)
-    where(obsession_id: Theme.find(subset_id).obsession_ids)
+    where(obsession: Theme.find(subset_id).obsessions)
   end
 end
