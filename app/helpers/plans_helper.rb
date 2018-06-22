@@ -4,12 +4,12 @@ module PlansHelper
       "Accomplished! (Fully implemented and marked as finished)"
     else
       if plan.steps.empty?
-        "Preliminary Design (lacks steps)"
+        "Preliminary Design (Lacks steps)"
       else
         if plan.steps.all? {|step| step.complete?}
           "Development or Pending Submission (Fully performed but not marked finished)"
         else
-          "Development or Implementation (contains at least one incomplete step)"
+          "Development or Implementation (Contains at least one incomplete step)"
         end
       end
     end
