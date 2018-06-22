@@ -27,7 +27,7 @@
       <% end %>
 
       <% if !undone.unfinished_but_with_all_steps_completed.empty? %>
-        <p>Plans with all steps marked complete but not yet submitted as finished:</p>
+        <p>Plans with all steps marked complete but not yet submitted:</p>
         <%= present_plans(undone.unfinished_but_with_all_steps_completed) %>
       <% end %>
     <% end %>
