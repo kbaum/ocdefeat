@@ -1,31 +1,40 @@
 <div class="report well well-lg">
   <h4>Progress Report</h4>
-  <p>The report indicates that patient <%= planner(accomplished, unaccomplished) %> <%= report(accomplished, unaccomplished) %></p>
+  <p>The report indicates that patient <%= planner(done, undone) %> <%= report(done, undone) %></p>
   <br>
 
-  <% if accomplished %> <!-- If the patient selected has finished ERP plans -->
+  <% if done %> <!-- If the patient selected has finished ERP plans -->
     <p><strong><u>Finished Plans</u></strong></p>
-    <%= present_plans(accomplished) %>
+    <%= present_plans(done) %>
   <% end %>
 
-  <% if unaccomplished %> <!-- If the patient selected has unfinished ERP plans -->
+  <% if undone %> <!-- If the patient selected has unfinished ERP plans -->
     <p>
       <strong><u>Unfinished Plans:</u></strong>
-      <% if unaccomplished.with_steps.blank? %>
+      <% if undone.with_steps.empty? %>
         The patient must delineate the steps of every plan!
-      <% elsif unaccomplished.stepless.blank? %>
+      <% elsif undone.stepless.empty? %>
         The patient must complete each step in every plan and then mark each plan as finished!
       <% end %>
     </p>
 
-    <% if !unaccomplished.with_steps.blank? %>
+    <% if !undone.with_steps.empty? %>
       <p><em>~Delineated Plans:</em></p>
-      <%= present_plans(unaccomplished.with_steps) %>
+
+      <% if !undone.with_incomplete_step.empty? %>
+        <p>Plans with at least one incomplete step:</p>
+        <%= present_plans(undone.with_incomplete_step) %>
+      <% end %>
+
+      <% if !undone.unfinished_but_with_all_steps_completed.empty? %>
+        <p>Plans with all steps marked complete but not yet submitted as finished:</p>
+        <%= present_plans(undone.unfinished_but_with_all_steps_completed) %>
+      <% end %>
     <% end %>
 
-    <% if !unaccomplished.stepless.blank? %>
+    <% if !undone.stepless.blank? %>
       <p><em>~Stepless Plans:</em></p>
-      <%= present_plans(unaccomplished.stepless) %>
+      <%= present_plans(undone.stepless) %>
     <% end %>
   <% end %>
 </div>
