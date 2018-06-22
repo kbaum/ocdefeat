@@ -65,7 +65,7 @@
     <br>
     <%= f.radio_button :variant, 'Traditional' %>
     <%= f.label :ocd_variant_traditional, "Traditional:" %>
-    <p>I perform outward compulsive behaviors, such as repetitively washing my hands or touching the doorknob a certain number of times.</p>
+    <p>I perform outward compulsive behaviors, such as repetitively washing my hands.</p>
     <br>
     <%= f.radio_button :variant, 'Purely Obsessional' %>
     <%= f.label :ocd_variant_purely_obsessional, "Purely Obsessional (Pure-O):" %>
@@ -81,16 +81,16 @@
     <hr>
   </div>
 
-  <div class="field well well-lg">
+  <div class="well well-lg">
     <h4>Describe your OCD Treatment</h4>
-    <li><em>Prospective patients, describe any type of OCD treatment that you have undergone. How effective was each treatment?</em></li>
-    <br>
-    <li><em>Aspiring therapists, describe the efficacy of the treatment plans you implement based on patient outcomes.</em></li>
+    <p><em>Prospective patients, describe any type of OCD treatment that you have undergone. How effective was each treatment?</em></p>
+    <p><em>Aspiring therapists, describe the efficacy of the treatment plans you implement based on patient outcomes.</em></p>
     <br>
     <%= f.fields_for :treatments do |t| %>
-      <%= t.label :treatment_type %>:
+      <%= t.label :treatment_type, "Add a treatment" %>:
       <%= t.text_field :treatment_type %>
       <%= t.fields_for :user_treatments do |ut| %>
+        <%= ut.collection_select(:treatment_id, Treatment.order(:treatment_type), :id, :treatment_type, prompt: "Select a treatment") %>
         <%= ut.label :efficacy %>:
         <%= ut.text_field :efficacy %>
         <%= ut.label :duration %>:
