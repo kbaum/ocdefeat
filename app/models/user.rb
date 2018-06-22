@@ -37,6 +37,18 @@ class User < ApplicationRecord
     end
   end
 
+  def treatments_attributes=(treatments_attributes)
+    treatments_attributes.values.each do |treatments_attribute|
+      if !treatments_attribute["user_treatments"]["treatment_id"].blank? # User selects an existing treatment from the dropdown menu
+        existing_treatment = Treatment.find(treatments_attribute["user_treatments"]["treatment_id"])
+        self.user_treatments.build(user: self, treatment: existing_treatment, efficacy: treatments_attribute["user_treatments"]["efficacy"], duration: treatments_attribute["user_treatments"]["duration"])
+      elsif !treatments_attribute["treatment_type"].blank? # User typed a treatment into the form field
+        treatment = Treatment.find_or_create_by(treatment_type: treatments_attribute["treatment_type"])
+        self.user_treatments.build(user: self, treatment: treatment, efficacy: treatments_attribute["user_treatments"]["efficacy"], duration: treatments_attribute["user_treatments"]["duration"])
+      end
+    end
+  end
+
   def self.obsessing_about(theme_id)
     joins(obsessions: :theme).where(themes: { id: theme_id} ).distinct
   end
