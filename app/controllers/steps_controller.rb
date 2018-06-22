@@ -61,7 +61,7 @@ class StepsController < ApplicationController
     def check_completion
       @step = Step.find(params[:id])
       if @step.complete?
-        redirect_to plan_path(@step.plan), alert: "You already performed this ERP exercise, so there is no need to modify this step!"
+        redirect_to plan_path(@step.plan), alert: "A step that has already been performed cannot be modified!"
       end
     end
 
