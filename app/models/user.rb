@@ -14,9 +14,9 @@ class User < ApplicationRecord
 
   has_many :obsessions, dependent: :destroy
   has_many :plans, through: :obsessions, dependent: :destroy
-  has_many :comments
-  has_many :user_treatments
-  has_many :treatments, through: :user_treatments
+  has_many :comments, dependent: :destroy
+  has_many :user_treatments, dependent: :destroy
+  has_many :treatments, through: :user_treatments, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
@@ -34,15 +34,6 @@ class User < ApplicationRecord
       user.role_requested = "Patient"
       user.severity = "Mild"
       user.variant = "Traditional"
-    end
-  end
-
-  def treatments_attributes=(treatments_attributes)
-    treatments_attributes.values.each do |treatments_attribute|
-      if !treatments_attribute["treatment_type"].blank?
-        treatment = Treatment.find_or_create_by(treatment_type: treatments_attribute["treatment_type"])
-        self.user_treatments.build(user: self, treatment: treatment, efficacy: treatments_attribute["user_treatments"]["efficacy"], duration: treatments_attribute["user_treatments"]["duration"])
-      end
     end
   end
 
