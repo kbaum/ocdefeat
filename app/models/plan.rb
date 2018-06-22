@@ -34,7 +34,7 @@ class Plan < ApplicationRecord
   end
 
   def self.unfinished_but_with_all_steps_completed
-    unaccomplished.joins(:steps).where.not(steps: { status: 0 }).distinct
+    with_steps.where.not(id: Step.not_performed.map {|step| step.plan})
   end
 
   def unachieved?
