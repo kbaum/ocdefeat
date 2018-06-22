@@ -8,6 +8,6 @@
 
 <% if @plans %>
   <%= render partial: "plans_div", locals: { plans: @plans } %>
-<% elsif @accomplished || @unaccomplished %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
-  <%= render partial: "plan_progress_div", locals: { accomplished: @accomplished, unaccomplished: @unaccomplished } %>
+<% elsif @done || @undone %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
+  <%= render partial: "plan_progress_div", locals: { done: @done, undone: @undone } %>
 <% end %>
