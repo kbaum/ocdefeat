@@ -23,7 +23,7 @@ class PlansController < ApplicationController
         end
       else # Patient did not choose a filter, so @plans stores AR::Relation of only plans designed by the patient
         @plans = plans
-        flash.now[:notice] = "You designed #{plural_inflection(@plans)} to expose yourself to your obsessions to develop anxiety tolerance."
+        flash.now[:notice] = "You designed #{plural_inflection(@plans)} to expose yourself to your obsessions."
       end
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
@@ -63,7 +63,7 @@ class PlansController < ApplicationController
         end
       else # Therapist did not choose a filter for filtering plans
         @plans = plans # stores all plans designed by the therapist's patients
-        flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions to develop anxiety tolerance."
+        flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
       end # closes logic about filter selected
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters plans by date created
