@@ -16,20 +16,24 @@ class CommentsController < ApplicationController
     authorize @comment
   end
 
-  def update # PUT or PATCH request to "/comments/:id" maps to comments#update
+  def update # PUT or PATCH request to "/comments/:id" maps to comments#update due to shallow nesting
     authorize @comment
     if @comment.update(comment_params)
-      redirect_to obsession_comments_path(@obsession), notice: "Your comment was successfully modified!"
+      redirect_to obsession_comments_path(@comment.obsession), notice: "Your comment was successfully modified!"
     else
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
       render :edit
     end
   end
 
-  def destroy
+  def destroy  # DELETE request to "/comments/:id" maps to comments#destroy
     authorize @comment
     @comment.destroy
-    redirect_to obsession_comments_path(@obsession), notice: "Your comment was successfully deleted!"
+    if current_user.therapist?
+      redirect_to obsessions_path, notice: "Your comment was successfully deleted. Would you like to psychoanalyze another obsession?"
+    elsif current_user.patient?
+      redirect_to obsessions_path, notice: "Your comment was successfully deleted. Would you like to voice a concern about a different obsession?"
+    end
   end
 
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
@@ -60,8 +64,7 @@ class CommentsController < ApplicationController
   private
 
     def set_comment
-      @obsession = Obsession.find(params[:obsession_id])
-      @comment = @obsession.comments.find(params[:id])
+      @comment = Comment.find(params[:id])
     end
 
     def comment_params
