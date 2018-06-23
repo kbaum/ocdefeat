@@ -23,5 +23,5 @@
 <%= render partial: "self_help_ul", locals: { obsession: @obsession } %>
 
 <div class="well well-sm">
-  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: Comment.new } %>
+  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: @comment } %>
 </div>
