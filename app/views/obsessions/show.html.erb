@@ -17,3 +17,6 @@
     <%= link_to "Delete Obsession", obsession_path(@obsession), method: :delete, data: { confirm: "Permanently delete this obsession from your patient history?" }, class: "btn btn-danger btn-sm", role: "button" %>
   <% end %>
 </div>
+
+
+<%= render partial: "obsession_data", locals: { obsession: @obsession } %>
