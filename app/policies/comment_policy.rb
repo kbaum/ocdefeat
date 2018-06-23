@@ -32,9 +32,7 @@ class CommentPolicy < ApplicationPolicy
     end
 
     def therapist_comments_on_counselees_obsessions
-      if user.therapist?
-        record.obsession.in?(user.counselees.map {|counselee| counselee.obsessions}.flatten)
-      end
+      user.therapist? && record.obsession.in?(user.counselees.map {|counselee| counselee.obsessions}.flatten)
     end
 end
 
