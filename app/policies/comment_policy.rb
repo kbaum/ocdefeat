@@ -7,6 +7,12 @@ class CommentPolicy < ApplicationPolicy
     comment_owner
   end
 
+  def permitted_attributes
+    if comment_owner
+      [:content] # user_id and #obsession_id cannot be changed once set in #create
+    end
+  end
+
   def update?
     comment_owner
   end
