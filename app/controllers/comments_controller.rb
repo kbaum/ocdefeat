@@ -29,11 +29,7 @@ class CommentsController < ApplicationController
   def destroy  # DELETE request to "/comments/:id" maps to comments#destroy
     authorize @comment
     @comment.destroy
-    if current_user.therapist?
-      redirect_to obsessions_path, notice: "Your comment was successfully deleted. Would you like to psychoanalyze another obsession?"
-    elsif current_user.patient?
-      redirect_to obsessions_path, notice: "Your comment was successfully deleted. Would you like to voice a concern about a different obsession?"
-    end
+    redirect_to obsessions_path, notice: "#{delete_comment_message}"
   end
 
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
@@ -84,6 +80,14 @@ class CommentsController < ApplicationController
         "You"
       elsif current_user.therapist?
         "The patient"
+      end
+    end
+
+    def delete_comment_message
+      if current_user.therapist?
+        "Your comment was successfully deleted. Would you like to psychoanalyze another obsession?"
+      elsif current_user.patient?
+        "Your comment was successfully deleted. Would you like to voice a concern about a different obsession?"
       end
     end
   end
