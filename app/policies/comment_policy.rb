@@ -26,6 +26,10 @@ class CommentPolicy < ApplicationPolicy
     def comment_owner
       record.user == user
     end
+
+    def patient_comments_on_own_obsession
+      user.patient? && record.obsession.in?(user.obsessions)
+    end
 end
 
 # A patient can only comment on her own obsessions (a patient can only see her own obsessions' show pages)
