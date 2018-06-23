@@ -30,6 +30,12 @@ class CommentPolicy < ApplicationPolicy
     def patient_comments_on_own_obsession
       user.patient? && record.obsession.in?(user.obsessions)
     end
+
+    def therapist_comments_on_counselees_obsessions
+      if user.therapist?
+        record.obsession.in?(user.counselees.map {|counselee| counselee.obsessions}.flatten)
+      end
+    end
 end
 
 # A patient can only comment on her own obsessions (a patient can only see her own obsessions' show pages)
