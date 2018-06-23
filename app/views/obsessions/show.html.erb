@@ -1,0 +1,19 @@
+<div class="well well-sm">
+  <h4>OCD Spike: <small class="spike">"<%= @obsession.intrusive_thought %>"</small></h4>
+
+  <small><em>—reported by <%= @obsession.patient_name %> on <%= created_on(@obsession) %></em></small>
+
+  <br><br>
+
+  <% if policy(@obsession).create? %>
+    <%= link_to "Create ERP Plan", new_obsession_plan_path(@obsession), class: "btn btn-success btn-sm", role: "button" %>
+  <% end %>
+
+  <% if policy(@obsession).update? %>
+    <%= link_to "Edit Obsession", edit_obsession_path(@obsession), class: "btn btn-primary btn-sm", role: "button" %>
+  <% end %>
+
+  <% if policy(@obsession).destroy? %>
+    <%= link_to "Delete Obsession", obsession_path(@obsession), method: :delete, data: { confirm: "Permanently delete this obsession from your patient history?" }, class: "btn btn-danger btn-sm", role: "button" %>
+  <% end %>
+</div>
