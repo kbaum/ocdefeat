@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_many :plans, through: :obsessions, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :user_treatments, dependent: :destroy
-  has_many :treatments, through: :user_treatments, dependent: :destroy
+  has_many :treatments, through: :user_treatments
 
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }
@@ -25,7 +25,7 @@ class User < ApplicationRecord
   validates :role_requested, inclusion: { in: ["Patient", "Therapist", "Admin"], message: "must be selected from the available roles" }, on: :create
   has_secure_password
   validates :password, length: { minimum: 8 }, allow_nil: true # when a user edits their user information, they don't have to retype their password
-  validates_associated :user_treatments
+  validates_associated :treatments
 
   def self.find_or_create_by_omniauth(auth_hash)
     self.where(provider: auth_hash["provider"], uid: auth_hash["uid"]).first_or_create do |user|
