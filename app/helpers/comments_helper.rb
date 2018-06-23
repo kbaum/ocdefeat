@@ -11,7 +11,7 @@ module CommentsHelper
     if current_user.therapist?
       "Add mental health tips..."
     elsif current_user.patient?
-      "Tell me your troubles..."
+      "Feel free to vent here..."
     end
   end
 
