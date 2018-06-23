@@ -50,9 +50,9 @@ module UsersHelper
 
   def plan_pronouns
     if current_user.patient?
-      "You have designed"
+      "You designed"
     elsif current_user.therapist? || current_user.admin?
-      "The patient has designed"
+      "The patient designed"
     end
   end
 
