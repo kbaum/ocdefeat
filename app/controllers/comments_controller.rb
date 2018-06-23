@@ -16,10 +16,10 @@ class CommentsController < ApplicationController
     authorize @comment
   end
 
-  def update
+  def update # PUT or PATCH request to "/comments/:id" maps to comments#update
     authorize @comment
     if @comment.update(comment_params)
-      redirect_to obsession_path(@obsession), notice: "Your comment was successfully updated!"
+      redirect_to obsession_comments_path(@comment.obsession), notice: "Your comment was successfully modified!"
     else
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
       render :edit

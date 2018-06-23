@@ -191,7 +191,7 @@ class ObsessionsController < ApplicationController
   def show
     authorize @obsession
     @comments = @obsession.comments
-    @comment = Comment.new
+    @comment = Comment.new # instance for form_for to wrap around (creating a new comment on obsession show pg)
   end
 
   def edit
