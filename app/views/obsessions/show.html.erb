@@ -16,6 +16,10 @@
   <% if policy(@obsession).destroy? %>
     <%= link_to "Delete Obsession", obsession_path(@obsession), method: :delete, data: { confirm: "Permanently delete this obsession from your patient history?" }, class: "btn btn-danger btn-sm", role: "button" %>
   <% end %>
+
+  <% if policy(@obsession).show? %>
+    <%= link_to "Read Comments", obsession_comments_path(@obsession), class: "btn btn-default btn-sm", role: "button" %>
+  <% end %>
 </div>
 
 
