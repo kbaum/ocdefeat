@@ -1,6 +1,6 @@
 class CommentPolicy < ApplicationPolicy
   def create?
-    user.patient? || user.therapist?
+    patient_comments_on_own_obsession || therapist_comments_on_counselees_obsessions
   end
 
   def edit?
