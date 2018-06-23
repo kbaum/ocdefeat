@@ -10,4 +10,14 @@
   <br>
 
   <%= vary_variant(@user) %>
+
+  <% unless @user.treatments.empty? %>
+    <br><br>
+    <p><strong>Previous Treatment:</strong></p>
+    <ul>
+      <% @user.treatments.each do |treatment| %>
+        <li><%= treatment.treatment_type %> - <%= UserTreatment.find_by(user: @user, treatment: treatment).duration %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
