@@ -31,6 +31,13 @@
 
   <br>
 
+  <% if policy(Obsession).create? %>
+    <p>Fixated on something else? <%= link_to "Report a new obsession.", new_obsession_path %></p>
+    <br>
+  <% end %>
+
   <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.plan_count, "ERP plan") %>.</p>
   <br>
 </div>
+
+<%= render partial: "manage_account", locals: { user: @user } %>
