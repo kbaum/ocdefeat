@@ -21,3 +21,16 @@
     </ul>
   <% end %>
 </div>
+
+<div class="well well-sm">
+  <h4><em>OCDefeat Statistics</em></h4>
+
+  <br>
+
+  <p><strong>Obsession Count:</strong> <%= obsession_pronouns %> <%= pluralize(@user.obsession_count, "obsession") %>.</p>
+
+  <br>
+
+  <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.plan_count, "ERP plan") %>.</p>
+  <br>
+</div>
