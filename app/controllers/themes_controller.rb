@@ -1,13 +1,8 @@
 class ThemesController < ApplicationController
   before_action :require_themes, only: :index
 
-  def create
-    @theme = Theme.new(theme_params)
-    if @theme.save
-      redirect_to themes_path, notice: "You created the OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!"
-    else
-      redirect_to themes_path, alert: "Notwithstanding your psychological expertise, your attempt to create a new, unique OCD theme was unsuccessful. Please try again."
-    end
+  def new
+    @theme = Theme.new # instance for form_for to wrap around
   end
 
   def index
@@ -76,7 +71,7 @@ class ThemesController < ApplicationController
       end
     end
 
-    def theme_params # private method returns sanitized, strong params
-      params.require(:theme).permit(:name, :obsession_ids => [])
+    def theme_params
+      params.require(:theme).permit(:name, :description)
     end
 end
