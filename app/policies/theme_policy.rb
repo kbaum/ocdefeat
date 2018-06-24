@@ -7,6 +7,10 @@ class ThemePolicy < ApplicationPolicy
     end
   end
 
+  def new?
+    user.therapist?
+  end
+
   def create?
     user.therapist?
   end
