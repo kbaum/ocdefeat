@@ -1,4 +1,6 @@
 <%= form_with(model: comment, local: true, url: (comment.new_record? ? [obsession, comment]: comment)) do |comment_builder| %>
+  <%= validation_errors_for(comment) %>
+  <br>
   <div class="field">
     <%= comment_builder.label :content, label_comment %><br>
     <%= comment_builder.text_area :content, placeholder: (comment.errors.full_messages_for(:content).first || placefill_comment), class: "form-control" %>
@@ -7,6 +9,6 @@
   <br>
   <div class="actions">
     <%= comment_builder.hidden_field :obsession_id, value: obsession.id %>
-    <%= comment_builder.submit label_submit_btn, class: "btn btn-primary btn-sm" %>
+    <%= comment_builder.submit label_submit_btn, class: "btn btn-default btn-sm" %>
   </div>
 <% end %>
