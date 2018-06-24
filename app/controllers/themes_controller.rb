@@ -16,7 +16,7 @@ class ThemesController < ApplicationController
   end
 
   def index
-    themes = policy_scope(Theme) # Theme.all
+    @themes = policy_scope(Theme) # Theme.all
   end
 
   def destroy

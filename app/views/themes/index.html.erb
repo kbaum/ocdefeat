@@ -1,3 +1,7 @@
 <h3>OCD Themes</h3>
 
 <%= render(@themes) || "No OCD themes were found." %>
+
+<% if !@themes.empty? %>
+  <h4><em>Discover the prevalence of a particular type of OCD in patients!</em></h4>
+<% end %>
