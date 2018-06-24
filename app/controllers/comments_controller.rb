@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
     if !params[:type].blank? # If the user filters comments by type
       if params[:type] == "Patient Concerns"
         if @comments.concerns.empty?
-          flash.now[:alert] = "#{commenter} voiced no concerns about this obsession, but here are some gems of wisdom from an OCDefeat therapist:"
+          flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession, but here are some therapy tips to keep in mind:"
         else
           @comments = @comments.concerns # stores all concerns on a single obsession
           flash.now[:notice] = "#{commenter} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
