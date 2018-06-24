@@ -13,9 +13,4 @@
   <p><strong>Current Caseload</strong>: <%= @user.counselees.count %></p>
 </div>
 
-<% if policy(@user).edit? %>
-  <h3>Patient Management</h3>
-
-
-
 <%= render partial: "manage_account", locals: { user: @user } %>
