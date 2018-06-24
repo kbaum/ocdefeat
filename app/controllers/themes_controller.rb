@@ -21,10 +21,10 @@ class ThemesController < ApplicationController
   end
 
   def destroy # DELETE request to "/themes/:id" maps to themes#destroy
-    @theme = Theme.find(params[:id])
-    authorize @theme
-    theme_name = @theme.name
-    @theme.destroy
+    theme = Theme.find(params[:id])
+    authorize theme
+    theme_name = theme.name
+    theme.destroy
     redirect_to themes_path, notice: "The OCD theme \"#{theme_name}\" has been deleted!"
   end
 
