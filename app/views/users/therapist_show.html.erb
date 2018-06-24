@@ -10,7 +10,10 @@
   <p><strong>Email Address</strong>: <%= @user.email %></p>
   <p><strong>Psychology Specialty</strong>: Obsessive Compulsive Disorder (OCD)</p>
   <% if !@user.treatments.empty? %>
-    <p><strong>Past Treatments Prescribed</strong>:</p>
+    <p><strong>Treatments Prescribed</strong>:</p>
+    <% @user.treatments.each do |treatment| %>
+      <li><em><%= treatment.treatment_type %></em> - <%= UserTreatment.find_by(user: @user, treatment: treatment).efficacy %></li>
+    <% end %>
   <% end %>
 </div>
 
