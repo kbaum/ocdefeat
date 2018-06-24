@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  extend Datable
+
   scope :advice, -> { where(user: User.therapists) }
   scope :concerns, -> { where(user: User.patients) }
 
