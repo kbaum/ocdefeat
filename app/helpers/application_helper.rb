@@ -17,8 +17,11 @@ module ApplicationHelper
     end
   end
 
-  def created_on(instance)
-    instance.created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
-  end
+  #def created_on(instance)
+    #instance.created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
+  #end
 
+  def updated_on(instance)
+    instance.updated_at.strftime("%A, %B %e, %Y, at %l:%M %p")
+  end
 end
