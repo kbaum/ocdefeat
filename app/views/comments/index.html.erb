@@ -2,7 +2,7 @@
 
 <br>
 
-<%= render partial: "filter_comments", locals: { obsession: @obsession } %>
+<%= render partial: "filter_comments", locals: { obsession: @obsession } unless @comments.empty? %>
 
 <br>
 
