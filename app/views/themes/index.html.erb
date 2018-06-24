@@ -25,9 +25,3 @@
     <%= render(@themes) %>
   <% end %>
 <% end %>
-
-<% if policy(@new_theme).destroy? %> <!--Only therapists can create and destroy themes on themes index page)-->
-  <h3>Theme by Therapist</h3>
-  <p>Create a new OCD theme in which to classify your patients' obsessions!</p>
-  <%= render partial: "theme_by_therapist", locals: { new_theme: @new_theme } %>
-<% end %>
