@@ -12,9 +12,6 @@
   <% end %>
   <br>
   <p><strong>Current Caseload</strong>: <%= @user.counselees.count %></p>
-  <% if policy(@user).edit? %>
-    <%= button_to "Patient Management", users_path, class: "btn btn-default btn-sm", role: "button" %>
-  <% end %>
 </div>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
