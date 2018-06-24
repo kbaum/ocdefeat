@@ -50,7 +50,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show_comments?
-    user.therapist? || oneself
+    record.counselor == user || oneself
   end
 
   private
