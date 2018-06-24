@@ -9,7 +9,7 @@ class ThemesController < ApplicationController
     authorize @theme
 
     if @theme.save
-      flash.now[:notice] = "You created the OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!"
+      redirect_to themes_path, notice: "You created the OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!"
     else
       flash.now[:alert] = "Notwithstanding your psychological expertise, your attempt to create a unique OCD theme was unsuccessful. Please try again."
       render :new
