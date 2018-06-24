@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
           flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter.downcase}."
         else
           @comments = @obsession.comments.advice
-          flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when struggling with this obsession."
+          flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when coping with this obsession."
         end
       end
     end
