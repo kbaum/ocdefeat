@@ -1,5 +1,6 @@
 class Plan < ApplicationRecord
   extend Datable
+  
   scope :flooding, -> { where(flooded: true) }
   scope :graded_exposure, -> { where.not(flooded: true) }
   scope :accomplished, -> { where(progress: 1) }
