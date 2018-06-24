@@ -19,14 +19,14 @@ class ThemesController < ApplicationController
     @themes = policy_scope(Theme) # Theme.all
   end
 
-  def destroy
+  def destroy # DELETE request to "/themes/:id" maps to themes#destroy
     theme_name = Theme.find(params[:id]).name
     Theme.find(params[:id]).destroy
     redirect_to themes_path, notice: "The OCD theme \"#{theme_name}\" has been deleted!"
   end
 
   private
-  
+
     def theme_params
       params.require(:theme).permit(:name, :description)
     end
