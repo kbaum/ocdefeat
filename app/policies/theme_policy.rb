@@ -11,7 +11,7 @@ class ThemePolicy < ApplicationPolicy
     user.therapist?
   end
 
-  def destroy? # only therapists can remove OCD themes (b/c they can judge whether a proposed OCD theme is an accurate type of OCD)
+  def destroy?
     user.therapist?
   end
 end
