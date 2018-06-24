@@ -67,17 +67,4 @@ module UsersHelper
       end
     end
   end
-
-  def sort_variant_diagnosees(variant)
-    content_tag(:p) do
-      content_tag(:strong, "Patients who Perform #{variant} Types of Rituals:")
-    end +
-    if User.by_ocd_variant(variant).empty?
-      content_tag(:p) do
-        content_tag(:em, "No patients perform #{variant.downcase} types rituals.")
-      end
-    else
-      render partial: "users_ul", locals: { users: User.by_ocd_variant(variant) }
-    end
-  end
 end
