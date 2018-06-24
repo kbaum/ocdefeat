@@ -1,7 +1,7 @@
 <% if policy(user).edit? %>
-  <%= link_to "Edit Account", edit_user_path(user) %>
+  <%= link_to "Edit Account", edit_user_path(user), class: "btn btn-primary btn-sm", role: "button" %>
 <% end %>
 
 <% if policy(user).destroy? %>
-  <%= button_to "Delete Account", user_path(user), method: :delete, data: { confirm: "Your account will be permanently deleted. Are you sure you want to leave the OCDefeat community?" } %>
+  <%= button_to "Delete Account", user_path(user), method: :delete, data: { confirm: "Your account will be permanently deleted. Are you sure you want to leave the OCDefeat community?" }, class: "btn btn-danger btn-sm", role: "button" %>
 <% end %>
