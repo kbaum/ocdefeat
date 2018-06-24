@@ -1,8 +1,8 @@
 module ThemesHelper
   def describe_theme(theme)
-    theme.description.empty? ? "(Self-explanatory)" : "#{theme.description}"
+    theme.description.empty? ? "Self-explanatory" : "#{theme.description}"
   end
-  
+
   def tally_popularity(theme)
     if theme.obsessions_per_theme == 0
       "No patients are currently obsessing about \"#{theme.name}.\""
