@@ -1,7 +1,12 @@
-<div class="well well-sm">
-  <h4><%= theme.name %></h4>
-  <p><strong>Description</strong>: <%= describe_theme(theme) %></p>
-  <p><%= tally_popularity(theme) %></p>
+<div class="well well-lg">
+  <h4><mark><%= theme.name %></mark></h4>
+
+  <% unless theme.description.blank? %>
+    <p><%= theme.description %></p>
+  <% end %>
+
+  <p><em><%= tally_popularity(theme) %></em></p>
+
   <% if policy(theme).destroy? %>
     <%= button_to "Delete Theme", theme_path(theme), method: :delete, data: { confirm: "The OCD theme \"#{theme.name}\" will be permanently deleted." }, class: "btn btn-danger btn-sm", role: "button" %>
   <% end %>
