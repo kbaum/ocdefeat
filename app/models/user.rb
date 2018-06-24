@@ -50,8 +50,8 @@ class User < ApplicationRecord
     end
   end
 
-  def self.obsessing_about(theme_id)
-    joins(obsessions: :theme).where(themes: { id: theme_id} ).distinct
+  def self.obsessing_about(theme)
+    patients.joins(obsessions: :theme).where(themes: { id: theme } ).distinct
   end
 
   def self.count_counselees # returns a hash. keys = string name counselor, values = number of counselees assigned to that counselor
