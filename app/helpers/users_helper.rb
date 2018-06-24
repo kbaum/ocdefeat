@@ -68,19 +68,6 @@ module UsersHelper
     end
   end
 
-  def sort_severity_diagnosees(severity)
-    content_tag(:p) do
-      content_tag(:strong, "#{severity}ly Obsessive Patients:")
-    end +
-    if User.by_ocd_severity(severity).empty?
-      content_tag(:p) do
-        content_tag(:em, "No patients were diagnosed with #{severity} OCD.")
-      end
-    else
-      render partial: "users_ul", locals: { users: User.by_ocd_severity(severity) }
-    end
-  end
-
   def sort_variant_diagnosees(variant)
     content_tag(:p) do
       content_tag(:strong, "Patients who Perform #{variant} Types of Rituals:")
