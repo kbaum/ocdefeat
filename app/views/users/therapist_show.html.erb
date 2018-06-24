@@ -16,15 +16,6 @@
     <h3>Patient Management</h3>
     <h4>Your Current Caseload: <%= @user.counselees.count %></h4>
     <br>
-    
-
-    <div class="well well-sm">
-      <h4><u>Breakdown by OCD Variant</u></h4>
-      <br>
-      <% ["Traditional", "Purely Obsessional", "Both"].each do |variant| %>
-        <%= sort_variant_diagnosees(variant) %>
-      <% end %>
-    </div>
 
     <div class="well well-sm">
       <h4><u>Patients to Monitor for High Anxiety</u></h4>
