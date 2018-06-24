@@ -1,0 +1,20 @@
+<div class="well well-lg">
+  <%= form_for @theme do |f| %>
+    <%= validation_errors_for(@theme) %>
+
+    <div class="field">
+      <%= f.label :name, "Name:" %>
+      <%= f.text_field :name, placeholder: (@theme.errors.full_messages_for(:name).first || "Enter theme name...") %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description, "Describe the theme" %><br>
+      <small><em>(if the name is not self-explanatory)</em></small>:
+      <%= f.text_field :description, class: "form-control" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit class: "btn btn-default btn-small" %>
+    </div>
+  <% end %>
+</div>
