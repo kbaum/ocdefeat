@@ -143,7 +143,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def new # implicitly renders app/views/users/new.html.erb view file
+  def new
     @user = User.new
     3.times { @user.treatments.build }
   end
@@ -223,10 +223,11 @@ class UsersController < ApplicationController
         :password,
         :password_confirmation,
         :uid,
+        :provider,
         :role_requested,
-        :variant,
-        :severity,
         :role,
+        :severity,
+        :variant,
         :counselor_id,
         :treatments_attributes => [:treatment_type, :user_treatments => [:treatment_id, :duration, :efficacy]]
       )
