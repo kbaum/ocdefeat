@@ -2,6 +2,8 @@
 
 <br>
 
+<%= panicky_patients %>
+
 <h4>Filter Your Patients by...</h4>
 
 <br>
@@ -28,6 +30,8 @@
   ]),
   prompt: "OCD Severity and Variant" %>
   <br><br>
+  <%= select_tag "extent_of_exposure", options_for_select(["Patients who are unexposed to an obsession", "Patients who are planning or practicing exposure exercises", "Patients who finished an ERP plan"]), prompt: "Extent of Exposure to Triggers" %>
+  <br><br>
   <%= select_tag "recent_ruminators", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
   <br><br>
   <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms" %>
@@ -46,8 +50,6 @@
         <th>Patient Name</th>
         <th>Severity</th>
         <th>Variant</th>
-        <th>Average Anxiety Level</th>
-        <th>Clinical Presentation</th>
         <th>Obsession Count</th>
         <th>ERP Plan Count</th>
       </tr>
