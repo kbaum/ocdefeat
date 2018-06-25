@@ -1,7 +1,4 @@
 class User < ApplicationRecord
-  scope :admins, -> { where(role: 3) }
-  scope :unassigned_users, -> { where(role: 0) }
-  scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
   scope :patients_overanxious, -> { patients.joins(:obsessions).where("obsessions.anxiety_rating > ?", Obsession.average_anxiety_rating).distinct }
   scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
