@@ -192,7 +192,11 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     user.destroy
-    redirect_to root_url, notice: @message
+    if current_user.admin?
+      redirect_to users_path, notice: "The user's account was successfully deleted."
+    else
+      redirect_to root_url, notice: @message
+    end
   end
 
   private
@@ -240,8 +244,6 @@ class UsersController < ApplicationController
           "We hope that your experience with OCDefeat was productive and meaningful, and that you acquired the skillset necessary to defeat OCD!"
         when "therapist"
           "We hope that your experience working as an OCDefeat therapist was rewarding. Thank you for helping our patients defeat OCD!"
-        when "admin"
-          "The user's account was successfully deleted."
         end
     end
 end
