@@ -88,7 +88,7 @@ class User < ApplicationRecord
   end
 
   def self.by_role(string_role)
-    where(role: User.roles[string_role])
+    where(role: string_role)
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
