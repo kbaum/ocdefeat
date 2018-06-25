@@ -12,9 +12,9 @@
     <% end %>
   </td>
   <td>
-    <% if user.patient? && user.counselor_id.nil? %>
+    <% if user.patient? && user.counselor.nil? %>
       <%= form_for(user) do |f| %>
-        <%= f.select(:counselor_id, therapists.map {|therapist| [therapist.name, therapist.id]}, prompt: "Choose Counselor") %>
+        <%= f.select(:counselor_id, therapists.map {|therapist| [therapist.name, therapist.id]}, include_blank: "Choose Counselor") %>
         <%= f.submit "Choose Counselor" %>
       <% end %>
     <% elsif user.counselor %>
