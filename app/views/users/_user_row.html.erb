@@ -12,6 +12,18 @@
     <% end %>
   </td>
   <td>
+    <% if user.patient? && user.counselor_id.nil? %>
+      <%= form_for(user) do |f| %>
+        <%= f.select(:counselor_id, therapists.map {|therapist| [therapist.name, therapist.id]}, prompt: "Choose Counselor") %>
+        <%= f.submit "Choose Counselor" %>
+      <% end %>
+    <% elsif user.counselor %>
+      <%= user.counselor.name %>
+    <% else %>
+      <%= "N/A" %>
+    <% end %>
+  </td>
+  <td>
     <%= link_to "Delete Account", user_path(user), method: :delete, data: { confirm: "This account will be permanently deleted. Do you want to proceed?" } %>
   </td>
 </tr>
