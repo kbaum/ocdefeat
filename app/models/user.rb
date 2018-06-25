@@ -6,6 +6,8 @@ class User < ApplicationRecord
   scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
+  scope :patients_nonobsessive, -> { patients.where.not(id: Obsession.all.map {|obsession| obsession.user_id}) }
+  scope :patients_obsessive_but_symptomless, -> { patients.joins(:obsessions).where.not(id: Obsession.presenting_symptoms.map {|o| o.user_id}).distinct }
 
   enum role: { unassigned: 0, patient: 1, therapist: 2, admin: 3 }
 
