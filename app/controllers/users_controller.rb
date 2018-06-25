@@ -103,21 +103,23 @@ class UsersController < ApplicationController
           flash.now[:notice] = "#{sv_agreement(@filtered_users)} preoccupied with \"#{Theme.find(params[:theme_preoccupation]).name}.\""
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
-        if users.all? {|user| user.obsessions.empty?} # If none of the patients have obsessions
-          flash.now[:notice] = "All patients are asymptomatic since nobody is obsessing!"
+        if users.all? {|user| user.obsessions.empty?} # If none of the therapist's patients have obsessions
+          flash.now[:notice] = "All of your patients are asymptomatic since none of them are obsessing!"
         elsif params[:symptoms_presence] == "Symptomatic patients"
           if users.symptomatic.empty?
-            flash.now[:alert] = "No patients present with physical symptoms of OCD."
+            flash.now[:alert] = "None of your patients present with physical symptoms of OCD."
           else
             @filtered_users = users.symptomatic
             flash.now[:notice] = "#{sv_agreement(@filtered_users)} physically symptomatic of OCD."
           end
         elsif params[:symptoms_presence] == "Asymptomatic patients"
-          if users.asymptomatic.empty?
-            flash.now[:alert] = "All patients with obsessions present with physical symptoms of OCD."
+          if users.patients_nonobsessive.empty? && users.patients_obsessive_but_symptomless.empty?
+            flash.now[:alert] = "All of your patients present with physical symptoms of OCD."
           else
-            @filtered_users = users.asymptomatic
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} asymptomatic."
+            @asymptomatic_nonobsessive = users.patients_nonobsessive if !users.patients_nonobsessive.empty?
+            @asymptomatic_obsessive = users.patients_obsessive_but_symptomless if !users.patients_obsessive_but_symptomless.empty?
+            total_asymptomatic = users.count - users.symptomatic.count
+            flash.now[:notice] = "You have #{total_asymptomatic} #{'asymptomatic patient'.pluralize(total_asymptomatic)}!"
           end
         end
       elsif !params[:recent_ruminators].blank? # Therapist filters patients by those who reported new obsessions yesterday or today
