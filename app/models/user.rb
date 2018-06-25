@@ -121,10 +121,6 @@ class User < ApplicationRecord
   def self.patients_planning_preliminarily # returns AR::Relation of users who have at least 1 plan that lacks steps
     patients_planning.merge(Plan.stepless)
   end
-
-  def self.num_users_obsessing_about(theme_id)
-    self.patients.select {|p| p.obsessions.any? {|o| o.theme_ids.include?(theme_id)}}.count
-  end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
   # so if we're looking for all unassigned_users who want to be patients, we call
