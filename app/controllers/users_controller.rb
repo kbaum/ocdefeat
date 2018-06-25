@@ -58,9 +58,9 @@ class UsersController < ApplicationController
         severity = params[:severity_and_variant].split(" and ").first
         variant = params[:severity_and_variant].split(" and ").last
         if users.by_severity_and_variant(severity, variant).empty?
-          flash.now[:alert] = "There are no patients with #{severity.downcase} OCD and #{variant.downcase} types of compulsions."
+          flash.now[:alert] = "None of your patients have #{severity.downcase} OCD and #{variant.downcase} types of compulsions."
         else
-          @filtered_users = users.by_severity_and_variant(severity, variant) # stores AR::Relation of all patients with a specific OCD severity and variant combination
+          @filtered_users = users.by_severity_and_variant(severity, variant) # stores AR::Relation of therapist's patients with a specific OCD severity and variant combination
           flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
         end
       elsif !params[:extent_of_exposure].blank?
