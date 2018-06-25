@@ -1,11 +1,9 @@
 <h2>Admin Account</h2>
 
-<h4>Welcome, <%= current_user.name %>!</h4>
-
 <br>
 
 <div class="well well-sm">
-  <p><u>OCDefeat Enrollment Statistics</u></p>
+  <h4><u>OCDefeat Enrollment Statistics</u></h4>
   <p><strong>Admins</strong>: <%= User.admins.count %></p>
   <p><strong>Therapists</strong>: <%= User.therapists.count %></p>
   <p><strong>Patients</strong>: <%= User.patients.count %></p>
