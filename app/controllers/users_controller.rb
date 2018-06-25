@@ -4,20 +4,13 @@ class UsersController < ApplicationController
   before_action :reset_role_requested, only: [:edit, :update]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
-    users = policy_scope(User) # we're filtering users - users stores the array of user instances available to the type of viewer
+    users = policy_scope(User)
     @themes = policy_scope(Theme)
-    # when an admin views the users index, @users stores 'array' of ALL user instances (for the table)
-    # when a therapist views the users index, @users stores 'array' of only patients
-    # when a patient views the users index, @users stores 'array' of only therapists (like directory w/ contact info)
 
-    # From an admin's perspective, the users index page presents a table to manage all users accounts, i.e.,
-    # change users' roles, delete accounts. There is also 1 filter to filter users by current role
-    # The first 4 instance variables below correspond to locals used in app/views/filter_users/_admin.html.erb partial (which is rendered on users index pg when admin is viewer)
     if current_user.admin?
       @patients_without_counselor = User.patients_uncounseled
       @therapists = User.therapists
-      @table_users = users # @table_users stores array of all user instances
-      @filtered_users = users
+      @table_users = users # stores AR::Relation of all user instances
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
       @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
       @aspiring_admins = users.awaiting_assignment(%w(Patient Therapist), 3)
@@ -30,9 +23,9 @@ class UsersController < ApplicationController
             flash.now[:alert] = "No #{params[:role]}s were found."
           end
         else # If users with the selected role were found
-          @filtered_users = users.by_role(params[:role]) # stores 'AR::Relation' of all users with the selected role
+          @filtered_users = users.by_role(params[:role]) # stores AR::Relation of users with the selected role
           if params[:role] == "unassigned"
-            flash.now[:notice] = "#{@filtered_users.count} #{"user".pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} not yet assigned a role."
+            flash.now[:notice] = "#{@filtered_users.count} #{'user'.pluralize(@filtered_users.count)} #{'is'.pluralize(@filtered_users.count)} not yet assigned a role."
           else
             flash.now[:notice] = "You found #{@filtered_users.count} #{params[:role].pluralize(@filtered_users.count)}!"
           end
