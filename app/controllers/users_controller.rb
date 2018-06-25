@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
     if current_user.admin?
       @patients_without_counselor = User.patients_uncounseled
-      @therapists = User.therapists
+      @therapists = User.by_role("therapist")
       @table_users = users # stores AR::Relation of all user instances
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
       @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
