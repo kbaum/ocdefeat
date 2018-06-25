@@ -172,7 +172,11 @@ class UsersController < ApplicationController
 
   def update
     authorize @user
-    if @user.update_attributes(permitted_attributes(@user))
+    if @user.unassigned? && params[:user][:role] != "unassigned"
+      if @user.update_attributes(permitted_attributes(@user))
+        redirect_to users_path, notice: "#{@user.name} was successfully assigned the role of #{@user.role.downcase}!"
+      end
+    elsif @user.update_attributes(permitted_attributes(@user))
       redirect_to user_path(@user), notice: "User information was successfully updated!"
     else
       flash.now[:error] = "Your attempt to edit user information was unsuccessful. Please try again."
