@@ -9,8 +9,8 @@
     <% @user.treatments.each do |treatment| %>
       <li><em><%= treatment.treatment_type %></em> - <%= UserTreatment.find_by(user: @user, treatment: treatment).efficacy %></li>
     <% end %>
+    <br>
   <% end %>
-  <br>
   <p><strong>Current Caseload</strong>: <%= @user.counselees.count %></p>
 </div>
 
