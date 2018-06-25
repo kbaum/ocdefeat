@@ -12,7 +12,7 @@
 
 <br>
 
-<%= form_tag "/users", method: "get" do %>
+<%= form_tag users_path, method: "get" do %>
   <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
   <br><br>
   <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
