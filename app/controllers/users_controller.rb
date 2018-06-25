@@ -172,9 +172,13 @@ class UsersController < ApplicationController
 
   def update
     authorize @user
-    if @user.unassigned? && params[:user][:role] != "unassigned"
+    if current_user.admin? && @user.unassigned? && params[:user][:role] != "unassigned"
       if @user.update_attributes(permitted_attributes(@user))
-        redirect_to users_path, notice: "#{@user.name} was successfully assigned the role of #{@user.role.downcase}!"
+        redirect_to users_path, notice: "#{@user.name} was successfully assigned the role of #{@user.role}!"
+      end
+    elsif current_user.admin? && @user.counselor.nil? && !params[:user][:counselor_id].nil?
+      if @user.update_attributes(permitted_attributes(@user))
+        redirect_to users_path, notice: "Patient #{@user.name} is now under the care of #{User.therapists.find(params[:user][:counselor_id]).name}!"
       end
     elsif @user.update_attributes(permitted_attributes(@user))
       redirect_to user_path(@user), notice: "User information was successfully updated!"
