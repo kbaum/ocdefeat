@@ -121,17 +121,15 @@ class User < ApplicationRecord
   def self.patients_planning_preliminarily # returns AR::Relation of users who have at least 1 plan that lacks steps
     patients_planning.merge(Plan.stepless)
   end
-  # rejected_roles is an array of string roles the user does NOT want to be and
-  # role_number is the requested role's integer value
-  # so if we're looking for all unassigned_users who want to be patients, we call
-  # User.awaiting_assignment(["Therapist", "Admin"], 1)
-  # we're looking for user instances who are NOT already patients (with role = 1)
-  # AND who did NOT request the roles of therapist or admin
-  # Rails documentation favors .where.not instead of !=, but above method is same as saying:
-  #def self.awaiting_assignment(role_requested, role_number)
-   #self.where("role_requested = ? AND role != ?", role_requested, role_number)
-  #end
 end
+
+# rejected_roles is an array of string roles the user does NOT want to be and
+# role_number is the requested role's integer value
+# so if we're looking for all unassigned users who want to be patients, we call
+# User.awaiting_assignment(["Therapist", "Admin"], 1)
+# we're looking for user instances who are NOT already patients (with role = 1)
+# AND who did NOT request the roles of therapist or admin
+
 
 # Explanation of #find_or_create_by_omniauth(auth_hash):
 # Trying to find user instance by their provider attribute ("Twitter") and their user ID (uid) on Twitter
@@ -139,7 +137,5 @@ end
 # If a user instance does NOT exist with that UID from Twitter, then create one:
 # The newly instantiated user instance that was just created is passed to the block,
 # and we set its name attribute value = the name provided by Twitter -- auth_hash["info"]["name"],
-# we set its twitter_handle = auth_hash["info"]["nickname"],
-# we set its bio attribute = auth_hash["info"]["description"]
 # and we give it a random, unique string password using SecureRandom.hex
 # The user instance is returned at end of method call
