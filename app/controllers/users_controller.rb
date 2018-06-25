@@ -95,12 +95,12 @@ class UsersController < ApplicationController
             flash.now[:notice] = "#{plural_inflection(@filtered_users)} marked at least one ERP plan as finished!"
           end
         end
-      elsif !params[:obsessional_theme].blank? # Find therapist's patients who have at least 1 obsession that's classified in the obsessional theme
-        if users.obsessing_about(params[:obsessional_theme]).empty?
-          flash.now[:alert] = "None of your patients have obsessions that revolve around \"#{Theme.find(params[:obsessional_theme]).name}.\""
+      elsif !params[:theme_preoccupation].blank? # Find therapist's patients who have at least 1 obsession that's classified in the selected theme
+        if users.obsessing_about(params[:theme_preoccupation]).empty?
+          flash.now[:alert] = "None of your patients' obsessions revolve around \"#{Theme.find(params[:theme_preoccupation]).name}.\""
         else
-          @filtered_users = users.obsessing_about(params[:obsessional_theme])
-          flash.now[:notice] = "#{sv_agreement(@filtered_users)} preoccupied with \"#{Theme.find(params[:obsessional_theme]).name}.\""
+          @filtered_users = users.obsessing_about(params[:theme_preoccupation])
+          flash.now[:notice] = "#{sv_agreement(@filtered_users)} preoccupied with \"#{Theme.find(params[:theme_preoccupation]).name}.\""
         end
       elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
         if users.all? {|user| user.obsessions.empty?} # If none of the patients have obsessions
@@ -161,6 +161,7 @@ class UsersController < ApplicationController
       redirect_to user_path(@user), notice: "You successfully registered and created your preliminary profile, #{current_user.name}!"
     else
       flash.now[:error] = "Your registration attempt was unsuccessful. Please try again."
+      3.times { @user.treatments.build }
       render :new # present the registration form so the user can try signing up again
     end
   end
@@ -171,6 +172,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    authorize @user
   end
 
   def update
@@ -231,7 +233,7 @@ class UsersController < ApplicationController
         :severity,
         :role,
         :counselor_id,
-        :treatments_attributes => [:treatment_type, :user_treatments => [:duration, :efficacy]]
+        :treatments_attributes => [:treatment_type, :user_treatments => [:treatment_id, :duration, :efficacy]]
       )
     end
 
