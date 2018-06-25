@@ -117,24 +117,24 @@ class UsersController < ApplicationController
         end
       elsif !params[:recent_ruminators].blank? # Therapist filters patients by those who reported new obsessions yesterday or today
         if users.ruminating_yesterday.empty? && users.ruminating_today.empty?
-          flash.now[:alert] = "No patients reported new obsessions yesterday or today."
+          flash.now[:alert] = "None of your patients reported new obsessions yesterday or today."
         elsif params[:recent_ruminators] == "Patients who reported new obsessions yesterday"
           if users.ruminating_yesterday.empty?
-            flash.now[:alert] = "No patients reported new obsessions yesterday."
+            flash.now[:alert] = "None of your patients reported new obsessions yesterday."
           else
             @filtered_users = users.ruminating_yesterday
             flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions yesterday!"
           end
         elsif params[:recent_ruminators] == "Patients who reported new obsessions today"
           if users.ruminating_today.empty?
-            flash.now[:alert] = "No patients reported new obsessions today."
+            flash.now[:alert] = "None of your patients reported new obsessions today."
           else
             @filtered_users = users.ruminating_today
             flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions today!"
           end
         end
       else
-        @filtered_users = users # @filtered_users stores AR::Relation of all patients if no filter was applied when therapist views page
+        @filtered_users = users # stores AR::Relation of therapist's patients if no filter was applied when therapist views page
         flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently seeking your psychological expertise."
       end
     elsif current_user.patient?
