@@ -62,10 +62,6 @@ class User < ApplicationRecord
     patients_obsessing.merge(Obsession.presenting_symptoms)
   end
 
-  def self.asymptomatic # returns AR::Relation of users whose obsessions ALL have symptoms attribute = blank string
-    patients_obsessing.where(_not_exists(Obsession.where("obsessions.user_id = users.id").presenting_symptoms))
-  end
-
   def self.ruminating_yesterday # returns AR::Relation of users who created obsessions yesterday
     interval = (Time.now.midnight - 1.day)..Time.now.midnight
     patients_obsessing.where(obsessions: { created_at: interval })
@@ -126,10 +122,6 @@ class User < ApplicationRecord
 
   def self.num_users_obsessing_about(theme_id)
     self.patients.select {|p| p.obsessions.any? {|o| o.theme_ids.include?(theme_id)}}.count
-  end
-
-  def self._not_exists(scope)
-    "NOT #{_exists(scope)}"
   end
   # rejected_roles is an array of string roles the user does NOT want to be and
   # role_number is the requested role's integer value
