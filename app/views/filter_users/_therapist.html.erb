@@ -36,8 +36,6 @@
   <br><br>
   <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms" %>
   <br><br>
-  <%= select_tag 'obsessional_theme', options_from_collection_for_select(themes, "id", "name"), prompt: "Obsessional Theme" %>
-  <br><br>
   <%= submit_tag "Filter Patients" %>
 <% end %>
 
