@@ -86,10 +86,6 @@ class User < ApplicationRecord
     patients_planning.merge(Plan.accomplished)
   end
 
-  def self.by_role(the_role)
-    where(role: the_role)
-  end
-
   def self.by_role(string_role)
     where(role: User.roles[string_role])
   end
