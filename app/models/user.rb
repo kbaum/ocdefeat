@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  scope :admins, -> { where(role: 3) }
   scope :unassigned_users, -> { where(role: 0) }
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
