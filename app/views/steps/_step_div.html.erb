@@ -5,7 +5,6 @@
   <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
   <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
   <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
-  <p><strong>Status:</strong> <%= show_status(step) %></p>
 
   <%= render partial: "steps/set_step_status", locals: { step: step } if current_user.patient? && step.discomfort_degree %>
 
