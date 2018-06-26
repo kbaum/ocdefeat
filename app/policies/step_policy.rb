@@ -4,8 +4,10 @@ class StepPolicy < ApplicationPolicy # A step does not exist outside the context
   end
 
   def permitted_attributes # once the step's :plan_id was assigned in steps#create, it cannot be changed
-    if user.therapist? || parent_plan_possessor
+    if parent_plan_possessor # The patient who owns the plan to which the step belongs
       [:instructions, :duration, :discomfort_degree, :status]
+    elsif therapist_of_parent_plan_possessor # That patient's therapist
+      [:instructions, :duration]
     end
   end
 
