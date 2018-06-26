@@ -15,7 +15,7 @@
     <% if user.patient? && user.counselor.nil? %>
       <%= form_for(user) do |f| %>
         <%= f.select(:counselor_id, therapists.map {|therapist| [therapist.name, therapist.id]}, include_blank: "Choose Counselor") %>
-        <%= f.submit "Choose Counselor" %>
+        <%= f.submit "Assign to Patient" %>
       <% end %>
     <% elsif user.counselor %>
       <%= user.counselor.name %>
