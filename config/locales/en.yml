@@ -14,6 +14,6 @@ en:
       show?: "Access denied! That ERP plan can only be viewed by the patient who designed it and that patient's therapist."
       edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
     step_policy:
-      create?: "Access denied! Only the ERP plan designer and therapists are authorized to add new steps to the plan."
+      create?: "Access denied! Only the ERP plan designer and that patient's therapist are authorized to add new steps to the plan."
     theme_policy:
       destroy?: "Access denied! Only psychology professionals, who are trained in identifying different types of OCD, can remove an inaccurate OCD theme."
