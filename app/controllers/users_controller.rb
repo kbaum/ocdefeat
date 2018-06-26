@@ -178,7 +178,7 @@ class UsersController < ApplicationController
       end
     elsif current_user.admin? && @user.counselor.nil? && !params[:user][:counselor_id].nil?
       if @user.update_attributes(permitted_attributes(@user))
-        redirect_to users_path, notice: "Patient #{@user.name} is now under the care of #{User.therapists.find(params[:user][:counselor_id]).name}!"
+        redirect_to users_path, notice: "Patient #{@user.name} is now under the care of #{User.by_role("therapist").find(params[:user][:counselor_id]).name}!"
       end
     elsif @user.update_attributes(permitted_attributes(@user))
       redirect_to user_path(@user), notice: "User information was successfully updated!"
