@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
   before_action :deletion_msg, only: [:destroy]
   before_action :reset_role_requested, only: [:edit, :update]
+  before_action :require_users, only: [:index]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
     users = policy_scope(User)
@@ -203,6 +204,20 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def require_users
+      users = policy_scope(User)
+      if current_user.admin? && users.count == 1
+        redirect_to root_path, alert: "Looks like you're all alone here. Try to recruit some users to join the OCDefeat community!"
+      elsif users.empty?
+        if current_user.therapist?
+           flash[:notice] = "Looks like you weren't assigned to any patient cases yet!"
+        elsif current_user.patient?
+          flash[:notice] = "Unfortunately, no therapists are currently available for counseling."
+        end
+        redirect_to user_path(current_user)
+      end
     end
 
     def reset_role_requested
