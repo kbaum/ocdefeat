@@ -48,13 +48,13 @@ class StepsController < ApplicationController
 
     def prevent_changes_if_plan_performed
       if action_name == "create" # If I'm trying to create a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
-        @step = Plan.find(params[:plan_id]).steps.build
+        step = Plan.find(params[:plan_id]).steps.build
       else
-        @step = Step.find(params[:id]) # due to shallow nesting
+        step = Step.find(params[:id]) # for editing/updating/destroying a step due to shallow nesting
       end
 
-      if @step.plan.finished?
-        redirect_to plan_path(@step.plan), alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished."
+      if step.plan.finished?
+        redirect_to plan_path(step.plan), alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished."
       end
     end
 
