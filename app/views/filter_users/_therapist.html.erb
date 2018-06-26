@@ -63,14 +63,14 @@
 <% end %>
 
 
-  <% if asymptomatic_nonobsessive || asymptomatic_obsessive %>
-    <div class="well well-lg">
-      <p><strong><u>Asymptomatic Patients</u></strong>:</p>
+<% if asymptomatic_nonobsessive || asymptomatic_obsessive %>
+  <div class="well well-lg">
+    <p><strong><u>Asymptomatic Patients</u></strong>:</p>
 
-      <% if asymptomatic_nonobsessive %> <!-- If the therapist has patients who do NOT have obsessions -->
-        <p><em>~Patients who are not obsessing:</em></p>
-        <%= render partial: "users_ul", locals: { users: asymptomatic_nonobsessive } %>
-      <% end %>
+    <% if asymptomatic_nonobsessive %> <!-- If the therapist has patients who do NOT have obsessions -->
+      <p><em>~Patients who are not obsessing:</em></p>
+      <%= render partial: "users_ul", locals: { users: asymptomatic_nonobsessive } %>
+    <% end %>
 
     <% if asymptomatic_obsessive %> <!-- If the therapist has patients who only have symptomless obsessions -->
       <p><em>~Patients whose obsessions do not manifest in physical symptoms:</em></p>
