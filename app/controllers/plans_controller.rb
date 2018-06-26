@@ -188,7 +188,25 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
-    
+    def require_plans # private method called before plans#index
+      plans = policy_scope(Plan)
+      if plans.empty?
+        if current_user.admin?
+          redirect_to root_path, alert: "The Index of ERP plans is currently empty."
+        elsif current_user.therapist?
+          redirect_to users_path, alert: "ERP plans designed by your patients were not found."
+        elsif current_user.patient?
+          if current_user.obsessions.empty? # If the user has no plans but also has no obsessions
+            redirect_to user_path(current_user), alert: "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
+          else # the patient has obsessions for which no plans were designed
+            first_planless_obsession = current_user.obsessions.sans_plans.first
+            redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to implement some exposure exercises. Why not design a new ERP plan for this obsession now?"
+          end
+        end
+      end
+    end
+
+
 
     def set_obsessions
       if current_user.patient?
