@@ -3,11 +3,6 @@ class StepsController < ApplicationController
   before_action :check_completion, only: [:edit, :update, :destroy]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
-  def new # GET "/plans/:plan_id/steps/new" maps to steps#new
-    @plan = Plan.find(params[:plan_id])
-    @step = Step.new
-  end
-
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
     @step = Step.new(step_params)
     authorize @step
@@ -22,20 +17,6 @@ class StepsController < ApplicationController
 
   def edit # GET request to "/steps/:id/edit" maps to steps#edit
     authorize @step
-  end
-
-  def update # PATCH or PUT request to "/steps/:id" maps to steps#update
-    authorize @step
-    if @step.update_attributes(permitted_attributes(@step))
-      if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
-        redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
-      else
-        redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
-      end
-    else
-      flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
-      render :edit
-    end
   end
 
   def destroy # deleting a step - DELETE request to "/plans/:plan_id/steps/:id" maps to steps#destroy
