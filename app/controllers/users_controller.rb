@@ -211,7 +211,7 @@ class UsersController < ApplicationController
         redirect_to root_path, alert: "Looks like you're all alone here. Try to recruit some users to join the OCDefeat community!"
       elsif users.empty?
         if current_user.therapist?
-           flash[:notice] = "Looks like you weren't assigned to any patient cases yet!"
+           flash[:notice] = "Looks like you weren't assigned to any patients yet!"
         elsif current_user.patient?
           flash[:notice] = "Unfortunately, no therapists are currently available for counseling."
         end
