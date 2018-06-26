@@ -7,11 +7,6 @@
 <p><strong>Name:</strong> <%= @user.name %></p>
 <p><strong>Role Requested:</strong> <%= @user.role_requested %></p>
 
-<% if @user.provider == "twitter" && @user.role_requested == "Patient" %>
-  <div class="unassigned well">
-    <h4 class="unassigned">Thanks for logging in with Twitter as an OCDefeat patient!</h4>
-    <p class="unassigned">Request a different role and/or edit the details of your diagnosis <%= link_to "here!", edit_user_path(@user) %></p>
-  </div>
-<% end %>
+
 
 <%= render partial: "manage_account", locals: { user: @user } %>
