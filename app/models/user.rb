@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
   scope :patients_overanxious, -> { patients.joins(:obsessions).where("obsessions.anxiety_rating > ?", Obsession.average_anxiety_rating).distinct }
   scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
@@ -55,7 +56,7 @@ class User < ApplicationRecord
   end
 
   def self.count_counselees # returns a hash. keys = string name counselor, values = number of counselees assigned to that counselor
-    by_role("therapist").left_outer_joins(:counselees).group("users.name").count("counselees_users.id")
+    therapists.left_outer_joins(:counselees).group("users.name").count("counselees_users.id")
   end
 
   def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
