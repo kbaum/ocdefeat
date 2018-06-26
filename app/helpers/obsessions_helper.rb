@@ -1,4 +1,20 @@
 module ObsessionsHelper
+  def label_search
+    if current_user.patient?
+      "Do some introspection"
+    elsif current_user.therapist?
+      "Read your patients' minds"
+    end
+  end
+
+  def placefill_search
+    if current_user.patient?
+      "Search your thoughts..."
+    elsif current_user.therapist?
+      "Search thoughts containing..."
+    end
+  end
+
   def display_obsessions(obsessions)
     unless obsessions.nil?
       content_tag(:ul) do
