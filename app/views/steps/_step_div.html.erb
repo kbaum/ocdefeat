@@ -1,7 +1,10 @@
 <%= div_for_step(step) do %>
   <h4>STEP #<%= position_in_plan(step) %></h4>
+
   <em><%= last_updated(step) %></em>
+
   <br><br>
+
   <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
   <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
   <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
