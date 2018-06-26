@@ -43,27 +43,23 @@
 
 <br><br>
 
-<% if !filtered_users.empty? %>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Patient Name</th>
-        <th>Severity</th>
-        <th>Variant</th>
-        <th>Clinical Presentation</th>
-        <th>Obsession Count</th>
-        <th>ERP Plan Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% filtered_users.each do |filtered_user| %>
-        <%= render partial: "users/patient_chart_row", locals: { user: filtered_user } %>
-      <% end %>
-    </tbody>
-  </table>
-  <!--<%= render partial: "users/users_ul", locals: { users: filtered_users } %>-->
-<% end %>
-
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Patient Name</th>
+      <th>Severity</th>
+      <th>Variant</th>
+      <th>Clinical Presentation</th>
+      <th>Obsession Count</th>
+      <th>ERP Plan Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% filtered_users.each do |filtered_user| %>
+      <%= render partial: "users/patient_chart_row", locals: { user: filtered_user } %>
+    <% end %>
+  </tbody>
+</table>
 
 <% if asymptomatic_nonobsessive || asymptomatic_obsessive %>
   <div class="well well-lg">
@@ -81,8 +77,7 @@
   </div>
 <% end %>
 
-<% if !filtered_users.empty? %>
-  <div class="well well-sm">
-    <%= panicky_patients %>
-  </div>
-<% end %>
+
+<div class="well well-sm">
+  <%= panicky_patients %>
+</div>
