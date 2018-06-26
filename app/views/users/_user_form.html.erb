@@ -1,6 +1,6 @@
-<%= form_for @user do |f| %>
+<%= form_for user do |f| %>
 
-  <%= validation_errors_for(@user) %>
+  <%= validation_errors_for(user) %>
 
   <br>
 
@@ -32,7 +32,7 @@
 
   <hr>
 
-  <% if @user.id.nil? || @user.unassigned? %>
+  <% if user.id.nil? || user.unassigned? %>
     <div class="well well-lg">
       <h4>Request a Role in the OCDefeat Community:</h4>
       <br>
@@ -81,26 +81,36 @@
     <hr>
   </div>
 
-  <div class="well well-lg">
-    <h4>Describe your OCD Treatment</h4>
-    <p><em>Prospective patients, describe any type of OCD treatment that you have undergone. How effective was each treatment?</em></p>
-    <p><em>Aspiring therapists, describe the efficacy of the treatment plans you implement based on patient outcomes.</em></p>
-    <br>
-    <%= f.fields_for :treatments do |t| %>
-      <%= t.label :treatment_type, "Add a treatment" %>:
-      <%= t.text_field :treatment_type %>
-      <%= t.fields_for :user_treatments do |ut| %>
-        <%= ut.collection_select(:treatment_id, Treatment.order(:treatment_type), :id, :treatment_type, prompt: "Select a treatment") %>
-        <%= ut.label :efficacy %>:
-        <%= ut.text_field :efficacy %>
-        <%= ut.label :duration %>:
-        <%= ut.text_field :duration %>
-        <br><br>
+  <% if user.new_record? %>
+    <div class="well well-lg">
+      <h4>Describe your OCD Treatment</h4>
+      <br>
+      <p>Prospective patients, describe any type of OCD treatment that you have undergone. How effective was each treatment?</p>
+      <p>Aspiring therapists, describe the efficacy of the treatment plans you implement based on patient outcomes.</p>
+      <hr>
+      <%= f.fields_for :treatments do |t| %>
+        <div class="field">
+          <%= t.label :treatment_type, "Add a treatment" %>:
+          <%= t.text_field :treatment_type %>
+        </div>
+        <%= t.fields_for :user_treatments do |ut| %>
+          <div class="field">
+            <%= ut.label :treatment_id, "Select a treatment" %>:
+            <%= ut.collection_select(:treatment_id, Treatment.order(:treatment_type), :id, :treatment_type, prompt: "Choose Treatment") %>
+          </div>
+          <div class="field">
+            <%= ut.label :efficacy %>:
+            <%= ut.text_field :efficacy %>
+          </div>
+          <div class="field">
+            <%= ut.label :duration %>:
+            <%= ut.text_field :duration %>
+          </div>
+          <hr>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-
-  <br>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>
