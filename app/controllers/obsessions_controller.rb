@@ -82,7 +82,14 @@ class ObsessionsController < ApplicationController
         #flash.now[:notice] = "Your history of obsessions is recorded below."
       end
     elsif current_user.therapist?
-      if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
+      if !params[:search].blank? # Therapist searches her patients' obsessions by intrusive_thought containing term entered into search form
+        if obsessions.search_thoughts(params[:search]).empty?
+          flash.now[:alert] = "None of your patients are ruminating about that idea!"
+        else
+          @obsessions = obsessions.search_thoughts(params[:search])
+          flash.now[:notice] = "That stream of thought provides content for #{plural_inflection(@obsessions)}!"
+        end
+      elsif !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
         if @counselees.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
         else
