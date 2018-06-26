@@ -126,10 +126,10 @@ end
 
 
 # Explanation of #find_or_create_by_omniauth(auth_hash):
-# Trying to find user instance by their provider attribute ("Twitter") and their user ID (uid) on Twitter
+# Trying to find user instance by their provider attribute ("twitter") and their user ID (uid) on Twitter
 # If such a user exists in the DB already, return that user instance
-# If a user instance does NOT exist with that UID from Twitter, then create one:
+# If a user instance does NOT exist with that uid from Twitter, then create one:
 # The newly instantiated user instance that was just created is passed to the block,
-# and we set its name attribute value = the name provided by Twitter -- auth_hash["info"]["name"],
+# we set its name attribute value = the name provided by Twitter -- auth_hash["info"]["name"],
 # and we give it a random, unique string password using SecureRandom.hex
 # The user instance is returned at end of method call
