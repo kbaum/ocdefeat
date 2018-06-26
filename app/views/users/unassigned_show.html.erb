@@ -7,6 +7,8 @@
 <p><strong>Name:</strong> <%= @user.name %></p>
 <p><strong>Role Requested:</strong> <%= @user.role_requested %></p>
 
+<br>
+
 <% if @user.provider == "twitter" && @user.role_requested == "Patient" %>
   <div class="alert alert-success" role="alert">
     <h4 class="alert-heading">Thanks for logging in with Twitter!</h4>
@@ -15,5 +17,7 @@
     <p class="mb-0">Feel free to request a different role and/or edit the details of your diagnosis <%= link_to "here", edit_user_path(@user) %>!</p>
   </div>
 <% end %>
+
+<br>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
