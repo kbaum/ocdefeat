@@ -1,5 +1,9 @@
 <%= div_for_step(step) do %>
-  <h4>STEP #<%= position_in_plan(step) %></h4>
+  <% if step.complete? %>
+    <h4><span class="glyphicon glyphicon-ok-circle"></span> STEP #<%= position_in_plan(step) %></h4>
+  <% else %>
+    <h4>STEP #<%= position_in_plan(step) %></h4>
+  <% end %>
 
   <em><%= last_updated(step) %></em>
 
