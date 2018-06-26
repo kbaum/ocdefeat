@@ -136,7 +136,6 @@ class UsersController < ApplicationController
         end
       else
         @filtered_users = users # stores AR::Relation of therapist's patients if no filter was applied when therapist views page
-        flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently seeking your psychological expertise."
       end
     elsif current_user.patient?
       @therapists = users # @therapists stores AR::Relation of all therapists when patient views users index page
