@@ -12,7 +12,7 @@ en:
     plan_policy:
       new?: "Access denied! Only patients are authorized to create new ERP plans."
       show?: "Access denied! That ERP plan can only be viewed by the patient who designed it and that patient's therapist."
-      edit?: "Access denied! You are not authorized to edit preliminary information about this ERP plan."
+      edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
     step_policy:
       create?: "Access denied! Only the ERP plan designer and therapists are authorized to add new steps to the plan."
     theme_policy:
