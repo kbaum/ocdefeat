@@ -55,7 +55,7 @@ class User < ApplicationRecord
   end
 
   def self.count_counselees # returns a hash. keys = string name counselor, values = number of counselees assigned to that counselor
-    therapists.left_outer_joins(:counselees).group("users.name").count("counselees_users.id")
+    by_role("therapist").left_outer_joins(:counselees).group("users.name").count("counselees_users.id")
   end
 
   def self.symptomatic # returns AR::Relation of users who have at least 1 obsession whose symptoms attribute != blank string
@@ -89,7 +89,7 @@ class User < ApplicationRecord
   end
 
   def self.awaiting_assignment(rejected_roles, role_number)
-    unassigned_users.where.not(role_requested: rejected_roles, role: role_number)
+    by_role("unassigned").where.not(role_requested: rejected_roles, role: role_number)
   end
 
   def self.by_ocd_severity(severity)
