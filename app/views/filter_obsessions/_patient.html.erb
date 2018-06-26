@@ -1,7 +1,3 @@
-<%= render "search" %>
-
-<br>
-
 <%= form_tag(obsessions_path, method: "get") do %>
   <%= label_tag "approach", "ERP Treatment Approach:" %>
   <%= select_tag "approach", options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
