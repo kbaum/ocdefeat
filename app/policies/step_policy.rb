@@ -1,6 +1,10 @@
 class StepPolicy < ApplicationPolicy # A step does not exist outside the context of an ERP plan
+  def new?
+    parent_plan_possessor || therapist_of_parent_plan_possessor
+  end
+
   def create? # The patient who owns the plan to which the step belongs, and the patient's therapist, can create a new step for that plan
-    user.patient? || user.therapist?
+    new?
   end
 
   def permitted_attributes # once the step's :plan_id was assigned in steps#create, it cannot be changed
