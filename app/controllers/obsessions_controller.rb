@@ -8,7 +8,7 @@ class ObsessionsController < ApplicationController
     @themes = policy_scope(Theme)
 
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
-      if !params[:search].blank? # Patient filters obsessions by intrusive thought in simple search form
+      if !params[:search].blank? # Patient searches her own obsessions by intrusive_thought containing terms entered in search form. (params[:search] is neither nil nor empty string)
         if obsessions.search_thoughts(params[:search]).empty?
           flash.now[:alert] = "You never recorded that thought in your Obsessions Log!"
         else
@@ -79,7 +79,7 @@ class ObsessionsController < ApplicationController
         end
       else # Patient did not choose a filter, so all of her own obsessions are listed
         @obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
-        flash.now[:notice] = "Your history of obsessions is recorded below."
+        #flash.now[:notice] = "Your history of obsessions is recorded below."
       end
     elsif current_user.therapist?
       if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
@@ -144,7 +144,7 @@ class ObsessionsController < ApplicationController
         end
       else # Therapist did not select a filter
         @obsessions = obsessions # stores the therapist's patients' obsessions
-        flash.now[:notice] = "A full psychiatric history of your patients' obsessions is recorded below!"
+        #flash.now[:notice] = "A full psychiatric history of your patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters obsessions by date created
@@ -243,7 +243,8 @@ class ObsessionsController < ApplicationController
         :anxiety_rating,
         :symptoms,
         :rituals,
-        :theme_id
+        :theme_id,
+        :search
       )
     end
   end
