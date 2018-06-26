@@ -79,6 +79,8 @@
   </div>
 <% end %>
 
-<div class="well well-sm">
-  <%= panicky_patients %>
-</div>
+<% if !filtered_users.empty? %>
+  <div class="well well-sm">
+    <%= panicky_patients %>
+  </div>
+<% end %>
