@@ -131,8 +131,9 @@ class PlansController < ApplicationController
     @obsession = Obsession.find(params[:obsession_id])
     @plan = @obsession.plans.build(plan_params)
     authorize @plan
+
     if @plan.save
-      redirect_to plan_path(@plan), notice: "You successfully created the ERP plan entitled #{@plan.title}!"
+      redirect_to plan_path(@plan), flash: { success: "You successfully created the ERP plan entitled \"#{@plan.title}.\"" }
     else
       flash.now[:error] = "Your attempt to create a new ERP plan was unsuccessful. Please try again."
       render :new
