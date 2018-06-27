@@ -142,8 +142,8 @@ class PlansController < ApplicationController
 
   def show
     authorize @plan
-    @step = Step.new # instance for form_for to wrap around in nested resource form on plan show page
-    @plan_steps = @plan.steps # @plan_steps stores array of all steps belonging to @plan
+    @step = Step.new # instance for form_for to wrap around in nested resource form to create a new step on plan show page
+    @plan_steps = @plan.steps # stores AR::Relation of all steps belonging to @plan
   end
 
   def edit
