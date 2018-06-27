@@ -121,15 +121,10 @@ class PlansController < ApplicationController
     end # closes logic about filterer's role
   end # closes #index action
 
-  def new # new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
+  def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
     @obsession = Obsession.find(params[:obsession_id]) # @obsession is the parent. The form to create a new plan for an obsession is found at: "/obsessions/:obsession_id/plans/new"
     @plan = Plan.new # instance for form_for to wrap around
     authorize @plan
-    #@obsession = Obsession.find(params[:obsession_id])
-    #if current_user.patient? && current_user.obsessions.empty?
-      #redirect_to new_obsession_path, alert: "You currently have no obsessions! You must first create an obsession before designing an ERP plan that targets that obsession!"
-    #else
-    #end
   end
 
   def create # When the form to create a new plan is submitted, form data is sent via POST request to "/obsessions/:obsession_id/plans"
