@@ -27,7 +27,7 @@ class StepsController < ApplicationController
 
   def update # PATCH or PUT request to "/steps/:id" maps to steps#update
     authorize @step
-    if @step.update(step_params)
+    if @step.update_attributes(permitted_attributes(@step))
       if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
         redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
       else
