@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :prepare_plan, only: [:show, :edit, :update]
+  before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_obsessions, only: [:index]
   before_action :require_plans, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
@@ -165,10 +165,10 @@ class PlansController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy  # DELETE request to "/plans/:id" maps to plans#destroy
     authorize @plan
     @plan.destroy
-    redirect_to plans_path, notice: "ERP plan was successfully deleted!"
+    redirect_to plans_path, flash: { success: "ERP plan was successfully deleted!" }
   end
 
   private
