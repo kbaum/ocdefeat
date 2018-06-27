@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
+  before_action :prepare_plan, only: [:show, :edit, :update]
   before_action :set_obsessions, only: [:index]
   before_action :require_plans, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
