@@ -26,7 +26,7 @@ class StepsController < ApplicationController
 
   def update # PATCH or PUT request to "/steps/:id" maps to steps#update
     authorize @step
-    if @step.update_attributes(permitted_attributes(@step))
+    if @step.update(step_params)
       if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
         redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
       else
@@ -45,7 +45,7 @@ class StepsController < ApplicationController
   end
 
   private
-  
+
     def prevent_changes_if_plan_performed
       if action_name == "create" # If I'm trying to create a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
         step = Plan.find(params[:plan_id]).steps.build
@@ -81,3 +81,5 @@ class StepsController < ApplicationController
     end
 
 end
+# If steps#update is triggered, I know that the step is incomplete (status = 0) because a completed step cannot be updated due to #check_completion
+# and I know that the plan to which the step belongs is not finished due to #prevent_changes_if_plan_performed
