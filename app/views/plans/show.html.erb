@@ -10,7 +10,7 @@
     <%= render partial: "plans/finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
   </div>
   <div class="panel-body">
-    <%= render :collection => @plan_steps, :partial => "steps/step_div", :as => :step %>
+    <%= render partial: "steps/step_div", collection: @plan_steps, as: :step %>
   </div>
 </div>
 
