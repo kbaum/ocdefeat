@@ -6,12 +6,10 @@ en:
       destroy?: "As an admin, you cannot delete your own account!"
       show_comments?: "Access denied! You cannot read comments about that patient's obsessions!"
     obsession_policy:
-      new?: "Access denied! Only patients are authorized to create new obsessions."
-      show?: "Access denied! OCDefeat will not disclose details of obsessions to preserve patient privacy and confidentiality!"
-      edit?: "Access denied! An obsession is patient property; you are not authorized to edit this obsession."
+      new?: "Access denied! Only patients are authorized to report new obsessions."
+      show?: "Access denied! The details of obsessions will not be disclosed to preserve doctor-patient confidentiality and privacy!"
+      edit?: "Access denied! An obsession is only editable by the patient who reported it."
     plan_policy:
-      new?: "Access denied! Only patients are authorized to create new ERP plans."
+      new?: "Access denied! Only the patient who reported an obsession can design an ERP plan that targets this obsession!"
       show?: "Access denied! Only the patient and therapist who developed an ERP plan can view its exposure exercises!"
       edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
-      destroy?: "Access denied! Only psychology professionals, who are trained in identifying different types of OCD, can remove an inaccurate OCD theme."
-  
