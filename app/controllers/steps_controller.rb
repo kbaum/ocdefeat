@@ -2,7 +2,7 @@ class StepsController < ApplicationController
   before_action :prevent_changes_if_plan_performed, only: [:create, :edit, :update, :destroy]
   before_action :check_completion, only: [:edit, :update, :destroy]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
-  before_action :restrict_therapist_updates, only: [:update]
+  before_action :restrict_step_updates, only: [:update]
 
   def new # GET "/plans/:plan_id/steps/new" maps to steps#new
     @plan = Plan.find(params[:plan_id])
@@ -69,6 +69,15 @@ class StepsController < ApplicationController
     def set_step_and_parent_plan
       @step = Step.find(params[:id])
       @plan = @step.plan
+    end
+
+    def restrict_step_updates # called before steps#update - patch "/steps/:id" due to shallow nesting
+      step = Step.find(params[:id])
+      if current_user.therapist? && step.incomplete? && params[:step][:status] == 1 # Therapist tried to mark an incomplete step as complete
+        redirect_to plan_path(step.plan), alert: "Only the patient who performs this plan can mark its steps as complete!"
+      elsif current_user.therapist? && step.discomfort_degree.nil? && params[:step][:discomfort_degree] # Therapist tried to update the step's discomfort degree
+        redirect_to plan_path(step.plan), alert: "Only the patient who performs this plan can rate the degree of discomfort experienced while executing it!"
+      end
     end
 
     def step_params
