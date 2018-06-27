@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<% if policy(@step).create? %>
+<% if @plan.unfinished? && policy(@step).create? %>
   <div class="well well-lg">
     <h3>Add a New Step to "<%= @plan.title %>"</h3>
     <br>
