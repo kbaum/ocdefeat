@@ -7,7 +7,7 @@ en:
       show_comments?: "Access denied! You cannot read comments about that patient's obsessions!"
     obsession_policy:
       new?: "Access denied! Only patients are authorized to report new obsessions."
-      show?: "Access denied! The details of obsessions will not be disclosed to preserve doctor-patient confidentiality and privacy!"
+      show?: "Access denied! The details of obsessions will not be disclosed to preserve doctor-patient confidentiality!"
       edit?: "Access denied! An obsession is only editable by the patient who reported it."
     plan_policy:
       new?: "Access denied! Only the patient who reported an obsession can design an ERP plan that targets this obsession!"
