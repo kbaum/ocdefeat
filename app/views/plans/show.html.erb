@@ -29,6 +29,6 @@
 <% if policy(@plan).destroy? %>
   <button class="btn btn-default btn-md">
     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-    <%= link_to "Delete ERP Plan", plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to permanently delete this ERP plan?" } %>
+    <%= link_to "Delete ERP Plan", plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" } %>
   </button>
 <% end %>
