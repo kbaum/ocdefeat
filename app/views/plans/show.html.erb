@@ -1,8 +1,9 @@
 <div class="panel panel-info">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= @plan.title %></h3>
-    <small><em> — an ERP plan designed by <%= @plan.user.name %></em></small>
-    <br><br>
+    <h3 class="panel-title">
+      <%= @plan.title %><small><em> — an ERP plan designed by <%= @plan.user.name %></em></small>
+    </h3>
+    <br>
     <p><span class="glyphicon glyphicon-thumbs-up"></span> <strong>Goal</strong>: <%= @plan.goal %></p>
     <p><span class="glyphicon glyphicon-thumbs-up"></span> <strong>Treatment Approach</strong>: <%= treatment_approach(@plan) %></p>
     <br>
