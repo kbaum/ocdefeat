@@ -148,7 +148,6 @@ class PlansController < ApplicationController
 
   def edit
     authorize @plan
-    @obsession = @plan.obsession
   end
 
   def update # PATCH or PUT request to "/plans/:id" maps to plans#update
