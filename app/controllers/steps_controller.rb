@@ -2,7 +2,7 @@ class StepsController < ApplicationController
   before_action :prevent_changes_if_plan_performed, only: [:create, :edit, :update, :destroy]
   before_action :check_completion, only: [:edit, :update, :destroy]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
-  before_action :restrict_step_updates, only: [:update]
+  #before_action :restrict_updates, only: [:update]
 
   def new # GET "/plans/:plan_id/steps/new" maps to steps#new
     @plan = Plan.find(params[:plan_id])
@@ -27,7 +27,7 @@ class StepsController < ApplicationController
 
   def update # PATCH or PUT request to "/steps/:id" maps to steps#update
     authorize @step
-    if @step.update_attributes(permitted_attributes(@step))
+    if @step.update(step_params) # A step that is already marked as complete cannot be updated due to #check_completion
       if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
         redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
       else
@@ -39,7 +39,7 @@ class StepsController < ApplicationController
     end
   end
 
-  def destroy # deleting a step - DELETE request to "/plans/:plan_id/steps/:id" maps to steps#destroy
+  def destroy # deleting a step -  DELETE request to "/steps/:id" maps to steps#destroy
     authorize @step
     @step.destroy
     redirect_to plan_path(@plan), notice: "A step was successfully deleted from this ERP plan!"
@@ -69,15 +69,6 @@ class StepsController < ApplicationController
     def set_step_and_parent_plan
       @step = Step.find(params[:id])
       @plan = @step.plan
-    end
-
-    def restrict_step_updates # called before steps#update - patch "/steps/:id" due to shallow nesting
-      step = Step.find(params[:id])
-      if current_user.therapist? && step.incomplete? && params[:step][:status] == 1 # Therapist tried to mark an incomplete step as complete
-        redirect_to plan_path(step.plan), alert: "Only the patient who performs this plan can mark its steps as complete!"
-      elsif current_user.therapist? && step.discomfort_degree.nil? && params[:step][:discomfort_degree] # Therapist tried to update the step's discomfort degree
-        redirect_to plan_path(step.plan), alert: "Only the patient who performs this plan can rate the degree of discomfort experienced while executing it!"
-      end
     end
 
     def step_params
