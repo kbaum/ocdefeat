@@ -36,7 +36,7 @@ class StepsController < ApplicationController
   def destroy # deleting a step -  DELETE request to "/steps/:id" maps to steps#destroy
     authorize @step
     @step.destroy
-    redirect_to plan_path(@plan), notice: "A step was successfully deleted from this ERP plan!"
+    redirect_to plan_path(@plan), flash: { success: "A step was successfully deleted from this ERP plan!" }
   end
 
   private
