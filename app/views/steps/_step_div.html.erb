@@ -16,10 +16,6 @@
   <%= render partial: "steps/set_step_status", locals: { step: step } if step.discomfort_degree && current_user == step.plan.user %>
 
   <% if policy(step).update? && step.plan.unfinished? %>
-    <p><%= link_to "Edit Step", edit_step_path(step) %></p>
-  <% end %>
-
-  <% if policy(step).destroy? && step.plan.unfinished? %>
-    <%= button_to "Delete Step", step_path(step), :method => "delete", data: { confirm: "Are you sure you want to remove this ERP exercise?" } %>
+    <%= link_to "Edit Step", edit_step_path(step), class: "btn btn-primary btn-sm", role: "button" %>
   <% end %>
 <% end %>
