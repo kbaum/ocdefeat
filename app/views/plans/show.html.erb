@@ -20,6 +20,10 @@
 
 <% if policy(@plan).edit? && @plan.unfinished? %>
   <br>
+  <button class="btn btn-default btn-md">
+    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+    <%= link_to "Edit Plan Overview", edit_plan_path(@plan) %>
+  </button>
 <% end %>
 
 <% if policy(@plan).destroy? %>
