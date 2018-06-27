@@ -7,7 +7,7 @@ class StepsController < ApplicationController
     @step = Step.new(step_params)
     authorize @step
     if @step.save
-      redirect_to plan_path(@step.plan), notice: "A new step has been added to this ERP plan!"
+      redirect_to plan_path(@step.plan), flash: { success: "A new step has been added to this ERP plan!" }
     else
       @plan = @step.plan # to pass to rendered template app/views/plans/show.html.erb
       flash.now[:error] = "Your attempt to add a new step to this ERP plan was unsuccessful. Please try again."
@@ -21,8 +21,9 @@ class StepsController < ApplicationController
 
   def update # PATCH or PUT request to "/steps/:id" maps to steps#update
     authorize @step
+
     if @step.update(step_params) # A step that is already marked as complete cannot be updated due to #check_completion
-      if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
+      if @step.complete?
         redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
       else
         redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
