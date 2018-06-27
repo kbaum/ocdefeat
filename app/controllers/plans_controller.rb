@@ -155,9 +155,9 @@ class PlansController < ApplicationController
 
     if @plan.update_attributes(permitted_attributes(@plan))
       if @plan.finished? # If the plan is updated from unfinished (progress = 0) to finished (progress = 1)
-        redirect_to plan_path(@plan), notice: "Congratulations on developing anxiety tolerance by finishing this ERP plan!"
+        redirect_to plan_path(@plan), flash: { success: "Congratulations on developing anxiety tolerance by finishing this ERP plan!" }
       else
-        redirect_to plan_path(@plan), notice: "An overview of this ERP plan was successfully updated!"
+        redirect_to plan_path(@plan), flash: { success: "An overview of this ERP plan was successfully updated!" }
       end
     else
       flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
