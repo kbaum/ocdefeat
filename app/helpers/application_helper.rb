@@ -14,6 +14,8 @@ module ApplicationHelper
       "alert-warning"   # Yellow
     when "notice"
       "alert-info"      # Blue
+    when "success"
+      "alert-success"   # Green
     end
   end
 
