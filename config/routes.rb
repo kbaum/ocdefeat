@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :obsessions, shallow: true do
     resources :comments, except: :show
     resources :plans do
-      resources :steps
+      resources :steps, except: :new
     end
   end
 end
