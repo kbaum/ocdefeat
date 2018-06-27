@@ -2,12 +2,6 @@ class StepsController < ApplicationController
   before_action :prevent_changes_if_plan_performed, only: [:create, :edit, :update, :destroy]
   before_action :check_completion, only: [:edit, :update, :destroy]
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
-  #before_action :restrict_updates, only: [:update]
-
-  def new # GET "/plans/:plan_id/steps/new" maps to steps#new
-    @plan = Plan.find(params[:plan_id])
-    @step = Step.new
-  end
 
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
     @step = Step.new(step_params)
