@@ -1,6 +1,6 @@
 class Plan < ApplicationRecord
   extend Datable
-  
+
   scope :flooding, -> { where(flooded: true) }
   scope :graded_exposure, -> { where.not(flooded: true) }
   scope :accomplished, -> { where(progress: 1) }
@@ -38,7 +38,7 @@ class Plan < ApplicationRecord
     with_steps.where.not(id: Step.not_performed.map {|step| step.plan})
   end
 
-  def unachieved?
+  def without_step_or_with_incomplete_step?
     steps.empty? || steps.detect {|step| step.incomplete?}
   end
 
