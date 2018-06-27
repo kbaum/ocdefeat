@@ -3,7 +3,7 @@
 
   <br>
 
-  <% if !plan.new_record? && plan.unachieved? %>
+  <% if !plan.new_record? && plan.without_step_or_with_incomplete_step? %>
     <%= content_tag(:div, class: "alert alert-warning", role: "alert") do %>
       <%= content_tag(:h4, "This ERP plan remains unfinished!", class: "alert-heading") %>
       <%= content_tag(:p, content_tag(:strong, reason_why_unachieved(plan))) %>
