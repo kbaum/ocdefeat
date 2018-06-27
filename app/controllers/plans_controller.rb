@@ -173,9 +173,9 @@ class PlansController < ApplicationController
 
   private
     def preserve_plan
-      @plan = Plan.find(params[:id])
-      if @plan.finished?
-        redirect_to plan_path(@plan), alert: "You already accomplished and archived this ERP plan!"
+      plan = Plan.find(params[:id])
+      if plan.finished?
+        redirect_to plan_path(plan), alert: "You already accomplished and archived this ERP plan!"
       end
     end
 
