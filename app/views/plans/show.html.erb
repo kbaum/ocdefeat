@@ -20,10 +20,7 @@
 
 <% if policy(@plan).edit? && @plan.unfinished? %>
   <br>
-  <%= link_to "Edit Plan Overview", edit_plan_path(@plan) %>
 <% end %>
 
 <% if policy(@plan).destroy? %>
-  <br>
-  <%= button_to "Delete ERP Plan", plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" } %>
 <% end %>
