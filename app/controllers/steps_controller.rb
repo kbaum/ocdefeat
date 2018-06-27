@@ -23,9 +23,9 @@ class StepsController < ApplicationController
     authorize @step
     if @step.update(step_params) # A step that is already marked as complete cannot be updated due to #check_completion
       if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
-        redirect_to plan_path(@plan), notice: "Milestone accomplished! You're one step closer to defeating OCD!"
+        redirect_to plan_path(@plan), flash: { success: "Milestone accomplished! You're one step closer to defeating OCD!" }
       else
-        redirect_to plan_path(@plan), notice: "You successfully modified a step in this ERP plan!"
+        redirect_to plan_path(@plan), flash: { success: "You successfully modified a step in this ERP plan!" }
       end
     else
       flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
