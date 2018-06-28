@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
     authorize @comment
     if @comment.save
-      redirect_to obsession_comments_path(@comment.obsession), notice: "#{comment_creation_msg}"
+      redirect_to obsession_comments_path(@comment.obsession), flash: { success: "#{comment_creation_msg}" }
     else
       flash.now[:error] = "Your attempt to comment on the obsession was unsuccessful. Please try again."
       render :edit
