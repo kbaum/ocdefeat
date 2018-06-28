@@ -30,4 +30,7 @@
 <% end %>
 
 <% if policy(@plan).destroy? %>
+  <%= link_to plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" }, class: "btn btn-danger btn-md" do %>
+    <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete ERP Plan
+  <% end %>
 <% end %>
