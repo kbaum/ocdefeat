@@ -28,8 +28,8 @@
     <% end %>
   <% end %>
 
-  <% if undone && !undone.stepless.blank? %>
-    <p><strong><u>Unfinished Stepless Plans:</strong></p>
+  <% if undone && !undone.stepless.empty? %> <!-- If the patient selected has unfinished stepless plans -->
+    <p><strong><u>Unfinished Stepless Plans</u></strong></p>
     <%= render partial: "plans_ul", locals: { plans: undone.stepless } %>
     <% if undone.with_steps.empty? %>
         <small>*The patient must delineate the steps of every plan*</small>
