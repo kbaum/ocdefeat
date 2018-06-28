@@ -29,7 +29,7 @@ class ObsessionsController < ApplicationController
             flash.now[:alert] = "None of your ERP plans use a graded exposure approach to defeat OCD."
           else
             @obsessions = obsessions.defeatable_by_graded_exposure
-            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by constructing a hierachy of exposures and gradually performing the most to least tolerable exercises."
+            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by constructing a hierachy of OCD triggers and gradually performing the most to least tolerable exposure exercises."
           end
         end
       elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
