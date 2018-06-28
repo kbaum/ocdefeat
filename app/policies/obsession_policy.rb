@@ -16,7 +16,7 @@ class ObsessionPolicy < ApplicationPolicy
   end
 
   def create? # only patients can create obsessions
-    user.patient?
+    new?
   end
 
   def show?
