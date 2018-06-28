@@ -142,7 +142,7 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "Patient #{patient_picked.name} diligently designed ERP plans for every obsession."
         else # If the patient has obsessions for which no ERP plans were designed
           @obsessions = patient_picked.obsessions.sans_plans
-          flash.now[:notice] = "Patient #{patient_picked.name} has #{plural_inflection(@obsessions)} for which no ERP plans were designed!"
+          flash.now[:notice] = "Patient #{patient_picked.name} has #{plural_inflection(@obsessions)} for which no ERP plans were designed."
         end
       elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset -- params[:ocd_subset] is the ID of the theme
         if obsessions.by_theme(params[:ocd_subset]).empty? # If no obsession is classified in the selected subset
@@ -153,7 +153,6 @@ class ObsessionsController < ApplicationController
         end
       else # Therapist did not select a filter
         @obsessions = obsessions # stores the therapist's patients' obsessions
-        #flash.now[:notice] = "A full psychiatric history of your patients' obsessions is recorded below!"
       end
     elsif current_user.admin?
       if !params[:date].blank? # Admin filters obsessions by date created
