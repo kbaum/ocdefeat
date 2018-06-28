@@ -6,12 +6,12 @@ class SessionsController < ApplicationController
       if auth_hash = request.env["omniauth.auth"]
         @user = User.find_or_create_by_omniauth(auth_hash)
         session[:user_id] = @user.id
-        redirect_to user_path(@user), notice: "You successfully logged in!"
+        redirect_to user_path(@user), flash: { success: "You successfully logged in!" }
       else
         @user = User.find_by(email: params[:email])
         if @user && @user.authenticate(params[:password])
           session[:user_id] = @user.id # log in the user
-          redirect_to user_path(@user), notice: "You successfully logged in! Welcome back to OCDefeat, #{@user.name}!"
+          redirect_to user_path(@user), flash: { success: "You successfully logged in! Welcome back to OCDefeat, #{@user.name}!" }
         else # present login form so user can try logging in again
           flash.now[:error] = "Your login attempt was unsuccessful. Please enter a valid email and password combination."
           render :new
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
 
     def destroy # logging out the user
       session.clear # session[:user_id] = nil
-      redirect_to root_url, notice: "Thanks for using OCDefeat! Goodbye for now."
+      redirect_to root_url, flash: { success: "Thanks for using OCDefeat! Goodbye for now." }
     end
 end
 
