@@ -182,12 +182,10 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
-    def require_plans # private method called before plans#index
-      plans = policy_scope(Plan)
-      # A patient can only see her own plans, a therapist can see her patients' plans, an admin can see titles of all plans
+    def require_plans # called before plans#index
       if current_user.therapist? && current_user.counselees.empty?
         redirect_to user_path(current_user), alert: "There are no ERP plans for you to review since you currently have no patients!"
-      elsif plans.empty?
+      elsif policy_scope(Plan).empty? # If there are no plans to view (and the therapist has patients)
         if current_user.admin?
           redirect_to root_path, alert: "The Index of ERP plans is currently empty."
         elsif current_user.therapist?
@@ -197,7 +195,7 @@ class PlansController < ApplicationController
             redirect_to user_path(current_user), alert: "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
           else # the patient has obsessions for which no plans were designed
             first_planless_obsession = current_user.obsessions.sans_plans.first
-            redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to gain some exposure. Why not design a new ERP plan for this obsession now?"
+            redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to gain some exposure. Why not design an ERP plan for this obsession now?"
           end
         end
       end
