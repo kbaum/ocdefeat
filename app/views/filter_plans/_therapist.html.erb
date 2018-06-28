@@ -10,3 +10,9 @@
   <br><br>
   <%= submit_tag "Filter Plans" %>
 <% end %>
+
+<br>
+
+<% if done || undone %> <!-- Therapist filtered plans by patient's progress toward ERP plan completion -->
+  <%= render partial: "plan_progress_div", locals: { done: done, undone: undone } %>
+<% end %>
