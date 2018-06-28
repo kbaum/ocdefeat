@@ -22,7 +22,7 @@ class ObsessionsController < ApplicationController
             flash.now[:alert] = "None of your ERP plans use a flooding approach to defeat OCD."
           else
             @obsessions = obsessions.defeatable_by_flooding
-            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by flooding yourself with the exposures that engender the most anxiety first."
+            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by flooding yourself with the most anxiety-provoking exposures first."
           end
         elsif params[:approach] == "Graded Exposure"
           if obsessions.defeatable_by_graded_exposure.empty?
