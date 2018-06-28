@@ -207,7 +207,7 @@ class ObsessionsController < ApplicationController
   def update
     authorize @obsession
 
-    if @obsession.update(obsession_params)
+    if @obsession.update_attributes(permitted_attributes(@obsession))
       redirect_to obsession_path(@obsession), flash: { success: "Your obsession was successfully updated!" }
     else
       flash.now[:error] = "Your attempt to edit your obsession was unsuccessful. Please try again."
