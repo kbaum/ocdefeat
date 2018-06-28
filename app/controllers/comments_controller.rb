@@ -71,7 +71,7 @@ class CommentsController < ApplicationController
       if current_user.therapist?
         "Thank you for sharing your advice about overcoming this obsession!"
       elsif current_user.patient?
-        "Thank you for reaching out to your therapist!"
+        "Thank you for reaching out to your therapist to express your concerns!"
       end
     end
 
