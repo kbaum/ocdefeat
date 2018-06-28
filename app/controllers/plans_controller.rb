@@ -204,12 +204,6 @@ class PlansController < ApplicationController
     end
 
     def plan_params
-      params.require(:plan).permit(
-        :title,
-        :goal,
-        :flooded,
-        :obsession_id,
-        :progress
-      )
+      params.require(:plan).permit(:title, :goal, :flooded, :obsession_id, :progress)
     end
 end
