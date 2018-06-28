@@ -31,6 +31,12 @@ class ObsessionPolicy < ApplicationPolicy
     obsession_owner
   end
 
+  def permitted_attributes # user_id cannot be changed
+    if obsession_owner
+      [:intrusive_thought, :triggers, :anxiety_rating, :symptoms, :rituals, :time_consumed, :theme_id]
+    end
+  end
+
   def update?
     edit?
   end
