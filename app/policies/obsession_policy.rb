@@ -32,7 +32,7 @@ class ObsessionPolicy < ApplicationPolicy
   end
 
   def update?
-    obsession_owner
+    edit?
   end
 
   def destroy?
