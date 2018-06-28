@@ -153,7 +153,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id # log in the user
-      redirect_to user_path(@user), notice: "You successfully registered and created your preliminary profile, #{current_user.name}!"
+      redirect_to user_path(@user), flash: { success: "You successfully registered and created your preliminary profile, #{current_user.name}!" }
     else
       flash.now[:error] = "Your registration attempt was unsuccessful. Please try again."
       3.times { @user.treatments.build }
@@ -174,14 +174,14 @@ class UsersController < ApplicationController
     authorize @user
     if current_user.admin? && @user.unassigned? && params[:user][:role] != "unassigned"
       if @user.update_attributes(permitted_attributes(@user))
-        redirect_to users_path, notice: "#{@user.name} was successfully assigned the role of #{@user.role}!"
+        redirect_to users_path, flash: { success: "#{@user.name} was successfully assigned the role of #{@user.role}!" }
       end
     elsif current_user.admin? && @user.counselor.nil? && !params[:user][:counselor_id].nil?
       if @user.update_attributes(permitted_attributes(@user))
-        redirect_to users_path, notice: "Patient #{@user.name} is now under the care of #{User.by_role("therapist").find(params[:user][:counselor_id]).name}!"
+        redirect_to users_path, flash: { success: "Patient #{@user.name} is now under the care of #{User.by_role("therapist").find(params[:user][:counselor_id]).name}!" }
       end
     elsif @user.update_attributes(permitted_attributes(@user))
-      redirect_to user_path(@user), notice: "User information was successfully updated!"
+      redirect_to user_path(@user), flash: { success: "User information was successfully updated!" }
     else
       flash.now[:error] = "Your attempt to edit user information was unsuccessful. Please try again."
       render :edit
@@ -193,9 +193,9 @@ class UsersController < ApplicationController
     authorize user
     user.destroy
     if current_user.admin?
-      redirect_to users_path, notice: "The user's account was successfully deleted."
+      redirect_to users_path, flash: { success: "The user's account was successfully deleted." }
     else
-      redirect_to root_url, notice: @message
+      redirect_to root_url, flash: { success: @message }
     end
   end
 
