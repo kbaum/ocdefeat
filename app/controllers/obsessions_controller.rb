@@ -248,6 +248,7 @@ class ObsessionsController < ApplicationController
 
     def obsession_params
       params.require(:obsession).permit(
+        :user_id,
         :intrusive_thought,
         :triggers,
         :time_consumed,
