@@ -30,14 +30,14 @@
   <% end %>
 </div>
 
-
 <%= render partial: "obsession_data", locals: { obsession: @obsession } %>
 <%= render partial: "self_help_ul", locals: { obsession: @obsession } %>
-<br>
 
 <% if current_user.therapist? && !@obsession.comments.concerns.empty? %>
+  <br>
   <p><strong>Most Recent Concern to Address</strong>: <em class="spike">"<%= @obsession.comments.concerns.most_recently_updated.content %>"</em></p>
 <% elsif current_user.patient? && !@obsession.comments.advice.empty? %>
+  <br>
   <p><strong>Most Recent Advice to Heed</strong>: <em>"<%= @obsession.comments.advice.most_recently_updated.content %>"</em></p>
 <% end %>
 
