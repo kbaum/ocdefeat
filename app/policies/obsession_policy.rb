@@ -22,7 +22,7 @@ class ObsessionPolicy < ApplicationPolicy
   def show?
     if user.patient? # A patient can only see her own obsessions' show pages
       obsession_owner
-    elsif user.therapist? # A therapist can only see her own counselees' obsessions
+    elsif user.therapist? # A therapist can only see her own counselees' obsession show pages
       record.user.in?(user.counselees)
     end
   end
@@ -42,6 +42,6 @@ class ObsessionPolicy < ApplicationPolicy
   private
 
     def obsession_owner
-      user == record.user # record refers to the obsession instance
+      user == record.user
     end
 end
