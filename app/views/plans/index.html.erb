@@ -4,10 +4,7 @@
   <%= render partial: filters, locals: { plans: policy_scope(Plan), counselees: @counselees, themes: @themes, your_obsessions: @your_obsessions } %>
 </div>
 
-<hr>
-
 <% if @plans %>
+  <hr>
   <%= render partial: "plans_div", locals: { plans: @plans } %>
-<% elsif @done || @undone %> <!--Therapist filtered plans by patient's progress toward ERP plan completion-->
-  <%= render partial: "plan_progress_div", locals: { done: @done, undone: @undone } %>
 <% end %>
