@@ -10,6 +10,12 @@
       <%= content_tag(:span, nil, class: "glyphicon glyphicon-pencil") %> Create ERP Plan
     <% end %>
   <% end %>
+
+  <% if policy(@obsession).update? %>
+    <%= link_to edit_obsession_path(@obsession), class: "btn btn-primary btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Obsession
+    <% end %>
+  <% end %>
 </div>
 
 
