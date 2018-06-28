@@ -1,7 +1,7 @@
 class ObsessionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.admin? # An admin can view the index of all obsessions
+      if user.admin? # An admin can view the index of all obsessions (thought is displayed anonymously)
         scope.all
       elsif user.therapist? # A therapist can view the index of her own counselees' obsessions
         scope.where(user: user.counselees)
@@ -9,6 +9,10 @@ class ObsessionPolicy < ApplicationPolicy
         scope.where(user: user)
       end
     end
+  end
+
+  def new? # only patients can view the form to create a new obsession
+    user.patient?
   end
 
   def create? # only patients can create obsessions
