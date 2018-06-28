@@ -1,7 +1,7 @@
 module ObsessionsHelper
   def label_search
     if current_user.patient?
-      "Do some introspection"
+      "Take a moment to introspect"
     elsif current_user.therapist?
       "Read your patients' minds"
     end
