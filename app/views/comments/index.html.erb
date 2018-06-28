@@ -1,7 +1,7 @@
 <h4>Comments on the Obsession:</h4>
 <small><em>"<%= @obsession.intrusive_thought %>"</em></small>
 
-<br>
+<br><br>
 
 <%= render partial: "filter_comments", locals: { obsession: @obsession } unless @obsession.comments.empty? %>
 
