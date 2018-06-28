@@ -5,7 +5,6 @@ class ObsessionsController < ApplicationController
 
   def index
     obsessions = policy_scope(Obsession)
-    @counselees = policy_scope(User)
     @themes = policy_scope(Theme)
 
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
@@ -84,6 +83,7 @@ class ObsessionsController < ApplicationController
         @obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
       end
     elsif current_user.therapist?
+      @counselees = policy_scope(User)
       if !params[:search].blank? # Therapist searches her patients' obsessions by intrusive_thought containing term entered into search form
         if obsessions.search_thoughts(params[:search]).empty?
           flash.now[:alert] = "None of your patients are ruminating about that idea!"
