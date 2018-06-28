@@ -17,7 +17,9 @@ class ObsessionsController < ApplicationController
           flash.now[:notice] = "A thought popped into your head (and your search results)!"
         end
       elsif !params[:approach].blank?
-        if params[:approach] == "Flooding"
+        if current_user.plans.empty?
+          flash.now[:alert] = "Looks like you haven't designed any ERP plans to expose yourself to your obsessions!"
+        elsif params[:approach] == "Flooding"
           if obsessions.defeatable_by_flooding.empty?
             flash.now[:alert] = "None of your ERP plans use a flooding approach to defeat OCD."
           else
