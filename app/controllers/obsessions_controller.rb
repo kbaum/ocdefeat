@@ -76,11 +76,10 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "None of your obsessions pertain to \"#{Theme.find(params[:ocd_theme]).name}.\""
         else # 1 or more of the patient's obsessions are classified in the selected theme
           @obsessions = obsessions.by_theme(params[:ocd_theme]) # stores AR::Relation of the patient's obsessions that are classified in the selected OCD theme
-          flash.now[:notice] = "The content of your obsessions revolves around \"#{Theme.find(params[:ocd_theme]).name}.\" #{sv_agreement(@obsessions)} classified in this OCD theme."
+          flash.now[:notice] = "The content of #{plural_inflection(@obsessions)} revolves around \"#{Theme.find(params[:ocd_theme]).name.downcase}.\""
         end
       else # Patient did not choose a filter, so all of her own obsessions are listed
         @obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
-        #flash.now[:notice] = "Your history of obsessions is recorded below."
       end
     elsif current_user.therapist?
       if !params[:search].blank? # Therapist searches her patients' obsessions by intrusive_thought containing term entered into search form
