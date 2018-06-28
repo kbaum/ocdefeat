@@ -86,7 +86,7 @@ class ObsessionsController < ApplicationController
       @counselees = policy_scope(User)
       if !params[:search].blank? # Therapist searches her patients' obsessions by intrusive_thought containing term entered into search form
         if obsessions.search_thoughts(params[:search]).empty?
-          flash.now[:alert] = "None of your patients are ruminating about that idea!"
+          flash.now[:alert] = "None of your patients are ruminating about that idea."
         else
           @obsessions = obsessions.search_thoughts(params[:search])
           flash.now[:notice] = "That stream of thought provides content for #{plural_inflection(@obsessions)}!"
