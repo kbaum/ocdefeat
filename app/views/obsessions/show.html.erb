@@ -22,6 +22,12 @@
       <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Obsession
     <% end %>
   <% end %>
+
+  <% if policy(@obsession).show? %>
+    <%= link_to obsession_comments_path(@obsession), class: "btn btn-default btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-book") %> Read Comments
+    <% end %>
+  <% end %>
 </div>
 
 
