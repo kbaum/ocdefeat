@@ -42,7 +42,7 @@ module PlansHelper
   end
 
   def present_plans(plans)
-    content_tag(:ul, class: "plans-ul") do
+    content_tag(:ul) do
       plans.each do |plan|
         concat(content_tag(:li, link_to(plan.title, plan_path(plan))))
       end
