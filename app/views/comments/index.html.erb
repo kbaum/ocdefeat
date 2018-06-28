@@ -1,4 +1,5 @@
-<h3>Comments on Obsession: <em>"<%= @obsession.intrusive_thought %>"</em></h3>
+<h4>Comments on the Obsession:</h4>
+<small><em>"<%= @obsession.intrusive_thought %>"</em></small>
 
 <br>
 
@@ -8,4 +9,6 @@
 
 <%= render(@comments) || "No comments were found." %>
 
-<%= link_to "Go back to obsession", obsession_path(@obsession) %>
+<br><br>
+
+<%= link_to "Go back to the obsession!", obsession_path(@obsession), class: "btn btn-default btn-sm" %>
