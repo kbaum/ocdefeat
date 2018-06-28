@@ -1,3 +1,11 @@
+<br>
+
+<p><em>OCDefeat has been documenting your progress toward ERP mastery! Read the full report below:</em></p>
+
+<%= render partial: "plans/plan_progress_div", locals: { done: @done, undone: @undone } %>
+
+<br>
+
 <h4>Filter Your Plans...</h4>
 
 <%= form_tag("/plans", method: "get") do %>
