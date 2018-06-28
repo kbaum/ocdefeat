@@ -38,7 +38,7 @@
   <p><strong>Most Recent Concern to Address</strong>: <em class="spike">"<%= @obsession.comments.concerns.most_recently_updated.content %>"</em></p>
 <% elsif current_user.patient? && !@obsession.comments.advice.empty? %>
   <br>
-  <p><strong>Most Recent Advice to Heed</strong>: <em>"<%= @obsession.comments.advice.most_recently_updated.content %>"</em></p>
+  <p><strong>Most Recent Advice to Heed</strong>: <em class="advice">"<%= @obsession.comments.advice.most_recently_updated.content %>"</em></p>
 <% end %>
 
 <div class="well well-sm">
