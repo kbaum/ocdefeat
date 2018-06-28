@@ -10,6 +10,9 @@ class PlansController < ApplicationController
     @your_obsessions = current_user.obsessions if current_user.patient?
 
     if current_user.patient?
+      @done = plans.accomplished if !plans.accomplished.empty?
+      @undone = plans.unaccomplished if !plans.unaccomplished.empty?
+      
       if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
         @plans = plans.find(params[:title])
         flash.now[:notice] = "An overview of the ERP plan entitled \"#{@plans.title}\" is displayed below!"
