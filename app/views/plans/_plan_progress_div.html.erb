@@ -31,5 +31,9 @@
   <% if undone && !undone.stepless.blank? %>
     <p><strong><u>Unfinished Stepless Plans:</strong></p>
     <%= render partial: "plans_ul", locals: { plans: undone.stepless } %>
+    <% if undone.with_steps.empty? %>
+        <small>*The patient must delineate the steps of every plan*</small>
+        <br><br>
+    <% end %>
   <% end %>
 </div>
