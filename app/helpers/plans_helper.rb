@@ -24,7 +24,7 @@ module PlansHelper
   end
 
   def add_or_perform_steps(plan)
-    plan.steps.empty? ? "Delineate the steps to be taken" : "Execute exposure exercises" if plan
+    plan.steps.empty? ? "Delineate the steps to be taken" : "Execute exposure exercises"
   end
 
   def planner(accomplished, unaccomplished)
