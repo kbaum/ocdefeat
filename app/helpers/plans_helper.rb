@@ -40,13 +40,4 @@ module PlansHelper
       "achieved desensitization by implementing #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} from start to finish!"
     end
   end
-
-  def present_plans(plans)
-    content_tag(:ul) do
-      plans.each do |plan|
-        concat(content_tag(:li, link_to(plan.title, plan_path(plan))))
-      end
-    end
-  end
-
 end
