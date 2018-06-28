@@ -8,6 +8,8 @@
 
 <h4>Filter Your Plans...</h4>
 
+<br>
+
 <%= form_tag("/plans", method: "get") do %>
   <%= select_tag "title", options_from_collection_for_select(plans, "id", "title"), prompt: "Title of Plan" %><br><br>
   <%= select_tag "obsession_targeted", options_from_collection_for_select(your_obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %><br><br>
