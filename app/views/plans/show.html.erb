@@ -24,7 +24,9 @@
 
 <% if policy(@plan).edit? && @plan.unfinished? %>
   <br>
-  
+  <%= link_to edit_plan_path(@plan), class: "btn btn-primary btn-md" do %>
+    <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Plan Overview
+  <% end %>
 <% end %>
 
 <% if policy(@plan).destroy? %>
