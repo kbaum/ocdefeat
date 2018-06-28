@@ -9,7 +9,7 @@
     <br>
   <% end %>
 
-  <% if undone && !undone.with_steps.empty? %>
+  <% if undone && !undone.with_steps.empty? %> <!-- If the patient selected has unfinished plans with steps -->
     <p><strong><u>Unfinished Delineated Plans</u></strong></p>
 
     <% if !undone.with_incomplete_step.empty? %>
@@ -18,7 +18,7 @@
     <% end %>
 
     <% if !undone.unfinished_but_with_all_steps_completed.empty? %>
-      <small>~with all steps marked complete but not yet submitted:</small>
+      <small>~with all steps marked as complete but not yet archived:</small>
       <%= render partial: "plans_ul", locals: { plans: undone.unfinished_but_with_all_steps_completed } %>
     <% end %>
 
