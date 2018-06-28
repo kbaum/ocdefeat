@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
   def update # PUT or PATCH request to "/comments/:id" maps to comments#update due to shallow nesting
     authorize @comment
     if @comment.update_attributes(permitted_attributes(@comment))
-      redirect_to obsession_comments_path(@comment.obsession), notice: "Your comment was successfully modified!"
+      redirect_to obsession_comments_path(@comment.obsession), flash: { success: "Your comment was successfully modified!" }
     else
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
       render :edit
