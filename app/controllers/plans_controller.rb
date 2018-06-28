@@ -1,6 +1,5 @@
 class PlansController < ApplicationController
   before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
-  before_action :set_obsessions, only: [:index]
   before_action :require_plans, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
 
@@ -185,7 +184,10 @@ class PlansController < ApplicationController
 
     def require_plans # private method called before plans#index
       plans = policy_scope(Plan)
-      if plans.empty?
+      # A patient can only see her own plans, a therapist can see her patients' plans, an admin can see titles of all plans
+      if current_user.therapist? && current_user.counselees.empty?
+        redirect_to user_path(current_user), alert: "There are no ERP plans for you to review since you currently have no patients!"
+      elsif plans.empty?
         if current_user.admin?
           redirect_to root_path, alert: "The Index of ERP plans is currently empty."
         elsif current_user.therapist?
@@ -195,21 +197,8 @@ class PlansController < ApplicationController
             redirect_to user_path(current_user), alert: "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
           else # the patient has obsessions for which no plans were designed
             first_planless_obsession = current_user.obsessions.sans_plans.first
-            redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to implement some exposure exercises. Why not design a new ERP plan for this obsession now?"
+            redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to gain some exposure. Why not design a new ERP plan for this obsession now?"
           end
-        end
-      end
-    end
-
-
-
-    def set_obsessions
-      if current_user.patient?
-        @your_obsessions = current_user.obsessions
-        if @your_obsessions.empty?
-          redirect_to new_obsession_path, alert: "No ERP plans were found since you have no obsessions. Create an obsession now?"
-        else
-          @your_obsessions
         end
       end
     end
