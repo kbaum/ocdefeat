@@ -1,6 +1,6 @@
 class Obsession < ApplicationRecord
   extend Datable
-  
+
   scope :defeatable_by_flooding, -> { joins(:plans).merge(Plan.flooding).distinct }
   scope :defeatable_by_graded_exposure, -> { joins(:plans).merge(Plan.graded_exposure).distinct }
   scope :sans_plans, -> { where.not(id: Plan.all.map {|plan| plan.obsession_id}) }
@@ -24,8 +24,16 @@ class Obsession < ApplicationRecord
     where(anxiety_rating: anxiety_rating)
   end
 
+  def self.least_to_most_distressing
+    order(:anxiety_rating)
+  end
+
   def self.most_to_least_distressing
     order(anxiety_rating: :desc)
+  end
+
+  def self.least_to_most_time_consuming
+    order(:time_consumed)
   end
 
   def self.most_to_least_time_consuming
