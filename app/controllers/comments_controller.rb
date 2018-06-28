@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   def destroy  # DELETE request to "/comments/:id" maps to comments#destroy
     authorize @comment
     @comment.destroy
-    redirect_to obsessions_path, notice: "#{delete_comment_message}"
+    redirect_to obsessions_path, flash: { success: "#{delete_comment_message}" }
   end
 
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
