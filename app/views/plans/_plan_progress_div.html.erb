@@ -24,17 +24,15 @@
 
     <% if undone.stepless.empty? %> <!-- If all unfinished plans have steps -->
       <small><em>*The patient must mark all steps as completed and then mark each plan as finished*</em></small>
-      <br><br>
     <% end %>
+    <br>
   <% end %>
 
   <% if undone && !undone.stepless.empty? %> <!-- If the patient selected has unfinished stepless plans -->
-    <br>
     <p><strong><u>Unfinished Stepless Plans</u></strong></p>
     <%= render partial: "plans_ul", locals: { plans: undone.stepless } %>
     <% if undone.with_steps.empty? %> <!-- If all unfinished plans have no steps -->
         <small>*The patient must delineate the steps of every plan*</small>
-        <br><br>
     <% end %>
   <% end %>
 </div>
