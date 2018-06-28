@@ -1,5 +1,6 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
+  before_action :set_themes, only: [:new, :edit]
   before_action :require_obsessions, only: [:index]
 
   def index
@@ -180,7 +181,6 @@ class ObsessionsController < ApplicationController
   def new
     @obsession = Obsession.new # instance for form_for to wrap around
     authorize @obsession
-    @themes = policy_scope(Theme) # @themes stores all themes so user can select which existing theme her new obsession pertains to
   end
 
   def create
@@ -202,7 +202,6 @@ class ObsessionsController < ApplicationController
 
   def edit
     authorize @obsession
-    @themes = policy_scope(Theme)
   end
 
   def update
@@ -226,6 +225,10 @@ class ObsessionsController < ApplicationController
 
     def set_obsession
       @obsession = Obsession.find(params[:id])
+    end
+
+    def set_themes
+      @themes = policy_scope(Theme) # Theme.all
     end
 
     def require_obsessions # this method is called before obsessions#index
