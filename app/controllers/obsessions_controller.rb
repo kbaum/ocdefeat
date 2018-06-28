@@ -178,9 +178,9 @@ class ObsessionsController < ApplicationController
   end
 
   def new
-    @obsession = Obsession.new # @obsession instance for form_for to wrap around
+    @obsession = Obsession.new # instance for form_for to wrap around
     authorize @obsession
-    @themes = policy_scope(Theme) # @themes stores all OCD themes so user can select which existing theme their new obsession pertains to
+    @themes = policy_scope(Theme) # @themes stores all themes so user can select which existing theme her new obsession pertains to
   end
 
   def create
@@ -188,9 +188,9 @@ class ObsessionsController < ApplicationController
     authorize @obsession
 
     if @obsession.save
-      redirect_to obsession_path(@obsession), notice: "Your obsession was successfully created!"
+      redirect_to obsession_path(@obsession), flash: { success: "You successfully reported a new obsession!" }
     else
-      flash.now[:error] = "Your attempt to create an obsession was unsuccessful. Please try again."
+      flash.now[:error] = "Your attempt to report a new obsession was unsuccessful. Please try again."
       render :new
     end
   end
