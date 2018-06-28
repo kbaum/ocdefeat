@@ -7,6 +7,7 @@ class PlansController < ApplicationController
     plans = policy_scope(Plan)
     @counselees = policy_scope(User) # used in app/views/filter_plans/_therapist.html.erb to store AR::Relation of the patients (counselees) that the therapist was assigned
     @themes = policy_scope(Theme) # Theme.all - patients, therapists and admins can view all themes
+    @your_obsessions = current_user.obsessions if current_user.patient?
 
     if current_user.patient?
       if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
