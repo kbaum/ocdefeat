@@ -27,4 +27,9 @@
       <br><br>
     <% end %>
   <% end %>
+
+  <% if undone && !undone.stepless.blank? %>
+    <p><strong><u>Unfinished Stepless Plans:</strong></p>
+    <%= render partial: "plans_ul", locals: { plans: undone.stepless } %>
+  <% end %>
 </div>
