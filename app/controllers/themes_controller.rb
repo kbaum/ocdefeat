@@ -1,4 +1,6 @@
 class ThemesController < ApplicationController
+  before_action :set_theme, only: [:edit, :update, :destroy]
+
   def new
     @theme = Theme.new # instance for form_for to wrap around
     authorize @theme
@@ -17,6 +19,20 @@ class ThemesController < ApplicationController
     end
   end
 
+  def edit
+    authorize @theme
+  end
+
+  def update
+    authorize @theme
+    if @theme.update_attributes(permitted_attributes(@theme))
+      redirect_to themes_path, flash: { success: "You successfully modified the description of this OCD theme!" }
+    else
+      flash.now[:error] = "Your attempt to edit the description of this OCD theme was unsuccessful. Please try again."
+      render :edit
+    end
+  end
+
   def index
     @themes = policy_scope(Theme) # Theme.all
   end
@@ -30,6 +46,9 @@ class ThemesController < ApplicationController
   end
 
   private
+    def set_theme
+      @theme = Theme.find(params[:id])
+    end
 
     def theme_params
       params.require(:theme).permit(:name, :description)
