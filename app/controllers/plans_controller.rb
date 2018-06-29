@@ -12,7 +12,7 @@ class PlansController < ApplicationController
     if current_user.patient?
       @done = plans.accomplished if !plans.accomplished.empty?
       @undone = plans.unaccomplished if !plans.unaccomplished.empty?
-      
+
       if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
         @plans = plans.find(params[:title])
         flash.now[:notice] = "An overview of the ERP plan entitled \"#{@plans.title}\" is displayed below!"
@@ -193,10 +193,10 @@ class PlansController < ApplicationController
         if current_user.admin?
           redirect_to root_path, alert: "The Index of ERP plans is currently empty."
         elsif current_user.therapist?
-          redirect_to users_path, alert: "ERP plans designed by your patients were not found."
+          redirect_to root_path, alert: "ERP plans designed by your patients were not found."
         elsif current_user.patient?
           if current_user.obsessions.empty? # If the user has no plans but also has no obsessions
-            redirect_to user_path(current_user), alert: "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
+            redirect_to root_path(current_user), alert: "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
           else # the patient has obsessions for which no plans were designed
             first_planless_obsession = current_user.obsessions.sans_plans.first
             redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to gain some exposure. Why not design an ERP plan for this obsession now?"
