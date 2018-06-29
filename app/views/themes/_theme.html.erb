@@ -8,6 +8,6 @@
   <p><em><%= tally_popularity(theme) %></em></p>
 
   <% if policy(theme).destroy? %>
-    <%= button_to "Delete Theme", theme_path(theme), method: :delete, data: { confirm: "The OCD theme \"#{theme.name}\" will be permanently deleted." }, class: "btn btn-danger btn-sm", role: "button" %>
+    
   <% end %>
 </div>
