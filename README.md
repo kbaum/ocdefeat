@@ -8,8 +8,8 @@ Please follow the instructions below:
 
 1). Fork this repository
 2). Install all gem dependencies by running bundle install (or bundle)
-3). Run migrations with the command rake db:migrate to set up the database.
-3). Seed your database by running rake db:seed.
+3). Run migrations with the command rake db:migrate to set up the database
+3). Seed your database by running rake db:seed
 4). Run command rails s start up your application's local server
 5). Navigate to http://localhost:3000/ to start using OCDefeat!
 
