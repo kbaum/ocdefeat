@@ -12,10 +12,10 @@ class ThemePolicy < ApplicationPolicy
   end
 
   def create?
-    user.therapist?
+    new?
   end
 
   def destroy?
-    user.therapist?
+    new?
   end
 end
