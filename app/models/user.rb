@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :user_treatments, dependent: :destroy
   has_many :treatments, through: :user_treatments
+  has_many :themes # A therapist can create many themes in which to classify patients' obsessions
 
   validates :name, presence: true
   validates :email, presence: true, email: true, uniqueness: true, length: { maximum: 100 }

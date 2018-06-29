@@ -1,4 +1,5 @@
 class Theme < ApplicationRecord
+  belongs_to :user # theme belongs to therapist user instance who created it
   has_many :obsessions
   validates :name, presence: true, uniqueness: true
 
