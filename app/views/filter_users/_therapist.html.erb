@@ -1,5 +1,7 @@
 <h2>Patient Census</h2>
 
+<h5><em><%= pluralize(current_user.counselees.count, "patient") %> <%= "is".pluralize(current_user.counselees.count) %> currently seeking your psychological expertise!</em></h5>
+
 <br>
 
 <h4>Filter Your Patients by...</h4>
