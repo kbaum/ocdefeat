@@ -50,17 +50,17 @@ second_patient.role_requested = "Patient"
 second_patient.counselor = second_therapist
 second_patient.save
 
-talk_therapy = Treatment.create(treatment_type: "Psychotherapy")
-cbt = Treatment.create(treatment_type: "Cognitive Behavioral Therapy (CBT)")
-erp = Treatment.create(treatment_type: "Exposure and Response Prevention (ERP)")
-imaginal_exposure = Treatment.create(treatment_type: "Imaginal Exposure")
-behavior_modification = Treatment.create(treatment_type: "Behavior Modification")
-group_therapy = Treatment.create(treatment_type: "Group Therapy")
-traditional_outpatient = Treatment.create(treatment_type: "Traditional Outpatient Clinic")
-intensive_outpatient = Treatment.create(treatment_type: "Intensive Outpatient Clinic")
-inpatient = Treatment.create(treatment_type: "Inpatient")
-act = Treatment.create(treatment_type: "Acceptance and Commitment Therapy")
-sri = Treatment.create(treatment_type: "Selective Serotonin Reuptake Inhibitors (SSRIs)")
+Treatment.create(treatment_type: "Psychotherapy")
+Treatment.create(treatment_type: "Cognitive Behavioral Therapy (CBT)")
+Treatment.create(treatment_type: "Exposure and Response Prevention (ERP)")
+Treatment.create(treatment_type: "Imaginal Exposure")
+Treatment.create(treatment_type: "Behavior Modification")
+Treatment.create(treatment_type: "Group Therapy")
+Treatment.create(treatment_type: "Traditional Outpatient Clinic")
+Treatment.create(treatment_type: "Intensive Outpatient Clinic")
+Treatment.create(treatment_type: "Inpatient")
+Treatment.create(treatment_type: "Acceptance and Commitment Therapy")
+Treatment.create(treatment_type: "Selective Serotonin Reuptake Inhibitors (SSRIs)")
 
 Theme.create(name: "Existentialism", description: "This theme is characterized by preoccupation with philosophical questions about the meaning of life.")
 Theme.create(name: "Perfectionism", description: "This theme is characterized by preoccupation with making mistakes and the need to exert absolute control.")
