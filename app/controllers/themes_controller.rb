@@ -5,7 +5,8 @@ class ThemesController < ApplicationController
   end
 
   def create
-    @theme = Theme.new(theme_params)
+    # @theme = Theme.new(theme_params)
+    @theme = current_user.themes.build(theme_params)
     authorize @theme
 
     if @theme.save
