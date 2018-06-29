@@ -4,9 +4,19 @@ by which repeated exposure to fears and avoidance of ritualization leads to incr
 
 During the registration process, prospective users request a role in the OCDefeat community, which the admin can approve or reject. After their roles have been assigned, newly-minted OCDefeat patients can report their obsessions, voice concerns and develop custom ERP plans tailored to their obsessions. Therapists, who are assigned to particular patients by the admin, can revise their patients' ERP plans, create OCD themes in which to classify their patients' obsessions and provide advice.
 
-Follow the instructions below to begin using OCDefeat:
+Please follow the instructions below:
 
-1). Fork the repository
-2). Run command bundle (or bundle install)
-3). Run command rake db:seed (to seed the database)
-4). Run command rails s to start this application on your local server, which can be viewed at: http://localhost:3000/
+1). Fork this repo.
+2). Install all gem dependencies by running bundle install (or bundle)
+3). Run migrations with the command rake db:migrate to set up the database.
+3). Seed your database by running rake db:seed.
+4). Run command rails s start up your application's local server
+5). Navigate to http://localhost:3000/ to start using OCDefeat!
+
+Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/Jenna424/ocdefeat. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
+
+License
+
+The application is available as open source under the terms of the MIT License.
