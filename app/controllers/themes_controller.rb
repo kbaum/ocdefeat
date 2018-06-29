@@ -1,6 +1,10 @@
 class ThemesController < ApplicationController
   before_action :set_theme, only: [:edit, :update, :destroy]
 
+  def index
+    @themes = policy_scope(Theme) # Theme.all
+  end
+
   def new
     @theme = Theme.new # instance for form_for to wrap around
     authorize @theme
@@ -31,10 +35,6 @@ class ThemesController < ApplicationController
       flash.now[:error] = "Your attempt to edit the description of this OCD theme was unsuccessful. Please try again."
       render :edit
     end
-  end
-
-  def index
-    @themes = policy_scope(Theme) # Theme.all
   end
 
   def destroy # DELETE request to "/themes/:id" maps to themes#destroy
