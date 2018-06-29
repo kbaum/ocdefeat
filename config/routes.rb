@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, except: :new
   resources :plans, only: :index
-  resources :themes, only: [:index, :new, :create, :destroy]
+  resources :themes, except: [:show]
 
   resources :obsessions, shallow: true do
     resources :comments, except: :show
