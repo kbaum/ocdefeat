@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     end
 
     def login_required # redirect to the homepage unless the user is logged in
-      redirect_to root_path, alert: "You must be logged in to view this page!" unless logged_in?
+      redirect_to root_url, alert: "You must be logged in to view this page!" unless logged_in?
     end
 
     def filters
