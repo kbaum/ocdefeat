@@ -1,9 +1,14 @@
 <div class="well well-lg">
   <h4><mark><%= theme.name %></mark></h4>
+  <small><em> — OCD theme contributed by <%= theme.contributor_name %></em></small>
+
+  <br><br>
 
   <% unless theme.description.blank? %>
     <p><%= theme.description %></p>
   <% end %>
+
+  <br>
 
   <p><em><%= tally_popularity(theme) %></em></p>
 
@@ -12,4 +17,5 @@
       <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Theme
     <% end %>
   <% end %>
+
 </div>
