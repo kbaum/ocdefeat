@@ -50,17 +50,17 @@ second_patient.role_requested = "Patient"
 second_patient.counselor = second_therapist
 second_patient.save
 
-Treatment.create(treatment_type: "Psychotherapy")
-Treatment.create(treatment_type: "Cognitive Behavioral Therapy (CBT)")
-Treatment.create(treatment_type: "Exposure and Response Prevention (ERP)")
-Treatment.create(treatment_type: "Imaginal Exposure")
-Treatment.create(treatment_type: "Behavior Modification")
-Treatment.create(treatment_type: "Group Therapy")
-Treatment.create(treatment_type: "Traditional Outpatient Clinic")
-Treatment.create(treatment_type: "Intensive Outpatient Clinic")
-Treatment.create(treatment_type: "Inpatient")
-Treatment.create(treatment_type: "Acceptance and Commitment Therapy")
-Treatment.create(treatment_type: "Selective Serotonin Reuptake Inhibitors (SSRIs)")
+talk_therapy = Treatment.create(treatment_type: "Psychotherapy")
+cbt = Treatment.create(treatment_type: "Cognitive Behavioral Therapy (CBT)")
+erp = Treatment.create(treatment_type: "Exposure and Response Prevention (ERP)")
+imaginal_exposure = Treatment.create(treatment_type: "Imaginal Exposure")
+behavior_modification = Treatment.create(treatment_type: "Behavior Modification")
+group_therapy = Treatment.create(treatment_type: "Group Therapy")
+traditional_outpatient = Treatment.create(treatment_type: "Traditional Outpatient Clinic")
+intensive_outpatient = Treatment.create(treatment_type: "Intensive Outpatient Clinic")
+inpatient = Treatment.create(treatment_type: "Inpatient")
+act = Treatment.create(treatment_type: "Acceptance and Commitment Therapy")
+sri = Treatment.create(treatment_type: "Selective Serotonin Reuptake Inhibitors (SSRIs)")
 
 Theme.create(name: "Existentialism", description: "This theme is characterized by preoccupation with philosophical questions about the meaning of life.")
 Theme.create(name: "Perfectionism", description: "This theme is characterized by preoccupation with making mistakes and the need to exert absolute control.")
@@ -68,3 +68,7 @@ Theme.create(name: "Contamination", description: "This theme is characterized by
 Theme.create(name: "Scrupulosity", description: "This theme is characterized by preoccupation with religious and moral values.")
 Theme.create(name: "Sensorimotor OCD", description: "This theme is characterized by hyperfixation on automatic bodily processes such as swallowing, breathing or blinking.")
 Theme.create(name: "Symmetry and Orderliness", description: "This theme is characterized by the urge to arrange one's environment in a precise and rigid way.")
+
+UserTreatment.create(user_id: 2, treatment_id: 3, efficacy: "extremely effective", duration: "may take months to years to master this technique")
+UserTreatment.create(user_id: 2, treatment_id: 11, efficacy: "best when used in conjunction with ERP", duration: "typically lifelong")
+UserTreatment.create(user_id: 2, treatment_id: 1, efficacy: "helpful to confide in someone you trust", duration: "months to years")
