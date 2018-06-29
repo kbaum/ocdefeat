@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  before_action :login_required, except: [:new, :create, :home, :privacy, :terms]
+  before_action :login_required, except: [:home]
 
   private
 
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
     def current_user
       #@current_user ||= User.find(session[:user_id]) if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
+      @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
 
     def logged_in?
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     end
 
     def login_required # redirect to the homepage unless the user is logged in
-      redirect_to root_path unless logged_in?
+      redirect_to root_path, alert: "You must be logged in to view this page!" unless logged_in?
     end
 
     def filters
