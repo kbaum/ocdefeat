@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :deletion_msg, only: [:destroy]
   before_action :reset_role_requested, only: [:edit, :update]
   before_action :require_users, only: [:index]
+  before_action :prevent_signed_in_users_from_viewing_signup, only: [:new]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
     users = policy_scope(User)
@@ -201,6 +202,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def prevent_signed_in_users_from_viewing_signup
+      redirect_to root_path, alert: "You cannot view the registration form since you already registered for OCDefeat!" if current_user
+    end
 
     def set_user
       @user = User.find(params[:id])
