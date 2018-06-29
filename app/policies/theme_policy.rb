@@ -15,7 +15,13 @@ class ThemePolicy < ApplicationPolicy
     new?
   end
 
-  def destroy?
-    new?
+  def destroy? # only the therapist who created the theme should be able to delete it
+    theme_owner
   end
+
+  private
+
+    def theme_owner
+      user.therapist? && record.user == user
+    end
 end
