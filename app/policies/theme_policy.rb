@@ -15,6 +15,20 @@ class ThemePolicy < ApplicationPolicy
     new?
   end
 
+  def edit?
+    theme_owner
+  end
+
+  def permitted_attributes
+    if theme_owner
+      [:description]
+    end
+  end
+
+  def update?
+    edit?
+  end
+
   def destroy? # only the therapist who created the theme should be able to delete it
     theme_owner
   end
