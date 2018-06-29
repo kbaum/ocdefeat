@@ -15,3 +15,6 @@ en:
       edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
     comment_policy:
       edit?: "Access denied! You cannot edit a comment that you have not written!"
+    theme_policy:
+      new?: "Access denied! Only trained mental health professionals are permitted to create new OCD themes in which to classify patients' obsessions!"
+      destroy?: "Access denied! You cannot delete an OCD theme that another therapist has contributed to our index page!"
