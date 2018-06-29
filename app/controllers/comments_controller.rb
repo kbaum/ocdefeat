@@ -48,7 +48,7 @@ class CommentsController < ApplicationController
         end
       elsif params[:type] == "Advice from Therapists"
         if @comments.advice.empty?
-          flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter.downcase}, but here are some concerns that need to be addressed:"
+          flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter.downcase}, but here are some of your concerns that need to be addressed:"
         else
           @comments = @comments.advice # stores all advice on a single obsession
           flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when coping with this obsession."
