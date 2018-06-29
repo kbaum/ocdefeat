@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :login_required, only: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update]
   before_action :deletion_msg, only: [:destroy]
   before_action :reset_role_requested, only: [:edit, :update]
