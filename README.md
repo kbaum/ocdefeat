@@ -6,7 +6,7 @@ During the registration process, prospective users request a role in the OCDefea
 
 Please follow the instructions below:
 
-1). Fork this repo.
+1). Fork this repository
 2). Install all gem dependencies by running bundle install (or bundle)
 3). Run migrations with the command rake db:migrate to set up the database.
 3). Seed your database by running rake db:seed.
