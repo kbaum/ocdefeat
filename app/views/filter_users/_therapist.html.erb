@@ -1,7 +1,5 @@
 <h2>Patient Census</h2>
 
-<h5><em><%= pluralize(filtered_users.count, "patient") %> <%= "is".pluralize(filtered_users.count) %> currently seeking your psychological expertise!</em></h5>
-
 <br>
 
 <h4>Filter Your Patients by...</h4>
@@ -55,8 +53,10 @@
     </tr>
   </thead>
   <tbody>
-    <% filtered_users.each do |filtered_user| %>
-      <%= render partial: "users/patient_chart_row", locals: { user: filtered_user } %>
+    <% if filtered_users %>
+      <% filtered_users.each do |filtered_user| %>
+        <%= render partial: "users/patient_chart_row", locals: { user: filtered_user } %>
+      <% end %>
     <% end %>
   </tbody>
 </table>
