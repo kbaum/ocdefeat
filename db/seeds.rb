@@ -24,6 +24,7 @@ second_therapist.email = "psychiatrist@ocdefeat.com"
 second_therapist.password = "psychiatry"
 second_therapist.role = 2
 second_therapist.variant = "Neither"
+second_therapist.severity = "Nonobsessive"
 second_therapist.role_requested = "Therapist"
 second_therapist.save
 
@@ -67,4 +68,3 @@ Theme.create(name: "Contamination", description: "This theme is characterized by
 Theme.create(name: "Scrupulosity", description: "This theme is characterized by preoccupation with religious and moral values.")
 Theme.create(name: "Sensorimotor OCD", description: "This theme is characterized by hyperfixation on automatic bodily processes such as swallowing, breathing or blinking.")
 Theme.create(name: "Symmetry and Orderliness", description: "This theme is characterized by the urge to arrange one's environment in a precise and rigid way.")
-Theme.create(name: "Relationship OCD", description: "This theme is characterized by intense doubts about one's relationship.")
