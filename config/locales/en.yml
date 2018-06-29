@@ -13,3 +13,5 @@ en:
       new?: "Access denied! Only the patient who reported an obsession can design an ERP plan that targets this obsession!"
       show?: "Access denied! Only the patient and therapist who developed an ERP plan can view its exposure exercises!"
       edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
+    comment_policy:
+      edit?: "Access denied! You cannot edit a comment that you have not written!"
