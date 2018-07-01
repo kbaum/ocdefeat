@@ -6,7 +6,7 @@ class Obsession < ApplicationRecord
   scope :defeatable_by_graded_exposure, -> { joins(:plans).merge(Plan.graded_exposure).distinct }
   scope :sans_plans, -> { where.not(id: Plan.all.map {|plan| plan.obsession_id}) }
   scope :presenting_symptoms, -> { where.not(symptoms: nil) }
-  scope :symptomless, -> { where(symptoms: ["", " "]) }
+  scope :symptomless, -> { where(symptoms: nil) }
 
   belongs_to :theme
   belongs_to :user
