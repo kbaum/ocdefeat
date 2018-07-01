@@ -1,7 +1,7 @@
 <div class="form-check">
   <%= form_for(step) do |f| %>
-    <%= f.label :status, "Check the box once you complete this step:", class: "form-check-label" %>
-    <%= f.check_box :status, class: "form-check-input toggle", checked: step.complete? %>
+    <%= f.label :completed, "Check the box once you complete this step:", class: "form-check-label" %>
+    <%= f.check_box :completed, class: "form-check-input toggle", checked: step.completed? %>
   <% end %>
 </div>
 
