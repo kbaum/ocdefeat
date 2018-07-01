@@ -71,7 +71,7 @@ class StepsController < ApplicationController
         :duration,
         :plan_id,
         :discomfort_degree,
-        :status
+        :completed
       )
     end
 
