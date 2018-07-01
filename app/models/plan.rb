@@ -25,7 +25,7 @@ class Plan < ApplicationRecord
   end
 
   def without_step_or_with_incomplete_step?
-    steps.empty? || steps.detect {|step| step.incomplete?}
+    steps.empty? || steps.detect {|step| !step.completed?}
   end
 
   def self.designed_by(designer_id)
