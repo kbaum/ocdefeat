@@ -5,7 +5,7 @@ class Plan < ApplicationRecord
   scope :graded_exposure, -> { where.not(flooded: true) }
   scope :accomplished, -> { where(finished: true) }
   scope :unaccomplished, -> { where.not(finished: true) }
-  scope :with_steps, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
+  scope :with_steps, -> { joins(:steps).distinct }
   scope :stepless, -> { where.not("exists ( #{Step.where('plans.id = steps.plan_id').to_sql} )") }
 
   belongs_to :obsession
