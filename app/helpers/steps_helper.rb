@@ -1,7 +1,7 @@
 module StepsHelper
 
   def div_class_for_step(step)
-    "incomplete" if step.incomplete?
+    "incomplete" if !step.completed?
   end
 
   def div_for_step(step)
