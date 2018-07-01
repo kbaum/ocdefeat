@@ -17,11 +17,11 @@ class Plan < ApplicationRecord
   validates :finished, finished: true, on: :update
 
   def self.with_incomplete_step # Returns AR::Relation of plans with steps where at least 1 step in each plan is incomplete
-    with_steps.merge(Step.not_performed)
+    with_steps.merge(Step.incomplete)
   end
 
   def self.unfinished_but_with_all_steps_completed
-    with_steps.where.not(id: Step.not_performed.map {|step| step.plan})
+    with_steps.where.not(id: Step.incomplete.map {|step| step.plan})
   end
 
   def without_step_or_with_incomplete_step?
