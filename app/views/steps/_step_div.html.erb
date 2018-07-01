@@ -13,7 +13,7 @@
   <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
   <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
 
-  <%= render partial: "steps/set_step_status", locals: { step: step } if step.discomfort_degree && current_user == step.plan.user %>
+  <%= render partial: "steps/set_step_status", locals: { step: step } if current_user == step.plan.user %>
 
   <br>
 
