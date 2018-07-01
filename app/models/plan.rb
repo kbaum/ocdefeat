@@ -3,8 +3,8 @@ class Plan < ApplicationRecord
 
   scope :flooding, -> { where(flooded: true) }
   scope :graded_exposure, -> { where.not(flooded: true) }
-  scope :accomplished, -> { where(progress: 1) }
-  scope :unaccomplished, -> { where(progress: 0) }
+  scope :accomplished, -> { where(finished: true) }
+  scope :unaccomplished, -> { where.not(finished: true) }
   scope :with_steps, -> { joins(:steps).where.not(steps: { id: nil }).distinct }
   scope :stepless, -> { where.not(id: Step.all.map {|step| step.plan_id}) }
 
@@ -14,7 +14,6 @@ class Plan < ApplicationRecord
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
-  #validates :progress, progress: true, on: :update
   validates :finished, finished: true, on: :update
 
   def self.with_incomplete_step # Returns AR::Relation of plans with steps where at least 1 step in each plan is incomplete
