@@ -22,7 +22,7 @@ class StepsController < ApplicationController
   def update # PATCH or PUT request to "/steps/:id" maps to steps#update
     authorize @step
     if @step.update(step_params) # A step that is already marked as complete cannot be updated due to #check_completion
-      if @step.complete? # If the step is updated from incomplete to complete (status changes from 0 to 1)
+      if @step.completed? # If the step is updated from incomplete to complete (status changes from 0 to 1)
         redirect_to plan_path(@plan), flash: { success: "Milestone accomplished! You're one step closer to defeating OCD!" }
       else
         redirect_to plan_path(@plan), flash: { success: "You successfully modified a step in this ERP plan!" }
@@ -55,7 +55,7 @@ class StepsController < ApplicationController
 
     def check_completion # Check if the step was already marked as complete before calling #edit, #update or #destroy (when plan is still unfinished)
       step = Step.find(params[:id])
-      if step.complete?
+      if step.completed?
         redirect_to plan_path(step.plan), alert: "A step that has already been performed cannot be modified!"
       end
     end
