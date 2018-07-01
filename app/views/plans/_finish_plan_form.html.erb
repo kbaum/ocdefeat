@@ -1,6 +1,6 @@
 <div class="form-check">
   <%= form_for(plan) do |f| %>
-    <%= f.label :progress, "Permanently mark this ERP plan as finished", class: "form-check-label" %>
-    <%= f.check_box :progress, class: "form-check-input toggle", checked: plan.finished? %>
+    <%= f.label :finished, "Permanently mark this ERP plan as finished", class: "form-check-label" %>
+    <%= f.check_box :finished, class: "form-check-input toggle", checked: plan.finished? %>
   <% end %>
 </div>
