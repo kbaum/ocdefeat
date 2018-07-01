@@ -1,4 +1,5 @@
 class Obsession < ApplicationRecord
+  normalize_attribute :symptoms  # strips leading & trailing whitespace & sets symptoms attribute to nil if blank
   extend Datable
 
   scope :defeatable_by_flooding, -> { joins(:plans).merge(Plan.flooding).distinct }
