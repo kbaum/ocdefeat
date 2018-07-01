@@ -6,7 +6,7 @@ module PlansHelper
       if plan.steps.empty?
         "Preliminary Design (Lacks steps)"
       else
-        if plan.steps.all? {|step| step.complete?}
+        if plan.steps.all? {|step| step.completed?}
           "Development or Pending Submission (Fully performed but not marked finished)"
         else
           "Development or Implementation (Contains at least one incomplete step)"
