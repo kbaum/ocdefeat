@@ -244,8 +244,6 @@ class UsersController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :uid,
-        :provider,
         :role_requested,
         :role,
         :severity,
