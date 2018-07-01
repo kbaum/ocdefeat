@@ -19,7 +19,6 @@ class Plan < ApplicationRecord
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
-  validates :flooded, inclusion: { in: [true, false] }
   validates :progress, progress: true, on: :update
 
   def unfinished? # an unfinished plan (self) has a progress attribute value = 0
