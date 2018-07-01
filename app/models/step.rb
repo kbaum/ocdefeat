@@ -1,5 +1,5 @@
 class Step < ApplicationRecord
-  scope :not_performed, -> { where(status: 0) }
+  scope :incomplete, -> { where.not(completed: true) }
 
   belongs_to :plan
 
