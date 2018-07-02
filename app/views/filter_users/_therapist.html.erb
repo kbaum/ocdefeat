@@ -9,25 +9,21 @@
 <br>
 
 <%= form_tag users_path, method: "get" do %>
-  <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
-  <br><br>
-  <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
-  <br><br>
   <%= select_tag "severity_and_variant",
-  options_for_select([
-    "Mild and Traditional",
-    "Mild and Purely Obsessional",
-    "Mild and Both",
-    "Moderate and Traditional",
-    "Moderate and Purely Obsessional",
-    "Moderate and Both",
-    "Severe and Traditional",
-    "Severe and Purely Obsessional",
-    "Severe and Both",
-    "Extreme and Traditional",
-    "Extreme and Purely Obsessional",
-    "Extreme and Both"
-  ]),
+    options_for_select([
+      "Mild and Traditional",
+      "Mild and Purely Obsessional",
+      "Mild and Both",
+      "Moderate and Traditional",
+      "Moderate and Purely Obsessional",
+      "Moderate and Both",
+      "Severe and Traditional",
+      "Severe and Purely Obsessional",
+      "Severe and Both",
+      "Extreme and Traditional",
+      "Extreme and Purely Obsessional",
+      "Extreme and Both"
+    ]),
   prompt: "OCD Severity and Variant" %>
   <br><br>
   <%= select_tag "extent_of_exposure", options_for_select(["Patients who are unexposed to an obsession", "Patients who are planning or practicing exposure exercises", "Patients who finished an ERP plan"]), prompt: "Extent of Exposure to Triggers" %>
