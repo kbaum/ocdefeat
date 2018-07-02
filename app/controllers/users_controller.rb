@@ -29,27 +29,7 @@ class UsersController < ApplicationController
         @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
       end
     elsif current_user.therapist? # When therapist views users index page, users variable stores the therapist's patients
-      if !params[:severity].blank? # Therapist filters patients by OCD severity
-        if users.by_ocd_severity(params[:severity]).empty? # If no patients have the selected OCD severity
-          flash.now[:alert] = "None of your patients were diagnosed with #{params[:severity]} OCD."
-        else
-          @filtered_users = users.by_ocd_severity(params[:severity]) # stores AR::Relation of all patients with the selected OCD severity
-          flash.now[:notice] = "#{sv_agreement(@filtered_users)} diagnosed with #{params[:severity]} OCD!"
-        end
-      elsif !params[:variant].blank? # Therapist filters patients by OCD variant
-        if users.by_ocd_variant(params[:variant]).empty? # If none of the therapist's patients have the specified OCD variant
-          flash.now[:alert] = "None of your patients were diagnosed with that variant of OCD."
-        else
-          @filtered_users = users.by_ocd_variant(params[:variant]) # stores AR::Relation of the therapist's patients with a specific OCD variant
-          if params[:variant] == "Both"
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} both traditionally and purely obsessive."
-          elsif params[:variant] == "Purely Obsessional"
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} purely obsessive."
-          else
-            flash.now[:notice] = "#{sv_agreement(@filtered_users)} traditionally obsessive."
-          end
-        end
-      elsif !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "Purely Obsessional", "Both")
+      if !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "Purely Obsessional", "Both")
         severity = params[:severity_and_variant].split(" and ").first
         variant = params[:severity_and_variant].split(" and ").last
         if users.by_severity_and_variant(severity, variant).empty?
