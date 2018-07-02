@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
       if !params[:role].blank? # Admin filters users by role ("unassigned", "patient", "therapist" or "admin")
         if users.by_role(params[:role]).empty? # If there are no users with the selected role
-          flash.now[:alert] = "No users with the selected role were found."
+          flash.now[:alert] = "No users were found."
         else # If users with the selected role were found
           @filtered_users = users.by_role(params[:role]) # stores AR::Relation of users with the selected role
           flash.now[:success] = "You found #{@filtered_users.count} #{params[:role]} #{'user'.pluralize(@filtered_users.count)}!"
