@@ -15,8 +15,6 @@
   <br><br>
   <%= select_tag "theme_id", options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
   <br><br>
-  <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Physical Symptoms" %>
-  <br><br>
   <%= select_tag "rumination_recency", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
   <br><br>
   <%= select_tag "treatment_id", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatments Undergone" %>
