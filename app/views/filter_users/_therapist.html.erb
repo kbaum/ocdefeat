@@ -6,6 +6,21 @@
 
 <h4>Filter Your Patients by...</h4>
 
+<%= form_tag users_path, method: "get" do %>
+  <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
+  <br><br>
+  <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
+  <br><br>
+  <%= select_tag "theme_id", options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
+  <br><br>
+  <%= select_tag "treatment_id", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatments Undergone" %>
+  <br><br>
+  <%= label_tag :from_anxiety_level, "Range of Anxiety Levels" %><br/>
+  <%= text_field_tag :from_anxiety_level, size: 10 %> -
+  <%= text_field_tag :to_anxiety_level, size: 10 %>
+  <%= submit_tag "Filter Patients" %>
+<% end %>
+<!--
 <br>
 
 <%= form_tag users_path, method: "get" do %>
@@ -62,6 +77,7 @@
     <% end %>
   </tbody>
 </table>
+-->
 
 <% if asymptomatic_nonobsessive || asymptomatic_obsessive %>
   <div class="well well-lg">
