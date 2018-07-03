@@ -5,6 +5,15 @@ class PatientFinder
     @initial_scope = initial_scope
   end
 
+  def call(params)
+    scoped = filter_by_rumination_recency(initial_scope, params[:rumination_recency])
+    scoped = filter_by_treatment(scoped, params[:treatment_id])
+    scoped = filter_by_fixation(scoped, params[:theme_id])
+    scoped = filter_by_variant(scoped, params[:variant])
+    scoped = filter_by_severity(scoped, params[:severity])
+    scoped
+  end
+
   def filter_by_severity(scoped, severity)
     severity.blank? ? scoped : scoped.where("severity = ?", severity)
   end
@@ -26,6 +35,19 @@ class PatientFinder
       scoped
     else
       scoped.joins(:treatments).where(treatments: { id: treatment_id }).distinct
+    end
+  end
+
+  def filter_by_rumination_recency(scoped, rumination_recency)
+    if rumination_recency.blank?
+      scoped
+    else
+      if rumination_recency == "Patients who reported new obsessions yesterday"
+        interval = (Time.now.midnight - 1.day)..Time.now.midnight
+      elsif rumination_recency == "Patients who reported new obsessions today"
+        interval = Time.now.midnight..Time.now
+      end
+      scoped.patients_obsessing.where(obsessions: { created_at: interval })
     end
   end
 end
