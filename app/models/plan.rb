@@ -6,8 +6,8 @@ class Plan < ApplicationRecord
   scope :accomplished, -> { where(finished: true) }
   scope :unaccomplished, -> { where.not(finished: true) }
   scope :with_steps, -> { joins(:steps).distinct }
-  scope :stepless, -> { where.not("exists ( #{Step.where('plans.id = steps.plan_id').to_sql} )") }
-
+  scope :stepless, -> { where.not("exists ( #{Step.where('plans.id = steps.plan_id').select(1).to_sql} )") }
+  
   belongs_to :obsession
   delegate :user, to: :obsession # I can call #user on plan instance to return user instance to which the plan belongs. I don't use allow_nil: true b/c a plan belongs to an obsession and not having an obsession is an error condition
   has_many :steps, dependent: :destroy
