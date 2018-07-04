@@ -9,6 +9,14 @@ module UsersHelper
     end
   end
 
+  def unexposed(users) # argument is AR::Relation of a therapist's patients
+    if users.unexposed_to_obsession.empty?
+      content_tag(:small, "All of your patients designed at least one ERP plan to target each of their obsessions!")
+    else
+      content_tag(:small, "#{sv_agreement(users.unexposed_to_obsession)} unexposed to an obsession, having reported at least one obsession that lacks ERP plans.")
+    end
+  end
+
   def demand_data(attribute_name) # argument is the string "severity" or "variant"
     if current_user.patient?
       content_tag(:div, class: "alert alert-warning", role: "alert") do
