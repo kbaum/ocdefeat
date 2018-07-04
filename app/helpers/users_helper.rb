@@ -17,6 +17,22 @@ module UsersHelper
     end
   end
 
+  def planning_or_practicing(users) # argument is AR::Relation of a therapist's patients
+    if users.patients_planning_or_practicing_erp.empty?
+      content_tag(:small, "None of your patients are currently designing or implementing ERP plans.")
+    else
+      content_tag(:small, "#{sv_agreement(users.patients_planning_or_practicing_erp)} currently developing or performing an ERP plan.")
+    end
+  end
+
+  def finished_planning(users) # argument is AR::Relation of a therapist's patients
+    if users.with_finished_plan.empty?
+      content_tag(:small, "None of your patients marked an ERP plan as finished.")
+    else
+      content_tag(:small, "#{plural_inflection(users.with_finished_plan)} marked at least one ERP plan as finished!")
+    end
+  end
+
   def demand_data(attribute_name) # argument is the string "severity" or "variant"
     if current_user.patient?
       content_tag(:div, class: "alert alert-warning", role: "alert") do
