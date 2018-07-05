@@ -13,7 +13,7 @@
   <br><br>
   <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
   <br><br>
-  <%= select_tag "theme_id", options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
+  <%= select_tag 'theme_fixation', options_from_collection_for_select(themes, "id", "name"), prompt: "Patients preoccupied with theme" %>
   <br><br>
   <%= select_tag "treatment_id", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatments Undergone" %>
   <br><br>
@@ -23,39 +23,6 @@
 <% end %>
 
 <br>
-
-<!-- <%= form_tag users_path, method: "get" do %>
-  <%= select_tag "extent_of_exposure", options_for_select(["Patients who are unexposed to an obsession", "Patients who are planning or practicing exposure exercises", "Patients who finished an ERP plan"]), prompt: "Extent of Exposure to Triggers" %>
-  <br><br>
-  <%= select_tag "recent_ruminators", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
-  <br><br>
-  <%= select_tag "severity_and_variant",
-    options_for_select([
-      "Mild and Traditional",
-      "Mild and Purely Obsessional",
-      "Mild and Both",
-      "Moderate and Traditional",
-      "Moderate and Purely Obsessional",
-      "Moderate and Both",
-      "Severe and Traditional",
-      "Severe and Purely Obsessional",
-      "Severe and Both",
-      "Extreme and Traditional",
-      "Extreme and Purely Obsessional",
-      "Extreme and Both"
-    ]),
-  prompt: "OCD Severity and Variant" %>
-  <br><br>
-  <%= select_tag 'theme_preoccupation', options_from_collection_for_select(themes, "id", "name"), prompt: "Patients preoccupied with theme" %>
-  <br><br>
-  <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms" %>
-  <br><br>
-  <%= submit_tag "Filter Patients" %>
-<% end %>
-
-<br>
-
--->
 
 <table class="table table-bordered">
   <thead>
@@ -77,18 +44,41 @@
   </tbody>
 </table>
 
-<% if asymptomatic_nonobsessive || asymptomatic_obsessive %>
-  <div class="well well-lg">
-    <p><strong><u>Breakdown of Asymptomatic Patients</u></strong></p>
+<div class="well well-lg">
+  <p><strong><u>Clinical Presentation of OCD in Patients</u></strong></p> <!-- The therapist's symptomatic/asymptomatic patients -->
+  <%= symptoms_in(current_user.counselees) %>
+  <p><em>~Physically Symptomatic Patients:</em></p>
+  <p><em>~Asymptomatic Patients</em></p>
+  <small><em>~Patients who are not obsessing:</em></small><br>
+  <small><em>~Patients whose obsessions do not manifest in physical symptoms:</em></small>
+</div>
 
-    <% if asymptomatic_nonobsessive %> <!-- If the therapist has patients who do NOT have obsessions -->
-      <p><em>~Patients who are not obsessing:</em></p>
-      <%= render partial: "users_ul", locals: { users: asymptomatic_nonobsessive } %>
+<div class="well well-lg">
+  <h4><em>Patients' Extent of Exposure to Obsessions</em></h4>
+  <br>
+  <% if current_user.counselees.all? {|counselee| counselee.obsessions.empty?} %> <!-- If none of the therapist's patients are obsessing about anything at all -->
+    <small>None of your patients are obsessing, so there is no need to practice exposure exercises.</small>
+  <% else %>
+    <label>Patients with an obsession for which no ERP plans were designed:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
+    <% if patients_unexposed_to_obsession.empty? %>
+      <small>0 patients</small>
+      <br><br>
+    <% else %>
+      <%= render partial: "users_ul", locals: { users: patients_unexposed_to_obsession } %>
     <% end %>
-
-    <% if asymptomatic_obsessive %> <!-- If the therapist has patients who only have symptomless obsessions -->
-      <p><em>~Patients whose obsessions do not manifest in physical symptoms:</em></p>
-      <%= render partial: "users_ul", locals: { users: asymptomatic_obsessive }  %>
+    <label>Patients who are planning or practicing exposure exercises:</label> <!-- Therapist filters their patients by those with unfinished plans -->
+    <% if patients_planning_or_practicing_erp.empty? %>
+      <small>0 patients</small>
+      <br><br>
+    <% else %>
+      <%= render partial: "users_ul", locals: { users: patients_planning_or_practicing_erp } %>
     <% end %>
-  </div>
-<% end %>
+    <label>Patients who finished an ERP plan:</label> <!-- Therapist filters their patients by those who designed at least 1 plan that is marked as finished -->
+    <% if patients_with_finished_plan.empty? %>
+      <small>0 patients</small>
+      <br><br>
+    <% else %>
+      <%= render partial: "users_ul", locals: { users: patients_with_finished_plan } %>
+    <% end %>
+  <% end %>
+</div>
