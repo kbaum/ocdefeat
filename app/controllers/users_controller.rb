@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
     if current_user.therapist? # A therapist sees her own patients on the users index page
       @filtered_users = PatientFinder.new(policy_scope(User)).call(therapist_filterer_params)
+      @symptomatic_patients = users.symptomatic
       @asymptomatic_nonobsessive_patients = users.patients_nonobsessive
       @asymptomatic_obsessive_patients = users.patients_obsessive_but_symptomless
       @patients_with_planless_obsession = users.with_planless_obsession
