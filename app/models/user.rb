@@ -74,7 +74,7 @@ class User < ApplicationRecord
     patients_obsessing.where(obsessions: { created_at: interval })
   end
 
-  def self.unexposed_to_obsession # Returns AR::Relation of users who have at least 1 obsession for which no ERP plans were designed
+  def self.with_planless_obsession # Returns AR::Relation of users who have at least 1 obsession for which no ERP plans were designed
     patients_obsessing.merge(Obsession.sans_plans)
   end
 
