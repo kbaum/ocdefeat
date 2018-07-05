@@ -1,0 +1,19 @@
+<div class="well well-lg">
+  <p><em>On <%= updated_on(comment) %>, <%= comment.user_name %> commented:</em></p>
+
+  <p><strong>"<%= comment.content %>"</strong></p>
+
+  <br>
+
+  <% if policy(comment).edit? %>
+    <%= link_to edit_comment_path(comment), class: "btn btn-default btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Comment
+    <% end %>
+  <% end %>
+
+  <% if policy(comment).destroy? %>
+    <%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you want to delete this comment?" }, class: "btn btn-default btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Comment
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,36 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <%= @plan.title %><small><em> — an ERP plan designed by <%= @plan.user.name %></em></small>
+    </h3>
+    <br>
+    <p><span class="glyphicon glyphicon-thumbs-up"></span> <strong>Goal</strong>: <%= @plan.goal %></p>
+    <p><span class="glyphicon glyphicon-thumbs-up"></span> <strong>Treatment Approach</strong>: <%= treatment_approach(@plan) %></p>
+    <br>
+    <%= render partial: "plans/finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
+  </div>
+  <div class="panel-body">
+    <%= render partial: "steps/step_div", collection: @plan_steps, as: :step %>
+  </div>
+</div>
+
+<% if @plan.unfinished? && policy(@step).create? %>
+  <div class="well well-lg">
+    <h3>Add a New Step to "<%= @plan.title %>"</h3>
+    <br>
+    <%= render partial: "steps/step", locals: { plan: @plan, step: @step } %>
+  </div>
+<% end %>
+
+<% if policy(@plan).edit? && @plan.unfinished? %>
+  <br>
+  <%= link_to edit_plan_path(@plan), class: "btn btn-primary btn-sm" do %>
+    <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Plan Overview
+  <% end %>
+<% end %>
+
+<% if policy(@plan).destroy? %>
+  <%= link_to plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" }, class: "btn btn-danger btn-sm" do %>
+    <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete ERP Plan
+  <% end %>
+<% end %>

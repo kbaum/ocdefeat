@@ -1,0 +1,17 @@
+<h2>Professional Profile</h2>
+
+<div class="well well-lg">
+  <p><strong>OCDefeat Title</strong>: <%= @user.name %>, OCDefeat Therapy Forum Facilitator</p>
+  <p><strong>Email Address</strong>: <%= @user.email %></p>
+  <p><strong>Psychology Specialty</strong>: Obsessive Compulsive Disorder (OCD)</p>
+  <% if !@user.treatments.empty? %>
+    <p><strong>Treatments Prescribed</strong>:</p>
+    <% @user.treatments.each do |treatment| %>
+      <li><em><%= treatment.treatment_type %></em> - <%= UserTreatment.find_by(user: @user, treatment: treatment).efficacy %></li>
+    <% end %>
+    <br>
+  <% end %>
+  <p><strong>Current Caseload</strong>: <%= @user.counselees.count %></p>
+</div>
+
+<%= render partial: "manage_account", locals: { user: @user } %>

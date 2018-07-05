@@ -1,0 +1,7 @@
+<%= div_for(plans, class: "well well-sm") do |plan| %>
+  <h3><%= link_to_unless(current_user.admin?, plan.title, plan_path(plan)) %></h3>
+  <p><strong>Goal:</strong> <%= plan.goal %></p>
+  <p><strong>Treatment Approach:</strong> <%= treatment_approach(plan) %></p>
+  <p><strong>Number of Steps:</strong> <%= plan.steps.count %></p>
+  <p><strong>Stage of Progress:</strong> <%= progress(plan) %></p>
+<% end %>

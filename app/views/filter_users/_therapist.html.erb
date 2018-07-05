@@ -1,0 +1,101 @@
+<h2>Patient Census</h2>
+
+<h5><em><%= pluralize(current_user.counselees.count, "patient") %> <%= "is".pluralize(current_user.counselees.count) %> currently seeking your psychological expertise!</em></h5>
+
+<br>
+
+<h4>Filter Your Patients by...</h4>
+
+<%= form_tag users_path, method: "get" do %>
+  <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
+  <br><br>
+  <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
+  <br><br>
+  <%= select_tag "theme_id", options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
+  <br><br>
+  <%= select_tag "treatment_id", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatments Undergone" %>
+  <br><br>
+  <%= label_tag :from_anxiety_level, "Range of Anxiety Levels" %><br/>
+  <%= text_field_tag :from_anxiety_level, size: 10 %> -
+  <%= text_field_tag :to_anxiety_level, size: 10 %>
+  <%= submit_tag "Filter Patients" %>
+<% end %>
+<!--
+<br>
+
+<%= form_tag users_path, method: "get" do %>
+  <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
+  <br><br>
+  <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
+  <br><br>
+  <%= select_tag "severity_and_variant",
+  options_for_select([
+    "Mild and Traditional",
+    "Mild and Purely Obsessional",
+    "Mild and Both",
+    "Moderate and Traditional",
+    "Moderate and Purely Obsessional",
+    "Moderate and Both",
+    "Severe and Traditional",
+    "Severe and Purely Obsessional",
+    "Severe and Both",
+    "Extreme and Traditional",
+    "Extreme and Purely Obsessional",
+    "Extreme and Both"
+  ]),
+  prompt: "OCD Severity and Variant" %>
+  <br><br>
+  <%= select_tag "extent_of_exposure", options_for_select(["Patients who are unexposed to an obsession", "Patients who are planning or practicing exposure exercises", "Patients who finished an ERP plan"]), prompt: "Extent of Exposure to Triggers" %>
+  <br><br>
+  <%= select_tag "recent_ruminators", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
+  <br><br>
+  <%= select_tag 'theme_preoccupation', options_from_collection_for_select(themes, "id", "name"), prompt: "Patients preoccupied with theme" %>
+  <br><br>
+  <%= select_tag "symptoms_presence", options_for_select(["Symptomatic patients", "Asymptomatic patients"]), prompt: "Presence of Symptoms" %>
+  <br><br>
+  <%= submit_tag "Filter Patients" %>
+<% end %>
+
+<br><br>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Patient Name</th>
+      <th>Severity</th>
+      <th>Variant</th>
+      <th>Clinical Presentation</th>
+      <th>Obsession Count</th>
+      <th>ERP Plan Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if filtered_users %>
+      <% filtered_users.each do |filtered_user| %>
+        <%= render partial: "users/patient_chart_row", locals: { user: filtered_user } %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+-->
+
+<% if asymptomatic_nonobsessive || asymptomatic_obsessive %>
+  <div class="well well-lg">
+    <p><strong><u>Asymptomatic Patients</u></strong>:</p>
+
+    <% if asymptomatic_nonobsessive %> <!-- If the therapist has patients who do NOT have obsessions -->
+      <p><em>~Patients who are not obsessing:</em></p>
+      <%= render partial: "users_ul", locals: { users: asymptomatic_nonobsessive } %>
+    <% end %>
+
+    <% if asymptomatic_obsessive %> <!-- If the therapist has patients who only have symptomless obsessions -->
+      <p><em>~Patients whose obsessions do not manifest in physical symptoms:</em></p>
+      <%= render partial: "users_ul", locals: { users: asymptomatic_obsessive }  %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<div class="well well-sm">
+  <%= panicky_patients %>
+</div>

@@ -1,0 +1,33 @@
+<div>
+  <%= render partial: filters, locals: {
+    patients_without_counselor: @patients_without_counselor,
+    themes: @themes,
+    treatments: @treatments,
+    table_users: @table_users,
+    therapists: @therapists,
+    filtered_users: @filtered_users,
+    prospective_patients: @prospective_patients,
+    therapists_to_be: @therapists_to_be,
+    aspiring_admins: @aspiring_admins,
+    asymptomatic_nonobsessive: @asymptomatic_nonobsessive,
+    asymptomatic_obsessive: @asymptomatic_obsessive
+  } %>
+</div>
+
+<!-- Explanation:
+In users#index, @filtered_users instance variable is defined,
+so app/views/users/index.html.erb (this file) has access to @filtered_users instance variable
+When an admin views the users index page,
+the partial app/views/filter_users/_admin.html.erb is rendered from app/views/users/index.html.erb
+The variable @filtered_users from the users index view file
+is referenced in the partial app/views/filter_users/_admin.html.erb
+as the local variable filtered_users.
+When a therapist views the users index page,
+the partial app/views/filter_users/_therapist.html.erb is rendered from app/views/users/index.html.erb
+The variable @filtered_users from the users index view file
+is referenced in partial app/views/filter_users/_therapist.html.erb
+It's not good to use instance variables in a partial.
+I want to display filtered users in an unordered list, and this code will be repeated frequently,
+so I want to pass the local variable filtered_users
+from app/views/filtered_users/_admin.html.erb and app/views/filtered_users/_therapist.html.erb
+partials to app/views/users/_users_ul.html.erb partial

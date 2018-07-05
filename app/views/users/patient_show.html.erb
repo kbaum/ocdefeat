@@ -1,0 +1,42 @@
+<h2>Patient Profile</h2>
+
+<h3><%= show_severity(@user) %></h3>
+
+<br>
+
+<div class="well well-sm">
+  <h4><em>Medical History</em></h4>
+
+  <br>
+
+  <%= vary_variant(@user) %>
+
+  <% unless @user.treatments.empty? %>
+    <br><br>
+    <p><strong>Previous Treatment:</strong></p>
+    <ul>
+      <% @user.treatments.each do |treatment| %>
+        <li><%= treatment.treatment_type %> - <%= UserTreatment.find_by(user: @user, treatment: treatment).duration %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<div class="well well-sm">
+  <h4><em>OCDefeat Statistics</em></h4>
+
+  <br>
+
+  <p><strong>Obsession Count:</strong> <%= obsession_pronouns %> <%= pluralize(@user.obsession_count, "obsession") %>.</p>
+
+  <br>
+
+  <% if policy(Obsession).create? %>
+    <p>Fixated on something else? <%= link_to "Report a new obsession.", new_obsession_path %></p>
+    <br>
+  <% end %>
+
+  <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.plan_count, "ERP plan") %>.</p>
+</div>
+
+<%= render partial: "manage_account", locals: { user: @user } %>

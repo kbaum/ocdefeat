@@ -1,0 +1,46 @@
+<div class="well well-sm">
+  <h4>OCD Spike: <small class="spike">"<%= @obsession.intrusive_thought %>"</small></h4>
+
+  <small><em>—reported by <%= @obsession.patient_name %> on <%= created_on(@obsession) %></em></small>
+
+  <br><br>
+
+  <% if policy(@obsession).create? %>
+    <%= link_to new_obsession_plan_path(@obsession), class: "btn btn-success btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-pencil") %> Create Plan
+    <% end %>
+  <% end %>
+
+  <% if policy(@obsession).update? %>
+    <%= link_to edit_obsession_path(@obsession), class: "btn btn-primary btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Obsession
+    <% end %>
+  <% end %>
+
+  <% if policy(@obsession).destroy? %>
+    <%= link_to obsession_path(@obsession), method: :delete, data: { confirm: "Permanently delete this obsession from your patient history?" }, class: "btn btn-danger btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Obsession
+    <% end %>
+  <% end %>
+
+  <% if policy(@obsession).show? %>
+    <%= link_to obsession_comments_path(@obsession), class: "btn btn-default btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-book") %> Read Comments
+    <% end %>
+  <% end %>
+</div>
+
+<%= render partial: "obsession_data", locals: { obsession: @obsession } %>
+<%= render partial: "self_help_ul", locals: { obsession: @obsession } %>
+
+<% if current_user.therapist? && !@obsession.comments.concerns.empty? %>
+  <br>
+  <p><strong>Most Recent Concern to Address</strong>: <em class="spike">"<%= @obsession.comments.concerns.most_recently_updated.content %>"</em></p>
+<% elsif current_user.patient? && !@obsession.comments.advice.empty? %>
+  <br>
+  <p><strong>Most Recent Advice to Heed</strong>: <em class="advice">"<%= @obsession.comments.advice.most_recently_updated.content %>"</em></p>
+<% end %>
+
+<div class="well well-sm">
+  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: @comment } %>
+</div>

@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Deconstructing the Obsession</h4>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info"><strong>Intrusive Thought</strong>: <%= obsession.intrusive_thought %></li>
+    <li class="list-group-item list-group-item-info"><strong>Triggers</strong>: <%= obsession.triggers %></li>
+    <li class="list-group-item list-group-item-info"><strong>Anxiety Rating</strong>: <%= obsession.anxiety_rating %></li>
+    <% if !obsession.symptoms.blank? %>
+      <li class="list-group-item list-group-item-info"><strong>Clinical Presentation</strong>: <%= obsession.symptoms %></li>
+    <% end %>
+    <li class="list-group-item list-group-item-info"><strong>Rituals</strong>: <%= obsession.rituals %></li>
+    <li class="list-group-item list-group-item-info"><strong>Time Consumed</strong>: <%= obsession.time_consumed %> <%= 'hour'.pluralize(obsession.time_consumed) %>/day</li>
+  </ul>
+</div>

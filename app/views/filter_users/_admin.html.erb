@@ -1,0 +1,62 @@
+<h3><em>Admin Access to Accounts</em></h3>
+
+<br>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">User ID #</th>
+      <th scope="col">Profile Page</th>
+      <th scope="col">Role Regulation</th>
+      <th scope="col">Counseling Connections</th>
+      <th scope="col">Account Management</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "users/user_row", collection: table_users, as: :user, locals: { therapists: @therapists } %>
+  </tbody>
+</table>
+
+<div class="well well-lg">
+  <%= form_tag users_path, method: "get" do %>
+    <%= label_tag "role", "Filter Users by Role:" %><br><br>
+    <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
+    <%= submit_tag "Filter Users" %>
+  <% end %>
+
+  <br>
+
+  <% if filtered_users %>
+    <%= render partial: "users/users_ul", locals: { users: filtered_users } %>
+  <% end %>
+</div>
+
+<br>
+
+<div class="well well-lg">
+  <label>Users Awaiting Role Assignment:</label>
+
+  <br><br>
+
+  <p><em>Prospective Patients:</em></p>
+
+  <%= render partial: "users/users_ul", locals: { users: prospective_patients } %>
+
+  <p><em>Therapists To-Be:</em></p>
+
+  <%= render partial: "users/users_ul", locals: { users: therapists_to_be } %>
+
+  <p><em>Aspiring Admins:</em></p>
+
+  <%= render partial: "users/users_ul", locals: { users: aspiring_admins } %>
+</div>
+
+<div class="well well-lg">
+  <label>Patient Caseload by Therapist:</label>
+
+  <br><br>
+
+  <% User.count_counselees.each do |name, number| %>
+    <p><%= name %> | <%= number %></p>
+  <% end %>
+</div>

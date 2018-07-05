@@ -1,0 +1,14 @@
+<h4>Comments on the Obsession:</h4>
+<small><em class="spike">"<%= @obsession.intrusive_thought %>"</em></small>
+
+<br><br>
+
+<%= render partial: "filter_comments", locals: { obsession: @obsession } unless @obsession.comments.empty? %>
+
+<br>
+
+<%= render(@comments) || "No comments were found." %>
+
+<br><br>
+
+<%= link_to "Go back to the obsession!", obsession_path(@obsession), class: "btn btn-default btn-sm" %>

@@ -11,5 +11,13 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery
 //= require turbolinks
+//= require bootstrap
 //= require_tree .
+
+$(function(){
+  $("input.toggle").on("change", function(){
+    $(this).parents("form").trigger("submit")
+  })
+});

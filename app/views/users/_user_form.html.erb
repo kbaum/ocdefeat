@@ -1,0 +1,119 @@
+<%= form_for user do |f| %>
+
+  <%= validation_errors_for(user) %>
+
+  <br>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+   </div>
+
+   <br>
+
+   <div class="field">
+     <%= f.label :email %><br>
+     <%= f.text_field :email %>
+   </div>
+
+   <br>
+
+   <div class="field">
+     <%= f.label :password %><br>
+     <%= f.password_field :password %>
+   </div>
+
+   <br>
+
+   <div class="field">
+     <%= f.label :password_confirmation, "Password Confirmation" %><br>
+     <%= f.password_field :password_confirmation %>
+   </div>
+
+   <hr>
+
+   <% if user.id.nil? || user.unassigned? %>
+     <div class="well well-lg">
+       <h4>Request a Role in the OCDefeat Community:</h4>
+       <br>
+         <%= f.radio_button :role_requested, "Patient" %>
+         <%= f.label :role_requested_patient, "Patient:" %> As a patient, you can defeat OCD by creating custom ERP plans tailored to your obsessions!<br><br>
+         <%= f.radio_button :role_requested, "Therapist" %>
+         <%= f.label :role_requested_therapist, "Therapist:" %> As a therapist, you can facilitate our mental health forum by devising exposure activities and modifying patients' ERP plans!<br><br>
+         <%= f.radio_button :role_requested, "Admin" %>
+         <%= f.label :role_requested_admin, "Admin:" %> As an admin, you can manage users' accounts and assign their roles!
+     </div>
+   <% end %>
+
+   <div class="well well-lg">
+     <h4>Rate the severity of your OCD based on the amount of time you obsess daily:</h4>
+     <br>
+     <%= f.radio_button :severity, 'Mild' %>
+     <%= f.label :ocd_severity_mild, "Mild:" %> <%= "less than 1 hr/day" %><br><br>
+     <%= f.radio_button :severity, 'Moderate' %>
+     <%= f.label :ocd_severity_moderate, "Moderate:" %> <%= "1-3 hrs/day" %><br><br>
+     <%= f.radio_button :severity, 'Severe' %>
+     <%= f.label :ocd_severity_severe, "Severe:" %> <%= "3-8 hrs/day" %><br><br>
+     <%= f.radio_button :severity, 'Extreme' %>
+     <%= f.label :ocd_severity_extreme, "Extreme:" %> <%= "more than 8 hrs/day" %><br><br>
+     <%= f.radio_button :severity, 'Nonobsessive' %>
+     <%= f.label :ocd_severity_nonobsessive, "N/A:" %> <%= "I requested the role of therapist/admin" %><br>
+   </div>
+
+   <div class="well well-lg">
+     <h4>Describe your OCD diagnosis:</h4>
+     <br>
+     <%= f.radio_button :variant, 'Traditional' %>
+     <%= f.label :ocd_variant_traditional, "Traditional:" %>
+     <p>I perform outward compulsive behaviors, such as repetitively washing my hands.</p>
+     <br>
+     <%= f.radio_button :variant, 'Purely Obsessional' %>
+     <%= f.label :ocd_variant_purely_obsessional, "Purely Obsessional (Pure-O):" %>
+     <p>My rituals take place primarily in my own mind, such as mental review of events.</p>
+     <br>
+     <%= f.radio_button :variant, 'Both' %>
+     <%= f.label :ocd_variant_both, "Both Traditional and Pure-O Variants:" %>
+     <p>I perform a combination of overtly compulsive behaviors and primarily obsessional mental exercises.</p>
+     <br>
+     <%= f.radio_button :variant, 'Neither' %>
+     <%= f.label :ocd_variant_neither, "Neither Traditional nor Pure-O Variants:" %>
+     <p>N/A: I requested the role of admin/therapist.</p>
+   </div>
+
+   <% if user.new_record? %>
+     <div class="well well-lg">
+       <h4>Describe your OCD Treatment:</h4>
+       <br>
+       <p>Prospective patients, describe any type of OCD treatment that you have undergone. How effective was each treatment?</p>
+       <p>Aspiring therapists, describe the efficacy of the treatment plans you implement based on patient outcomes.</p>
+       <hr>
+       <%= f.fields_for :treatments do |t| %>
+         <div class="field">
+           <%= t.label :treatment_type, "Add a treatment" %>:
+           <%= t.text_field :treatment_type %>
+         </div>
+         <%= t.fields_for :user_treatments do |ut| %>
+           <div class="field">
+             <%= ut.label :treatment_id, "Select a treatment" %>:
+             <%= ut.collection_select(:treatment_id, Treatment.order(:treatment_type), :id, :treatment_type, prompt: "Choose Treatment") %>
+           </div>
+           <div class="field">
+             <%= ut.label :efficacy %>:
+             <%= ut.text_field :efficacy %>
+           </div>
+           <div class="field">
+             <%= ut.label :duration %>:
+             <%= ut.text_field :duration %>
+           </div>
+           <hr>
+         <% end %>
+       <% end %>
+     </div>
+   <% end %>
+
+   <div class="actions">
+     <%= f.submit %>
+   </div>
+
+   <br>
+ <% end %>
