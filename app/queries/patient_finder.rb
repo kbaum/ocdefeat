@@ -8,7 +8,7 @@ class PatientFinder
   def call(params)
     scoped = filter_by_severity(initial_scope, params[:severity])
     scoped = filter_by_variant(scoped, params[:variant])
-    scoped = filter_by_fixation(scoped, params[:theme_id])
+    scoped = filter_by_fixation(scoped, params[:theme_fixation])
     scoped = filter_by_treatment(scoped, params[:treatment_id])
     scoped = filter_by_rumination_recency(scoped, params[:rumination_recency])
     scoped
