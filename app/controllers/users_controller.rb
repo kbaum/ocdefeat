@@ -165,10 +165,7 @@ class UsersController < ApplicationController
         :variant,
         :theme_fixation,
         :treatment_undergone,
-        :from_anxiety_level,
-        :to_anxiety_level,
-        :recent_ruminators,
-        :symptoms_presence
+        :recent_ruminators
       )
     end
 
