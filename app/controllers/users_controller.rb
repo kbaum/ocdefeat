@@ -163,11 +163,11 @@ class UsersController < ApplicationController
       params.permit(
         :severity,
         :variant,
-        :theme_id,
-        :treatment_id,
+        :theme_fixation,
+        :treatment_undergone,
         :from_anxiety_level,
         :to_anxiety_level,
-        :rumination_recency,
+        :recent_ruminators,
         :symptoms_presence
       )
     end
