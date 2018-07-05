@@ -10,7 +10,7 @@ class PatientFinder
     scoped = filter_by_variant(scoped, params[:variant])
     scoped = filter_by_fixation(scoped, params[:theme_fixation])
     scoped = filter_by_treatment(scoped, params[:treatment_undergone])
-    scoped = filter_by_rumination_recency(scoped, params[:rumination_recency])
+    scoped = filter_by_rumination_recency(scoped, params[:recent_ruminators])
     scoped
   end
 
