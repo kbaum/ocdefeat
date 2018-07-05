@@ -13,11 +13,11 @@
   <br><br>
   <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
   <br><br>
-  <%= select_tag 'theme_fixation', options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
+  <%= select_tag "theme_fixation", options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
   <br><br>
   <%= select_tag "treatment_undergone", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatment Undergone" %>
   <br><br>
-  <%= select_tag "rumination_recency", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
+  <%= select_tag "recent_ruminators", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
   <br><br>
   <%= submit_tag "Filter Patients" %>
 <% end %>
