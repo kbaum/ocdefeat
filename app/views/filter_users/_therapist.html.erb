@@ -50,7 +50,12 @@
   <br><br>
   <label>Physically Symptomatic Patients</label>:
   <%= show_patients(symptomatic_patients) %>
-  <label>Asymptomatic Patients</label><br>
+  <label>Asymptomatic Patients</label>
+  <br><br>
+  <small><em>~who are not obsessing:</em></small>
+  <%= show_patients(asymptomatic_nonobsessive_patients) %>
+  <small><em>~whose obsessions do not manifest physically:</em></small>
+  <%= show_patients(asymptomatic_obsessive_patients) %>
 </div>
 
 <div class="well well-lg">
