@@ -13,7 +13,7 @@
   <br><br>
   <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
   <br><br>
-  <%= select_tag 'theme_fixation', options_from_collection_for_select(themes, "id", "name"), prompt: "Patients preoccupied with theme" %>
+  <%= select_tag 'theme_fixation', options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
   <br><br>
   <%= select_tag "treatment_id", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatments Undergone" %>
   <br><br>
