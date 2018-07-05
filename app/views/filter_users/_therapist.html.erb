@@ -61,7 +61,7 @@
 <div class="well well-lg">
   <h4><em>Patients' Extent of Exposure to Triggers</em></h4>
   <% if current_user.counselees.all? {|counselee| counselee.obsessions.empty?} %> <!-- If none of the therapist's patients are obsessing about anything at all -->
-    <small>There are no obsessions to gain exposure to!</small>
+    <small>None of your patients is obsessing!</small>
   <% else %>
     <br>
     <label>Patients with obsession that lacks an ERP plan:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
