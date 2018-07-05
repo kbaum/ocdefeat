@@ -1,12 +1,12 @@
 class PatientFinder
-  attr_accessor :initial_scope
+  attr_accessor :default_scope
 
-  def initialize(initial_scope)
-    @initial_scope = initial_scope
+  def initialize(default_scope)
+    @default_scope = default_scope
   end
 
   def call(params)
-    scoped = filter_by_severity(initial_scope, params[:severity])
+    scoped = filter_by_severity(default_scope, params[:severity])
     scoped = filter_by_variant(scoped, params[:variant])
     scoped = filter_by_fixation(scoped, params[:theme_fixation])
     scoped = filter_by_treatment(scoped, params[:treatment_undergone])
