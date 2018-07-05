@@ -60,12 +60,7 @@
     <small>None of your patients are obsessing, so there is no need to practice exposure exercises!</small>
   <% else %>
     <label>Patients with an obsession for which no ERP plans were designed:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
-    <% if patients_with_planless_obsession.empty? %>
-      <small>0 patients</small>
-      <br><br>
-    <% else %>
-      <%= render partial: "users_ul", locals: { users: patients_with_planless_obsession } %>
-    <% end %>
+    <%= show_exposed_or_unexposed(patients_with_planless_obsession) %>
     <label>Patients who are planning or practicing exposure exercises:</label> <!-- Therapist filters their patients by those with unfinished plans -->
     <% if patients_planning_or_practicing_erp.empty? %>
       <small>0 patients</small>
