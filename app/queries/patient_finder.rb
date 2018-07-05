@@ -30,11 +30,11 @@ class PatientFinder
     end
   end
 
-  def filter_by_treatment(scoped, treatment_id)
-    if treatment_id.blank?
+  def filter_by_treatment(scoped, treatment_undergone)
+    if treatment_undergone.blank?
       scoped
     else
-      scoped.joins(:treatments).where(treatments: { id: treatment_id }).distinct
+      scoped.joins(:treatments).where(treatments: { id: treatment_undergone }).distinct
     end
   end
 
