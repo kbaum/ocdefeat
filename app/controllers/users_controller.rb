@@ -6,16 +6,19 @@ class UsersController < ApplicationController
   before_action :require_users, only: [:index]
   before_action :prevent_signed_in_users_from_viewing_signup, only: [:new]
 
-  def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the viewer's role and the filtered objects they're permitted to see)
+  def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the current user's role and the filtered objects they're permitted to see)
     users = policy_scope(User)
     @themes = policy_scope(Theme)
     @treatments = Treatment.all
 
-    if current_user.therapist?
+    if current_user.therapist? # A therapist sees her own patients on the users index page
       @filtered_users = PatientFinder.new(policy_scope(User)).call(therapist_filterer_params)
-    end
-
-    if current_user.admin?
+      @asymptomatic_nonobsessive_patients = users.patients_nonobsessive
+      @asymptomatic_obsessive_patients = users.patients_obsessive_but_symptomless
+      @patients_with_planless_obsession = users.with_planless_obsession
+      @patients_planning_or_practicing_erp = users.patients_planning_or_practicing_erp
+      @patients_with_finished_plan = users.with_finished_plan
+    elsif current_user.admin?
       @patients_without_counselor = User.patients_uncounseled
       @therapists = User.by_role("therapist")
       @table_users = users # stores AR::Relation of all user instances
@@ -33,9 +36,7 @@ class UsersController < ApplicationController
       else
         @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
       end
-    elsif current_user.therapist? # When therapist views users index page, users variable stores the therapist's patients
-      @asymptomatic_nonobsessive = users.patients_nonobsessive if !users.patients_nonobsessive.empty?
-      @asymptomatic_obsessive = users.patients_obsessive_but_symptomless if !users.patients_obsessive_but_symptomless.empty?
+    #elsif current_user.therapist? # When therapist views users index page, users variable stores the therapist's patients
       #if !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "Purely Obsessional", "Both")
         #severity = params[:severity_and_variant].split(" and ").first
         #variant = params[:severity_and_variant].split(" and ").last
@@ -45,31 +46,7 @@ class UsersController < ApplicationController
           #@filtered_users = users.by_severity_and_variant(severity, variant) # stores AR::Relation of therapist's patients with a specific OCD severity and variant combination
           #flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
         #end
-      #elsif !params[:extent_of_exposure].blank?
-        #if users.all? {|user| user.obsessions.empty?} # If none of the therapist's patients are obsessing about anything at all
-          #flash.now[:alert] = "None of your patients are obsessing, so there is no need to practice exposure exercises."
-        #elsif params[:extent_of_exposure] == "Patients who are unexposed to an obsession" # Therapist filters their patients by those who have at least 1 obsession for which no ERP plans were designed
-          #if users.unexposed_to_obsession.empty?
-            #flash.now[:alert] = "All of your patients designed at least one ERP plan to target each of their obsessions!"
-          #else
-            #@filtered_users = users.unexposed_to_obsession
-            #flash.now[:notice] = "#{sv_agreement(@filtered_users)} unexposed to an obsession, having reported at least one obsession that lacks ERP plans."
-          #end
-        #elsif params[:extent_of_exposure] == "Patients who are planning or practicing exposure exercises" # Therapist filters their patients by those with unfinished plans
-          #if users.patients_planning_or_practicing_erp.empty?
-            #flash.now[:alert] = "None of your patients are currently designing or implementing ERP plans."
-          #else
-            #@filtered_users = users.patients_planning_or_practicing_erp
-            #flash.now[:notice] = "#{sv_agreement(@filtered_users)} currently developing or performing an ERP plan."
-          #end
-        #elsif params[:extent_of_exposure] == "Patients who finished an ERP plan" # Therapist filters their patients by those who designed at least 1 plan that is marked as finished
-          #if users.with_finished_plan.empty?
-            #flash.now[:alert] = "None of your patients marked an ERP plan as finished."
-          #else
-            #@filtered_users = users.with_finished_plan
-            #flash.now[:notice] = "#{plural_inflection(@filtered_users)} marked at least one ERP plan as finished!"
-          #end
-        #end
+
       #elsif !params[:theme_preoccupation].blank? # Find therapist's patients who have at least 1 obsession that's classified in the selected theme
         #if users.obsessing_about(params[:theme_preoccupation]).empty?
           #flash.now[:alert] = "None of your patients' obsessions revolve around \"#{Theme.find(params[:theme_preoccupation]).name}.\""
@@ -91,8 +68,7 @@ class UsersController < ApplicationController
           #if users.patients_nonobsessive.empty? && users.patients_obsessive_but_symptomless.empty?
             #flash.now[:alert] = "All of your patients present with physical symptoms of OCD."
           #else
-            #@asymptomatic_nonobsessive = users.patients_nonobsessive if !users.patients_nonobsessive.empty?
-            #@asymptomatic_obsessive = users.patients_obsessive_but_symptomless if !users.patients_obsessive_but_symptomless.empty?
+
             #total_asymptomatic = users.count - users.symptomatic.count
             #flash.now[:notice] = "You have #{total_asymptomatic} #{'asymptomatic patient'.pluralize(total_asymptomatic)}!"
           #end
