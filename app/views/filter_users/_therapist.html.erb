@@ -57,14 +57,14 @@
   <h4><em>Patients' Extent of Exposure to Obsessions</em></h4>
   <br>
   <% if current_user.counselees.all? {|counselee| counselee.obsessions.empty?} %> <!-- If none of the therapist's patients are obsessing about anything at all -->
-    <small>None of your patients are obsessing, so there is no need to practice exposure exercises.</small>
+    <small>None of your patients are obsessing, so there is no need to practice exposure exercises!</small>
   <% else %>
     <label>Patients with an obsession for which no ERP plans were designed:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
-    <% if patients_unexposed_to_obsession.empty? %>
+    <% if patients_with_planless_obsession.empty? %>
       <small>0 patients</small>
       <br><br>
     <% else %>
-      <%= render partial: "users_ul", locals: { users: patients_unexposed_to_obsession } %>
+      <%= render partial: "users_ul", locals: { users: patients_with_planless_obsession } %>
     <% end %>
     <label>Patients who are planning or practicing exposure exercises:</label> <!-- Therapist filters their patients by those with unfinished plans -->
     <% if patients_planning_or_practicing_erp.empty? %>
