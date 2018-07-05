@@ -38,13 +38,13 @@ class PatientFinder
     end
   end
 
-  def filter_by_rumination_recency(scoped, rumination_recency)
-    if rumination_recency.blank?
+  def filter_by_rumination_recency(scoped, recent_ruminators)
+    if recent_ruminators.blank?
       scoped
     else
-      if rumination_recency == "Patients who reported new obsessions yesterday"
+      if recent_ruminators == "Patients who reported new obsessions yesterday"
         interval = (Time.now.midnight - 1.day)..Time.now.midnight
-      elsif rumination_recency == "Patients who reported new obsessions today"
+      elsif recent_ruminators == "Patients who reported new obsessions today"
         interval = Time.now.midnight..Time.now
       end
       scoped.patients_obsessing.where(obsessions: { created_at: interval })
