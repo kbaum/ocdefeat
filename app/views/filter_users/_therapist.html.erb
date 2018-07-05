@@ -59,7 +59,7 @@
 </div>
 
 <div class="well well-lg">
-  <h4><em>Patients' Extent of Exposure to Obsessions</em></h4>
+  <h4><em>Patients' Extent of Exposure to Triggers</em></h4>
   <% if current_user.counselees.all? {|counselee| counselee.obsessions.empty?} %> <!-- If none of the therapist's patients are obsessing about anything at all -->
     <small>None of your patients are obsessing, so there is no need to practice exposure exercises!</small>
   <% else %>
