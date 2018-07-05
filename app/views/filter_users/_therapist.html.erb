@@ -58,10 +58,10 @@
   <% else %>
     <br>
     <label>Patients with an obsession for which no ERP plans were designed:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
-    <%= show_exposed_or_unexposed(patients_with_planless_obsession) %>
+    <%= show_patients(patients_with_planless_obsession) %>
     <label>Patients who are planning or practicing exposure exercises:</label> <!-- Therapist filters their patients by those with unfinished plans -->
-    <%= show_exposed_or_unexposed(patients_planning_or_practicing_erp) %>
+    <%= show_patients(patients_planning_or_practicing_erp) %>
     <label>Patients who finished an ERP plan:</label> <!-- Therapist filters their patients by those who designed at least 1 plan that is marked as finished -->
-    <%= show_exposed_or_unexposed(patients_with_finished_plan) %>
+    <%= show_patients(patients_with_finished_plan) %>
   <% end %>
 </div>
