@@ -64,11 +64,6 @@
     <label>Patients who are planning or practicing exposure exercises:</label> <!-- Therapist filters their patients by those with unfinished plans -->
     <%= show_exposed_or_unexposed(patients_planning_or_practicing_erp) %>
     <label>Patients who finished an ERP plan:</label> <!-- Therapist filters their patients by those who designed at least 1 plan that is marked as finished -->
-    <% if patients_with_finished_plan.empty? %>
-      <small>0 patients</small>
-      <br><br>
-    <% else %>
-      <%= render partial: "users_ul", locals: { users: patients_with_finished_plan } %>
-    <% end %>
+    <%= show_exposed_or_unexposed(patients_with_finished_plan) %>
   <% end %>
 </div>
