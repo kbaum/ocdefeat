@@ -22,11 +22,11 @@ class PatientFinder
     variant.blank? ? scoped : scoped.where("variant = ?", variant)
   end
 
-  def filter_by_fixation(scoped, theme_id)
-    if theme_id.blank?
+  def filter_by_fixation(scoped, theme_fixation)
+    if theme_fixation.blank?
       scoped
     else
-      scoped.joins(obsessions: :theme).where(themes: { id: theme_id }).distinct
+      scoped.joins(obsessions: :theme).where(themes: { id: theme_fixation }).distinct
     end
   end
 
