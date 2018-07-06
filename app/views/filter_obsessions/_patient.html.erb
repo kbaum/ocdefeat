@@ -21,5 +21,7 @@
     <%= label_tag :min_anxiety_rating, "Anxiety rating within range" %>:<br>
     <%= text_field_tag :min_anxiety_rating, nil, placeholder: "Lower limit", size: 10 %> -
     <%= text_field_tag :max_anxiety_rating, nil, placeholder: "Upper limit", size: 10 %>
+    <br><br>
+    <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
   <% end %>
 </div>
