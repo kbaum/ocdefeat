@@ -7,6 +7,7 @@ class PatientObsessionFinder
 
   def call(params)
     scoped = search_thoughts(default_scope, params[:search_thoughts])
+    scoped = filter_by_theme(scoped, params[:ocd_theme])
     scoped = filter_by_min_anxiety_rating(scoped, params[:min_anxiety_rating])
     scoped = filter_by_max_anxiety_rating(scoped, params[:max_anxiety_rating])
     scoped = filter_by_min_time_consumed(scoped, params[:min_time_consumed])
@@ -16,6 +17,10 @@ class PatientObsessionFinder
 
   def search_thoughts(scoped, keywords)
     keywords.blank? ? scoped : scoped.where("intrusive_thought LIKE ?", "%#{keywords}%")
+  end
+
+  def filter_by_theme(scoped, theme)
+    theme.blank? ? scoped : scoped.where(theme: theme)
   end
 
   def filter_by_min_anxiety_rating(scoped, min_anxiety_rating)
