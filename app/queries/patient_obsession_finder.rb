@@ -7,9 +7,15 @@ class PatientObsessionFinder
 
   def call(params)
     scoped = search_thoughts(default_scope, params[:search_thoughts])
+    scoped = filter_by_lower_limit_anxiety_level(scoped, params[:min_anxiety_rating])
+    scoped = filter_by_upper_limit_anxiety_level(scoped, params[:max_anxiety_rating])
   end
 
   def search_thoughts(scoped, keywords)
     keywords.blank? ? scoped : scoped.where("intrusive_thought LIKE ?", "%#{keywords}%")
+  end
+
+  def filter_by_min_anxiety_rating(scoped, min_anxiety_rating)
+    min_anxiety_rating.blank? ? scoped : scoped.where("anxiety_rating >= ?", min_anxiety_rating)
   end
 end
