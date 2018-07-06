@@ -264,6 +264,6 @@ class ObsessionsController < ApplicationController
     end
 
     def patient_filters_obsessions_params
-      params.permit(:search_thoughts)
+      params.permit(:search_thoughts, :min_anxiety_rating, :max_anxiety_rating)
     end
   end
