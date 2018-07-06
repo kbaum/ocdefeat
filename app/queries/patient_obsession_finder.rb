@@ -28,6 +28,18 @@ class PatientObsessionFinder
     max_time_consumed.blank? ? scoped : scoped.where("time_consumed <= ?", max_time_consumed)
   end
 
+  def filter_by_erp_approach(scoped, strategy)
+    if strategy.blank?
+      scoped
+    else
+      if strategy == "Flooding"
+        scoped.defeatable_by_flooding
+      else
+        scoped.defeatable_by_graded_exposure
+      end
+    end
+  end
+
   def filter_by_min_anxiety_rating(scoped, min_anxiety_rating)
     min_anxiety_rating.blank? ? scoped : scoped.where("anxiety_rating >= ?", min_anxiety_rating)
   end
