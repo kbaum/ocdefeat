@@ -1,11 +1,3 @@
-<!-- <%= form_tag(obsessions_path, method: "get") do %>
-  <%= select_tag "ocd_theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
-  <br><br>
-  <%= select_tag "anxiety_ranking", options_for_select(["Least to Most Distressing", "Most to Least Distressing"]), prompt: "Anxiety Ranking" %>
-  <br><br>
-  <%= submit_tag "Filter Obsessions" %>
-<% end %> -->
-
 <div class="well well-lg">
   <%= form_tag obsessions_path, method: :get do %>
     <%= label_tag :search_thoughts, "Take a moment to introspect" %>:
@@ -16,6 +8,9 @@
     <br><br>
     <%= label_tag "approach", "ERP Treatment Approach" %>:
     <%= select_tag "approach", options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
+    <br><br>
+    <%= label_tag "ocd_theme", "OCD Theme" %>:
+    <%= select_tag "ocd_theme", options_from_collection_for_select(themes, "id", "name"), prompt: "Choose Theme" %>
     <br><br>
     <%= label_tag :min_time_consumed, "Hours consumed daily, in the range" %>:
     <%= number_field_tag :min_time_consumed, nil, in: 0..24 %> -
