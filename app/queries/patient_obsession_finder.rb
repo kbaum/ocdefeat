@@ -4,4 +4,7 @@ class PatientObsessionFinder
   def initialize(default_scope) # default scope is AR::Relation of the patient's own obsessions
     @default_scope = default_scope
   end
-end
+
+  def search_thoughts(scoped, keywords)
+    keywords.blank? ? scoped : scoped.where("intrusive_thought LIKE '%?%'", keywords)
+  end
