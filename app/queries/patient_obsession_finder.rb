@@ -9,6 +9,8 @@ class PatientObsessionFinder
     scoped = search_thoughts(default_scope, params[:search_thoughts])
     scoped = filter_by_min_anxiety_rating(scoped, params[:min_anxiety_rating])
     scoped = filter_by_max_anxiety_rating(scoped, params[:max_anxiety_rating])
+    scoped = filter_by_min_time_consumed(scoped, params[:min_time_consumed])
+    scoped = filter_by_max_time_consumed(scoped, params[:max_time_consumed])
     scoped
   end
 
