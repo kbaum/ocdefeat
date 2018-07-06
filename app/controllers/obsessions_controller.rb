@@ -11,7 +11,7 @@ class ObsessionsController < ApplicationController
       @obsessions = PatientObsessionFinder.new(obsessions).call(patient_filters_obsessions_params)
     elsif current_user.therapist?
       @obsessions = PatientObsessionFinder.new(obsessions).call(patient_filters_obsessions_params)
-      #@counselees = policy_scope(User)
+      @counselees = policy_scope(User)
       #elsif !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
         #if @counselees.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
           #flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
