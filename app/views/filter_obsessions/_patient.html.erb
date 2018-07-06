@@ -1,4 +1,4 @@
-<%= form_tag(obsessions_path, method: "get") do %>
+<!-- <%= form_tag(obsessions_path, method: "get") do %>
   <%= label_tag "approach", "ERP Treatment Approach:" %>
   <%= select_tag "approach", options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
   <br><br>
@@ -12,4 +12,12 @@
   <%= select_tag "anxiety_ranking", options_for_select(["Least to Most Distressing", "Most to Least Distressing"]), prompt: "Anxiety Ranking" %>
   <br><br>
   <%= submit_tag "Filter Obsessions" %>
-<% end %>
+<% end %> -->
+
+<div class="well well-lg">
+  <%= form_tag obsessions_path, method: :get do %>
+    <%= label_tag :search_thoughts, "Take a moment to introspect" %>:
+    <%= text_field_tag :search_thoughts, params[:search_thoughts], placeholder: "Search your thoughts...", class: "form-control" %><br>
+    <%= submit_tag "Search Thoughts", name: nil, class: "btn btn-default btn-sm" %>
+  <% end %>
+</div>
