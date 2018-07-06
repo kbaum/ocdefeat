@@ -20,8 +20,12 @@ class PatientObsessionFinder
     keywords.blank? ? scoped : scoped.where("intrusive_thought LIKE ?", "%#{keywords}%")
   end
 
-  def filter_by_theme(scoped, theme)
-    theme.blank? ? scoped : scoped.where(theme: theme)
+  def filter_by_min_time_consumed(scoped, min_time_consumed)
+    min_time_consumed.blank? ? scoped : scoped.where("time_consumed >= ?", min_time_consumed)
+  end
+
+  def filter_by_max_time_consumed(scoped, max_time_consumed)
+    max_time_consumed.blank? ? scoped : scoped.where("time_consumed <= ?", max_time_consumed)
   end
 
   def filter_by_min_anxiety_rating(scoped, min_anxiety_rating)
@@ -32,11 +36,7 @@ class PatientObsessionFinder
     max_anxiety_rating.blank? ? scoped : scoped.where("anxiety_rating <= ?", max_anxiety_rating)
   end
 
-  def filter_by_min_time_consumed(scoped, min_time_consumed)
-    min_time_consumed.blank? ? scoped : scoped.where("time_consumed >= ?", min_time_consumed)
-  end
-
-  def filter_by_max_time_consumed(scoped, max_time_consumed)
-    max_time_consumed.blank? ? scoped : scoped.where("time_consumed <= ?", max_time_consumed)
+  def filter_by_theme(scoped, theme)
+    theme.blank? ? scoped : scoped.where(theme: theme)
   end
 end
