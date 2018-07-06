@@ -10,14 +10,8 @@ class ObsessionsController < ApplicationController
     if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
       @obsessions = PatientObsessionFinder.new(obsessions).call(patient_filters_obsessions_params)
     elsif current_user.therapist?
+      @obsessions = PatientObsessionFinder.new(obsessions).call(patient_filters_obsessions_params)
       #@counselees = policy_scope(User)
-      #if !params[:search].blank? # Therapist searches her patients' obsessions by intrusive_thought containing term entered into search form
-        #if obsessions.search_thoughts(params[:search]).empty?
-          #flash.now[:alert] = "None of your patients are ruminating about that idea."
-        #else
-          #@obsessions = obsessions.search_thoughts(params[:search])
-          #flash.now[:notice] = "That stream of thought provides content for #{plural_inflection(@obsessions)}!"
-        #end
       #elsif !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
         #if @counselees.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
           #flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
@@ -70,13 +64,6 @@ class ObsessionsController < ApplicationController
         #else # If the patient has obsessions for which no ERP plans were designed
           #@obsessions = patient_picked.obsessions.sans_plans
           #flash.now[:notice] = "Patient #{patient_picked.name} has #{plural_inflection(@obsessions)} for which no ERP plans were designed."
-        #end
-      #elsif !params[:ocd_subset].blank? # Therapist filters obsessions by OCD subset -- params[:ocd_subset] is the ID of the theme
-        #if obsessions.by_theme(params[:ocd_subset]).empty? # If no obsession is classified in the selected subset
-          #flash.now[:alert] = "None of your patients' obsessions revolve around \"#{Theme.find(params[:ocd_subset]).name}.\""
-        #else # At least one obsession is classified in the selected subset
-          #@obsessions = obsessions.by_theme(params[:ocd_subset])
-          #flash.now[:notice] = "The content of #{plural_inflection(@obsessions)} revolves around \"#{Theme.find(params[:ocd_subset]).name}.\""
         #end
       #else # Therapist did not select a filter
         #@obsessions = obsessions # stores the therapist's patients' obsessions
