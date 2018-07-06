@@ -8,6 +8,8 @@ class PatientObsessionFinder
   def call(params)
     scoped = search_thoughts(default_scope, params[:search_thoughts])
     scoped = filter_by_min_anxiety_rating(scoped, params[:min_anxiety_rating])
+    scoped = filter_by_max_anxiety_rating(scoped, params[:max_anxiety_rating])
+    scoped
   end
 
   def search_thoughts(scoped, keywords)
