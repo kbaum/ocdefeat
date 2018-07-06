@@ -1,5 +1,5 @@
 <div class="well well-lg">
-  <%= form_tag obsessions_path, method: :get do %>
+  <%= form_tag obsessions_path, method: "get" do %>
     <%= label_tag :search_thoughts, "Take a moment to introspect" %>:
     <%= text_field_tag :search_thoughts, params[:search_thoughts], placeholder: "Search your thoughts...", class: "form-control" %><br>
     <%= label_tag :min_anxiety_rating, "Anxiety level induced, in the range" %>:
