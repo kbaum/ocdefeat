@@ -18,6 +18,8 @@
   <%= form_tag obsessions_path, method: :get do %>
     <%= label_tag :search_thoughts, "Take a moment to introspect" %>:
     <%= text_field_tag :search_thoughts, params[:search_thoughts], placeholder: "Search your thoughts...", class: "form-control" %><br>
-    <%= submit_tag "Search Thoughts", name: nil, class: "btn btn-default btn-sm" %>
+    <%= label_tag :min_anxiety_rating, "Anxiety rating within range" %>:<br>
+    <%= text_field_tag :min_anxiety_rating, nil, placeholder: "Lower limit", size: 10 %> -
+    <%= text_field_tag :max_anxiety_rating, nil, placeholder: "Upper limit", size: 10 %>
   <% end %>
 </div>
