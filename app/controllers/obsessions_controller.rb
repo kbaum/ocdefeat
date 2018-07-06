@@ -7,81 +7,84 @@ class ObsessionsController < ApplicationController
     obsessions = policy_scope(Obsession)
     @themes = policy_scope(Theme)
 
-    if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
-      if !params[:search].blank? # Patient searches her own obsessions by intrusive_thought containing terms entered in search form. (params[:search] is neither nil nor empty string)
-        if obsessions.search_thoughts(params[:search]).empty?
-          flash.now[:alert] = "You never recorded that thought in your Obsessions Log!"
-        else
-          @obsessions = obsessions.search_thoughts(params[:search])
-          flash.now[:notice] = "A thought popped into your head (and your search results)!"
-        end
-      elsif !params[:approach].blank?
-        if current_user.plans.empty?
-          flash.now[:alert] = "Looks like you haven't designed any ERP plans to expose yourself to your obsessions!"
-        elsif params[:approach] == "Flooding"
-          if obsessions.defeatable_by_flooding.empty?
-            flash.now[:alert] = "None of your ERP plans use a flooding approach to defeat OCD."
-          else
-            @obsessions = obsessions.defeatable_by_flooding
-            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by flooding yourself with the most anxiety-provoking exposures first."
-          end
-        elsif params[:approach] == "Graded Exposure"
-          if obsessions.defeatable_by_graded_exposure.empty?
-            flash.now[:alert] = "None of your ERP plans use a graded exposure approach to defeat OCD."
-          else
-            @obsessions = obsessions.defeatable_by_graded_exposure
-            flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by constructing a hierachy of OCD triggers and gradually performing the most to least tolerable exposure exercises."
-          end
-        end
-      elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
-        if obsessions.by_anxiety_rating(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
-          flash.now[:alert] = "None of your obsessions were rated at anxiety level #{params[:anxiety_amount]}."
-        else
-          @obsessions = obsessions.by_anxiety_rating(params[:anxiety_amount]) # stores AR::Relation of the patient's obsessions with the selected anxiety_rating
-          flash.now[:notice] = "You rated #{plural_inflection(@obsessions)} at anxiety level #{params[:anxiety_amount]}!"
-        end
-      elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
-        if current_user.obsession_count == 1 # If the patient only has 1 obsession
-          @obsessions = current_user.obsessions # @obsessions is AR::Relation storing 1 obsession
-          flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsessions.first.anxiety_rating}!"
-        else # If the patient has more than 1 obsession
-          distress_degree = current_user.obsessions.first.anxiety_rating # stores the patient's first obsession's anxiety_rating
-          if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree} # all of the patient's obsessions have the same anxiety_rating, so none are displayed
-            flash.now[:alert] = "Your obsessions cannot be ranked in order of anxiety rating, as you rated each obsession at anxiety level #{distress_degree}!"
-          elsif params[:anxiety_ranking] == "Least to Most Distressing"
-            @obsessions = obsessions.least_to_most_distressing
-            flash.now[:notice] = "Your obsessions are ordered from least to most distressing!"
-          else
-            @obsessions = obsessions.most_to_least_distressing
-            flash.now[:notice] = "Your obsessions are ordered from most to least distressing!"
-          end
-        end
-      elsif !params[:time_taken].blank? # Patient filters her own obsessions by time_consumed (hrs/day)
-        if current_user.obsession_count == 1 # If the patient only has 1 obsession
-          @obsessions = current_user.obsessions # @obsessions is AR::Relation storing 1 obsession
-          flash.now[:notice] = "You only have one obsession, which consumes #{@obsessions.first.time_consumed} #{'hour'.pluralize(@obsessions.first.time_consumed)} of your time on a daily basis!"
-        else # If the patient has more than 1 obsession
-          first_timeframe = current_user.obsessions.first.time_consumed
-          if current_user.obsessions.all? {|o| o.time_consumed == first_timeframe} # The patient's own obsessions all have the same time_consumed value, so they're not displayed
-            flash.now[:alert] = "Your obsessions cannot be ranked by amount of time spent obsessing, as each of your obsessions takes up #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of your time daily!"
-          elsif params[:time_taken] == "Least to Most Time-Consuming"
-            @obsessions = obsessions.least_to_most_time_consuming
-            flash.now[:notice] = "Your obsessions are ordered from least to most time-consuming!"
-          else
-            @obsessions = obsessions.most_to_least_time_consuming
-            flash.now[:notice] = "Your obsessions are ordered from most to least time-consuming!"
-          end
-        end
-      elsif !params[:ocd_theme].blank? # Patient filters her own obsessions by OCD theme - params[:ocd_theme] is the ID of the theme in which the obsessions we're searching for are classified
-        if obsessions.by_theme(params[:ocd_theme]).empty? # If none of the patient's obsessions pertain to that theme
-          flash.now[:alert] = "None of your obsessions pertain to \"#{Theme.find(params[:ocd_theme]).name}.\""
-        else # 1 or more of the patient's obsessions are classified in the selected theme
-          @obsessions = obsessions.by_theme(params[:ocd_theme]) # stores AR::Relation of the patient's obsessions that are classified in the selected OCD theme
-          flash.now[:notice] = "The content of #{plural_inflection(@obsessions)} revolves around \"#{Theme.find(params[:ocd_theme]).name}.\""
-        end
-      else # Patient did not choose a filter, so all of her own obsessions are listed
-        @obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
-      end
+    if current_user.patient?
+      @obsessions = PatientObsessionFinder.new(obsessions).call(patient_filters_obsessions_params)
+
+    #if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
+      #if !params[:search].blank? # Patient searches her own obsessions by intrusive_thought containing terms entered in search form. (params[:search] is neither nil nor empty string)
+        #if obsessions.search_thoughts(params[:search]).empty?
+          #flash.now[:alert] = "You never recorded that thought in your Obsessions Log!"
+        #else
+          #@obsessions = obsessions.search_thoughts(params[:search])
+          #flash.now[:notice] = "A thought popped into your head (and your search results)!"
+        #end
+      #elsif !params[:approach].blank?
+        #if current_user.plans.empty?
+          #flash.now[:alert] = "Looks like you haven't designed any ERP plans to expose yourself to your obsessions!"
+        #elsif params[:approach] == "Flooding"
+          #if obsessions.defeatable_by_flooding.empty?
+            #flash.now[:alert] = "None of your ERP plans use a flooding approach to defeat OCD."
+          #else
+            #@obsessions = obsessions.defeatable_by_flooding
+            #flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by flooding yourself with the most anxiety-provoking exposures first."
+          #end
+        #elsif params[:approach] == "Graded Exposure"
+          #if obsessions.defeatable_by_graded_exposure.empty?
+            #flash.now[:alert] = "None of your ERP plans use a graded exposure approach to defeat OCD."
+          #else
+            #@obsessions = obsessions.defeatable_by_graded_exposure
+            #flash.now[:notice] = "#{plural_inflection(@obsessions)} can be defeated by constructing a hierachy of OCD triggers and gradually performing the most to least tolerable exposure exercises."
+          #end
+        #end
+      #elsif !params[:anxiety_amount].blank? # Patient filters her own obsessions by anxiety_rating -- params[:anxiety_amount] = anxiety_rating attribute value (an integer from 1-10)
+        #if obsessions.by_anxiety_rating(params[:anxiety_amount]).empty? # If none of the patient's obsessions has the selected anxiety_rating
+          #flash.now[:alert] = "None of your obsessions were rated at anxiety level #{params[:anxiety_amount]}."
+        #else
+          #@obsessions = obsessions.by_anxiety_rating(params[:anxiety_amount]) # stores AR::Relation of the patient's obsessions with the selected anxiety_rating
+          #flash.now[:notice] = "You rated #{plural_inflection(@obsessions)} at anxiety level #{params[:anxiety_amount]}!"
+        #end
+      #elsif !params[:anxiety_ranking].blank? # Patient filters her own obsessions by increasing/decreasing anxiety_rating
+        #if current_user.obsession_count == 1 # If the patient only has 1 obsession
+          #@obsessions = current_user.obsessions # @obsessions is AR::Relation storing 1 obsession
+          #flash.now[:notice] = "You only have one obsession with an anxiety rating of #{@obsessions.first.anxiety_rating}!"
+        #else # If the patient has more than 1 obsession
+          #distress_degree = current_user.obsessions.first.anxiety_rating # stores the patient's first obsession's anxiety_rating
+          #if current_user.obsessions.all? {|o| o.anxiety_rating == distress_degree} # all of the patient's obsessions have the same anxiety_rating, so none are displayed
+            #flash.now[:alert] = "Your obsessions cannot be ranked in order of anxiety rating, as you rated each obsession at anxiety level #{distress_degree}!"
+          #elsif params[:anxiety_ranking] == "Least to Most Distressing"
+            #@obsessions = obsessions.least_to_most_distressing
+            #flash.now[:notice] = "Your obsessions are ordered from least to most distressing!"
+          #else
+            #@obsessions = obsessions.most_to_least_distressing
+            #flash.now[:notice] = "Your obsessions are ordered from most to least distressing!"
+          #end
+        #end
+      #elsif !params[:time_taken].blank? # Patient filters her own obsessions by time_consumed (hrs/day)
+        #if current_user.obsession_count == 1 # If the patient only has 1 obsession
+          #@obsessions = current_user.obsessions # @obsessions is AR::Relation storing 1 obsession
+          #flash.now[:notice] = "You only have one obsession, which consumes #{@obsessions.first.time_consumed} #{'hour'.pluralize(@obsessions.first.time_consumed)} of your time on a daily basis!"
+        #else # If the patient has more than 1 obsession
+          #first_timeframe = current_user.obsessions.first.time_consumed
+          #if current_user.obsessions.all? {|o| o.time_consumed == first_timeframe} # The patient's own obsessions all have the same time_consumed value, so they're not displayed
+            #flash.now[:alert] = "Your obsessions cannot be ranked by amount of time spent obsessing, as each of your obsessions takes up #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of your time daily!"
+          #elsif params[:time_taken] == "Least to Most Time-Consuming"
+            #@obsessions = obsessions.least_to_most_time_consuming
+            #flash.now[:notice] = "Your obsessions are ordered from least to most time-consuming!"
+          #else
+            #@obsessions = obsessions.most_to_least_time_consuming
+            #flash.now[:notice] = "Your obsessions are ordered from most to least time-consuming!"
+          #end
+        #end
+      #elsif !params[:ocd_theme].blank? # Patient filters her own obsessions by OCD theme - params[:ocd_theme] is the ID of the theme in which the obsessions we're searching for are classified
+        #if obsessions.by_theme(params[:ocd_theme]).empty? # If none of the patient's obsessions pertain to that theme
+          #flash.now[:alert] = "None of your obsessions pertain to \"#{Theme.find(params[:ocd_theme]).name}.\""
+        #else # 1 or more of the patient's obsessions are classified in the selected theme
+          #@obsessions = obsessions.by_theme(params[:ocd_theme]) # stores AR::Relation of the patient's obsessions that are classified in the selected OCD theme
+          #flash.now[:notice] = "The content of #{plural_inflection(@obsessions)} revolves around \"#{Theme.find(params[:ocd_theme]).name}.\""
+        #end
+      #else # Patient did not choose a filter, so all of her own obsessions are listed
+        #@obsessions = obsessions # stores AR::Relation of all the patient's own obsessions
+      #end
     elsif current_user.therapist?
       @counselees = policy_scope(User)
       if !params[:search].blank? # Therapist searches her patients' obsessions by intrusive_thought containing term entered into search form
@@ -258,5 +261,9 @@ class ObsessionsController < ApplicationController
         :theme_id,
         :search
       )
+    end
+
+    def patient_filters_obsessions_params
+      params.permit(:search_thoughts)
     end
   end
