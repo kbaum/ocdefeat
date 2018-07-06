@@ -2,16 +2,19 @@
   <%= label_tag :search_thoughts, "Intrusive thoughts that contain" %>:
   <%= text_field_tag :search_thoughts, params[:search_thoughts], placeholder: "Take a moment to introspect. Search your thoughts...", class: "form-control" %>
   <br>
-  <%= label_tag :ocd_theme, "OCD Theme" %>:
-  <%= select_tag :ocd_theme, options_from_collection_for_select(themes, "id", "name"), prompt: "Choose Theme" %>
+  <%= label_tag :min_time_consumed, "Hours consumed daily, in the range" %>:
+  <%= number_field_tag :min_time_consumed, nil, in: 0..24 %> -
+  <%= number_field_tag :max_time_consumed, nil, in: 0..24 %>
+  <br><br>
+  <%= label_tag :approach, "ERP Treatment Approach" %>:
+  <%= select_tag :approach, options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
   <br><br>
   <%= label_tag :min_anxiety_rating, "Anxiety rating, in the range" %>:
   <%= number_field_tag :min_anxiety_rating, nil, in: 1..10 %> -
   <%= number_field_tag :max_anxiety_rating, nil, in: 1..10 %>
   <br><br>
-  <%= label_tag :min_time_consumed, "Hours consumed daily, in the range" %>:
-  <%= number_field_tag :min_time_consumed, nil, in: 0..24 %> -
-  <%= number_field_tag :max_time_consumed, nil, in: 0..24 %>
+  <%= label_tag :ocd_theme, "OCD Theme" %>:
+  <%= select_tag :ocd_theme, options_from_collection_for_select(themes, "id", "name"), prompt: "Choose Theme" %>
   <br><br>
   <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
   <br><br>
