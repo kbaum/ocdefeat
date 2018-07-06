@@ -17,4 +17,8 @@ class PatientObsessionFinder
   def filter_by_min_anxiety_rating(scoped, min_anxiety_rating)
     min_anxiety_rating.blank? ? scoped : scoped.where("anxiety_rating >= ?", min_anxiety_rating)
   end
+
+  def filter_by_max_anxiety_rating(scoped, max_anxiety_rating)
+    max_anxiety_rating.blank? ? scoped : scoped.where("anxiety_rating <= ?", max_anxiety_rating)
+  end
 end
