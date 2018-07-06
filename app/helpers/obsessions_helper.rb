@@ -1,9 +1,9 @@
 module ObsessionsHelper
-  def label_search
+  def filter_obsessions_header
     if current_user.patient?
-      "Take a moment to introspect"
+      content_tag(:h4, "Filter Your Obsessions by...")
     elsif current_user.therapist?
-      "Read your patients' minds"
+      content_tag(:h4, "Filter Your Patients' Obsessions by...")
     end
   end
 
