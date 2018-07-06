@@ -1,10 +1,6 @@
 <!-- <%= form_tag(obsessions_path, method: "get") do %>
   <%= label_tag "approach", "ERP Treatment Approach:" %>
   <%= select_tag "approach", options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
-  <br><br>
-  <%= label_tag "anxiety_amount", "Amount of Anxiety Induced:" %>
-  <%= number_field_tag "anxiety_amount", nil, in: 1..10 %>
-  <br><br>
   <%= select_tag "time_taken", options_for_select(["Least to Most Time-Consuming", "Most to Least Time-Consuming"]), prompt: "Time Consumed" %>
   <br><br>
   <%= select_tag "ocd_theme", options_from_collection_for_select(themes, "id", "name"), prompt: "OCD Theme" %>
@@ -19,8 +15,8 @@
     <%= label_tag :search_thoughts, "Take a moment to introspect" %>:
     <%= text_field_tag :search_thoughts, params[:search_thoughts], placeholder: "Search your thoughts...", class: "form-control" %><br>
     <%= label_tag :min_anxiety_rating, "Anxiety rating within range" %>:<br>
-    <%= text_field_tag :min_anxiety_rating, nil, placeholder: "Lower limit", size: 10 %> -
-    <%= text_field_tag :max_anxiety_rating, nil, placeholder: "Upper limit", size: 10 %>
+    <%= number_field_tag :min_anxiety_rating, nil, in: 1..10 %> -
+    <%= number_field_tag :max_anxiety_rating, nil, in: 1..10 %>
     <br><br>
     <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
   <% end %>
