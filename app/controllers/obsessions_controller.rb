@@ -2,6 +2,7 @@ class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
   before_action :set_themes, only: [:new, :edit]
   before_action :require_obsessions, only: [:index]
+  include AdminFiltersConcern
 
   def index
     obsessions = policy_scope(Obsession)
@@ -68,26 +69,7 @@ class ObsessionsController < ApplicationController
         @patient_obsessions = obsessions # stores the therapist's patients' obsessions
       end
     elsif current_user.admin?
-      if !params[:date].blank? # Admin filters obsessions by date created
-        if params[:date] == "Today"
-          if obsessions.from_today.empty? # If no obsessions were created today
-            flash.now[:alert] = "No new obsessions were reported today."
-          else
-            @obsessions = obsessions.from_today # stores AR::Relation of all obsessions created today
-            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported today!"
-          end
-        elsif params[:date] == "Old Obsessions"
-          if obsessions.before_today.empty? # If no obsessions were created prior to today
-            flash.now[:alert] = "No obsessions were reported before today."
-          else
-            @obsessions = obsessions.before_today # stores AR::Relation of all obsessions created prior to today
-            flash.now[:notice] = "You found #{plural_inflection(@obsessions)} reported before today!"
-          end
-        end
-      else # Admin did not choose a filter
-        @obsessions = obsessions # stores AR::Relation of all patients' obsessions
-        flash.now[:notice] = "OCD spikes are sparsely detailed and displayed anonymously to preserve patient confidentiality."
-      end
+      @obsessions = filter_by_date
     end
   end
 
