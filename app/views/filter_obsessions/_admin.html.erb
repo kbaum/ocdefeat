@@ -2,3 +2,7 @@
   <%= select_tag "date", options_for_select(["Today", "Old Obsessions"]), prompt: "Date Reported" %>
   <%= submit_tag "Filter Obsessions" %>
 <% end %>
+
+<br>
+
+<%= display_obsessions(obsessions) %>
