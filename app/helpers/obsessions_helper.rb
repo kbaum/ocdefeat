@@ -3,7 +3,7 @@ module ObsessionsHelper
     if current_user.patient?
       content_tag(:h4, "Filter Your Obsessions by...")
     elsif current_user.therapist?
-      content_tag(:h4, "Filter All Patients' Obsessions by...")
+      content_tag(:h4, "Filter Your Patients' Obsessions by...")
     end
   end
 
