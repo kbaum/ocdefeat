@@ -1,0 +1,24 @@
+<%= render partial: "filter_obsessions/shared_obsession_filters", locals: { themes: themes } %>
+
+<br>
+
+<div class="patient-obsessions">
+  <h4>Filter Obsessions Reported by a Specific Patient</h4>
+
+  <br>
+
+  <%= form_tag(obsessions_path, method: "get") do %>
+    <%= select_tag "patient", options_from_collection_for_select(counselees, "id", "name"), prompt: "All Obsessions Reported by Patient" %>
+    <br><br>
+    <%= select_tag "planless", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Obsessions that Lack ERP Plans" %>
+    <br><br>
+    <%= select_tag "distressed", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Most to Least Distressing Obsessions" %>
+    <br><br>
+    <%= select_tag "consumed", options_from_collection_for_select(counselees, "id", "name"), prompt: "Patient's Most to Least Time-Consuming Obsessions" %>
+    <br><br>
+    <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
+  <% end %>
+</div>
+
+<br>
+<%= display_obsessions(@patient_obsessions) %>
