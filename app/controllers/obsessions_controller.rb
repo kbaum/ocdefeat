@@ -175,7 +175,7 @@ class ObsessionsController < ApplicationController
       )
     end
 
-    def patient_filters_obsessions_params
+    def filter_obsessions_params
       params.permit(
         :search_thoughts,
         :min_time_consumed,
