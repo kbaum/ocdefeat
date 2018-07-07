@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
         "#{@obsessions.count} #{'obsession'.pluralize(@obsessions.count)}"
       when @plans
         "#{@plans.count} ERP #{'plan'.pluralize(@plans.count)}"
+      when @patient_obsessions
+        "#{@patient_obsessions.count} #{'obsession'.pluralize(@patient_obsessions.count)}"
       end
     end
 
