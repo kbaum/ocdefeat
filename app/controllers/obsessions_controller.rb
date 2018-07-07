@@ -6,11 +6,9 @@ class ObsessionsController < ApplicationController
   def index
     obsessions = policy_scope(Obsession)
     @themes = policy_scope(Theme)
+    @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params) unless current_user.admin?
 
-    if current_user.patient? # patient is guaranteed to have at least 1 obsession due to #require_obsessions
-      @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params)
-    elsif current_user.therapist?
-      @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params)
+    if current_user.therapist?
       @counselees = policy_scope(User)
 
       if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
