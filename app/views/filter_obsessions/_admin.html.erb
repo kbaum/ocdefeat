@@ -1,5 +1,5 @@
 <%= form_tag(obsessions_path, method: "get") do %>
-  <%= select_tag "date", options_for_select(["Today", "Old Obsessions"]), prompt: "Date Reported" %>
+  <%= select_tag :date, options_for_select(["Today", "Before Today"]), prompt: "Date Reported" %>
   <%= submit_tag "Filter Obsessions" %>
 <% end %>
 
