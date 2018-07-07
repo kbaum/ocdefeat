@@ -1,7 +1,7 @@
-class PatientObsessionFinder
+class ObsessionFinder
   attr_accessor :default_scope
 
-  def initialize(default_scope) # default scope is AR::Relation of the patient's own obsessions
+  def initialize(default_scope) # the patient's own obsessions or the therapist's patients' obsessions
     @default_scope = default_scope
   end
 
