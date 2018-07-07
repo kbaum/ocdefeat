@@ -17,7 +17,7 @@ module AdminFiltersConcern
             objects = scoped_objects.from_today # stores AR::Relation of all obsessions/plans created today
             flash.now[:success] = "You found #{plural_inflection(objects)} reported today!"
           end
-        elsif params[:date] == "Old Obsessions"
+        elsif params[:date] == "Before Today"
           if scoped_objects.before_today.empty? # If no obsessions/plans were created prior to today
             flash.now[:alert] = "No #{controller_name} were created before today."
           else
