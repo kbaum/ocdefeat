@@ -1,4 +1,14 @@
 module PlansHelper
+  def display_plans(plans)
+    unless plans.nil?
+      content_tag(:ul) do
+        plans.each do |plan|
+          concat(content_tag(:li, link_to_unless(current_user.admin?, plan.title, plan_path(plan))))
+        end
+      end
+    end
+  end
+
   def progress(plan)
     if plan.finished?
       "Accomplished! (Fully implemented and marked as finished)"
