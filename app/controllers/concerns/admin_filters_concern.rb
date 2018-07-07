@@ -25,7 +25,16 @@ module AdminFiltersConcern
             flash.now[:success] = "You found #{objects.count} #{objects.first.class.to_s.downcase.pluralize(objects.count)} reported before today!"
           end
         end
+      else # Admin did not choose a filter
+        objects = scoped_objects # stores AR::Relation of all patients' obsessions/plans
+        if objects.first.class == Obsession
+          message = "OCD spikes are sparsely detailed and displayed anonymously to preserve patient privacy."
+        elsif objects.first.class == Plan
+          message = "ERP plans are only listed by title to preserve doctor-patient confidentiality."
+        end
+        flash.now[:success] = "#{message}"
       end
+      objects
     end
   end
 end
