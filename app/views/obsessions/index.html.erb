@@ -7,14 +7,4 @@
 
 <br>
 
-<div>
-  <h3>Filter Obsessions by...</h3>
-
-  <br>
-
-  <%= render partial: filters, locals: { counselees: @counselees, themes: @themes } %>
-</div>
-
-<hr>
-
-<%= display_obsessions(@obsessions) %>
+<%= render partial: filters, locals: { counselees: @counselees, themes: @themes } %>
