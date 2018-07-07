@@ -2,3 +2,7 @@
   <%= select_tag "date", options_for_select(["Today", "Past Plans"]), prompt: "Date Designed" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
+
+<br>
+
+<%= render partial: "plans/plans_ul", locals: { plans: plans } %>
