@@ -1,5 +1,5 @@
-<%= form_tag("/plans", method: "get") do %>
-  <%= select_tag "date", options_for_select(["Today", "Past Plans"]), prompt: "Date Designed" %>
+<%= form_tag(plans_path, method: "get") do %>
+  <%= select_tag :date, options_for_select(["Today", "Before Today"]), prompt: "Date Designed" %>
   <%= submit_tag "Filter Plans" %>
 <% end %>
 
