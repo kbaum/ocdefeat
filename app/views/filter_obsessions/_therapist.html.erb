@@ -1,4 +1,4 @@
-<%= render partial: "filter_obsessions/shared_obsession_filters", locals: { themes: themes } %>
+<%= render partial: "filter_obsessions/shared_obsession_filters", locals: { themes: themes, obsessions: obsessions } %>
 
 <br>
 
@@ -21,4 +21,4 @@
 </div>
 
 <br>
-<%= display_obsessions(@patient_obsessions) %>
+<%= display_obsessions(patient_obsessions) %>
