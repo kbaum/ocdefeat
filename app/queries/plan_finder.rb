@@ -31,4 +31,16 @@ class PlanFinder
       end
     end
   end
+
+  def filter_by_delineation(scoped, delineation)
+    if delineation.blank?
+      scoped
+    else
+      if delineation == "Plans with Steps"
+        scoped.with_steps
+      else
+        scoped.stepless
+      end
+    end
+  end
 end
