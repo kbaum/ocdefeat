@@ -13,6 +13,8 @@
     <%= number_field_tag :min_anxiety_rating, nil, in: 1..10 %> -
     <%= number_field_tag :max_anxiety_rating, nil, in: 1..10 %>
     <br><br>
+    <%= render partial: "shared/approach_and_theme_filters", locals: { themes: themes } %>
+    <br><br>
     <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
   <% end %>
 </div>
