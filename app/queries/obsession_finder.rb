@@ -12,7 +12,7 @@ class ObsessionFinder
     scoped = filter_by_erp_approach(scoped, params[:approach])
     scoped = filter_by_min_anxiety_rating(scoped, params[:min_anxiety_rating])
     scoped = filter_by_max_anxiety_rating(scoped, params[:max_anxiety_rating])
-    scoped = filter_by_theme(scoped, params[:ocd_theme])
+    scoped = filter_by_ocd_theme(scoped, params[:ocd_theme])
     scoped
   end
 
@@ -48,7 +48,7 @@ class ObsessionFinder
     max_anxiety_rating.blank? ? scoped : scoped.where("anxiety_rating <= ?", max_anxiety_rating)
   end
 
-  def filter_by_theme(scoped, theme)
+  def filter_by_ocd_theme(scoped, theme)
     theme.blank? ? scoped : scoped.where(theme: theme)
   end
 end
