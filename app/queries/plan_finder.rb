@@ -9,6 +9,7 @@ class PlanFinder
     scoped = search_titles(default_scope, params[:title_terms])
     scoped = filter_by_obsession_targeted(scoped, params[:obsession_targeted])
     scoped = filter_by_accomplishment(scoped, params[:accomplishment])
+    scoped = filter_by_delineation(scoped, params[:delineation])
     scoped
   end
 
