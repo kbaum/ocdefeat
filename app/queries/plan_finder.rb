@@ -10,6 +10,7 @@ class PlanFinder
     scoped = filter_by_obsession_targeted(scoped, params[:obsession_targeted])
     scoped = filter_by_accomplishment(scoped, params[:accomplishment])
     scoped = filter_by_delineation(scoped, params[:delineation])
+    scoped = filter_by_approach(scoped, params[:approach])
     scoped
   end
 
