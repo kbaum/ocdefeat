@@ -45,4 +45,8 @@ class PlanFinder
       approach == "Flooding" ? scoped.flooding : scoped.graded_exposure
     end
   end
+
+  def filter_by_theme(scoped, theme)
+    theme.blank? ? scoped : scoped.by_theme(theme)
+  end
 end
