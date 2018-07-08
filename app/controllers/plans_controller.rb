@@ -178,6 +178,6 @@ class PlansController < ApplicationController
     end
 
     def filter_plans_params
-      params.permit(:title_terms, :obsession_targeted, :accomplishment, :delineation)
+      params.permit(:title_terms, :obsession_targeted, :accomplishment, :delineation, :approach, :ocd_theme)
     end
 end
