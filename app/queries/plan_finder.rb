@@ -7,6 +7,8 @@ class PlanFinder
 
   def call(params)
     scoped = search_titles(default_scope, params[:title_terms])
+    scoped = filter_by_obsession_targeted(scoped, params[:obsession_targeted])
+    scoped
   end
 
   def search_titles(scoped, title_terms)
