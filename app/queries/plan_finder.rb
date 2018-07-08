@@ -5,6 +5,10 @@ class PlanFinder
     @default_scope = default_scope
   end
 
+  def call(params)
+    scoped = search_titles(default_scope, params[:title_terms])
+  end
+
   def search_titles(scoped, title_terms)
     title_terms.blank? ? scoped : scoped.where("title LIKE ?", "%#{title_terms}%")
   end
