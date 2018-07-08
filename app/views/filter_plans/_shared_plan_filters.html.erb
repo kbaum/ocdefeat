@@ -5,7 +5,8 @@
     <%= label_tag :title_terms, "Key Terms Found in Plan Titles" %>:
     <%= text_field_tag :title_terms, nil, placeholder: "Search titles containing...", class: "form-control" %>
     <br>
-    <%= select_tag :obsession_targeted, options_from_collection_for_select(obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %>
+    <%= label_tag :obsession_targeted, "Obsession Targeted" %>:
+    <%= select_tag :obsession_targeted, options_from_collection_for_select(obsessions, "id", "intrusive_thought"), prompt: "Choose Obsession by Intrusive Idea" %>
     <br><br>
     <%= render partial: "shared/approach_and_theme_filters", locals: { themes: themes } %>
     <br><br>
