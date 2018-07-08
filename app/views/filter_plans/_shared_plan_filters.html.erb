@@ -7,6 +7,8 @@
     <br>
     <%= select_tag :obsession_targeted, options_from_collection_for_select(obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %>
     <br><br>
+    <%= render partial: "shared/approach_and_theme_filters", locals: { themes: themes } %>
+    <br><br>
     <%= submit_tag "Filter ERP Plans", class: "btn btn-default btn-sm" %>
   <% end %>
 </div>
