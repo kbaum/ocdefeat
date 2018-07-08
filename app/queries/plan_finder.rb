@@ -5,6 +5,10 @@ class PlanFinder
     @default_scope = default_scope
   end
 
+  def search_titles(scoped, title_terms)
+    title_terms.blank? ? scoped : scoped.where("title LIKE ?", "%#{title_terms}%")
+  end
+
   def filter_by_obsession_targeted(scoped, obsession_targeted)
     obsession_targeted.blank? ? scoped : scoped.where(obsession: obsession_targeted)
   end
