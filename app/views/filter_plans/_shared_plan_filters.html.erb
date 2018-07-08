@@ -1,4 +1,9 @@
 <div class="plans">
   <%= filter_plans_header %>
-  <br>
+
+  <%= form_tag plans_path, method: "get" do %>
+    <%= select_tag :obsession_targeted, options_from_collection_for_select(obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %>
+    <br><br>
+    <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
+  <% end %>
 </div>
