@@ -1,0 +1,5 @@
+<%= label_tag :approach, "Treatment Approach" %>:
+<%= select_tag :approach, options_for_select(["Flooding", "Graded Exposure"]), prompt: "Select Strategy" %>
+<br><br>
+<%= label_tag :ocd_theme, "OCD Theme" %>:
+<%= select_tag :ocd_theme, options_from_collection_for_select(themes, "id", "name"), prompt: "Choose Theme" %>
