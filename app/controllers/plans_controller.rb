@@ -2,14 +2,17 @@ class PlansController < ApplicationController
   before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :require_plans, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
+  include AdminFiltersConcern
 
   def index
     plans = policy_scope(Plan)
     @counselees = policy_scope(User) # used in app/views/filter_plans/_therapist.html.erb to store AR::Relation of the patients (counselees) that the therapist was assigned
     @themes = policy_scope(Theme) # Theme.all - patients, therapists and admins can view all themes
-    @your_obsessions = current_user.obsessions if current_user.patient?
-
-    if current_user.patient?
+    @obsessions = policy_scope(Obsession) # the patient's own obsessions / the therapist's patients' obsessions
+    
+    if current_user.admin?
+      @plans = filter_by_date
+    elsif current_user.patient?
       @done = plans.accomplished if !plans.accomplished.empty?
       @undone = plans.unaccomplished if !plans.unaccomplished.empty?
 
@@ -68,59 +71,58 @@ class PlansController < ApplicationController
         @plans = plans # stores all plans designed by the therapist's patients
         flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
       end # closes logic about filter selected
-    elsif current_user.admin?
-      if !params[:date].blank? # Admin filters plans by date created
-        if params[:date] == "Today"
-          if plans.from_today.empty? # If no plans were created today
-            flash.now[:alert] = "No ERP plans were designed today."
-          else
-            @plans = plans.from_today
-            flash.now[:notice] = "You found #{plural_inflection(@plans)} designed today!"
-          end
-        elsif params[:date] == "Past Plans"
-          if plans.before_today.empty? # If no plans were created prior to today
-            flash.now[:alert] = "No ERP plans were designed before today."
-          else
-            @plans = plans.before_today
-            flash.now[:notice] = "You found #{plural_inflection(@plans)} designed before today!"
-          end
-        end # closes logic for params[:date]
-      elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
-        if params[:delineation] == "Stepless Plans"
-          if plans.stepless.empty? # If all plans HAVE steps
-            flash.now[:alert] = "All ERP plans have at least one step."
-          else
-            @plans = plans.stepless # stores AR::Relation of stepless plans
-            flash.now[:notice] = "#{sv_agreement(@plans)} lacking steps!"
-          end
-        elsif params[:delineation] == "Plans with Steps"
-          if plans.with_steps.empty? # If no plans have steps
-            flash.now[:alert] = "All ERP plans lack steps."
-          else
-            @plans = plans.with_steps # stores AR::Relation of plans that have at least 1 step
-            flash.now[:notice] = "#{sv_agreement(@plans)} populated with steps!"
-          end
-        end
-      elsif !params[:accomplishment].blank? # Admin filters plans by finished/unfinished plans
-        if params[:accomplishment] == "Accomplished Plans"
-            if plans.accomplished.empty? # If no plans were marked finished
-              flash.now[:alert] = "Not a single ERP plan was marked as finished."
-            else
-              @plans = plans.accomplished # stores AR::Relation of plans marked finished
-              flash.now[:notice] = "#{sv_agreement(@plans)} marked finished!"
-            end
-        elsif params[:accomplishment] == "Unaccomplished Plans"
-          if plans.unaccomplished.empty? # If all plans were marked finished
-            flash.now[:alert] = "All ERP plans were fully implemented and marked as finished."
-          else
-            @plans = plans.unaccomplished # stores AR::Relation of unfinished plans
-            flash.now[:notice] = "#{sv_agreement(@plans)} left unfinished!"
-          end
-        end
-      else # Admin did not choose a filter for filtering plans
-        @plans = plans # stores AR::Relation of all ERP plans designed by all patients
-        flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
-      end # closes logic about filter selected
+      #if !params[:date].blank? # Admin filters plans by date created
+        #if params[:date] == "Today"
+          #if plans.from_today.empty? # If no plans were created today
+            #flash.now[:alert] = "No ERP plans were designed today."
+          #else
+            #@plans = plans.from_today
+            #flash.now[:notice] = "You found #{plural_inflection(@plans)} designed today!"
+          #end
+        #elsif params[:date] == "Past Plans"
+          #if plans.before_today.empty? # If no plans were created prior to today
+            #flash.now[:alert] = "No ERP plans were designed before today."
+          #else
+            #@plans = plans.before_today
+            #flash.now[:notice] = "You found #{plural_inflection(@plans)} designed before today!"
+          #end
+        #end # closes logic for params[:date]
+      #elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
+        #if params[:delineation] == "Stepless Plans"
+          #if plans.stepless.empty? # If all plans HAVE steps
+            #flash.now[:alert] = "All ERP plans have at least one step."
+          #else
+            #@plans = plans.stepless # stores AR::Relation of stepless plans
+            #flash.now[:notice] = "#{sv_agreement(@plans)} lacking steps!"
+          #end
+        #elsif params[:delineation] == "Plans with Steps"
+          #if plans.with_steps.empty? # If no plans have steps
+            #flash.now[:alert] = "All ERP plans lack steps."
+          #else
+            #@plans = plans.with_steps # stores AR::Relation of plans that have at least 1 step
+            #flash.now[:notice] = "#{sv_agreement(@plans)} populated with steps!"
+          #end
+        #end
+      #elsif !params[:accomplishment].blank? # Admin filters plans by finished/unfinished plans
+        #if params[:accomplishment] == "Accomplished Plans"
+            #if plans.accomplished.empty? # If no plans were marked finished
+              #flash.now[:alert] = "Not a single ERP plan was marked as finished."
+            #else
+              #@plans = plans.accomplished # stores AR::Relation of plans marked finished
+              #flash.now[:notice] = "#{sv_agreement(@plans)} marked finished!"
+            #end
+        #elsif params[:accomplishment] == "Unaccomplished Plans"
+          #if plans.unaccomplished.empty? # If all plans were marked finished
+            #flash.now[:alert] = "All ERP plans were fully implemented and marked as finished."
+          #else
+            #@plans = plans.unaccomplished # stores AR::Relation of unfinished plans
+            #flash.now[:notice] = "#{sv_agreement(@plans)} left unfinished!"
+          #end
+        #end
+      #else # Admin did not choose a filter for filtering plans
+        #@plans = plans # stores AR::Relation of all ERP plans designed by all patients
+        #flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
+      #end # closes logic about filter selected
     end # closes logic about filterer's role
   end # closes #index action
 
