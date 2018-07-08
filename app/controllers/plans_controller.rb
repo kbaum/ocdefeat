@@ -16,22 +16,6 @@ class PlansController < ApplicationController
       @plans = PlanFinder.new(plans).call(filter_plans_params) unless current_user.admin?
       #@done = plans.accomplished if !plans.accomplished.empty?
       #@undone = plans.unaccomplished if !plans.unaccomplished.empty?
-
-      #if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
-        #@plans = plans.find(params[:title])
-        #flash.now[:notice] = "An overview of the ERP plan entitled \"#{@plans.title}\" is displayed below!"
-      #elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
-        #thought = current_user.obsessions.find(params[:obsession_targeted]).intrusive_thought
-        #if current_user.obsessions.find(params[:obsession_targeted]).plans.empty? # If no plans for the selected obsession were found
-          #flash.now[:alert] = "No ERP plans target the obsession: \"#{thought}\""
-        #else
-          #@plans = current_user.obsessions.find(params[:obsession_targeted]).plans # stores AR::Relation of plans belonging to the obsession selected
-          #flash.now[:notice] = "You can implement #{plural_inflection(@plans)} to expose yourself to the obsession: \"#{thought}\""
-        #end
-      #else # Patient did not choose a filter, so @plans stores AR::Relation of only plans designed by the patient
-        #@plans = plans
-        #flash.now[:notice] = "You designed #{plural_inflection(@plans)} to expose yourself to your obsessions."
-      #end
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
         if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
@@ -72,22 +56,6 @@ class PlansController < ApplicationController
         @plans = plans # stores all plans designed by the therapist's patients
         flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
       end # closes logic about filter selected
-      #if !params[:date].blank? # Admin filters plans by date created
-        #if params[:date] == "Today"
-          #if plans.from_today.empty? # If no plans were created today
-            #flash.now[:alert] = "No ERP plans were designed today."
-          #else
-            #@plans = plans.from_today
-            #flash.now[:notice] = "You found #{plural_inflection(@plans)} designed today!"
-          #end
-        #elsif params[:date] == "Past Plans"
-          #if plans.before_today.empty? # If no plans were created prior to today
-            #flash.now[:alert] = "No ERP plans were designed before today."
-          #else
-            #@plans = plans.before_today
-            #flash.now[:notice] = "You found #{plural_inflection(@plans)} designed before today!"
-          #end
-        #end # closes logic for params[:date]
       #elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
         #if params[:delineation] == "Stepless Plans"
           #if plans.stepless.empty? # If all plans HAVE steps
