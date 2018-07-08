@@ -25,11 +25,7 @@ class PlanFinder
     if accomplishment.blank?
       scoped
     else
-      if accomplishment == "Accomplished Plans"
-        scoped.where(finished: true)
-      else
-        scoped.where.not(finished: true)
-      end
+      accomplishment == "Accomplished Plans" ? scoped.accomplished : scoped.unaccomplished
     end
   end
 
