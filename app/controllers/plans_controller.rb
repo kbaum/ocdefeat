@@ -14,81 +14,28 @@ class PlansController < ApplicationController
       @plans = filter_by_date
       #@done = plans.accomplished if !plans.accomplished.empty?
       #@undone = plans.unaccomplished if !plans.unaccomplished.empty?
-    elsif current_user.therapist?
-      if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
-        if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
-          flash.now[:alert] = "No ERP plans were designed by patient #{@counselees.find(params[:designer]).name}."
-        else
-          @plans = plans.designed_by(params[:designer])
-          flash.now[:notice] = "You found #{plural_inflection(@plans)} designed by patient #{@plans.first.user.name}!"
-        end
-      elsif !params[:subset].blank? # Therapist filters plans by OCD subset -- params[:subset] is the ID of the theme
-        if plans.by_subset(params[:subset]).empty? # If no plans are classified in the selected OCD subset
-          flash.now[:alert] = "None of your patients' ERP plans target obsessions that revolve around \"#{Theme.find(params[:subset]).name}.\""
-        else
-          @plans = plans.by_subset(params[:subset]) # stores AR::Relation of plans that thematically relate to the selected subset
-          flash.now[:notice] = "#{plural_inflection(@plans)} will help your patients confront obsessions about \"#{Theme.find(params[:subset]).name}.\""
-        end
-      elsif !params[:patient_planner].blank? # Therapist filters plans by patient's stepless plans
-        patient_name = @counselees.find(params[:patient_planner]).name
-        if @counselees.find(params[:patient_planner]).plans.empty? # If the selected patient has no ERP plans
-          flash.now[:alert] = "No ERP plans were designed by patient #{patient_name}."
-        elsif @counselees.find(params[:patient_planner]).plans.stepless.empty? # The patient has plans, but all of these plans have steps
-          flash.now[:alert] = "All plans designed by patient #{patient_name} contain steps."
-        else # The patient has plans without steps
-          @plans = @counselees.find(params[:patient_planner]).plans.stepless
-          flash.now[:notice] = "Patient #{patient_name} must add exposure exercises to #{plural_inflection(@plans)}!"
-        end
-      elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
-        patient_progressing = @counselees.find(params[:patient_progressing])
-        if patient_progressing.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
-        elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
-          flash.now[:alert] = "Patient #{patient_progressing.name} should design ERP plans to overcome obsessions."
-        else # If the patient has plans
-          @done = patient_progressing.plans.accomplished if !patient_progressing.plans.accomplished.empty?
-          @undone = patient_progressing.plans.unaccomplished if !patient_progressing.plans.unaccomplished.empty?
-          flash.now[:notice] = "You retrieved #{patient_progressing.name}'s progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
-        end
-      else # Therapist did not choose a filter for filtering plans
-        @plans = plans # stores all plans designed by the therapist's patients
-        flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
-      end # closes logic about filter selected
-      #elsif !params[:delineation].blank? # Admin filters plans by stepless plans vs. plans delineated with steps
-        #if params[:delineation] == "Stepless Plans"
-          #if plans.stepless.empty? # If all plans HAVE steps
-            #flash.now[:alert] = "All ERP plans have at least one step."
-          #else
-            #@plans = plans.stepless # stores AR::Relation of stepless plans
-            #flash.now[:notice] = "#{sv_agreement(@plans)} lacking steps!"
-          #end
-        #elsif params[:delineation] == "Plans with Steps"
-          #if plans.with_steps.empty? # If no plans have steps
-            #flash.now[:alert] = "All ERP plans lack steps."
-          #else
-            #@plans = plans.with_steps # stores AR::Relation of plans that have at least 1 step
-            #flash.now[:notice] = "#{sv_agreement(@plans)} populated with steps!"
-          #end
+    #elsif current_user.therapist?
+      #if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
+        #if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
+          #flash.now[:alert] = "No ERP plans were designed by patient #{@counselees.find(params[:designer]).name}."
+        #else
+          #@plans = plans.designed_by(params[:designer])
+          #flash.now[:notice] = "You found #{plural_inflection(@plans)} designed by patient #{@plans.first.user.name}!"
         #end
-      #elsif !params[:accomplishment].blank? # Admin filters plans by finished/unfinished plans
-        #if params[:accomplishment] == "Accomplished Plans"
-            #if plans.accomplished.empty? # If no plans were marked finished
-              #flash.now[:alert] = "Not a single ERP plan was marked as finished."
-            #else
-              #@plans = plans.accomplished # stores AR::Relation of plans marked finished
-              #flash.now[:notice] = "#{sv_agreement(@plans)} marked finished!"
-            #end
-        #elsif params[:accomplishment] == "Unaccomplished Plans"
-          #if plans.unaccomplished.empty? # If all plans were marked finished
-            #flash.now[:alert] = "All ERP plans were fully implemented and marked as finished."
-          #else
-            #@plans = plans.unaccomplished # stores AR::Relation of unfinished plans
-            #flash.now[:notice] = "#{sv_agreement(@plans)} left unfinished!"
-          #end
+      #elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
+        #patient_progressing = @counselees.find(params[:patient_progressing])
+        #if patient_progressing.obsessions.empty? # If the selected patient has no obsessions
+          #flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
+        #elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
+          #flash.now[:alert] = "Patient #{patient_progressing.name} should design ERP plans to overcome obsessions."
+        #else # If the patient has plans
+          #@done = patient_progressing.plans.accomplished if !patient_progressing.plans.accomplished.empty?
+          #@undone = patient_progressing.plans.unaccomplished if !patient_progressing.plans.unaccomplished.empty?
+          #flash.now[:notice] = "You retrieved #{patient_progressing.name}'s progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
         #end
-      #else # Admin did not choose a filter for filtering plans
-        #@plans = plans # stores AR::Relation of all ERP plans designed by all patients
-        #flash.now[:notice] = "Collectively, patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
+      #else # Therapist did not choose a filter for filtering plans
+        #@plans = plans # stores all plans designed by the therapist's patients
+        #flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
       #end # closes logic about filter selected
     end # closes logic about filterer's role
   end # closes #index action
