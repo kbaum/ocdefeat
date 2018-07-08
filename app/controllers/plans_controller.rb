@@ -13,6 +13,7 @@ class PlansController < ApplicationController
     if current_user.admin?
       @plans = filter_by_date
     elsif current_user.patient?
+      @plans = PlanFinder.new(plans).call(filter_plans_params) unless current_user.admin?
       #@done = plans.accomplished if !plans.accomplished.empty?
       #@undone = plans.unaccomplished if !plans.unaccomplished.empty?
 
@@ -208,5 +209,9 @@ class PlansController < ApplicationController
 
     def plan_params
       params.require(:plan).permit(:title, :goal, :flooded, :obsession_id, :finished)
+    end
+
+    def filter_plans_params
+      params.permit(:title_terms, :obsession_targeted)
     end
 end
