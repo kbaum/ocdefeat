@@ -11,6 +11,7 @@ class PlanFinder
     scoped = filter_by_accomplishment(scoped, params[:accomplishment])
     scoped = filter_by_delineation(scoped, params[:delineation])
     scoped = filter_by_approach(scoped, params[:approach])
+    scoped = filter_by_theme(scoped, params[:ocd_theme])
     scoped
   end
 
