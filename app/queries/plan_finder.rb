@@ -18,4 +18,16 @@ class PlanFinder
   def filter_by_obsession_targeted(scoped, obsession_targeted)
     obsession_targeted.blank? ? scoped : scoped.where(obsession: obsession_targeted)
   end
+
+  def filter_by_accomplishment(scoped, accomplishment)
+    if accomplishment.blank?
+      scoped
+    else
+      if accomplishment == "Accomplished Plans"
+        scoped.where(finished: true)
+      else
+        scoped.where.not(finished: true)
+      end
+    end
+  end
 end
