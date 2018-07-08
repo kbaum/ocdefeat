@@ -8,6 +8,9 @@
     <%= label_tag :obsession_targeted, "Obsession Targeted" %>:
     <%= select_tag :obsession_targeted, options_from_collection_for_select(obsessions, "id", "intrusive_thought"), prompt: "Choose Obsession by Intrusive Idea" %>
     <br><br>
+    <%= label_tag :accomplishment, "Accomplishment" %>:
+    <%= select_tag :accomplishment, options_for_select(["Accomplished Plans", "Unaccomplished Plans"]), prompt: "Accomplished vs. Unaccomplished Plans" %>
+    <br><br>
     <%= label_tag :delineation, "Delineation" %>:
     <%= select_tag :delineation, options_for_select(["Plans with Steps", "Stepless Plans"]), prompt: "Delineated vs. Undelineated Plans" %>
     <br><br>
