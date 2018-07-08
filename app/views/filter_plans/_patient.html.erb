@@ -1,17 +1,5 @@
-<br>
-
 <p><em>We've documented your progress toward mastery of OCD through ERP!</em></p>
 
-<%= render partial: "plans/plan_progress_div", locals: { done: done, undone: undone } %>
-
 <br>
 
-<h4>Filter Your Plans...</h4>
-
-<br>
-
-<%= form_tag("/plans", method: "get") do %>
-  <%= select_tag "title", options_from_collection_for_select(plans, "id", "title"), prompt: "Title of Plan" %><br><br>
-  <%= select_tag "obsession_targeted", options_from_collection_for_select(your_obsessions, "id", "intrusive_thought"), prompt: "Obsession Targeted" %><br><br>
-  <%= submit_tag "Filter Plans" %>
-<% end %>
+<%= render partial: "filter_plans/shared_plan_filters", locals: { obsessions: obsessions, themes: themes } %>
