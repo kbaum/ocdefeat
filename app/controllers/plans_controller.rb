@@ -9,28 +9,28 @@ class PlansController < ApplicationController
     @counselees = policy_scope(User) # used in app/views/filter_plans/_therapist.html.erb to store AR::Relation of the patients (counselees) that the therapist was assigned
     @themes = policy_scope(Theme) # Theme.all - patients, therapists and admins can view all themes
     @obsessions = policy_scope(Obsession) # the patient's own obsessions / the therapist's patients' obsessions
-    
+
     if current_user.admin?
       @plans = filter_by_date
     elsif current_user.patient?
-      @done = plans.accomplished if !plans.accomplished.empty?
-      @undone = plans.unaccomplished if !plans.unaccomplished.empty?
+      #@done = plans.accomplished if !plans.accomplished.empty?
+      #@undone = plans.unaccomplished if !plans.unaccomplished.empty?
 
-      if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
-        @plans = plans.find(params[:title])
-        flash.now[:notice] = "An overview of the ERP plan entitled \"#{@plans.title}\" is displayed below!"
-      elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
-        thought = current_user.obsessions.find(params[:obsession_targeted]).intrusive_thought
-        if current_user.obsessions.find(params[:obsession_targeted]).plans.empty? # If no plans for the selected obsession were found
-          flash.now[:alert] = "No ERP plans target the obsession: \"#{thought}\""
-        else
-          @plans = current_user.obsessions.find(params[:obsession_targeted]).plans # stores AR::Relation of plans belonging to the obsession selected
-          flash.now[:notice] = "You can implement #{plural_inflection(@plans)} to expose yourself to the obsession: \"#{thought}\""
-        end
-      else # Patient did not choose a filter, so @plans stores AR::Relation of only plans designed by the patient
-        @plans = plans
-        flash.now[:notice] = "You designed #{plural_inflection(@plans)} to expose yourself to your obsessions."
-      end
+      #if !params[:title].blank? # Patient filters her own plans by title -- params[:title] stores ID of plan selected by title from dropdown menu
+        #@plans = plans.find(params[:title])
+        #flash.now[:notice] = "An overview of the ERP plan entitled \"#{@plans.title}\" is displayed below!"
+      #elsif !params[:obsession_targeted].blank? # Patient filters her own plans by the obsession targeted -- params[:obsession_targeted] is the ID of obsession for which the patient searches plans
+        #thought = current_user.obsessions.find(params[:obsession_targeted]).intrusive_thought
+        #if current_user.obsessions.find(params[:obsession_targeted]).plans.empty? # If no plans for the selected obsession were found
+          #flash.now[:alert] = "No ERP plans target the obsession: \"#{thought}\""
+        #else
+          #@plans = current_user.obsessions.find(params[:obsession_targeted]).plans # stores AR::Relation of plans belonging to the obsession selected
+          #flash.now[:notice] = "You can implement #{plural_inflection(@plans)} to expose yourself to the obsession: \"#{thought}\""
+        #end
+      #else # Patient did not choose a filter, so @plans stores AR::Relation of only plans designed by the patient
+        #@plans = plans
+        #flash.now[:notice] = "You designed #{plural_inflection(@plans)} to expose yourself to your obsessions."
+      #end
     elsif current_user.therapist?
       if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
         if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
