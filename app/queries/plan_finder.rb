@@ -36,11 +36,7 @@ class PlanFinder
     if delineation.blank?
       scoped
     else
-      if delineation == "Plans with Steps"
-        scoped.with_steps
-      else
-        scoped.stepless
-      end
+      delineation == "Plans with Steps" ? scoped.with_steps : scoped.stepless
     end
   end
 end
