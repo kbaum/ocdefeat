@@ -41,10 +41,6 @@ class Obsession < ApplicationRecord
     order(time_consumed: :desc)
   end
 
-  def self.by_theme(theme_id)
-    where(id: Theme.find(theme_id).obsessions)
-  end
-
   def self.by_patient(patient)
     where(user: patient)
   end
