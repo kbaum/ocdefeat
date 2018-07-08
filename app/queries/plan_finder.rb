@@ -8,6 +8,7 @@ class PlanFinder
   def call(params)
     scoped = search_titles(default_scope, params[:title_terms])
     scoped = filter_by_obsession_targeted(scoped, params[:obsession_targeted])
+    scoped = filter_by_accomplishment(scoped, params[:accomplishment])
     scoped
   end
 
