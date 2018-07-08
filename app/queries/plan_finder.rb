@@ -36,4 +36,12 @@ class PlanFinder
       delineation == "Plans with Steps" ? scoped.with_steps : scoped.stepless
     end
   end
+
+  def filter_by_approach(scoped, approach)
+    if approach.blank?
+      scoped
+    else
+      approach == "Flooding" ? scoped.flooding : scoped.graded_exposure
+    end
+  end
 end
