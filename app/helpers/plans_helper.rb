@@ -41,10 +41,6 @@ module PlansHelper
     plan.steps.empty? ? "Delineate the steps to be taken" : "Execute exposure exercises"
   end
 
-  def planner(accomplished, unaccomplished)
-    accomplished.blank? ? "#{unaccomplished.first.user.name}" : "#{accomplished.first.user.name}"
-  end
-
   def report(accomplished, unaccomplished)
     if accomplished && unaccomplished # If the patient has both finished AND unfinished plans
       "marked #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} as finished and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
