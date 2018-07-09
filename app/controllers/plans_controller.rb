@@ -6,14 +6,15 @@ class PlansController < ApplicationController
 
   def index
     plans = policy_scope(Plan)
+    @done = plans.accomplished
+    @undone = plans.unaccomplished
     @counselees = policy_scope(User) if current_user.therapist? # used in app/views/filter_plans/_therapist.html.erb to store AR::Relation of the patients (counselees) that the therapist was assigned
     @themes = policy_scope(Theme) unless current_user.admin? # Theme.all - patients, therapists and admins can view all themes
     @obsessions = policy_scope(Obsession) # the patient's own obsessions / the therapist's patients' obsessions
     @plans = PlanFinder.new(plans).call(filter_plans_params) unless current_user.admin?
+
     if current_user.admin?
       @plans = filter_by_date
-      #@done = plans.accomplished if !plans.accomplished.empty?
-      #@undone = plans.unaccomplished if !plans.unaccomplished.empty?
     #elsif current_user.therapist?
       #if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
         #if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
