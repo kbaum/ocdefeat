@@ -6,4 +6,5 @@
 <%= form_tag plans_path, method: "get" do %>
   <%= label_tag :patient_progressing, "Pick the patient whose progress report you want to retrieve" %>:
   <%= select_tag :patient_progressing, options_from_collection_for_select(counselees, "id", "name"), prompt: "Pick Patient" %>
+  <%= submit_tag "Retrieve Report", class: "btn btn-default btn-sm" %>
 <% end %>
