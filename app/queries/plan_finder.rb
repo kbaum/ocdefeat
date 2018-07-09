@@ -12,6 +12,7 @@ class PlanFinder
     scoped = filter_by_delineation(scoped, params[:delineation])
     scoped = filter_by_approach(scoped, params[:approach])
     scoped = filter_by_theme(scoped, params[:ocd_theme])
+    scoped = filter_by_designer(scoped, params[:designer])
     scoped
   end
 
@@ -49,5 +50,9 @@ class PlanFinder
 
   def filter_by_theme(scoped, theme)
     theme.blank? ? scoped : scoped.by_theme(theme)
+  end
+
+  def filter_by_designer(scoped, designer)
+    designer.blank? ? scoped : scoped.where(obsession: User.patients.find(designer).obsessions)
   end
 end
