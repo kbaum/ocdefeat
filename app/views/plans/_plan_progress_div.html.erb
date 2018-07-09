@@ -4,4 +4,12 @@
   <br>
   <p>The report indicates that you <%= report(done, undone) %></p>
   <br>
+
+  <label><u>Finished Plans</u></label>:
+  <% if done.empty? %>
+    <small>No plans were marked as finished.</small>
+  <% else %>
+    <%= content_tag(:small, "All plans were marked as finished!") if undone.empty? %>
+    <%= render partial: "plans_ul", locals: { plans: done } %>
+  <% end %>
 </div>
