@@ -18,4 +18,28 @@
     <small>No plans were left unfinished.</small>
   <% else %>
     <%= content_tag(:small, "All plans were left unfinished.") if done.empty? %>
+    <br><br>
+
+    <em>Unfinished Delineated Plans:</em>
+    <% if undone.with_steps.empty? %> <!-- If the patient's unfinished plans all lack steps -->
+      <small>0</small>
+      <br><br>
+    <% else %>
+      <br>
+      <small>~with at least one incomplete step:</small>
+      <% if undone.with_incomplete_step.empty? %>
+        <small>0</small>
+        <br>
+      <% else %>
+        <%= render partial: "plans_ul", locals: { plans: undone.with_incomplete_step } %>
+      <% end %>
+      <small>~with all steps marked as completed but not yet archived:</small>
+      <% if undone.unfinished_but_with_all_steps_completed.empty? %>
+        <small>0</small>
+        <br><br>
+      <% else %>
+        <%= render partial: "plans_ul", locals: { plans: undone.unfinished_but_with_all_steps_completed } %>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>
