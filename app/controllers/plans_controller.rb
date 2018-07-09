@@ -14,6 +14,20 @@ class PlansController < ApplicationController
     if current_user.patient?
       @done = plans.accomplished
       @undone = plans.unaccomplished
+    elsif current_user.therapist?
+      @counselees = policy_scope(User)
+      if !params[:patient_progressing].blank?
+        patient = @counselees.find(params[:patient_progressing])
+        if patient.obsessions.empty? # If the selected patient has no obsessions
+          flash.now[:notice] = "No ERP plans designed by #{patient.name} were found, but that's okay since this patient is not obsessing!"
+        elsif patient.plans.empty? # If the selected patient has obsessions but no ERP plans
+          flash.now[:alert] = "Patient #{patient.name} must design ERP plans to gain exposure to obsessions!"
+        else # If the patient has plans
+          @done = patient.plans.accomplished
+          @undone = patient.plans.unaccomplished
+          flash.now[:notice] = "You retrieved #{patient.name}'s progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
+        end
+      end
     end
   end
 
