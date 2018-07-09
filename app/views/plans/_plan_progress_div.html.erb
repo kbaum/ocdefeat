@@ -41,5 +41,12 @@
         <%= render partial: "plans_ul", locals: { plans: undone.unfinished_but_with_all_steps_completed } %>
       <% end %>
     <% end %>
+
+    <em>Unfinished Stepless Plans</em>:
+    <% if undone.stepless.empty? %>
+      <small>0</small>
+    <% else %>
+      <%= render partial: "plans_ul", locals: { plans: undone.stepless } %>
+    <% end %>
   <% end %>
 </div>
