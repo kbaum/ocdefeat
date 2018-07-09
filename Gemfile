@@ -37,6 +37,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'attribute_normalizer'
 
+gem 'draper'
+
 #gem 'wicked'
 
 # Use Capistrano for deployment
