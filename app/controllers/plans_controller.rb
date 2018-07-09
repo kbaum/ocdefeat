@@ -6,40 +6,16 @@ class PlansController < ApplicationController
 
   def index
     plans = policy_scope(Plan)
-    @done = plans.accomplished
-    @undone = plans.unaccomplished
     @counselees = policy_scope(User) if current_user.therapist? # used in app/views/filter_plans/_therapist.html.erb to store AR::Relation of the patients (counselees) that the therapist was assigned
     @themes = policy_scope(Theme) unless current_user.admin? # Theme.all - patients, therapists and admins can view all themes
     @obsessions = policy_scope(Obsession) # the patient's own obsessions / the therapist's patients' obsessions
     @plans = PlanFinder.new(plans).call(filter_plans_params) unless current_user.admin?
 
-    if current_user.admin?
-      @plans = filter_by_date
-    #elsif current_user.therapist?
-      #if !params[:designer].blank? # Therapist filters plans by patient designer -- params[:designer] is the ID of the user whose plans we want to find
-        #if plans.designed_by(params[:designer]).empty? # If the selected user did not design any plans
-          #flash.now[:alert] = "No ERP plans were designed by patient #{@counselees.find(params[:designer]).name}."
-        #else
-          #@plans = plans.designed_by(params[:designer])
-          #flash.now[:notice] = "You found #{plural_inflection(@plans)} designed by patient #{@plans.first.user.name}!"
-        #end
-      #elsif !params[:patient_progressing].blank? # Therapist filters plans by patient's progress toward plan completion -- params[:patient_progressing] is the ID of the user
-        #patient_progressing = @counselees.find(params[:patient_progressing])
-        #if patient_progressing.obsessions.empty? # If the selected patient has no obsessions
-          #flash.now[:alert] = "No ERP plans were found for patient #{patient_progressing.name}, but that's okay because this patient is not obsessing!"
-        #elsif patient_progressing.plans.empty? # If the selected patient has obsessions but no ERP plans
-          #flash.now[:alert] = "Patient #{patient_progressing.name} should design ERP plans to overcome obsessions."
-        #else # If the patient has plans
-          #@done = patient_progressing.plans.accomplished if !patient_progressing.plans.accomplished.empty?
-          #@undone = patient_progressing.plans.unaccomplished if !patient_progressing.plans.unaccomplished.empty?
-          #flash.now[:notice] = "You retrieved #{patient_progressing.name}'s progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
-        #end
-      #else # Therapist did not choose a filter for filtering plans
-        #@plans = plans # stores all plans designed by the therapist's patients
-        #flash.now[:notice] = "Collectively, your patients designed #{plural_inflection(@plans)} to gain exposure to their obsessions."
-      #end # closes logic about filter selected
-    end # closes logic about filterer's role
-  end # closes #index action
+    if current_user.patient?
+      @done = plans.accomplished
+      @undone = plans.unaccomplished
+    end
+  end
 
   def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
     @obsession = Obsession.find(params[:obsession_id]) # @obsession is the parent. The form to create a new plan for an obsession is found at: "/obsessions/:obsession_id/plans/new"
