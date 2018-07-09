@@ -6,28 +6,13 @@ class PlansController < ApplicationController
 
   def index
     plans = policy_scope(Plan)
-    @themes = policy_scope(Theme) unless current_user.admin? # Theme.all - patients, therapists and admins can view all themes
-    @obsessions = policy_scope(Obsession) # the patient's own obsessions / the therapist's patients' obsessions
+    @done = plans.accomplished if current_user.patient?
+    @undone = plans.unaccomplished if current_user.patient?
+    @counselees = policy_scope(User) if current_user.therapist?
+    @themes = policy_scope(Theme) unless current_user.admin?
+    @obsessions = policy_scope(Obsession) unless current_user.admin? # the patient's own obsessions / the therapist's patients' obsessions
     @plans = PlanFinder.new(plans).call(filter_plans_params) unless current_user.admin?
-
-    if current_user.patient?
-      @done = plans.accomplished
-      @undone = plans.unaccomplished
-    elsif current_user.therapist?
-      @counselees = policy_scope(User)
-      if !params[:patient_progressing].blank?
-        patient = @counselees.find(params[:patient_progressing])
-        if patient.obsessions.empty? # If the selected patient has no obsessions
-          flash.now[:notice] = "No ERP plans designed by #{patient.name} were found, but that's okay since this patient is not obsessing!"
-        elsif patient.plans.empty? # If the selected patient has obsessions but no ERP plans
-          flash.now[:alert] = "Patient #{patient.name} must design ERP plans to gain exposure to obsessions!"
-        else # If the patient has plans
-          @done = patient.plans.accomplished
-          @undone = patient.plans.unaccomplished
-          flash.now[:notice] = "You retrieved #{patient.name}'s progress report, which identifies ERP plans that this patient finished and/or left unfinished!"
-        end
-      end
-    end
+    @plans = filter_by_date if current_user.admin?
   end
 
   def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
