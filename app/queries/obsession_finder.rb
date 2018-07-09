@@ -32,11 +32,7 @@ class ObsessionFinder
     if strategy.blank?
       scoped
     else
-      if strategy == "Flooding"
-        scoped.defeatable_by_flooding
-      else
-        scoped.defeatable_by_graded_exposure
-      end
+      strategy == "Flooding" ? scoped.defeatable_by_flooding : scoped.defeatable_by_graded_exposure
     end
   end
 
