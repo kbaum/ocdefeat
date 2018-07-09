@@ -12,4 +12,11 @@
     <%= content_tag(:small, "All plans were marked as finished!") if undone.empty? %>
     <%= render partial: "plans_ul", locals: { plans: done } %>
   <% end %>
+
+  <label><u>Unfinished Plans</u></label>:
+  <% if undone.empty? %>
+    <small>No plans were left unfinished.</small>
+  <% else %>
+    <%= content_tag(:small, "All plans were left unfinished.") if done.empty? %>
+  <% end %>
 </div>
