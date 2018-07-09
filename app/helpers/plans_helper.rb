@@ -13,10 +13,6 @@ module PlansHelper
     end
   end
 
-  def treatment_approach(plan)
-    plan.flooded? ? "Flooding" : "Graded Exposure"
-  end
-
   def reason_why_unachieved(plan)
     plan.steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all of its steps are completed!"
   end
