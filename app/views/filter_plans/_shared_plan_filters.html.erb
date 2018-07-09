@@ -16,6 +16,11 @@
     <br><br>
     <%= render partial: "shared/approach_and_theme_filters", locals: { themes: themes } %>
     <br><br>
+    <% if current_user.therapist? %>
+      <%= label_tag :designer, "Plan Designer" %>:
+      <%= select_tag :designer, options_from_collection_for_select(counselees, "id", "name"), prompt: "Select Patient" %>
+      <br><br>
+    <% end %>
     <%= submit_tag "Filter ERP Plans", class: "btn btn-default btn-sm" %>
   <% end %>
 </div>
