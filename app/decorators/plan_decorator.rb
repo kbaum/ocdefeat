@@ -14,4 +14,8 @@ class PlanDecorator < SimpleDelegator
       end
     end
   end
+
+  def show_strategy
+    flooded? ? "Flooding" : "Graded Exposure"
+  end
 end
