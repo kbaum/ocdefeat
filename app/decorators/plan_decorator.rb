@@ -18,4 +18,8 @@ class PlanDecorator < SimpleDelegator
   def show_strategy
     flooded? ? "Flooding" : "Graded Exposure"
   end
+
+  def uncover_why_unachieved
+    steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all of its steps are completed!"
+  end
 end
