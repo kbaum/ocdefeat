@@ -1,3 +1,15 @@
 <%= render partial: "filter_obsessions/shared_obsession_filters", locals: { themes: themes, obsessions: obsessions } %>
 <br>
 <%= display_obsessions(obsessions) %>
+
+<div class="techniques">
+  <h5>Techniques to Defeat Your Obsessions</h5>
+  <p>
+    ~<%= policy_scope(Obsession).defeatable_by_flooding.count %> <%= 'obsession'.pluralize(policy_scope(Obsession).defeatable_by_flooding.count) %>
+    can be defeated by flooding yourself with exposure to the most strongly feared stimuli first.
+  </p>
+  <p>
+    ~<%= policy_scope(Obsession).defeatable_by_graded_exposure.count %> <%= 'obsession'.pluralize(policy_scope(Obsession).defeatable_by_graded_exposure.count) %>
+    can be defeated by constructing a hierarchy of triggers and gradually confronting the least to most feared stimuli.
+  </p>
+</div>
