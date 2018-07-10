@@ -12,7 +12,9 @@ class PlansController < ApplicationController
     @themes = policy_scope(Theme) unless current_user.admin?
     @obsessions = policy_scope(Obsession) unless current_user.admin? # the patient's own obsessions / the therapist's patients' obsessions
     @plans = PlanFinder.new(plans).call(filter_plans_params).decorate unless current_user.admin?
-    @plans = filter_by_date if current_user.admin?
+    if current_user.admin?
+      @plans = filter_by_date.decorate unless filter_by_date.nil?
+    end
   end
 
   def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
