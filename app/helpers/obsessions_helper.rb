@@ -17,12 +17,4 @@ module ObsessionsHelper
       end
     end
   end
-
-  def rhyme_symptoms(obsession)
-    if obsession.symptoms.blank?
-      " until every single fear evaporates"
-    else
-      ", and symptoms such as #{obsession.symptoms} will dissipate"
-    end
-  end
 end
