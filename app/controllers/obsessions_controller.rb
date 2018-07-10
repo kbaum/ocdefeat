@@ -7,7 +7,7 @@ class ObsessionsController < ApplicationController
   def index
     obsessions = policy_scope(Obsession)
     @themes = policy_scope(Theme)
-    @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params) unless current_user.admin?
+    @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params).decorate unless current_user.admin?
 
     if current_user.therapist?
       @counselees = policy_scope(User)
@@ -69,7 +69,7 @@ class ObsessionsController < ApplicationController
         @patient_obsessions = obsessions # stores the therapist's patients' obsessions
       end
     elsif current_user.admin?
-      @obsessions = filter_by_date
+      @obsessions = filter_by_date.decorate
     end
   end
 
@@ -119,7 +119,7 @@ class ObsessionsController < ApplicationController
   private
 
     def set_obsession
-      @obsession = Obsession.find(params[:id])
+      @obsession = Obsession.find(params[:id]).decorate
     end
 
     def set_themes
