@@ -17,4 +17,8 @@ class StepDecorator < SimpleDelegator
       discomfort_degree
     end
   end
+
+  def present_position_in_plan
+    plan.steps.find_index(__getobj__).to_i + 1
+  end
 end
