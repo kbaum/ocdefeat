@@ -33,7 +33,7 @@
       <% else %>
         <%= render partial: "plans_ul", locals: { plans: undone.with_incomplete_step } %>
       <% end %>
-      <small>~with all steps marked as completed but not yet archived:</small>
+      <small>~with all steps marked complete but not archived:</small>
       <% if undone.unfinished_but_with_all_steps_completed.empty? %>
         <small>0</small>
         <br><br>
