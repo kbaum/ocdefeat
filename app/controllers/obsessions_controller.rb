@@ -69,7 +69,7 @@ class ObsessionsController < ApplicationController
         @patient_obsessions = obsessions.decorate # stores the therapist's patients' obsessions
       end
     elsif current_user.admin?
-      @obsessions = filter_by_date.decorate
+      @obsessions = filter_by_date.decorate unless filter_by_date.nil?
     end
   end
 
