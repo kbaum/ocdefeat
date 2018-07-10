@@ -25,10 +25,6 @@ module ObsessionsHelper
     end
   end
 
-  def originated_on(obsession)
-    obsession.created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
-  end
-
   def rhyme_symptoms(obsession)
     if obsession.symptoms.blank?
       " until every single fear evaporates"
