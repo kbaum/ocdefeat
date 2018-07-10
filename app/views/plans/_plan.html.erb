@@ -8,7 +8,7 @@
       <%= content_tag(:h4, "This ERP plan remains unfinished!", class: "alert-heading") %>
       <%= content_tag(:p, content_tag(:strong, PlanDecorator.new(plan).uncover_why_unachieved)) %>
       <hr>
-      <%= content_tag(:span, PlanDecorator.new(plan).add_or_perform_steps) + link_to(" here!", plan_path(plan)) %>
+      <%= content_tag(:span, plan.add_or_perform_steps) + link_to(" here!", plan_path(plan)) %>
     <% end %>
     <br>
   <% end %>
