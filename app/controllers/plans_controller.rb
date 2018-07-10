@@ -76,7 +76,7 @@ class PlansController < ApplicationController
     end
 
     def prepare_plan
-      @plan = Plan.find(params[:id])
+      @plan = Plan.find(params[:id]).decorate
     end
 
     def require_plans # called before plans#index
