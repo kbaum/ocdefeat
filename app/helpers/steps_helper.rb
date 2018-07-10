@@ -13,18 +13,7 @@ module StepsHelper
   def position_in_plan(step)
     step.plan.steps.find_index(step).to_i + 1
   end
-
-  def display_discomfort(step)
-    if step.discomfort_degree.nil?
-      if current_user.patient?
-        link_to("Rate your discomfort", edit_step_path(step)) << " when performing this step."
-      elsif current_user.therapist? && step.plan.user.in?(current_user.counselees)
-        "Not yet rated"
-      end
-    else
-      step.discomfort_degree
-    end
-  end
+  
 end
 # Explanation of #div_class_for_step(step):
 # Calling #complete? on step instance returns true if status attribute value of step instance = 1
