@@ -1,6 +1,6 @@
 <%= div_for_step(step) do %>
   <% if step.completed? %>
-    <h4><span class="glyphicon glyphicon-ok-circle"></span> STEP #<%= StepDecorator.new(step).present_position_in_plan %></h4>
+    <h4><span class="glyphicon glyphicon-ok-circle"></span> STEP #<%= position_in_plan(step) %></h4>
   <% else %>
     <h4>STEP #<%= position_in_plan(step) %></h4>
   <% end %>
