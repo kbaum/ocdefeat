@@ -2,7 +2,7 @@
   <% if step.completed? %>
     <h4><span class="glyphicon glyphicon-ok-circle"></span> STEP #<%= StepDecorator.new(step).present_position_in_plan %></h4>
   <% else %>
-    <h4>STEP #<%= position_in_plan(step) %></h4>
+    <h4>STEP #<%= StepDecorator.new(step).present_position_in_plan %></h4>
   <% end %>
 
   <em><%= StepDecorator.new(step).last_updated %></em>
