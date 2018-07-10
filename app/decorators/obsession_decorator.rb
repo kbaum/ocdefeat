@@ -6,7 +6,7 @@ class ObsessionDecorator < Draper::Decorator
     intrusive_thought = "What if I " << "#{idea}?"
   end
 
-  def reported_on
+  def date_reported
     created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
   end
 end
