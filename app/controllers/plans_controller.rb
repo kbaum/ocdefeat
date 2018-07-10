@@ -11,7 +11,7 @@ class PlansController < ApplicationController
     @counselees = policy_scope(User) if current_user.therapist?
     @themes = policy_scope(Theme) unless current_user.admin?
     @obsessions = policy_scope(Obsession) unless current_user.admin? # the patient's own obsessions / the therapist's patients' obsessions
-    @plans = PlanFinder.new(plans).call(filter_plans_params) unless current_user.admin?
+    @plans = PlanFinder.new(plans).call(filter_plans_params).decorate unless current_user.admin?
     @plans = filter_by_date if current_user.admin?
   end
 
