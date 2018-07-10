@@ -9,10 +9,12 @@ module ObsessionsHelper
   end
 
   def display_obsessions(obsessions)
-    unless obsessions.nil?
+    if obsessions.nil? || obsessions.empty?
+      content_tag(:small, content_tag(:mark, "No obsessions were found."))
+    else
       content_tag(:ul) do
         obsessions.each do |obsession|
-          concat(content_tag(:li, link_to_unless(current_user.admin?, obsession.decorate.hypotheticalize, obsession_path(obsession))))
+          concat(content_tag(:li, link_to_unless(current_user.admin?, obsession.hypotheticalize, obsession_path(obsession))))
         end
       end
     end
