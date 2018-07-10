@@ -19,7 +19,7 @@ module ObsessionsHelper
     unless obsessions.nil?
       content_tag(:ul) do
         obsessions.each do |obsession|
-          concat(content_tag(:li, link_to_unless(current_user.admin?, obsession.intrusive_thought, obsession_path(obsession))))
+          concat(content_tag(:li, link_to_unless(current_user.admin?, obsession.hypotheticalize, obsession_path(obsession))))
         end
       end
     end
