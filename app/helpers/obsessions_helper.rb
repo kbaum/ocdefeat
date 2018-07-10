@@ -5,11 +5,7 @@ module ObsessionsHelper
   end
 
   def placefill_search
-    if current_user.patient?
-      "Take a moment to introspect. Search your thoughts..."
-    elsif current_user.therapist?
-      "Search thoughts containing..."
-    end
+    current_user.patient? ? "Take a moment to introspect. Search your thoughts..." : "Search thoughts containing..."
   end
 
   def display_obsessions(obsessions)
