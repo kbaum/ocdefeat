@@ -9,9 +9,9 @@
 
   <br><br>
 
-  <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
-  <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
-  <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
+  <p><strong>Instructions for Performing ERP Exercise</strong>: <%= step.instructions %></p>
+  <p><strong>Duration of Exercise</strong>: <%= step.duration %></p>
+  <p><strong>Degree of Discomfort</strong>: <%= display_discomfort(step) %></p>
 
   <%= render partial: "steps/set_step_status", locals: { step: step } if current_user == step.plan.user %>
 
