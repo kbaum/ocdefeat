@@ -10,10 +10,6 @@ module StepsHelper
     end
   end
 
-  def last_updated(step)
-    step.updated_at.strftime("Last modified on %A, %B %e, at %l:%M %p")
-  end
-
   def position_in_plan(step)
     step.plan.steps.find_index(step).to_i + 1
   end
