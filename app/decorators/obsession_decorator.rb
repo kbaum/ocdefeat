@@ -9,4 +9,8 @@ class ObsessionDecorator < Draper::Decorator
   def date_reported
     created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
   end
+
+  def rhyme_symptoms
+    symptoms ? ", and symptoms such as #{symptoms} will dissipate" : " until every single fear evaporates"
+  end
 end
