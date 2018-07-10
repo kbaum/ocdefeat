@@ -5,13 +5,13 @@
     <h4>STEP #<%= position_in_plan(step) %></h4>
   <% end %>
 
-  <em><%= last_updated(step) %></em>
+  <em><%= StepDecorator.new(step).last_updated %></em>
 
   <br><br>
 
   <p><strong>Instructions for Performing ERP Exercise:</strong> <%= step.instructions %></p>
   <p><strong>Duration of Exercise:</strong> <%= step.duration %></p>
-  <p><strong>Degree of Discomfort:</strong> <%= display_discomfort(step) %></p>
+  <p><strong>Degree of Discomfort:</strong> <%= StepDecorator.new(step).display_discomfort(current_user) %></p>
 
   <%= render partial: "steps/set_step_status", locals: { step: step } if current_user == step.plan.user %>
 
