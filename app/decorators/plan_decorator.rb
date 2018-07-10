@@ -1,4 +1,4 @@
-class PlanDecorator < SimpleDelegator
+class PlanDecorator < Draper::Decorator
   def present_progress
     if finished?
       "Accomplished! (Fully implemented and marked as finished)"
