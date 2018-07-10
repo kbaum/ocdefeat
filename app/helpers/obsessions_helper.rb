@@ -1,10 +1,7 @@
 module ObsessionsHelper
-  def filter_obsessions_header
-    if current_user.patient?
-      content_tag(:h4, "Filter Your Obsessions by...")
-    elsif current_user.therapist?
-      content_tag(:h4, "Filter Your Patients' Obsessions by...")
-    end
+  def obsessions_header
+    text = current_user.patient? ? "Filter Your Obsessions by..." : "Filter Your Patients' Obsessions by..."
+    content_tag(:h4, "#{text}")
   end
 
   def placefill_search
@@ -19,7 +16,7 @@ module ObsessionsHelper
     unless obsessions.nil?
       content_tag(:ul) do
         obsessions.each do |obsession|
-          concat(content_tag(:li, link_to_unless(current_user.admin?, obsession.hypotheticalize, obsession_path(obsession))))
+          concat(content_tag(:li, link_to_unless(current_user.admin?, obsession.decorate.hypotheticalize, obsession_path(obsession))))
         end
       end
     end
