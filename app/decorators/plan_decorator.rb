@@ -1,6 +1,6 @@
 class PlanDecorator < Draper::Decorator
   delegate_all
-  
+
   def present_progress
     if finished?
       "Accomplished! (Fully implemented and marked as finished)"
@@ -22,7 +22,11 @@ class PlanDecorator < Draper::Decorator
   end
 
   def uncover_why_unachieved
-    steps.empty? ? "A plan can only be performed if it contains steps!" : "A plan can only be marked as finished if all of its steps are completed!"
+    if steps.empty?
+      "A plan can only be performed if it contains steps!"
+    else
+      "A plan can only be marked as finished if all of its steps are completed!"
+    end
   end
 
   def add_or_perform_steps
