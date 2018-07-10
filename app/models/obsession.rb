@@ -19,7 +19,6 @@ class Obsession < ApplicationRecord
   validates :time_consumed, inclusion: { in: 0..24, message: "must be a valid timeframe within a 24-hour day" }
   validates :anxiety_rating, inclusion: { in: 1..10, message: "must be measured on a scale of 1-10" }
   validates :rituals, presence: true
-  before_validation :hypotheticalize, on: [ :create, :update ]
 
   def self.by_anxiety_rating(anxiety_rating)
     where(anxiety_rating: anxiety_rating)
@@ -56,12 +55,4 @@ class Obsession < ApplicationRecord
   def self.average_anxiety_rating # Find the average anxiety_rating for all obsessions
     average(:anxiety_rating)
   end
-
-  private
-    def hypotheticalize # sets intrusive_thought attribute of obsession = to formatted string "What if I...?"
-      if !self.intrusive_thought.blank?
-        idea = self.intrusive_thought.downcase.split(/\A\bwhat\b\s+\bif\b\s+\bi\b\s+/).join("").split("?").join("")
-        self.intrusive_thought = "What if I " << "#{idea}?"
-      end
-    end
 end
