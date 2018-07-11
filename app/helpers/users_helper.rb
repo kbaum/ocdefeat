@@ -16,41 +16,4 @@ module UsersHelper
       content_tag(:small, "None of your OCD patients is physically symptomatic.")
     end
   end
-
-  def demand_data(attribute_name) # argument is the string "severity" or "variant"
-    if current_user.patient?
-      content_tag(:div, class: "alert alert-warning", role: "alert") do
-        content_tag(:label, "Please indicate your OCD #{attribute_name} in") +
-        link_to(" your account information", edit_user_path(current_user), class: "alert-link") + "."
-      end
-    else
-      content_tag(:div, class: "alert alert-info", role: "alert") do
-        content_tag(:label, "#{attribute_name.capitalize}:") + " The patient has been instructed to comply by entering appropriate information."
-      end
-    end
-  end
-
-  def show_severity(user) # user is the patient whose profile is being viewed
-    if user.severity.in?(%w[Mild Moderate Severe Extreme])
-      content_tag(:h4, "#{user.name} vs. #{user.severity} OCD")
-    else
-      demand_data("severity")
-    end
-  end
-
-  def vary_variant(user)
-    if user.variant.in?(["Traditional", "Purely Obsessional", "Both"])
-      content_tag(:label, "OCD Variant:") +
-      case user.variant
-      when "Traditional"
-        " Traditional"
-      when "Purely Obsessional"
-        " Pure-O"
-      when "Both"
-        " Hybrid of Traditional and Pure-O"
-      end
-    else
-      demand_data("variant")
-    end
-  end
 end
