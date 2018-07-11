@@ -47,10 +47,11 @@
     <em>Unfinished Stepless Plans</em>:
     <% if undone.stepless.empty? %>
       <small>0</small>
+      <br><br>
     <% else %>
       <%= render partial: "plans_ul", locals: { plans: undone.stepless } %>
     <% end %>
   <% end %>
-  <%= content_tag(:small, "You must delineate the steps of every unfinished plan.") if undone.with_steps.empty? %>
-  <%= content_tag(:small, "You must mark all steps as completed and then mark each plan as finished") if undone.stepless.empty? %>
+  <%= content_tag(:small, "You must delineate the steps of every unfinished plan!") if undone.with_steps.empty? %>
+  <%= content_tag(:small, "You must mark all steps as complete and then mark each plan as finished!") if undone.stepless.empty? %>
 </div>
