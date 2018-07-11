@@ -1,12 +1,4 @@
 module CommentsHelper
-  def label_comment
-    if current_user.therapist?
-      "Give the patient some therapy pointers to defeat this obsession:"
-    elsif current_user.patient?
-      "Voice your concerns to a counselor about this obsession:"
-    end
-  end
-
   def placefill_comment
     if current_user.therapist?
       "Add mental health tips..."
