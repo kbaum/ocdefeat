@@ -38,4 +38,20 @@ class UserDecorator < ApplicationDecorator
       demand_data("severity")
     end
   end
+
+  def vary_variant
+    if variant.in?(["Traditional", "Purely Obsessional", "Both"])
+      content_tag(:label, "OCD Variant:") +
+      case variant
+      when "Traditional"
+        " Traditional"
+      when "Purely Obsessional"
+        " Pure-O"
+      when "Both"
+        " Hybrid of Traditional and Pure-O"
+      end
+    else
+      demand_data("variant")
+    end
+  end
 end
