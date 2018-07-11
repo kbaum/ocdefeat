@@ -1,10 +1,5 @@
 class PlanDecorator < Draper::Decorator
-  include Draper::LazyHelpers
   delegate_all
-
-  def present_plans_header
-    content_tag(:h4, current_user.patient? ? "Filter Your ERP Plans by..." : "Filter Your Patients' ERP Plans by...")
-  end
 
   def present_progress
     if finished?
