@@ -1,6 +1,6 @@
 <h2>Patient Profile</h2>
 
-<h3><%= show_severity(@user) %></h3>
+<h3><%= @user.show_severity %></h3>
 
 <br>
 
@@ -9,7 +9,7 @@
 
   <br>
 
-  <%= vary_variant(@user) %>
+  <%= @user.vary_variant %>
 
   <% unless @user.treatments.empty? %>
     <br><br>
