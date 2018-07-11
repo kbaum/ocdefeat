@@ -4,7 +4,7 @@ class CommentDecorator < ApplicationDecorator
 
   def label
     if current_user.patient?
-      "Voice your concerns to a counselor about this obsession"
+      "Voice your concerns about this obsession"
     else
       "Give the patient some therapy pointers to defeat this obsession"
     end
