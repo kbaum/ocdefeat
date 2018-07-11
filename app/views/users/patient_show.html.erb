@@ -27,7 +27,7 @@
 
   <br>
 
-  <p><strong>Obsession Count:</strong> <%=  %> <%= @user.objects_count("obsession") %>.</p>
+  <p><strong>Obsession Count:</strong> <%= @user.pronouns_for_defeating_ocd %> <%= @user.objects_count("obsession") %>.</p>
 
   <br>
 
@@ -36,7 +36,7 @@
     <br>
   <% end %>
 
-  <p><strong>ERP Plan Count:</strong> <%=  %> <%= @user.objects_count("plan") %>.</p>
+  <p><strong>ERP Plan Count:</strong> <%= @user.pronouns_for_designing_plans %> <%= @user.objects_count("plan") %>.</p>
 </div>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
