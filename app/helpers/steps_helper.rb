@@ -1,8 +1,4 @@
 module StepsHelper
-  def position_in_plan(step)
-    step.plan.steps.find_index(step).to_i + 1
-  end
-
   def display_discomfort(step)
     if step.discomfort_degree.nil?
       if current_user.patient?
