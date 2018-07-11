@@ -17,4 +17,17 @@ class UserDecorator < ApplicationDecorator
   def present_clinical_presentation
     user.in?(User.symptomatic) ? "Symptomatic" : "Asymptomatic"
   end
+
+  def demand_data(attribute_name) # argument is the string "severity" or "variant"
+    if current_user.patient?
+      content_tag(:div, class: "alert alert-warning", role: "alert") do
+        content_tag(:label, "Please indicate your OCD #{attribute_name} in") +
+        link_to(" your account information", edit_user_path(current_user), class: "alert-link") + "."
+      end
+    else
+      content_tag(:div, class: "alert alert-info", role: "alert") do
+        content_tag(:label, "#{attribute_name.capitalize}") + ":" + " The patient has been instructed to comply by entering appropriate information."
+      end
+    end
+  end
 end
