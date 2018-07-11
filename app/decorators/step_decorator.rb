@@ -1,4 +1,5 @@
 class StepDecorator < Draper::Decorator
+  include Draper::LazyHelpers
   delegate_all
 
   def position_in_plan
