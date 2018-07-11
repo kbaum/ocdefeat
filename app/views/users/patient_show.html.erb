@@ -27,7 +27,7 @@
 
   <br>
 
-  <p><strong>Obsession Count:</strong> <%= obsession_pronouns %> <%= pluralize(@user.obsession_count, "obsession") %>.</p>
+  <p><strong>Obsession Count:</strong> <%= obsession_pronouns %> <%= @user.objects_count("obsession") %>.</p>
 
   <br>
 
@@ -36,7 +36,7 @@
     <br>
   <% end %>
 
-  <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= pluralize(@user.plan_count, "ERP plan") %>.</p>
+  <p><strong>ERP Plan Count:</strong> <%= plan_pronouns %> <%= @user.objects_count("plan") %>.</p>
 </div>
 
 <%= render partial: "manage_account", locals: { user: @user } %>
