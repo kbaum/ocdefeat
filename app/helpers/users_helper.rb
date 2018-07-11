@@ -73,17 +73,4 @@ module UsersHelper
       "The patient designed"
     end
   end
-
-  def panicky_patients
-    if current_user.therapist? && policy_scope(User).patients_overanxious.empty?
-      content_tag(:label, "None of your patients reported obsessions that induce above-average anxiety levels.")
-    elsif current_user.therapist?
-      content_tag(:label, "Patients with above-average anxiety levels") + ":" +
-      content_tag(:ul) do
-        policy_scope(User).patients_overanxious.each do |user|
-          concat(content_tag(:li, link_to(user.name, user_path(user))))
-        end
-      end
-    end
-  end
 end
