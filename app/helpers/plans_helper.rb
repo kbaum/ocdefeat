@@ -1,4 +1,8 @@
 module PlansHelper
+  def present_plans_header
+    content_tag(:h4, current_user.patient? ? "Filter Your ERP Plans by..." : "Filter Your Patients' ERP Plans by...")
+  end
+  
   def plan_instructions(unfinished_plans)
     instructions =
       if unfinished_plans.with_steps.empty?
