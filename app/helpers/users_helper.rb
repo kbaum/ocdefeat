@@ -53,8 +53,4 @@ module UsersHelper
       demand_data("variant")
     end
   end
-
-  def clinical_features(user)
-    user.in?(User.symptomatic) ? "Symptomatic" : "Asymptomatic"
-  end
 end
