@@ -30,4 +30,12 @@ class UserDecorator < ApplicationDecorator
       end
     end
   end
+
+  def show_severity
+    if severity.in?(%w(Mild Moderate Severe Extreme))
+      content_tag(:h4, "#{name} vs. #{severity} OCD")
+    else
+      demand_data("severity")
+    end
+  end
 end
