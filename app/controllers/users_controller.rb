@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @treatments = Treatment.all
 
     if current_user.therapist? # A therapist sees her own patients on the users index page
-      @filtered_users = PatientFinder.new(users).call(therapist_filters_patients_params)
+      @filtered_users = PatientFinder.new(users).call(therapist_filters_patients_params).decorate
       @symptomatic_patients = users.symptomatic
       @asymptomatic_nonobsessive_patients = users.patients_nonobsessive
       @asymptomatic_obsessive_patients = users.patients_obsessive_but_symptomless
