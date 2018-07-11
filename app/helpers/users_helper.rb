@@ -1,12 +1,4 @@
 module UsersHelper
-  def show_patients(users)
-    if users.empty?
-      content_tag(:small, "0 patients") + content_tag(:br)
-    else
-      render partial: "users_ul", locals: { users: users }
-    end
-  end
-
   def symptoms_in(users) # argument is AR::Relation of a therapist's patients
     if users.all? {|user| user.obsessions.empty?} # If none of the therapist's patients have obsessions
       content_tag(:small, "All of your patients are asymptomatic and nonobsessive!")
