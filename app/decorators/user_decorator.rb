@@ -65,14 +65,14 @@ class UserDecorator < ApplicationDecorator
     end
   end
 
-  def summarize_your_patients_symptoms 
+  def summarize_your_patients_symptoms
     if therapist?
       symptoms_summary =
         if counselees.all? {|counselee| counselee.obsessions.empty?} # If none of the therapist's patients have obsessions
           "All of your patients are asymptomatic and nonobsessive!"
         elsif counselees.patients_nonobsessive.empty? && counselees.patients_obsessive_but_symptomless.empty? # All of the therapist's patients have obsessions, and all of these obsessions have symptoms
           "All of your OCD patients are physically symptomatic."
-        elsif counselees.patients_nonobsessive.empty? && users.symptomatic.empty? # All of the therapist's patients have obsessions, but none of these obsessions have symptoms
+        elsif counselees.patients_nonobsessive.empty? && counselees.symptomatic.empty? # All of the therapist's patients have obsessions, but none of these obsessions have symptoms
           "None of your OCD patients is physically symptomatic."
         end
       content_tag(:small, symptoms_summary)
