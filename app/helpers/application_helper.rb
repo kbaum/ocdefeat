@@ -29,7 +29,7 @@ module ApplicationHelper
     instance.created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
   end
 
-  def updated_on(instance)
-    instance.updated_at.strftime("%A, %B %e, %Y, at %l:%M %p")
+  def last_modified(instance)
+    instance.updated_at.strftime("Last modified on %A, %B %e, %Y, at %l:%M %p")
   end
 end
