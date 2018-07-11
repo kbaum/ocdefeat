@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def entitle_page(text)
+    content_for :title do
+      text += " | " if text.present?
+      text += "OCDefeat"
+    end
+  end
 
   def validation_errors_for(object = nil) # object is an AR instance or nil by default
     if object && object.errors.any?
