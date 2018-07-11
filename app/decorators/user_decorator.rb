@@ -12,4 +12,8 @@ class UserDecorator < ApplicationDecorator
   def pronouns_for_designing_plans
     helpers.current_user.patient? ? "You designed" : "The patient designed"
   end
+
+  def present_clinical_presentation
+    user.in?(User.symptomatic) ? "Symptomatic" : "Asymptomatic"
+  end
 end
