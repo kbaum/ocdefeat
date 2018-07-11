@@ -4,7 +4,7 @@
   <%= render partial: filters, locals: { plans: @plans, counselees: @counselees, themes: @themes, obsessions: @obsessions, done: @done, undone: @undone } %>
 </div>
 <!-- In PlanFinder query object, if no plans are found that match the patient or therapist's search criteria, @plans.empty? => true
-But in app/controllers/concerns/admin_filters_concern, object won't be assigned if it's an empty AR::Relation, so @plans will be nil -->
+But in app/controllers/concerns/admin_filters_concern, object won't be assigned if it's an empty AR::Relation, so @plans won't be assigned (@plans = nil) -->
 <% if @plans.nil? || @plans.empty? %>
   <br>
   <small><mark>No ERP plans were found.</mark></small>
