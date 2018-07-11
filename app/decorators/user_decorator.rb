@@ -54,4 +54,14 @@ class UserDecorator < ApplicationDecorator
       demand_data("variant")
     end
   end
+
+  def present_your_patients(patients)
+    if therapist?
+      if patients.empty?
+        content_tag(:small, "0") + content_tag(:br)
+      else
+        render partial: "users_ul", locals: { users: patients }
+      end
+    end
+  end
 end
