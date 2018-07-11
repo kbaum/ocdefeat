@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:edit, :update]
   before_action :deletion_msg, only: [:destroy]
   before_action :reset_role_requested, only: [:edit, :update]
   before_action :require_users, only: [:index]
@@ -120,6 +120,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id]).decorate
     authorize @user
     render show_template # private method #show_template returns string name of view file to be rendered
   end
@@ -174,7 +175,7 @@ class UsersController < ApplicationController
     end
 
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:id]).decorate
     end
 
     def require_users
