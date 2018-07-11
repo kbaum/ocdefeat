@@ -2,7 +2,7 @@
   <td><%= link_to user.name, user_path(user) %></td>
   <td><%= user.severity %></td>
   <td><%= user.variant %></td>
-  <td><%= clinical_features(user) %></td>
+  <td><%= user.present_clinical_presentation %></td>
   <td><%= user.obsession_count %></td>
   <td><%= user.plan_count %></td>
 </tr>
