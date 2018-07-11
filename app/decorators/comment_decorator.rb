@@ -3,10 +3,10 @@ class CommentDecorator < ApplicationDecorator
   delegate_all
 
   def label
-    if current_user.therapist?
-      "Give the patient some therapy pointers to defeat this obsession"
-    elsif current_user.patient?
+    if current_user.patient?
       "Voice your concerns to a counselor about this obsession"
+    else
+      "Give the patient some therapy pointers to defeat this obsession"
     end
   end
 
