@@ -2,8 +2,8 @@ class UserDecorator < ApplicationDecorator
   include Draper::LazyHelpers
   delegate_all
 
-  def objects_count(string_object) # argument is a string like "obsession" or "plan"
-    pluralize user.send("#{string_object}s").count, "#{string_object}"
+  def objects_count(object_type) # argument is a string like "obsession" or "plan"
+    pluralize user.send("#{object_type}s").count, object_type
   end
 
   def pronouns_for_defeating_ocd
