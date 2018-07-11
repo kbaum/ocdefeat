@@ -8,10 +8,6 @@ module PlansHelper
       end
       content_tag(:small, "#{instructions}")
   end
-  
-  def filter_plans_header
-    content_tag(:h4, current_user.patient? ? "Filter Your ERP Plans by..." : "Filter Your Patients' ERP Plans by...")
-  end
 
   def display_plans(plans)
     unless plans.nil?
