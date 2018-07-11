@@ -41,7 +41,7 @@ class UserDecorator < ApplicationDecorator
 
   def vary_variant
     if variant.in?(["Traditional", "Purely Obsessional", "Both"])
-      content_tag(:label, "OCD Variant:") +
+      content_tag(:label, "OCD Variant") + ":" +
       case variant
       when "Traditional"
         " Traditional"
