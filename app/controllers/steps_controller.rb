@@ -9,7 +9,7 @@ class StepsController < ApplicationController
     if @step.save
       redirect_to plan_path(@step.plan), flash: { success: "A new step has been added to this ERP plan!" }
     else
-      @plan = @step.plan # to pass to rendered template app/views/plans/show.html.erb
+      @plan = @step.plan.decorate # to pass to rendered template app/views/plans/show.html.erb
       flash.now[:error] = "Your attempt to add a new step to this ERP plan was unsuccessful. Please try again."
       render "plans/show"
     end
