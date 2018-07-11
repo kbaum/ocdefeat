@@ -51,13 +51,13 @@
   <%= summarize_symptoms %>
   <br><br>
   <label>Physically Symptomatic Patients</label>:
-  <%= @current_therapist.present_your_patients(symptomatic_patients) %>
+  <%= present_patients(symptomatic_patients) %>
   <label>Asymptomatic Patients</label>
   <br><br>
   <small><em>~who are not obsessing:</em></small>
-  <%= @current_therapist.present_your_patients(asymptomatic_nonobsessive_patients) %>
+  <%= present_patients(asymptomatic_nonobsessive_patients) %>
   <small><em>~whose obsessions do not manifest physically:</em></small>
-  <%= @current_therapist.present_your_patients(asymptomatic_obsessive_patients) %>
+  <%= present_patients(asymptomatic_obsessive_patients) %>
 </div>
 
 <div class="well well-lg">
@@ -67,10 +67,10 @@
   <% else %>
     <br>
     <label>Patients with obsession that lacks an ERP plan:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
-    <%= @current_therapist.present_your_patients(patients_with_planless_obsession) %>
+    <%= present_patients(patients_with_planless_obsession) %>
     <label>Patients preparing or performing plans:</label> <!-- Therapist filters their patients by those with unfinished plans -->
-    <%= @current_therapist.present_your_patients(patients_planning_or_practicing_erp) %>
+    <%= present_patients(patients_planning_or_practicing_erp) %>
     <label>Patients who finished an ERP plan:</label> <!-- Therapist filters their patients by those who designed at least 1 plan that is marked as finished -->
-    <%= @current_therapist.present_your_patients(patients_with_finished_plan) %>
+    <%= present_patients(patients_with_finished_plan) %>
   <% end %>
 </div>
