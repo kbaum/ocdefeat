@@ -46,8 +46,8 @@
 
 <div class="well well-lg">
   <h4><em>Clinical Presentation of OCD in Patients</em></h4> <!-- The therapist's symptomatic/asymptomatic patients -->
-  <%= symptoms_in(current_user.counselees) %>
-  <br>
+  <%= @current_therapist.summarize_your_patients_symptoms %>
+  <br><br>
   <label>Physically Symptomatic Patients</label>:
   <%= @current_therapist.present_your_patients(symptomatic_patients) %>
   <label>Asymptomatic Patients</label>
@@ -65,10 +65,10 @@
   <% else %>
     <br>
     <label>Patients with obsession that lacks an ERP plan:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
-    <%= show_patients(patients_with_planless_obsession) %>
+    <%= @current_therapist.present_your_patients(patients_with_planless_obsession) %>
     <label>Patients preparing or performing plans:</label> <!-- Therapist filters their patients by those with unfinished plans -->
-    <%= show_patients(patients_planning_or_practicing_erp) %>
+    <%= @current_therapist.present_your_patients(patients_planning_or_practicing_erp) %>
     <label>Patients who finished an ERP plan:</label> <!-- Therapist filters their patients by those who designed at least 1 plan that is marked as finished -->
-    <%= show_patients(patients_with_finished_plan) %>
+    <%= @current_therapist.present_your_patients(patients_with_finished_plan) %>
   <% end %>
 </div>
