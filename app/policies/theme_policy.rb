@@ -21,7 +21,7 @@ class ThemePolicy < ApplicationPolicy
 
   def permitted_attributes
     if theme_owner
-      [:description]
+      [:definition]
     end
   end
 
