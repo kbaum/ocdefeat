@@ -33,6 +33,8 @@ class ApplicationDecorator < Draper::Decorator
         "delete this exposure exercise?"
       when "Theme"
         "delete this OCD theme?"
+      when "Comment"
+        "delete this comment?"
       end
     "Do you want to " << fragment
   end
