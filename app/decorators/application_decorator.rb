@@ -10,9 +10,13 @@ class ApplicationDecorator < Draper::Decorator
     updated_at.strftime("Last modified on %A, %B %e, %Y, at %l:%M %p")
   end
 
+  def object_type
+    object.class.to_s == "User" ? "Account" : object.class.to_s
+  end
+
   def edit_link
     link_to polymorphic_path(object, action: "edit"), class: "btn btn-primary btn-sm" do
-      content_tag(:span, nil, class: "glyphicon glyphicon-edit") + content_tag(:small, " Edit #{object.class}")
+      content_tag(:span, nil, class: "glyphicon glyphicon-edit") + content_tag(:small, " Edit #{object_type}")
     end
   end
 
@@ -35,7 +39,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def delete_link
     link_to polymorphic_path(object), method: :delete, data: { confirm: delete_confirmation }, class: "btn btn-danger btn-sm" do
-      content_tag(:span, nil, class: "glyphicon glyphicon-trash") + content_tag(:small, " Delete #{object.class}")
+      content_tag(:span, nil, class: "glyphicon glyphicon-trash") + content_tag(:small, " Delete #{object_type}")
     end
   end
 end
