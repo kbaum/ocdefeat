@@ -13,4 +13,8 @@ class CommentDecorator < ApplicationDecorator
   def placefill
     current_user.patient? ? "Feel free to vent here..." : "Add mental health tips..."
   end
+
+  def submit_btn_text
+    "Share Your " << current_user.patient? ? "Troubles" : "Advice"
+  end
 end
