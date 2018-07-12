@@ -4,7 +4,7 @@
   <div class="field">
     <%= comment_builder.label :content, comment.label %>:<br>
     <%= comment_builder.text_area :content, placeholder: comment.placefill, class: "form-control" %>
-    <small class="form-text text-muted">Please refrain from <%= reassurance_gerunds %> reassurance, as this exacerbates OCD!</small>
+    <small class="form-text text-muted">Please refrain from <%= comment.reassurance_gerunds %> reassurance, as this exacerbates OCD!</small>
   </div>
   <br>
   <div class="actions">
