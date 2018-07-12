@@ -10,7 +10,7 @@
 
   <br>
 
-  <p><em><%= tally_popularity(theme) %></em></p>
+  <p><em><%= theme.popularity %></em></p>
 
   <% if policy(theme).edit? %>
     <%= link_to edit_theme_path(theme), class: "btn btn-default btn-sm" do %>
