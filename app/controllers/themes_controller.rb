@@ -30,9 +30,9 @@ class ThemesController < ApplicationController
   def update
     authorize @theme
     if @theme.update_attributes(permitted_attributes(@theme))
-      redirect_to themes_path, flash: { success: "You successfully modified the description of this OCD theme!" }
+      redirect_to themes_path, flash: { success: "You successfully modified the definition of this OCD theme!" }
     else
-      flash.now[:error] = "Your attempt to edit the description of this OCD theme was unsuccessful. Please try again."
+      flash.now[:error] = "Your attempt to edit the definition of this OCD theme was unsuccessful. Please try again."
       render :edit
     end
   end
