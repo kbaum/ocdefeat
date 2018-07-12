@@ -2,7 +2,7 @@ class ThemesController < ApplicationController
   before_action :set_theme, only: [:edit, :update, :destroy]
 
   def index
-    @themes = policy_scope(Theme) # Theme.all
+    @themes = policy_scope(Theme).decorate # Theme.all
   end
 
   def new
