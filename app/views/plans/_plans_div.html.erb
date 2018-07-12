@@ -1,5 +1,5 @@
 <%= div_for(plans, class: "well well-sm overview") do |plan| %>
-  <h3><%= link_to_unless(current_user.admin?, plan.title, plan_path(plan)) %></h3>
+  <h5><em><strong><%= link_to_unless(current_user.admin?, plan.title.titleize, plan_path(plan)) %></strong></em></h5>
   <p><strong>Goal:</strong> <%= plan.goal %></p>
   <p><strong>Treatment Approach:</strong> <%= plan.show_strategy %></p>
   <p><strong>Number of Steps:</strong> <%= plan.steps.count %></p>
