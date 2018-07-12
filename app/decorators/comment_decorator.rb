@@ -1,7 +1,4 @@
 class CommentDecorator < ApplicationDecorator
-  include Draper::LazyHelpers
-  delegate_all
-
   def label
     if current_user.patient?
       "Voice your concerns about this obsession"
