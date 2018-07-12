@@ -1,7 +1,3 @@
 <%= user.edit_link if policy(user).edit? %>
 
-<% if policy(user).destroy? %>
-  <%= link_to user_path(user), method: :delete, data: { confirm: "Your account will be permanently deleted. Are you sure you want to leave the OCDefeat community?" }, class: "btn btn-danger btn-sm" do %>
-    <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Account
-  <% end %>
-<% end %>
+<%= user.delete_link if policy(user).destroy? %>
