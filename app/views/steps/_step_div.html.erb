@@ -17,11 +17,7 @@
 
   <br>
 
-  <% if policy(step).update? && !step.plan.finished? %>
-    <%= link_to edit_step_path(step), class: "btn btn-primary btn-sm" do %>
-      <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Step
-    <% end %>
-  <% end %>
+  <%= step.edit_link if policy(step).update? && !step.plan.finished? %>
 
   <% if policy(step).destroy? && !step.plan.finished? %>
     <%= link_to step_path(step), method: :delete, data: { confirm: "Are you sure you want to delete this exposure exercise?" }, class: "btn btn-danger btn-sm" do %>
