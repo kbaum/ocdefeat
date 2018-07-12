@@ -24,12 +24,4 @@ module ApplicationHelper
       "alert-success"   # Green
     end
   end
-
-  def created_on(instance)
-    instance.created_at.strftime("%A, %B %e, %Y, at %l:%M %p")
-  end
-
-  def last_modified(instance)
-    instance.updated_at.strftime("Last modified on %A, %B %e, %Y, at %l:%M %p")
-  end
 end
