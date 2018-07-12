@@ -11,9 +11,6 @@
   <% if policy(theme).edit? %> <!-- Only the therapist who created the theme can edit and delete it -->
     <br>
     <%= theme.edit_link %>
+    <%= theme.delete_link %>
   <% end %>
-
-    <%= link_to theme_path(theme), method: :delete, data: { confirm: "Are you sure you want to delete this OCD theme?" }, class: "btn btn-danger btn-sm" do %>
-      <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Theme
-    <% end %>
 </div>
