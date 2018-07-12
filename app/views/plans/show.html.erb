@@ -28,4 +28,4 @@
 
 <%= @plan.edit_link if policy(@plan).edit? && !@plan.finished? %>
 
-<% @plan.delete_link if policy(@plan).destroy? %>
+<%= @plan.delete_link if policy(@plan).destroy? %>
