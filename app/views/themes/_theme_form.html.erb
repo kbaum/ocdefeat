@@ -2,17 +2,13 @@
   <%= validation_errors_for(theme) %>
 
   <div class="field">
-    <%= f.label :name %>
+    <%= f.label :name %>:
     <%= f.text_field :name, placeholder: (theme.errors.full_messages_for(:name).first || "Enter theme name...") %>
   </div>
 
   <br>
 
-  <div class="field">
-    <%= f.label :description, "Define Theme" %><br>
-    <small><em>if the name is not self-explanatory:</em></small>
-    <%= f.text_field :description, class: "form-control" %>
-  </div>
+  
 
   <br>
 
