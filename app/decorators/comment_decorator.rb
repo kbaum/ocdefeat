@@ -17,4 +17,8 @@ class CommentDecorator < ApplicationDecorator
   def submit_btn_text
     "Share Your " << (current_user.patient? ? "Troubles" : "Advice")
   end
+
+  def reassurance_gerunds
+    current_user.patient? ? "seeking" : "providing"
+  end
 end
