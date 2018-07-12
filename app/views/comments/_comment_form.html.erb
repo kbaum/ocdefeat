@@ -9,6 +9,6 @@
   <br>
   <div class="actions">
     <%= comment_builder.hidden_field :obsession_id, value: obsession.id %>
-    <%= comment_builder.submit label_submit_btn, class: "btn btn-default btn-sm" %>
+    <%= comment_builder.submit comment.submit_btn_text, class: "btn btn-default btn-sm" %>
   </div>
 <% end %>
