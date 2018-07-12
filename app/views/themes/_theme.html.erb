@@ -4,21 +4,16 @@
 
   <br><br>
 
-  <% unless theme.description.blank? %>
-    <p><%= theme.description %></p>
-  <% end %>
-
-  <br>
+  <%= content_tag(:p, theme.description) unless theme.description.blank? %>
 
   <p><em><%= theme.popularity %></em></p>
 
-  <% if policy(theme).edit? %>
+  <% if policy(theme).edit? %> <!-- Only the therapist who created the theme can edit and delete it -->
+    <br>
     <%= link_to edit_theme_path(theme), class: "btn btn-default btn-sm" do %>
       <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Theme
     <% end %>
-  <% end %>
 
-  <% if policy(theme).destroy? %>
     <%= link_to theme_path(theme), method: :delete, data: { confirm: "Are you sure you want to delete this OCD theme?" }, class: "btn btn-danger btn-sm" do %>
       <%= content_tag(:span, nil, class: "glyphicon glyphicon-trash") %> Delete Theme
     <% end %>
