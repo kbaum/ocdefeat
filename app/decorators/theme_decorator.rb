@@ -8,8 +8,8 @@ class ThemeDecorator < ApplicationDecorator
     else
       <<-HEREDOC
       #{pluralize(prevalence_in_patients, 'patient')}
-      #{'is'.pluralize(prevalence_in_patients)} obsessing about #{name},
-      in which #{pluralize(obsessions.count, 'obsession')}
+      reported obsessions that revolve around #{name.downcase},
+      a theme in which #{pluralize(obsessions.count, 'obsession')} 
       #{'is'.pluralize(obsessions.count)} classified.
       HEREDOC
     end
