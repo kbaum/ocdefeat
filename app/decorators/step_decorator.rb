@@ -1,7 +1,4 @@
-class StepDecorator < Draper::Decorator
-  include Draper::LazyHelpers
-  delegate_all
-
+class StepDecorator < ApplicationDecorator
   def position_in_plan
     plan.steps.find_index(step).to_i + 1
   end
