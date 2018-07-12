@@ -1,15 +1,10 @@
-.plans {
+.filter-plans {
   background-color: #fbebf7;
   padding: 10px;
   border: 5px solid #ecdeea;
 }
 
-.report {
-  background-color: #f1f8ff;
-  border: 5px solid #dde7f2;
-}
-
-div.overview {
+div.plans {
   background-color: #dff0d8;
   border: 3px solid #d6e9c6;
 }
