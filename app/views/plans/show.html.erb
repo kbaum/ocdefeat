@@ -26,12 +26,7 @@
   </div>
 <% end %>
 
-<% if policy(@plan).edit? && !@plan.finished? %>
-  <br>
-  <%= link_to edit_plan_path(@plan), class: "btn btn-primary btn-sm" do %>
-    <%= content_tag(:span, nil, class: "glyphicon glyphicon-edit") %> Edit Plan Overview
-  <% end %>
-<% end %>
+<%= @plan.edit_link if policy(@plan).edit? && !@plan.finished? %>
 
 <% if policy(@plan).destroy? %>
   <%= link_to plan_path(@plan), method: :delete, data: { confirm: "Are you sure you want to delete this ERP plan?" }, class: "btn btn-danger btn-sm" do %>
