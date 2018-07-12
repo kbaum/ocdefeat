@@ -1,7 +1,4 @@
 class ThemeDecorator < ApplicationDecorator
-  include Draper::LazyHelpers
-  delegate_all
-
   def popularity
     if obsessions.empty?
       "No patients reported obsessions that revolve around \"#{name}.\""
