@@ -12,7 +12,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def edit_link
     link_to polymorphic_path(object, action: "edit"), class: "btn btn-primary btn-sm" do
-      content_tag(:span, nil, class: "glyphicon glyphicon-edit") + content_tag(:small, "Edit #{object.class}")
+      content_tag(:span, nil, class: "glyphicon glyphicon-edit") + content_tag(:small, " Edit #{object.class}")
     end
   end
 end
