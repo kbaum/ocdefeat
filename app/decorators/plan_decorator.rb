@@ -1,4 +1,4 @@
-class PlanDecorator < Application::Decorator
+class PlanDecorator < ApplicationDecorator
   def present_progress
     if finished?
       "Accomplished! (Fully implemented and marked as finished)"
