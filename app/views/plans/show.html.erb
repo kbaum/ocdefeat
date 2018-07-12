@@ -9,7 +9,7 @@
     <p><span class="glyphicon glyphicon-thumbs-up"></span> <strong>Goal</strong>: <%= @plan.goal %></p>
     <p><span class="glyphicon glyphicon-thumbs-up"></span> <strong>Treatment Approach</strong>: <%= @plan.show_strategy %></p>
     <br>
-    <em><%= last_modified(@plan) %></em>
+    <em><%= @plan.last_modified %></em>
     <br><br>
     <%= render partial: "plans/finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
   </div>
