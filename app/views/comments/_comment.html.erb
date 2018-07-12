@@ -6,4 +6,6 @@
   <br><br>
 
   <%= comment.edit_link if policy(comment).edit? %>
+  
+  <%= comment.delete_link if policy(comment).destroy? %>
 </div>
