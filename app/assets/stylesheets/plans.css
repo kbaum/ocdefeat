@@ -4,12 +4,12 @@
   border: 5px solid #ecdeea;
 }
 
-div.report {
+.report {
   background-color: #f1f8ff;
   border: 5px solid #dde7f2;
 }
 
-div.overview {
+.overview {
   background-color: #dff0d8;
   border: 3px solid #d6e9c6;
 }
