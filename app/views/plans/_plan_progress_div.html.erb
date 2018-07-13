@@ -6,5 +6,12 @@
   <br>
 
   <label><u>Finished Plans</u></label>:
+  <%= display_plans(done) %>
+
   
+
+  <label><u>Unfinished Stepless Plans</u></label>:
+  <%= display_plans(undone.stepless) %>
+
+  <%= tip_for_plan_improvement(undone) %>
 </div>
