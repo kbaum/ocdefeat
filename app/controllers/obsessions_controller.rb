@@ -132,7 +132,7 @@ class ObsessionsController < ApplicationController
         redirect_to user_path(current_user), alert: "There are no obsessions for you to analyze since you currently have no patients!"
       elsif policy_scope(Obsession).empty? # If there are no obsessions to view (and therapist has patients)
         msg = if current_user.patient?
-          "Looks like you haven't been obsessing! No obsessions were found."
+          "Looks like you're managing your OCD well! No obsessions were found."
         elsif current_user.therapist?
           "Your patients are making progress! No one is currently obsessing, and all old obsessions were defeated and deleted!"
         elsif current_user.admin?
