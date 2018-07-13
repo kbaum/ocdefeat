@@ -3,23 +3,13 @@ module PlansHelper
     content_tag(:h4, current_user.patient? ? "Filter Your ERP Plans by..." : "Filter Your Patients' ERP Plans by...")
   end
 
-  def plan_instructions(unfinished_plans)
-    if !unfinished_plans.empty?
-      instructions =
-        if unfinished_plans.with_steps.empty?
-          "You must delineate the steps of every unfinished plan!"
-        elsif unfinished_plans.stepless.empty?
-          "You must mark all steps as complete and then mark each plan as finished!"
-        end
-      content_tag(:small, "#{instructions}")
-    end
-  end
-
   def display_plans(plans)
-    unless plans.nil?
+    if plans.nil? || plans.empty?
+      content_tag(:small, "0") + content_tag(:br)
+    else
       content_tag(:ul) do
         plans.each do |plan|
-          concat(content_tag(:li, link_to_unless(current_user.admin?, plan.title, plan_path(plan))))
+          concat(content_tag(:li, link_to_unless(current_user.admin?, plan.title.titleize, plan_path(plan))))
         end
       end
     end
