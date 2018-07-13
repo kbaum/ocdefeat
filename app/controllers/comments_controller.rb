@@ -72,12 +72,4 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:content, :obsession_id, :user_id)
     end
-
-    def commenter
-      if current_user.patient?
-        "You"
-      elsif current_user.therapist?
-        "The patient"
-      end
-    end
   end
