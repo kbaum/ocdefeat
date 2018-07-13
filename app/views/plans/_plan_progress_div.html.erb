@@ -8,7 +8,17 @@
   <label><u>Finished Plans</u></label>:
   <%= display_plans(done) %>
 
-  
+  <label><u>Unfinished Delineated Plans</u></label>:
+  <% if undone.with_steps.empty? %> <!-- If the patient's unfinished plans all lack steps -->
+    <small>0</small>
+    <br><br>
+  <% else %>
+    <br>
+    <small>~with at least one incomplete step:</small>
+    <%= display_plans(undone.with_incomplete_step) %>
+    <small>~with all steps marked complete but not archived:</small>
+    <%= display_plans(undone.unfinished_but_with_all_steps_completed) %>
+  <% end %>
 
   <label><u>Unfinished Stepless Plans</u></label>:
   <%= display_plans(undone.stepless) %>
