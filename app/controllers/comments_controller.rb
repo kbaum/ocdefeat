@@ -15,8 +15,9 @@ class CommentsController < ApplicationController
   end
 
   def edit  # GET "/comments/:id/edit" maps to comments#edit due to shallow nesting
-    @comment = Comment.find(params[:id]).decorate
-    authorize @comment
+    comment = Comment.find(params[:id])
+    authorize comment
+    @comment = comment.decorate # decorate right before rendering app/views/comments/edit.html.erb (_comment_form needs decorated comment)
   end
 
   def update # PUT or PATCH request to "/comments/:id" maps to comments#update due to shallow nesting
