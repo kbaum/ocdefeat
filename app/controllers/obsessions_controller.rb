@@ -98,7 +98,6 @@ class ObsessionsController < ApplicationController
 
   def edit
     authorize @obsession
-    @obsession = @obsession.decorate # call #decorate on obsession instance right before rendering obsession edit page
   end
 
   def update
