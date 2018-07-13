@@ -1,17 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:update, :destroy]
 
-  def create # POST request to "/obsessions/:obsession_id/comments" maps to comments#create
-    @comment = current_user.comments.build(comment_params)
-    authorize @comment
-    if @comment.save
-      redirect_to obsession_comments_path(@comment.obsession), flash: { success: "#{comment_creation_msg}" }
-    else
-      flash.now[:error] = "Your attempt to comment on the obsession was unsuccessful. Please try again."
-      render :edit
-    end
-  end
-
   def edit  # GET "/comments/:id/edit" maps to comments#edit due to shallow nesting
     @comment = Comment.find(params[:id]).decorate
     authorize @comment
@@ -64,14 +53,6 @@ class CommentsController < ApplicationController
 
     def comment_params
       params.require(:comment).permit(:content, :obsession_id, :user_id)
-    end
-
-    def comment_creation_msg
-      if current_user.therapist?
-        "Thank you for sharing your advice about overcoming this obsession!"
-      elsif current_user.patient?
-        "Thank you for reaching out to your therapist to express your concerns!"
-      end
     end
 
     def commenter
