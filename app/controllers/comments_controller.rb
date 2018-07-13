@@ -39,24 +39,27 @@ class CommentsController < ApplicationController
 
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
     @obsession = Obsession.find(params[:obsession_id]).decorate
-    @comments = policy_scope(Comment).where(obsession: @obsession).decorate # stores all comments on a single obsession (concerns and advice)
+    commenter = @obsession.patient_name
+    comments = policy_scope(Comment).where(obsession: @obsession)
     patient_obsessing = @obsession.user # stores the patient who reported the obsession
     authorize patient_obsessing, :show_comments? # A patient can see all comments on her own obsessions. A therapist can see all comments on her own patients' obsessions.
 
     if params[:type] == "Patient Concerns"
-      if @comments.concerns.empty?
-        flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession, but here are some therapy tips to keep in mind:"
+      if comments.concerns.empty?
+        flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession."
       else
-        @comments = @comments.concerns.decorate # stores all concerns on a single obsession
+        @comments = comments.concerns.decorate
         flash.now[:notice] = "#{commenter} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
       end
     elsif params[:type] == "Advice from Therapists"
-      if @comments.advice.empty?
-        flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter.downcase}, but here are some concerns that need to be addressed:"
+      if comments.advice.empty?
+        flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter}."
       else
-        @comments = @comments.advice.decorate # stores all advice on a single obsession
+        @comments = comments.advice.decorate
         flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when overcoming this obsession."
       end
+    else # No filter chosen
+      @comments = comments.decorate
     end
   end
 
