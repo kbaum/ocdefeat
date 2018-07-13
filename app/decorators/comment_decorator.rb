@@ -18,4 +18,12 @@ class CommentDecorator < ApplicationDecorator
   def reassurance_gerunds
     current_user.patient? ? "seeking" : "providing"
   end
+
+  def creation_message
+    if current_user.patient?
+      "Thank you for reaching out to your therapist to express your concerns!"
+    else
+      "Thank you for sharing your advice about overcoming this obsession!"
+    end
+  end
 end
