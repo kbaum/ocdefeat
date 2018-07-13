@@ -15,6 +15,18 @@ module PlansHelper
     end
   end
 
+  def tip_for_plan_improvement(unfinished_plans)
+    if !unfinished_plans.empty? # The patient has plans that are left unfinished
+      tip =
+        if unfinished_plans.with_steps.empty? # If all unfinished plans lack steps
+          "You must delineate the steps of every unfinished plan"
+        elsif unfinished_plans.stepless.empty? # If all unfinished plans have steps
+          "You must mark all steps as complete and then mark each plan as finished"
+        end
+      content_tag(:small, "*#{tip}*") if tip
+    end
+  end
+
   def report(accomplished, unaccomplished)
     if accomplished && unaccomplished # If the patient has both finished AND unfinished plans
       "marked #{accomplished.count} ERP #{'plan'.pluralize(accomplished.count)} as finished and left #{unaccomplished.count} ERP #{'plan'.pluralize(unaccomplished.count)} unfinished."
