@@ -114,7 +114,7 @@ class ObsessionsController < ApplicationController
   def destroy
     authorize @obsession
     @obsession.destroy
-    redirect_to user_path(current_user), flash: { success: "Congratulations on defeating your obsession!" }
+    redirect_to obsessions_path, flash: { success: "Congratulations on defeating your obsession!" }
   end
 
   private
