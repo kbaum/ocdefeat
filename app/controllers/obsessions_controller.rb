@@ -103,8 +103,8 @@ class ObsessionsController < ApplicationController
 
   def update
     authorize @obsession
-
     if @obsession.update_attributes(permitted_attributes(@obsession))
+      @obsession = @obsession.decorate # only decorate instance AFTER it's updated in DB, right before presenting show view
       redirect_to obsession_path(@obsession), flash: { success: "Your obsession was successfully updated!" }
     else
       flash.now[:error] = "Your attempt to edit your obsession was unsuccessful. Please try again."
