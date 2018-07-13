@@ -1,4 +1,14 @@
 class CommentPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user.patient?
+        scope.where(obsession: user.obsessions)
+      elsif user.therapist?
+        scope.where(obsession: user.counselees.map {|counselee| counselee.obsessions}.flatten)
+      end
+    end
+  end
+
   def create?
     patient_comments_on_own_obsession || therapist_comments_on_counselees_obsessions
   end
