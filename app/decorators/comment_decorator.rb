@@ -26,12 +26,4 @@ class CommentDecorator < ApplicationDecorator
       "Thank you for sharing your advice about overcoming this obsession!"
     end
   end
-
-  def invite_to_comment
-    if current_user.patient?
-      "Would you like to voice a concern about a different obsession?"
-    else
-      "Would you like to psychoanalyze another obsession?"
-    end
-  end
 end
