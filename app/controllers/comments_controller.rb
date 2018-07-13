@@ -15,17 +15,17 @@ class CommentsController < ApplicationController
   end
 
   def edit  # GET "/comments/:id/edit" maps to comments#edit due to shallow nesting
-    authorize comment
-    @comment = comment.decorate # decorate right before rendering app/views/comments/edit.html.erb (_comment_form needs decorated comment)
+    authorize @comment # retrieved from #set_comment
+    @comment = @comment.decorate # decorate right before rendering app/views/comments/edit.html.erb (_comment_form needs decorated comment)
   end
 
   def update # PUT or PATCH request to "/comments/:id" maps to comments#update due to shallow nesting
-    authorize comment
-    if comment.update_attributes(permitted_attributes(comment))
-      @comment = comment.decorate
+    authorize @comment # retrieved from #set_comment
+    if @comment.update_attributes(permitted_attributes(@comment))
+      @comment = @comment.decorate # decorate *after* updating comment instance in DB, right before presenting view
       redirect_to obsession_comments_path(@comment.obsession), flash: { success: "Your comment was successfully modified!" }
     else # the comment is invalid but still needs to be decorated for _comment_form
-      @comment = comment.decorate
+      @comment = @comment.decorate
       render :edit # render edit comment form w/ validation errors
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
     end
@@ -63,7 +63,7 @@ class CommentsController < ApplicationController
   private
 
     def set_comment
-      comment = Comment.find(params[:id])
+      @comment = Comment.find(params[:id])
     end
 
     def comment_params
