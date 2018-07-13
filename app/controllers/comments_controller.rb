@@ -24,9 +24,9 @@ class CommentsController < ApplicationController
     if @comment.update_attributes(permitted_attributes(@comment))
       @comment = @comment.decorate # decorate *after* updating comment instance in DB, right before presenting view
       redirect_to obsession_comments_path(@comment.obsession), flash: { success: "Your comment was successfully modified!" }
-    else # the comment is invalid but still needs to be decorated for _comment_form
+    else # the comment needs to be decorated for _comment_form
       @comment = @comment.decorate
-      render :edit # render edit comment form w/ validation errors
+      render :edit
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
     end
   end
@@ -75,14 +75,6 @@ class CommentsController < ApplicationController
         "You"
       elsif current_user.therapist?
         "The patient"
-      end
-    end
-
-    def delete_comment_message
-      if current_user.therapist?
-        "Your comment was successfully deleted. Would you like to psychoanalyze another obsession?"
-      elsif current_user.patient?
-        "Your comment was successfully deleted. Would you like to voice a concern about a different obsession?"
       end
     end
   end
