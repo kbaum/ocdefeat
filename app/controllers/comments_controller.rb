@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:update, :destroy]
+  before_action :set_comment, only: [:edit, :update, :destroy]
 
   def create # POST request to "/obsessions/:obsession_id/comments" maps to comments#create
     @obsession = Obsession.find(params[:obsession_id]).decorate # Immediately decorate b/c no changes made in DB before presenting view
@@ -18,16 +18,6 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     authorize comment
     @comment = comment.decorate # decorate right before rendering app/views/comments/edit.html.erb (_comment_form needs decorated comment)
-  end
-
-  def update # PUT or PATCH request to "/comments/:id" maps to comments#update due to shallow nesting
-    authorize @comment
-    if @comment.update_attributes(permitted_attributes(@comment))
-      redirect_to obsession_comments_path(@comment.obsession), flash: { success: "Your comment was successfully modified!" }
-    else
-      flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
-      render :edit
-    end
   end
 
   def destroy  # DELETE request to "/comments/:id" maps to comments#destroy
@@ -62,7 +52,7 @@ class CommentsController < ApplicationController
   private
 
     def set_comment
-      @comment = Comment.find(params[:id])
+      comment = Comment.find(params[:id])
     end
 
     def comment_params
