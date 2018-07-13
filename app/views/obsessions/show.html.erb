@@ -1,4 +1,4 @@
-<% entitle_page "Obsession #{@obsession.id}" %>
+<% entitle_page "Obsession" %>
 
 <div class="well well-sm">
   <h4>OCD Spike: <small class="spike">"<%= @obsession.hypotheticalize %>"</small></h4>
@@ -24,8 +24,8 @@
   <% end %>
 </div>
 
-<%= render partial: "obsession_data", locals: { obsession: @obsession } %>
-<%= render partial: "self_help_ul", locals: { obsession: @obsession } %>
+<%= render partial: "obsessions/obsession_data", locals: { obsession: @obsession } %>
+<%= render partial: "obsessions/self_help_ul", locals: { obsession: @obsession } %>
 
 <% if current_user.therapist? && !@obsession.comments.concerns.empty? %>
   <br>
@@ -36,5 +36,5 @@
 <% end %>
 
 <div class="well well-sm">
-  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: @comment } %>
+  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: new_or_invalid(@comment) } %>
 </div>

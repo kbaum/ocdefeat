@@ -2,7 +2,7 @@
   <%= validation_errors_for(comment) %>
   <br>
   <div class="field">
-    <%= comment_builder.label :content, comment.label %>:<br>
+    <%= comment_builder.label :content, comment.label %><br>
     <%= comment_builder.text_area :content, placeholder: comment.placefill, class: "form-control" %>
     <small class="form-text text-muted">Please refrain from <%= comment.reassurance_gerunds %> reassurance, as this exacerbates OCD!</small>
   </div>
