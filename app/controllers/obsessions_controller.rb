@@ -119,7 +119,7 @@ class ObsessionsController < ApplicationController
   private
 
     def set_obsession
-      @obsession = Obsession.find(params[:id]).decorate
+      @obsession = Obsession.find(params[:id])
     end
 
     def set_themes
