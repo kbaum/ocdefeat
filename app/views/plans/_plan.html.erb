@@ -1,9 +1,8 @@
 <%= form_with(model: plan, local: true, url: (plan.new_record? ? [obsession, plan]: plan)) do |plan_builder| %>
-  <%= validation_errors_for(@plan) %>
+  <%= validation_errors_for(plan) %>
 
-  <br>
-
-  <% if !plan.new_record? && plan.without_step_or_with_incomplete_step? %>
+  <% if plan.decorated? %>
+    <br>
     <%= content_tag(:div, class: "alert alert-warning", role: "alert") do %>
       <%= content_tag(:h4, "This ERP plan remains unfinished!", class: "alert-heading") %>
       <%= content_tag(:p, content_tag(:strong, plan.uncover_why_unachieved)) %>
@@ -12,6 +11,8 @@
     <% end %>
     <br>
   <% end %>
+
+  <br>
 
   <div class="field">
     <%= plan_builder.label :title, "What's the title of your ERP plan?" %><br>
