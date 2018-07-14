@@ -37,9 +37,10 @@ class PlansController < ApplicationController
   end
 
   def show
-    authorize @plan
-    @step = Step.new # instance for form_for to wrap around in nested resource form to create a new step on plan show page
-    @plan_steps = @plan.steps.decorate # stores AR::Relation of all steps belonging to @plan
+    authorize @plan # make sure the 'current_user' can view the plan show page
+    @plan_steps = @plan.steps.decorate # decorate each step instance that belongs to @plan instance
+    @plan.decorate # decorate plan instance right before rendering plan show view
+    @step = Step.new # define instance for form_for to wrap around in nested resource form to create a new step on plan show page
   end
 
   def edit
