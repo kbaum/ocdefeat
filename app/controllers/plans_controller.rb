@@ -23,19 +23,6 @@ class PlansController < ApplicationController
     authorize @plan
   end
 
-  def create # When the form to create a new plan is submitted, form data is sent via POST request to "/obsessions/:obsession_id/plans"
-    @obsession = Obsession.find(params[:obsession_id])
-    @plan = @obsession.plans.build(plan_params)
-    authorize @plan
-
-    if @plan.save
-      redirect_to plan_path(@plan), flash: { success: "You successfully created the ERP plan entitled \"#{@plan.title}.\"" }
-    else
-      flash.now[:error] = "Your attempt to create a new ERP plan was unsuccessful. Please try again."
-      render :new
-    end
-  end
-
   def show
     authorize @plan # make sure the 'current_user' can view the plan show page
     @plan_steps = @plan.steps.decorate # decorate each step instance that belongs to @plan instance
@@ -45,21 +32,7 @@ class PlansController < ApplicationController
 
   def edit
     authorize @plan
-  end
-
-  def update # PATCH or PUT request to "/plans/:id" maps to plans#update
-    authorize @plan
-
-    if @plan.update_attributes(permitted_attributes(@plan))
-      if @plan.finished? # If the plan is updated from unfinished (progress = 0) to finished (progress = 1)
-        redirect_to plan_path(@plan), flash: { success: "Congratulations on developing anxiety tolerance by finishing this ERP plan!" }
-      else
-        redirect_to plan_path(@plan), flash: { success: "An overview of this ERP plan was successfully updated!" }
-      end
-    else
-      flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
-      render :edit
-    end
+    @plan = @plan.decorate
   end
 
   def destroy  # DELETE request to "/plans/:id" maps to plans#destroy
