@@ -18,7 +18,7 @@ class PlansController < ApplicationController
   end
 
   def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
-    @obsession = Obsession.find(params[:obsession_id]) # @obsession is the parent. The form to create a new plan for an obsession is found at: "/obsessions/:obsession_id/plans/new"
+    @obsession = Obsession.find(params[:obsession_id]).decorate # @obsession is the parent. The form to create a new plan for an obsession is found at: "/obsessions/:obsession_id/plans/new"
     @plan = Plan.new # instance for form_for to wrap around
     authorize @plan
   end
