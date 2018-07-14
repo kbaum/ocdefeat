@@ -39,7 +39,7 @@ class PlansController < ApplicationController
   def show
     authorize @plan # make sure the 'current_user' can view the plan show page
     @plan_steps = @plan.steps.decorate # decorate each step instance that belongs to @plan instance
-    @plan.decorate # decorate plan instance right before rendering plan show view
+    @plan = @plan.decorate # set @plan = decorated plan right before rendering plan show view
     @step = Step.new # define instance for form_for to wrap around in nested resource form to create a new step on plan show page
   end
 
