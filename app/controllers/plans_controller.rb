@@ -69,8 +69,8 @@ class PlansController < ApplicationController
   end
 
   def destroy  # DELETE request to "/plans/:id" maps to plans#destroy
-    authorize plan
-    plan.destroy
+    authorize @plan
+    @plan.destroy
     redirect_to plans_path, flash: { success: "You successfully deleted an ERP plan!" }
   end
 
