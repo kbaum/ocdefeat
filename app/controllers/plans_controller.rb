@@ -50,6 +50,8 @@ class PlansController < ApplicationController
     authorize @plan
   end
 
+  
+
   def destroy  # DELETE request to "/plans/:id" maps to plans#destroy
     plan = Plan.find(params[:id])
     authorize plan
