@@ -47,7 +47,6 @@ class PlansController < ApplicationController
 
   def edit
     authorize @plan
-    @plan = @plan.decorate
   end
 
   def destroy  # DELETE request to "/plans/:id" maps to plans#destroy
