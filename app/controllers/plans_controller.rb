@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :prepare_plan, only: [:show, :edit, :update]
+  before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :require_plans, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
   include AdminFiltersConcern
@@ -77,7 +77,7 @@ class PlansController < ApplicationController
     end
 
     def prepare_plan
-      @plan = Plan.find(params[:id]).decorate
+      @plan = Plan.find(params[:id])
     end
 
     def require_plans # called before plans#index
