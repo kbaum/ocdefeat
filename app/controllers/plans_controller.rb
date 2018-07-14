@@ -25,11 +25,11 @@ class PlansController < ApplicationController
 
   def create # When the form to create a new plan is submitted, form data is sent via POST request to "/obsessions/:obsession_id/plans"
     obsession = Obsession.find(params[:obsession_id])
-    @plan = obsession.plans.build(plan_params)
-    authorize @plan
+    plan = obsession.plans.build(plan_params)
+    authorize plan
 
-    if @plan.save
-      @plan = @plan.decorate # b/c I call decorator methods #show_strategy and #last_modified in plan show view
+    if plan.save
+      @plan = plan.decorate # b/c I call decorator methods #show_strategy and #last_modified in plan show view
       redirect_to plan_path(@plan), flash: { success: "You successfully created the ERP plan entitled \"#{@plan.title.titleize}.\"" }
     else
       @obsession = obsession.decorate # b/c I call #hypotheticalize when rerendering new plan form
