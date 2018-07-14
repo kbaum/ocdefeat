@@ -26,13 +26,13 @@ class ObsessionsController < ApplicationController
         else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
           if patient_picked.obsession_count == 1 # If the selected patient only has 1 obsession
-            @patient_obsessions = patient_picked.obsessions.decorate # stores AR::Relation containing 1 obsession
+            @patient_obsessions = patient_picked.obsessions.decorate
             flash.now[:notice] = "Patient #{patient_picked.name} only has one obsession rated at anxiety level #{first_rating}!"
           else # If the selected patient has more than 1 obsession
             if patient_picked.obsessions.all? {|o| o.anxiety_rating == first_rating} # If all of the selected patient's obsessions have the same anxiety_rating, none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least distressing, as this patient rated each obsession at anxiety level #{first_rating}."
             else # Patient has multiple obsessions that do NOT all have the same anxiety_rating
-              @patient_obsessions = patient_picked.obsessions.most_to_least_distressing.decorate # stores AR::Relation of the selected patient's obsessions ordered from most to least distressing
+              @patient_obsessions = patient_picked.obsessions.most_to_least_distressing.decorate
               flash.now[:notice] = "#{patient_picked.name}'s obsessions are ordered from most to least distressing, so you can prioritize treating the obsessions that bring this patient the most discomfort!"
             end
           end
@@ -44,13 +44,13 @@ class ObsessionsController < ApplicationController
         else # The selected patient has obsessions
           first_timeframe = patient_picked.obsessions.first.time_consumed
           if patient_picked.obsession_count == 1 # If the selected patient only has 1 obsession
-            @patient_obsessions = patient_picked.obsessions.decorate # stores AR::Relation containing 1 obsession
+            @patient_obsessions = patient_picked.obsessions.decorate
             flash.now[:notice] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of the patient's time daily."
           else # If the selected patient has more than 1 obsession
             if patient_picked.obsessions.all? {|o| o.time_consumed == first_timeframe} # all of the selected patient's obsessions consume the same amount of time daily, so none are displayed
               flash.now[:alert] = "#{patient_picked.name}'s obsessions cannot be ordered from most to least time-consuming, as each obsession consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} daily."
             else # The patient has multiple obsessions that do NOT all take up the same amount of time
-              @patient_obsessions = patient_picked.obsessions.most_to_least_time_consuming.decorate # stores AR::Relation of the selected patient's obsessions ordered from most to least time-consuming
+              @patient_obsessions = patient_picked.obsessions.most_to_least_time_consuming.decorate
               flash.now[:notice] = "#{patient_picked.name}'s obsessions are ordered from most to least time-consuming, so you can prioritize treating the obsessions that take up the most time!"
             end
           end
