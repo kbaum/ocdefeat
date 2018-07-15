@@ -1,6 +1,6 @@
 class UserDecorator < ApplicationDecorator
   def objects_count(object_type) # argument is a string like "obsession" or "plan"
-    pluralize user.send("#{object_type}s").count, object_type
+    pluralize(send("#{object_type}s").count, object_type) if patient?
   end
 
   def pronouns_for_defeating_ocd
