@@ -83,9 +83,9 @@ class ObsessionsController < ApplicationController
     authorize @obsession
 
     if @obsession.save
-      redirect_to obsession_path(@obsession), flash: { success: "You successfully reported a new obsession!" }
+      redirect_to obsession_path(@obsession), flash: { success: "You successfully recorded a new obsession!" }
     else
-      flash.now[:error] = "Your attempt to report a new obsession was unsuccessful. Please try again."
+      flash.now[:error] = "Your attempt to record a new obsession was unsuccessful. Please try again."
       render :new
     end
   end
