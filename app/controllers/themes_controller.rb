@@ -18,7 +18,7 @@ class ThemesController < ApplicationController
     if @theme.save
       redirect_to themes_path, flash: { success: "You created the OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!" }
     else
-      flash.now[:alert] = "Notwithstanding your psychological expertise, your attempt to create a unique OCD theme was unsuccessful. Please try again."
+      flash.now[:alert] = "Your attempt to create a unique OCD theme was unsuccessful. Please try again."
       render :new
     end
   end
