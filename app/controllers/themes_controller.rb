@@ -1,8 +1,8 @@
 class ThemesController < ApplicationController
   before_action :set_theme, only: [:edit, :update, :destroy]
 
-  def index
-    @themes = policy_scope(Theme).decorate # Theme.all
+  def index # @themes stores #<Draper::CollectionDecorator...> in themes index view
+    @themes = policy_scope(Theme).decorate # decorating each theme in the collection right before rendering themes index view
   end
 
   def new
@@ -10,15 +10,14 @@ class ThemesController < ApplicationController
     authorize @theme
   end
 
-  def create
-    # @theme = Theme.new(theme_params)
+  def create # theme belongs to therapist who created the theme
     @theme = current_user.themes.build(theme_params)
     authorize @theme
 
     if @theme.save
-      redirect_to themes_path, flash: { success: "You created the OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!" }
+      redirect_to themes_path, flash: { success: "You added the OCD theme \"#{Theme.last.name}\" in which to classify your patients' obsessions!" }
     else
-      flash.now[:alert] = "Your attempt to create a unique OCD theme was unsuccessful. Please try again."
+      flash.now[:alert] = "Your attempt to add a unique OCD theme was unsuccessful. Please try again."
       render :new
     end
   end
