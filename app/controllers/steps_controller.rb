@@ -4,7 +4,7 @@ class StepsController < ApplicationController
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
-    @step = Step.new(step_params)
+    @step = Step.new(step_params) # Step automatically belongs to plan due to nested resource form in _step partial
     authorize @step
     if @step.save
       redirect_to plan_path(@step.plan), flash: { success: "A new step has been added to this ERP plan!" }
@@ -19,14 +19,16 @@ class StepsController < ApplicationController
     authorize @step
   end
 
-  def update # PATCH or PUT request to "/steps/:id" maps to steps#update
+  def update # PATCH or PUT request to "/steps/:id" maps to steps#update due to shallow nesting
     authorize @step
     if @step.update(step_params) # A step that is already marked as complete cannot be updated due to #check_completion
-      if @step.completed? # If the step is updated from incomplete to complete (status changes from 0 to 1)
-        redirect_to plan_path(@plan), flash: { success: "Milestone accomplished! You're one step closer to defeating OCD!" }
-      else
-        redirect_to plan_path(@plan), flash: { success: "You successfully modified a step in this ERP plan!" }
-      end
+      message =
+        if @step.completed? # If the step is updated from incomplete to complete (boolean value)
+          "Milestone accomplished! You're one step closer to defeating OCD!"
+        else
+          "You successfully modified a step in this ERP plan!"
+        end
+      redirect_to plan_path(@plan), flash: { success: message }
     else
       flash.now[:error] = "Your attempt to edit this ERP exercise was unsuccessful. Please try again."
       render :edit
