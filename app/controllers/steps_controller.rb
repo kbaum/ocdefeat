@@ -49,9 +49,7 @@ class StepsController < ApplicationController
 
     def check_completion # Check if the step was already marked as complete before calling #edit, #update or #destroy (when plan is still unfinished)
       step = Step.find(params[:id])
-      if step.completed?
-        redirect_to plan_path(step.plan), alert: "A step that has already been performed cannot be modified!"
-      end
+      redirect_to plan_path(step.plan), alert: "A step that was already performed cannot be modified!" if step.completed?
     end
 
     def set_step_and_parent_plan
