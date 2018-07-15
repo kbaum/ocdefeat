@@ -37,64 +37,6 @@ class UsersController < ApplicationController
       else
         @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
       end
-    #elsif current_user.therapist? # When therapist views users index page, users variable stores the therapist's patients
-      #if !params[:severity_and_variant].blank? # Therapist filters by specific OCD severity ("Mild", "Moderate", "Severe", "Extreme") and variant of OCD ("Traditional", "Purely Obsessional", "Both")
-        #severity = params[:severity_and_variant].split(" and ").first
-        #variant = params[:severity_and_variant].split(" and ").last
-        #if users.by_severity_and_variant(severity, variant).empty?
-          #flash.now[:alert] = "None of your patients have #{severity.downcase} OCD and #{variant.downcase} types of compulsions."
-        #else
-          #@filtered_users = users.by_severity_and_variant(severity, variant) # stores AR::Relation of therapist's patients with a specific OCD severity and variant combination
-          #flash.now[:notice] = "You found #{plural_inflection(@filtered_users)} with #{severity.downcase} OCD and #{variant.downcase} types of compulsions!"
-        #end
-
-      #elsif !params[:theme_preoccupation].blank? # Find therapist's patients who have at least 1 obsession that's classified in the selected theme
-        #if users.obsessing_about(params[:theme_preoccupation]).empty?
-          #flash.now[:alert] = "None of your patients' obsessions revolve around \"#{Theme.find(params[:theme_preoccupation]).name}.\""
-        #else
-          #@filtered_users = users.obsessing_about(params[:theme_preoccupation])
-          #flash.now[:notice] = "#{sv_agreement(@filtered_users)} preoccupied with \"#{Theme.find(params[:theme_preoccupation]).name}.\""
-        #end
-      #elsif !params[:symptoms_presence].blank? # Therapist filters patients by symptomatic/asymptomatic patients
-        #if users.all? {|user| user.obsessions.empty?} # If none of the therapist's patients have obsessions
-          #flash.now[:notice] = "All of your patients are asymptomatic since none of them are obsessing!"
-        #elsif params[:symptoms_presence] == "Symptomatic patients"
-          #if users.symptomatic.empty?
-            #flash.now[:alert] = "None of your patients present with physical symptoms of OCD."
-          #else
-            #@filtered_users = users.symptomatic
-            #flash.now[:notice] = "#{sv_agreement(@filtered_users)} physically symptomatic of OCD."
-          #end
-        #elsif params[:symptoms_presence] == "Asymptomatic patients"
-          #if users.patients_nonobsessive.empty? && users.patients_obsessive_but_symptomless.empty?
-            #flash.now[:alert] = "All of your patients present with physical symptoms of OCD."
-          #else
-
-            #total_asymptomatic = users.count - users.symptomatic.count
-            #flash.now[:notice] = "You have #{total_asymptomatic} #{'asymptomatic patient'.pluralize(total_asymptomatic)}!"
-          #end
-        #end
-      #elsif !params[:recent_ruminators].blank? # Therapist filters patients by those who reported new obsessions yesterday or today
-        #if users.ruminating_yesterday.empty? && users.ruminating_today.empty?
-          #flash.now[:alert] = "None of your patients reported new obsessions yesterday or today."
-        #elsif params[:recent_ruminators] == "Patients who reported new obsessions yesterday"
-          #if users.ruminating_yesterday.empty?
-            #flash.now[:alert] = "None of your patients reported new obsessions yesterday."
-          #else
-            #@filtered_users = users.ruminating_yesterday
-            #flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions yesterday!"
-          #end
-        #elsif params[:recent_ruminators] == "Patients who reported new obsessions today"
-          #if users.ruminating_today.empty?
-            #flash.now[:alert] = "None of your patients reported new obsessions today."
-          #else
-            #@filtered_users = users.ruminating_today
-            #flash.now[:notice] = "#{plural_inflection(@filtered_users)} reported new obsessions today!"
-          #end
-        #end
-      #else
-        #@filtered_users = users # stores AR::Relation of therapist's patients if no filter was applied when therapist views page
-      #end
     elsif current_user.patient?
       @therapists = users # @therapists stores AR::Relation of all therapists when patient views users index page
       flash.now[:notice] = "#{@therapists.count} #{'therapist'.pluralize(@therapists.count)} #{'is'.pluralize(@therapists.count)} available to guide you on your journey to defeat OCD!"
