@@ -8,3 +8,8 @@ div.plans {
   background-color: #dff0d8;
   border: 3px solid #d6e9c6;
 }
+
+div.report {
+  background-color: #fbf6b7;
+  border: 5px solid #ecdeea;
+}
