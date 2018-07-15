@@ -78,5 +78,5 @@ class StepsController < ApplicationController
     end
 
 end
-# If steps#update is triggered, I know that the step is incomplete (status = 0) because a completed step cannot be updated due to #check_completion
+# If steps#update is triggered, I know that the step is incomplete because a completed step cannot be updated due to #check_completion
 # and I know that the plan to which the step belongs is not finished due to #prevent_changes_if_plan_performed
