@@ -87,19 +87,20 @@ class PlansController < ApplicationController
     end
 
     def require_plans # called before plans#index
-      if current_user.patient? && current_user.plans.empty? && !current_user.obsessions.empty? # The patient has no plans AND the patient has obsessions for which no plans were designed
+      if current_user.patient? && current_user.plans.empty? && !current_user.obsessions.empty? # The patient has no plans AND the patient has at least 1 obsession for which no plans were designed
         first_planless_obsession = current_user.obsessions.first
         redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to gain some exposure. Why not design an ERP plan for this obsession now?"
       elsif current_user.therapist? && current_user.counselees.empty?
         redirect_to user_path(current_user), alert: "There are no ERP plans for you to review since you currently have no patients!"
       elsif policy_scope(Plan).empty? # If there are no plans to view (the therapist has patients, the patient doesn't have obsessions)
-        msg = if current_user.admin?
-          "The Index of ERP plans is currently empty."
-        elsif current_user.therapist?
-          "ERP plans designed by your patients were not found."
-        elsif current_user.patient? # If the user has no plans but also has no obsessions
-          "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
-        end
+        msg =
+          if current_user.admin?
+            "The Index of ERP plans is currently empty."
+          elsif current_user.therapist?
+            "No ERP plans designed by your patients were found."
+          elsif current_user.patient? # If the user has no plans but also has no obsessions
+            "Looks like you're not implementing any ERP plans, but that's okay since you're not obsessing!"
+          end
         redirect_to root_url, alert: "#{msg}"
       end
     end
