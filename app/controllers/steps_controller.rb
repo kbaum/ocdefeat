@@ -41,18 +41,10 @@ class StepsController < ApplicationController
     redirect_to plan_path(@plan), flash: { success: "A step was successfully deleted from this ERP plan!" }
   end
 
-  private
-
-    def prevent_changes_if_plan_performed
-      if action_name == "create" # If I'm trying to create a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
-        step = Plan.find(params[:plan_id]).steps.build
-      else
-        step = Step.find(params[:id]) # for editing/updating/destroying a step due to shallow nesting
-      end
-
-      if step.plan.finished?
-        redirect_to plan_path(step.plan), alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished."
-      end
+  private # Creating a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
+    def prevent_changes_if_plan_performed # Editing/updating/destroying a step - Step.find(params[:id])
+      step = action_name == "create" ? Plan.find(params[:plan_id]).steps.build : Step.find(params[:id])
+      redirect_to plan_path(step.plan), alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished." if step.plan.finished?
     end
 
     def check_completion # Check if the step was already marked as complete before calling #edit, #update or #destroy (when plan is still unfinished)
