@@ -25,12 +25,6 @@
     <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
     <%= submit_tag "Filter Users" %>
   <% end %>
-
-  <br>
-
-  <% if filtered_users %>
-    <%= render partial: "users/users_ul", locals: { users: filtered_users } %>
-  <% end %>
 </div>
 
 <br>
