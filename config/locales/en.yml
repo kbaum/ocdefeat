@@ -2,6 +2,7 @@ en:
   pundit:
     default: "You have requested a page that you cannot access."
     user_policy:
+      new?: "Access denied! You cannot view the registration form since you already registered for OCDefeat!"
       show?: "Access denied to prevent a breach of doctor-patient confidentiality!"
       edit?: "You cannot edit another user's account information!"
       destroy?: "As an admin, you cannot delete your own account!"
