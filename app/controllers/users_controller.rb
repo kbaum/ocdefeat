@@ -128,9 +128,9 @@ class UsersController < ApplicationController
       end
     end
 
-    def reset_role_requested
+    def reset_role_requested # The user requested the role of therapist/admin but was assigned the role of patient
       @user = User.find(params[:id])
-      if @user.patient? && @user.role_requested.in?(%w[Therapist Admin])
+      if @user.patient? && @user.role_requested.in?(%w(Therapist Admin))
         @user.role_requested = "Patient"
         @user.save
       end
