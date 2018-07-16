@@ -102,14 +102,6 @@ class User < ApplicationRecord
     where(variant: variant)
   end
 
-  def obsession_count
-    obsessions.count
-  end
-
-  def plan_count
-    plans.count
-  end
-
   def self.patients_planning_preliminarily # returns AR::Relation of users who have at least 1 plan that lacks steps
     patients_planning.merge(Plan.stepless)
   end
