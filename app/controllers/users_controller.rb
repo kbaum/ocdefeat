@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    authorize user
+    authorize @user # retrieved from before_action :set_user
     @user = user.decorate
     render show_template # private method #show_template returns string name of view file to be rendered
   end
