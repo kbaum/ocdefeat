@@ -112,6 +112,7 @@ class UsersController < ApplicationController
 
     def require_users
       users = policy_scope(User)
+      authorize users # prevent unassigned users from viewing users index
       if current_user.admin? && users.count == 1
         redirect_to root_path, alert: "Looks like you're all alone in the OCDefeat community! There are no accounts to manage."
       elsif users.empty?
@@ -120,8 +121,6 @@ class UsersController < ApplicationController
             "Looks like you weren't assigned to any patients yet!"
           elsif current_user.patient?
             "Unfortunately, no therapists are available for counseling."
-          else # current_user.unassigned?
-            "Your role must be formally assigned by an admin before you can view the Index of OCDefeat Users."
           end
         redirect_to user_path(current_user), alert: "#{message}"
       end
