@@ -2,7 +2,7 @@
 
 <h2>Patient Census</h2>
 
-<h5><em><%= pluralize(current_user.counselees.count, "patient") %> <%= "is".pluralize(current_user.counselees.count) %> currently seeking your psychological expertise!</em></h5>
+<%= present_patient_census %>
 
 <br>
 
@@ -38,11 +38,7 @@
     </tr>
   </thead>
   <tbody>
-    <% if filtered_users %>
-      <% filtered_users.each do |filtered_user| %>
-        <%= render partial: "users/patient_chart_row", locals: { user: filtered_user } %>
-      <% end %>
-    <% end %>
+    <%= render partial: "users/patient_chart_row", collection: filtered_users.decorate, as: :user %>
   </tbody>
 </table>
 
