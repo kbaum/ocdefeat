@@ -1,8 +1,6 @@
 class User < ApplicationRecord
   scope :therapists, -> { where(role: 2) }
   scope :patients, -> { where(role: 1) }
-  scope :patients_overanxious, -> { patients.joins(:obsessions).where("obsessions.anxiety_rating > ?", Obsession.average_anxiety_rating).distinct }
-  scope :patients_uncounseled, -> { patients.where(counselor_id: nil) }
   scope :patients_obsessing, -> { patients.joins(:obsessions).distinct }
   scope :patients_planning, -> { patients.joins(:plans).distinct }
   scope :patients_nonobsessive, -> { patients.where.not("exists ( #{Obsession.where('users.id = obsessions.user_id').select(1).to_sql} )") }
