@@ -123,7 +123,7 @@ class UsersController < ApplicationController
           if current_user.therapist?
             "Looks like you weren't assigned to any patients yet!"
           elsif current_user.patient?
-            "Unfortunately, no therapists are currently available for counseling."
+            "Unfortunately, no therapists are available for counseling."
           end
         redirect_to user_path(current_user), alert: "#{message}"
       end
