@@ -61,7 +61,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
     authorize user
     @user = user.decorate
     render show_template # private method #show_template returns string name of view file to be rendered
