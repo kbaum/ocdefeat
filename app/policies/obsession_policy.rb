@@ -7,6 +7,8 @@ class ObsessionPolicy < ApplicationPolicy
         scope.where(user: user.counselees)
       elsif user.patient? # For confidentiality purposes, a patient can only view her own obsessions
         scope.where(user: user)
+      else # user.unassigned?
+        scope.none
       end
     end
   end
