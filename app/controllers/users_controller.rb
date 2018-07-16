@@ -90,11 +90,12 @@ class UsersController < ApplicationController
 
   def destroy
     authorize @user # retrieved from before_action :set_user
-    user.destroy
+    user_name = @user.name
+    @user.destroy
     if current_user.admin?
-      redirect_to users_path, flash: { success: "The user's account was successfully deleted." }
+      redirect_to users_path, flash: { success: "#{user_name}'s account was successfully deleted." }
     else
-      redirect_to root_url, flash: { success: @message }
+      redirect_to root_url, flash: { success: "Farewell, #{user_name}. We hope that your experience with OCDefeat was productive and meaningful!" }
     end
   end
 
