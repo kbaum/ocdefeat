@@ -7,6 +7,8 @@ class UserPolicy < ApplicationPolicy
         scope.where(id: user.counselees)
       elsif user.patient? # patients can only view therapists on users index page (therapist directory)
         scope.where(role: 2)
+      elsif user.unassigned?
+        scope.none
       end
     end
   end
