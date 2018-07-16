@@ -133,14 +133,14 @@ class ObsessionsController < ApplicationController
       if current_user.therapist? && current_user.counselees.empty?
         redirect_to user_path(current_user), alert: "There are no obsessions for you to analyze since you currently have no patients!"
       elsif obsessions.empty? # If there are no obsessions to view (and therapist has patients)
-        msg = if current_user.patient?
+        message = if current_user.patient?
           "Looks like you're managing your OCD well! No obsessions were found."
         elsif current_user.therapist?
           "Your patients are making progress! No one is currently obsessing."
         elsif current_user.admin?
           "The Obsessions Log is currently empty."
         end
-        redirect_to root_path, alert: "#{msg}"
+        redirect_to root_path, alert: "#{message}"
       end
     end
 
