@@ -17,12 +17,10 @@ class UsersController < ApplicationController
       @patients_planning_or_practicing_erp = users.patients_planning_or_practicing_erp
       @patients_with_finished_plan = users.with_finished_plan
     elsif current_user.admin?
-      @therapists = User.by_role("therapist")
-      @table_users = users # stores AR::Relation of all user instances
+      @therapists = User.by_role("therapist") # used when admin assigns therapist to a patient
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
       @therapists_to_be = users.awaiting_assignment(%w(Patient Admin), 2)
       @aspiring_admins = users.awaiting_assignment(%w(Patient Therapist), 3)
-
       if !params[:role].blank? # Admin filters users by role ("unassigned", "patient", "therapist" or "admin")
         if users.by_role(params[:role]).empty? # If there are no users with the selected role
           flash.now[:alert] = "No users were found."
@@ -30,8 +28,8 @@ class UsersController < ApplicationController
           @filtered_users = users.by_role(params[:role]) # stores AR::Relation of users with the selected role
           flash.now[:success] = "You found #{@filtered_users.count} #{'user'.pluralize(@filtered_users.count)}!"
         end
-      else
-        @filtered_users = users # Admin did not choose a filter, so @filtered_users stores all users
+      else # Admin did not choose filter, so the table displays data for all user instances
+        @filtered_users = users
       end
     elsif current_user.patient?
       @therapists = users # @therapists stores AR::Relation of all therapists when patient views users index page
