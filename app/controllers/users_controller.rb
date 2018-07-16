@@ -6,10 +6,9 @@ class UsersController < ApplicationController
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the current user's role and the filtered objects they're permitted to see)
     users = policy_scope(User)
-    @themes = policy_scope(Theme)
-    @treatments = Treatment.all
-
     if current_user.therapist? # A therapist sees her own patients on the users index page
+      @themes = policy_scope(Theme) # same as Theme.all - Therapist can filter her patients by theme fixation
+      @treatments = Treatment.all # Therapist can filter her patients by treatments undergone
       @filtered_users = PatientFinder.new(users).call(therapist_filters_patients_params).decorate
       @symptomatic_patients = users.symptomatic
       @asymptomatic_nonobsessive_patients = users.patients_nonobsessive
