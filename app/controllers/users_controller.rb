@@ -117,7 +117,7 @@ class UsersController < ApplicationController
     def require_users
       users = policy_scope(User)
       if current_user.admin? && users.count == 1
-        redirect_to root_path, alert: "Looks like you're all alone. Try to recruit some users to join the OCDefeat community!"
+        redirect_to root_path, alert: "Looks like you're all alone in the OCDefeat community! There are no accounts to control."
       elsif users.empty?
         if current_user.therapist?
            flash[:alert] = "Looks like you weren't assigned to any patients yet!"
