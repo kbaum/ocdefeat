@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :reset_role_requested, only: [:edit, :update]
+  before_action :reset_role_requested, only: [:update]
   before_action :require_users, only: [:index]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the current user's role and the filtered objects they're permitted to see)
