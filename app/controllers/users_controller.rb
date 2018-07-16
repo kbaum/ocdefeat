@@ -43,6 +43,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new # instance for form_for to wrap around
+    authorize @user
     3.times { @user.treatments.build }
   end
 
@@ -108,7 +109,7 @@ class UsersController < ApplicationController
         :recent_ruminators
       )
     end
-    
+
     def set_user
       @user = User.find(params[:id])
     end
