@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if current_user.therapist? # A therapist sees her own patients on the users index page
       @themes = policy_scope(Theme) # same as Theme.all - Therapist can filter her patients by theme fixation
       @treatments = Treatment.all # Therapist can filter her patients by treatments undergone
-      @filtered_users = PatientFinder.new(users).call(therapist_filters_patients_params).decorate
+      @filtered_users = PatientFinder.new(users).call(therapist_filters_patients_params)
       @symptomatic_patients = users.symptomatic
       @asymptomatic_nonobsessive_patients = users.patients_nonobsessive
       @asymptomatic_obsessive_patients = users.patients_obsessive_but_symptomless
