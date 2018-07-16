@@ -160,16 +160,4 @@ class UsersController < ApplicationController
         :treatments_attributes => [:treatment_type, :user_treatments => [:treatment_id, :duration, :efficacy]]
       )
     end
-
-    def deletion_msg
-      @message =
-        case current_user.role
-        when "unassigned"
-          "Your preliminary profile was successfully deleted."
-        when "patient"
-          "We hope that your experience with OCDefeat was productive and meaningful, and that you acquired the skillset necessary to defeat OCD!"
-        when "therapist"
-          "We hope that your experience working as an OCDefeat therapist was rewarding. Thank you for helping our patients defeat OCD!"
-        end
-    end
 end
