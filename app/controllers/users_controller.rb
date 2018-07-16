@@ -17,7 +17,6 @@ class UsersController < ApplicationController
       @patients_planning_or_practicing_erp = users.patients_planning_or_practicing_erp
       @patients_with_finished_plan = users.with_finished_plan
     elsif current_user.admin?
-      @patients_without_counselor = User.patients_uncounseled
       @therapists = User.by_role("therapist")
       @table_users = users # stores AR::Relation of all user instances
       @prospective_patients = users.awaiting_assignment(%w(Therapist Admin), 1)
