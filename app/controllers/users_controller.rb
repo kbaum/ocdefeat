@@ -108,11 +108,7 @@ class UsersController < ApplicationController
         :recent_ruminators
       )
     end
-
-    def prevent_signed_in_users_from_viewing_signup
-      redirect_to root_path, alert: "You cannot view the registration form since you already registered for OCDefeat!" if current_user
-    end
-
+    
     def set_user
       @user = User.find(params[:id])
     end
