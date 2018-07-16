@@ -1,4 +1,11 @@
 module UsersHelper
+  def present_patient_census
+    if current_user.therapist?
+      content_tag(:h5, content_tag(:em, "#{pluralize(current_user.counselees.count, 'patient')}
+      #{'is'.pluralize(current_user.counselees.count)} currently seeking your psychological expertise!"))
+    end
+  end
+
   def present_patients(patients)
     if current_user.therapist? && patients.all? {|patient| patient.counselor == current_user}
       if patients.empty?
