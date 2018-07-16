@@ -1,13 +1,15 @@
 en:
   pundit:
-    default: "You have requested a page that you cannot access."
+    default: "You requested a page that you cannot access."
     user_policy:
+      index?: "Access denied! An admin must formally assign your role before you can view the Index of OCDefeat Users."
       new?: "Access denied! You cannot view the registration form since you already registered for OCDefeat!"
       show?: "Access denied to prevent a breach of doctor-patient confidentiality!"
       edit?: "You cannot edit another user's account information!"
       destroy?: "As an admin, you cannot delete your own account!"
       show_comments?: "Access denied! You cannot read comments about that patient's obsessions!"
     obsession_policy:
+      index?: "Access denied! An admin must formally assign your role before you can view the Obsessions Log."
       new?: "Access denied! Only patients are authorized to report new obsessions."
       show?: "Access denied! The details of obsessions will not be disclosed to preserve doctor-patient confidentiality!"
       edit?: "Access denied! An obsession is only editable by the patient who reported it."
