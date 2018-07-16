@@ -67,11 +67,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    authorize @user
+    authorize @user # retrieved from before_action :set_user
   end
 
   def update
-    authorize @user
+    authorize @user # retrieved from before_action :set_user
     if current_user.admin? && @user.unassigned? && params[:user][:role] != "unassigned"
       if @user.update_attributes(permitted_attributes(@user))
         redirect_to users_path, flash: { success: "#{@user.name} was successfully assigned the role of #{@user.role}!" }
@@ -89,7 +89,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
     authorize user
     user.destroy
     if current_user.admin?
