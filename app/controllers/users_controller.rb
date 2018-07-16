@@ -124,6 +124,8 @@ class UsersController < ApplicationController
             "Looks like you weren't assigned to any patients yet!"
           elsif current_user.patient?
             "Unfortunately, no therapists are available for counseling."
+          else # current_user.unassigned?
+            "Your role must be formally assigned by an admin before you can view the Index of OCDefeat Users."
           end
         redirect_to user_path(current_user), alert: "#{message}"
       end
