@@ -2,7 +2,13 @@
 
 <h3><em>Admin Access to Accounts</em></h3>
 
-<br>
+<div class="well well-lg">
+  <%= form_tag users_path, method: "get" do %>
+    <%= label_tag "role", "Filter Users by Role:" %><br><br>
+    <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
+    <%= submit_tag "Filter Users" %>
+  <% end %>
+</div>
 
 <table class="table table-bordered">
   <thead>
@@ -18,14 +24,6 @@
     <%= render partial: "users/user_row", collection: filtered_users, as: :user, locals: { therapists: therapists } %>
   </tbody>
 </table>
-
-<div class="well well-lg">
-  <%= form_tag users_path, method: "get" do %>
-    <%= label_tag "role", "Filter Users by Role:" %><br><br>
-    <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
-    <%= submit_tag "Filter Users" %>
-  <% end %>
-</div>
 
 <br>
 
