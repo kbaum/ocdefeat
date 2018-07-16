@@ -119,12 +119,13 @@ class UsersController < ApplicationController
       if current_user.admin? && users.count == 1
         redirect_to root_path, alert: "Looks like you're all alone in the OCDefeat community! There are no accounts to control."
       elsif users.empty?
-        if current_user.therapist?
-           flash[:alert] = "Looks like you weren't assigned to any patients yet!"
-        elsif current_user.patient?
-          flash[:alert] = "Unfortunately, no therapists are currently available for counseling."
-        end
-        redirect_to user_path(current_user)
+        message =
+          if current_user.therapist?
+            "Looks like you weren't assigned to any patients yet!"
+          elsif current_user.patient?
+            "Unfortunately, no therapists are currently available for counseling."
+          end
+        redirect_to user_path(current_user), alert: "#{message}"
       end
     end
 
