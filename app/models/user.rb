@@ -102,10 +102,6 @@ class User < ApplicationRecord
     where(variant: variant)
   end
 
-  def self.by_severity_and_variant(severity, variant)
-    by_ocd_severity(severity).by_ocd_variant(variant)
-  end
-
   def obsession_count
     obsessions.count
   end
