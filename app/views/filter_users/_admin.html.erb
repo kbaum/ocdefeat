@@ -2,13 +2,15 @@
 
 <h3><em>Admin Access to Accounts</em></h3>
 
-<div class="well well-lg">
-  <%= form_tag users_path, method: "get" do %>
-    <%= label_tag "role", "Filter Users by Role" %>:<br><br>
-    <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
-    <%= submit_tag "Filter Users" %>
-  <% end %>
-</div>
+<br>
+
+<%= form_tag users_path, method: "get" do %>
+  <%= label_tag "role", "Filter Users by Role" %>:
+  <%= select_tag "role", options_for_select(["unassigned", "patient", "therapist", "admin"]), prompt: "Select Role" %>
+  <%= submit_tag "Filter Users" %>
+<% end %>
+
+<br>
 
 <table class="table table-bordered">
   <thead>
