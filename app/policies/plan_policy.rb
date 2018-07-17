@@ -6,7 +6,9 @@ class PlanPolicy < ApplicationPolicy
       elsif user.therapist? # A therapist views an index of her own patients' plans
         scope.where(obsession: user.counselees.map {|counselee| counselee.obsessions}.flatten)
       elsif user.patient? # A patient views an index of her own plans
-        scope.where(obsession_id: user.obsession_ids)
+        scope.where(obsession: user.obsessions)
+      else
+        scope.none
       end
     end
   end
