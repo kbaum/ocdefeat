@@ -1,7 +1,7 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
   before_action :set_themes, only: [:new, :edit]
-  before_action :prohibit_obsession_viewing, only: [:index]
+  before_action :prevent_obsessions_viewing, only: [:index]
   include AdminFiltersConcern
 
   def index
@@ -127,7 +127,7 @@ class ObsessionsController < ApplicationController
       @themes = policy_scope(Theme) # Theme.all
     end
 
-    def prohibit_obsession_viewing # this method is called before obsessions#index
+    def prevent_obsessions_viewing # this method is called before obsessions#index
       if current_user.unassigned?
         redirect_to themes_path, alert: "An admin must assign your role before you can view the Obsessions Log, but you can learn about common OCD themes here."
       elsif current_user.therapist? && current_user.counselees.empty?
