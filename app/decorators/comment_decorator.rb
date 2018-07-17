@@ -1,4 +1,4 @@
-class CommentDecorator < ApplicationDecorator
+class CommentDecorator < ApplicationDecorator  
   def label
     if current_user.patient?
       "Voice your concerns about this obsession"
