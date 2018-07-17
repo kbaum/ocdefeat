@@ -3,9 +3,8 @@ class CommentsController < ApplicationController
 
   def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
     @obsession = Obsession.find(params[:obsession_id]).decorate
-    commenter = @obsession.patient_name
     comments = policy_scope(Comment).where(obsession: @obsession)
-    patient_obsessing = @obsession.user # stores the patient who reported the obsession
+    patient_obsessing = @obsession.user # stores the patient who recorded the obsession
     authorize patient_obsessing, :show_comments? # A patient can see all comments on her own obsessions. A therapist can see all comments on her own patients' obsessions.
 
     if params[:type] == "Patient Concerns"
