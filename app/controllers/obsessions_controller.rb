@@ -128,8 +128,6 @@ class ObsessionsController < ApplicationController
     end
 
     def require_obsessions # this method is called before obsessions#index
-      obsessions = policy_scope(Obsession)
-      authorize obsessions # prevent unassigned users from viewing obsessions index
       if current_user.therapist? && current_user.counselees.empty?
         redirect_to user_path(current_user), alert: "There are no obsessions for you to analyze since you currently have no patients!"
       elsif obsessions.empty? # If there are no obsessions to view (and therapist has patients)
