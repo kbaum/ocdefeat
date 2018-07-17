@@ -113,7 +113,7 @@ class UsersController < ApplicationController
     def prevent_users_viewing
       if current_user.admin? && users.count == 1
         redirect_to root_path, alert: "Looks like you're all alone in the OCDefeat community! There are no accounts to manage."
-      elsif users.empty?
+      elsif policy_scope(User).empty?
         message =
           if current_user.therapist?
             "Looks like you weren't assigned to any patients yet!"
