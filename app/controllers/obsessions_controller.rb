@@ -93,7 +93,7 @@ class ObsessionsController < ApplicationController
   def show
     authorize @obsession
     @obsession = @obsession.decorate # call #decorate on obsession instance right before rendering obsession show page
-    @comment = Comment.new.decorate # instance for form_for to wrap around (creating a new comment on obsession show pg)
+    @comment = Comment.new # instance for form_for to wrap around (creating a new comment on obsession show pg)
   end
 
   def edit
