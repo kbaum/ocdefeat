@@ -48,18 +48,18 @@ class CommentsController < ApplicationController
       if comments.concerns.empty?
         flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession."
       else
-        @comments = comments.concerns.decorate
+        @comments = comments.concerns
         flash.now[:notice] = "#{commenter} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
       end
     elsif params[:type] == "Advice from Therapists"
       if comments.advice.empty?
         flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter}."
       else
-        @comments = comments.advice.decorate
+        @comments = comments.advice
         flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when overcoming this obsession."
       end
     else # No filter chosen
-      @comments = comments.decorate
+      @comments = comments
     end
   end
 
