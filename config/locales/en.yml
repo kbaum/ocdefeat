@@ -14,6 +14,7 @@ en:
       show?: "Access denied! The details of obsessions will not be disclosed to preserve doctor-patient confidentiality!"
       edit?: "Access denied! An obsession is only editable by the patient who reported it."
     plan_policy:
+      index?: "Access denied! An admin must formally assign your role before you can view the Index of ERP Plans."
       new?: "Access denied! Only the patient who reported an obsession can design an ERP plan that targets this obsession!"
       show?: "Access denied! Only the patient and therapist who developed an ERP plan can view its exposure exercises!"
       edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
