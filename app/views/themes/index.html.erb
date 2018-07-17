@@ -2,4 +2,6 @@
 
 <h3>Discover the prevalence of a particular OCD theme in patients!</h3>
 
-<%= render(@themes) || "No OCD themes were found." %>
+<%= render(@themes.decorate) || "No OCD themes were found." %>
+
+<!-- Decorate each theme in @themes collection right before rendering _theme.html.erb for each theme -->
