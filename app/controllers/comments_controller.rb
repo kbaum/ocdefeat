@@ -6,20 +6,19 @@ class CommentsController < ApplicationController
     comments = policy_scope(Comment).where(obsession: @obsession)
     patient_obsessing = @obsession.user # stores the patient who recorded the obsession
     authorize patient_obsessing, :show_comments? # A patient can see all comments on her own obsessions. A therapist can see all comments on her own patients' obsessions.
-
     if params[:type] == "Patient Concerns"
       if comments.concerns.empty?
-        flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession."
+        flash.now[:alert] = "#{patient_obsessing.name} voiced no further concerns about this obsession."
       else
         @comments = comments.concerns
-        flash.now[:notice] = "#{commenter} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
+        flash.now[:notice] = "#{patient_obsessing.name} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
       end
     elsif params[:type] == "Advice from Therapists"
       if comments.advice.empty?
-        flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter}."
+        flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{patient_obsessing.name}."
       else
         @comments = comments.advice
-        flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when overcoming this obsession."
+        flash.now[:notice]= "#{patient_obsessing.name} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when overcoming this obsession."
       end
     else # No filter chosen
       @comments = comments
