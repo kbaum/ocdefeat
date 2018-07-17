@@ -113,7 +113,7 @@ class UsersController < ApplicationController
     def prevent_users_viewing
       if current_user.unassigned? # prevent unassigned users from viewing users index page
         redirect_to user_path(current_user), alert: "An admin must assign your role before you can view the Index of OCDefeat Users."
-      elsif current_user.admin? && users.count == 1
+      elsif current_user.admin? && policy_scope(User).count == 1
         redirect_to root_path, alert: "Looks like you're all alone in the OCDefeat community! There are no accounts to manage."
       elsif policy_scope(User).empty?
         message =
