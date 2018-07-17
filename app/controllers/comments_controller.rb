@@ -47,9 +47,8 @@ class CommentsController < ApplicationController
     authorize @comment # retrieved from #set_comment
     if @comment.update_attributes(permitted_attributes(@comment)) # After changes are saved in DB, this comment will be decorated in index view
       redirect_to obsession_comments_path(@comment.obsession), flash: { success: "Your comment was successfully modified!" }
-    else # the comment needs to be decorated for _comment_form rendered in edit comment view
-      @comment = @comment.decorate
-      render :edit
+    else
+      render :edit # @comment will be decorated for _comment_form in locals in render call in edit comment view
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
     end
   end
