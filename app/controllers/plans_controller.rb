@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
-  before_action :require_or_reject_plans, only: [:index]
+  before_action :prevent_plans_viewing, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
   include AdminFiltersConcern
 
@@ -84,7 +84,7 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
     end
 
-    def require_or_reject_plans # called before plans#index
+    def prevent_plans_viewing # called before plans#index
       if current_user.unassigned?
         redirect_to about_path, alert: "An admin must formally assign your role before you can view the Index of ERP Plans, but you can read about ERP here."
       elsif current_user.patient? && current_user.plans.empty? && !current_user.obsessions.empty? # The patient has no plans AND the patient has at least 1 obsession for which no plans were designed
