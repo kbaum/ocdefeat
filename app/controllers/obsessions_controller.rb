@@ -128,7 +128,9 @@ class ObsessionsController < ApplicationController
     end
 
     def require_obsessions # this method is called before obsessions#index
-      if current_user.therapist? && current_user.counselees.empty?
+      if current_user.unassigned?
+        redirect_to themes_path, alert: "An admin must formally assign your role before you can view the Obsessions Log, but you can read about common OCD themes here."
+      elsif current_user.therapist? && current_user.counselees.empty?
         redirect_to user_path(current_user), alert: "There are no obsessions for you to analyze since you currently have no patients!"
       elsif obsessions.empty? # If there are no obsessions to view (and therapist has patients)
         message =
