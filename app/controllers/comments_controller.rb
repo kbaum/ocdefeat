@@ -1,6 +1,32 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update, :destroy]
 
+  def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
+    @obsession = Obsession.find(params[:obsession_id]).decorate
+    commenter = @obsession.patient_name
+    comments = policy_scope(Comment).where(obsession: @obsession)
+    patient_obsessing = @obsession.user # stores the patient who reported the obsession
+    authorize patient_obsessing, :show_comments? # A patient can see all comments on her own obsessions. A therapist can see all comments on her own patients' obsessions.
+
+    if params[:type] == "Patient Concerns"
+      if comments.concerns.empty?
+        flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession."
+      else
+        @comments = comments.concerns
+        flash.now[:notice] = "#{commenter} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
+      end
+    elsif params[:type] == "Advice from Therapists"
+      if comments.advice.empty?
+        flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter}."
+      else
+        @comments = comments.advice
+        flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when overcoming this obsession."
+      end
+    else # No filter chosen
+      @comments = comments
+    end
+  end
+
   def create # POST request to "/obsessions/:obsession_id/comments" maps to comments#create
     obsession = Obsession.find(params[:obsession_id]) # will be decorated in obsessions#index
     comment = current_user.comments.build(comment_params)
@@ -35,32 +61,6 @@ class CommentsController < ApplicationController
     authorize @comment
     @comment.destroy
     redirect_to obsessions_path, flash: { success: "Your comment was successfully deleted. Would you like to comment on another obsession?" }
-  end
-
-  def index # Route helper #obsession_comments_path returns "/obsessions/:obsession_id/comments", which maps to comments#index
-    @obsession = Obsession.find(params[:obsession_id]).decorate
-    commenter = @obsession.patient_name
-    comments = policy_scope(Comment).where(obsession: @obsession)
-    patient_obsessing = @obsession.user # stores the patient who reported the obsession
-    authorize patient_obsessing, :show_comments? # A patient can see all comments on her own obsessions. A therapist can see all comments on her own patients' obsessions.
-
-    if params[:type] == "Patient Concerns"
-      if comments.concerns.empty?
-        flash.now[:alert] = "#{commenter} voiced no further concerns about this obsession."
-      else
-        @comments = comments.concerns
-        flash.now[:notice] = "#{commenter} voiced #{@comments.count} #{'concern'.pluralize(@comments.count)} about this obsession."
-      end
-    elsif params[:type] == "Advice from Therapists"
-      if comments.advice.empty?
-        flash.now[:alert] = "Unfortunately, no therapy pointers were given to #{commenter}."
-      else
-        @comments = comments.advice
-        flash.now[:notice]= "#{commenter} should bear #{@comments.count} therapy #{'pointer'.pluralize(@comments.count)} in mind when overcoming this obsession."
-      end
-    else # No filter chosen
-      @comments = comments
-    end
   end
 
   private
