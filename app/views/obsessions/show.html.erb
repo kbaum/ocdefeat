@@ -36,5 +36,17 @@
 <% end %>
 
 <div class="well well-sm">
-  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: new_or_invalid(@comment) } %>
+  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: @comment.decorate } %>
 </div>
+<!--
+Explanation of locals: *decorated obsession instance is needed even before render is called on obsession show view*
+The local variable obsession in _comment_form partial is either
+1). The decorated obsession set in obsessions#show passed to this obsession show view, or
+2). The decorated obsession set in the else clause of comments#create if a new comment is invalid (not saved to DB)
+and "obsessions/show" is re-rendered to present the comment form w/ validation errors
+* 1st time comment appears in obsession show view = when rendering form to create comment on obsession show page*
+*comment needs to be decorated because _comment_form uses decorator methods like #label*
+The local variable comment in _comment_form partial is either
+1). Comment.new instance for form_for to wrap around, set in obsessions#show and decorated here in render call
+2). The comment set in else clause of comments#create that is populated with errors and decorated here in render call
+-->
