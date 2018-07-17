@@ -6,7 +6,7 @@ module ApplicationHelper
     end
   end
 
-  def validation_errors_for(object = nil) # object is an AR instance or nil by default
+  def validation_errors_for(object = nil) # object is AR instance/instance of Decorator class or nil by default
     if object && object.errors.any?
       render partial: "shared/error_explanation_div", locals: { object: object }
     end
