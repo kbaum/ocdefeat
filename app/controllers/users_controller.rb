@@ -111,8 +111,6 @@ class UsersController < ApplicationController
     end
 
     def prevent_users_viewing
-      users = policy_scope(User)
-      authorize users # prevent unassigned users from viewing users index
       if current_user.admin? && users.count == 1
         redirect_to root_path, alert: "Looks like you're all alone in the OCDefeat community! There are no accounts to manage."
       elsif users.empty?
