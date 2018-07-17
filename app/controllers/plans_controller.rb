@@ -86,7 +86,7 @@ class PlansController < ApplicationController
 
     def prevent_plans_viewing # called before plans#index
       if current_user.unassigned?
-        redirect_to about_path, alert: "An admin must formally assign your role before you can view the Index of ERP Plans, but you can read about ERP here."
+        redirect_to about_path, alert: "An admin must assign your role before you can view the Index of ERP Plans, but you can read about ERP here."
       elsif current_user.patient? && current_user.plans.empty? && !current_user.obsessions.empty? # The patient has no plans AND the patient has at least 1 obsession for which no plans were designed
         first_planless_obsession = current_user.obsessions.first
         redirect_to new_obsession_plan_path(first_planless_obsession), alert: "Looks like you're obsessing and need to gain some exposure. Why not design an ERP plan for this obsession now?"
