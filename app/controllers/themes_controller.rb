@@ -1,8 +1,8 @@
 class ThemesController < ApplicationController
   before_action :set_theme, only: [:edit, :update, :destroy]
 
-  def index # @themes stores #<Draper::CollectionDecorator...> in themes index view
-    @themes = policy_scope(Theme).decorate # decorating each theme in the collection right before rendering themes index view
+  def index
+    @themes = policy_scope(Theme)
   end
 
   def new
