@@ -45,10 +45,9 @@ class CommentsController < ApplicationController
 
   def update # PUT or PATCH request to "/comments/:id" maps to comments#update due to shallow nesting
     authorize @comment # retrieved from #set_comment
-    if @comment.update_attributes(permitted_attributes(@comment))
-      @comment = @comment.decorate # decorate *after* updating comment instance in DB, right before presenting view
+    if @comment.update_attributes(permitted_attributes(@comment)) # After changes are saved in DB, this comment will be decorated in index view
       redirect_to obsession_comments_path(@comment.obsession), flash: { success: "Your comment was successfully modified!" }
-    else # the comment needs to be decorated for _comment_form
+    else # the comment needs to be decorated for _comment_form rendered in edit comment view
       @comment = @comment.decorate
       render :edit
       flash.now[:error] = "Your attempt to edit this comment was unsuccessful. Please try again."
