@@ -2,4 +2,4 @@
 
 <h1>Editing Comment</h1>
 
-<%= render partial: "comment_form", locals: { comment: @comment, obsession: @comment.obsession } %>
+<%= render partial: "comment_form", locals: { comment: @comment.decorate, obsession: @comment.obsession } %>
