@@ -2,11 +2,11 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update, :destroy]
 
   def create # POST request to "/obsessions/:obsession_id/comments" maps to comments#create
-    @obsession = Obsession.find(params[:obsession_id]).decorate # Immediately decorate b/c no changes made in DB before presenting view
+    obsession = Obsession.find(params[:obsession_id]) # will be decorated in obsessions#index
     comment = current_user.comments.build(comment_params)
     if comment.save # try saving to DB *before* presenting view, so DON'T decorate yet
-      @comment = comment.decorate # Decorate right before presenting comments index view
-      redirect_to obsession_comments_path(@obsession), flash: { success: @comment.creation_message }
+      @comment = comment.decorate # Decorate right before presenting comments index view (which needs decorated comment for flash success message)
+      redirect_to obsession_comments_path(obsession), flash: { success: @comment.creation_message }
     else # comment was invalid and not saved to the DB
       @comment = comment.decorate # @comment is populated with errors, but _comment_form needs this comment instance to be decorated for methods like #label
       render "obsessions/show" # present form with validation errors on obsession show view
