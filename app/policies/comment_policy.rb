@@ -5,6 +5,8 @@ class CommentPolicy < ApplicationPolicy
         scope.where(obsession: user.obsessions)
       elsif user.therapist?
         scope.where(obsession: user.counselees.map {|counselee| counselee.obsessions}.flatten)
+      else # if current_user.unassigned? || current_user.admin?
+        scope.none
       end
     end
   end
