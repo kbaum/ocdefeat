@@ -10,7 +10,7 @@
 
 <br>
 
-<%= render(@comments.decorate) || "No comments were found." unless @comments.nil? %>
+<%= render(@comments.decorate) || content_tag(:p, "No comments were found.") unless @comments.nil? %>
 
 <%= link_to "Go back to the obsession!", obsession_path(@obsession), class: "btn btn-default btn-sm" %>
 
