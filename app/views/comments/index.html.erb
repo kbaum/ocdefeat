@@ -12,8 +12,6 @@
 
 <%= render(@comments.decorate) || "No comments were found." unless @comments.nil? %>
 
-<br><br>
-
 <%= link_to "Go back to the obsession!", obsession_path(@obsession), class: "btn btn-default btn-sm" %>
 
 <!--
