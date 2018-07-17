@@ -26,15 +26,15 @@ class CommentsController < ApplicationController
   end
 
   def create # POST request to "/obsessions/:obsession_id/comments" maps to comments#create
-    obsession = Obsession.find(params[:obsession_id]) # will be decorated in obsessions#index
+    obsession = Obsession.find(params[:obsession_id]) # will be decorated in comments#index
     comment = current_user.comments.build(comment_params)
     if comment.save # try saving to DB *before* presenting view, so DON'T decorate yet
       @comment = comment.decorate # Decorate right before presenting comments index view (which needs decorated comment for flash success message)
       redirect_to obsession_comments_path(obsession), flash: { success: @comment.creation_message }
-    else # comment was invalid and not saved to the DB
-      @comment = comment.decorate # @comment is populated with errors, but _comment_form needs this comment instance to be decorated for methods like #label
-      @obsession = obsession.decorate
-      render "obsessions/show" # present form with validation errors on obsession show view
+    else # comment is invalid, populated with errors and not saved to the DB
+      @comment = comment # will be decorated in obsession show view in call to render _comment_form
+      @obsession = obsession.decorate # decorated obsession used throughout re-rendered obsession show view
+      render "obsessions/show" # present comment form with validation errors on obsession show view
       flash.now[:error] = "Your attempt to comment on this obsession was unsuccessful. Please try again."
     end
   end
