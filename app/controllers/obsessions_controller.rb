@@ -12,8 +12,8 @@ class ObsessionsController < ApplicationController
       if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
         if @counselees.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
-        else
-          @patient_obsessions = obsessions.by_patient(params[:patient])#.decorate # stores AR::Relation of all the selected patient's obsessions
+        else # @patient_obsessions is only set in obsessions#index if obsessions are found - never going to be nil
+          @patient_obsessions = obsessions.by_patient(params[:patient]).decorate # stores Draper::CollectionDecorator object of all the selected patient's obsessions
           flash.now[:notice] = "Patient #{@patient_obsessions.first.patient_name} has #{plural_inflection(@patient_obsessions)}!"
         end
       elsif !params[:distressed].blank? # Therapist filters obsessions by a patient's obsessions ordered from highest to lowest anxiety_rating.
