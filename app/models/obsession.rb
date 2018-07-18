@@ -24,10 +24,6 @@ class Obsession < ApplicationRecord
     where(anxiety_rating: anxiety_rating)
   end
 
-  def self.least_to_most_distressing
-    order(:anxiety_rating)
-  end
-
   def self.most_to_least_distressing
     order(anxiety_rating: :desc)
   end
