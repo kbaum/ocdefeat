@@ -65,8 +65,8 @@ class ObsessionsController < ApplicationController
       else # Therapist did not select a filter
         @patient_obsessions = obsessions.decorate # stores Draper::CollectionDecorator object of the therapist's patients' obsessions (there must be at least 1 obsession to view the obsessions index)
       end
-    elsif current_user.admin?
-      @obsessions = filter_by_date unless filter_by_date.nil?#.decorate unless filter_by_date.nil?
+    elsif current_user.admin? # There must be at least 1 obsession for admin to view the obsessions index
+      @obsessions = filter_by_date.decorate unless filter_by_date.nil? # filter_by_date = nil when no obsessions are found for the filter chosen and filter_by_date variable is not set
     end
   end
 
