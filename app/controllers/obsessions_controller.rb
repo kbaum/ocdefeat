@@ -67,7 +67,7 @@ class ObsessionsController < ApplicationController
       end
     elsif current_user.admin? # There must be at least 1 obsession for admin to view the obsessions index
       @obsessions = filter_by_date.decorate unless filter_by_date.nil? # filter_by_date = nil when no obsessions are found for the filter chosen and filter_by_date variable is not set
-    end
+    end # @obsessions = nil when it's not set when filter_by_date, which returns object, = nil
   end
 
   def new
