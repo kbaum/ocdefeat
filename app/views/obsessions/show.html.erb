@@ -7,7 +7,7 @@
 
   <br><br>
 
-  <% if policy(@obsession).create? %>
+  <% if policy(@obsession).create? %> <!-- Patient who recorded obsession can create plan for that obsession -->
     <%= link_to new_obsession_plan_path(@obsession), class: "btn btn-success btn-sm" do %>
       <%= content_tag(:span, nil, class: "glyphicon glyphicon-pencil") %> Create Plan
     <% end %>
