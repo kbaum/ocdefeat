@@ -24,7 +24,7 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "#{patient_picked.name} is not distressed, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
           first_rating = patient_picked.obsessions.first.anxiety_rating
-          if patient_picked.obsession_count == 1 # If the selected patient only has 1 obsession
+          if patient_picked.obsessions.count == 1 # If the selected patient only has 1 obsession
             @patient_obsessions = patient_picked.obsessions#.decorate
             flash.now[:notice] = "Patient #{patient_picked.name} only has one obsession rated at anxiety level #{first_rating}!"
           else # If the selected patient has more than 1 obsession
@@ -42,7 +42,7 @@ class ObsessionsController < ApplicationController
           flash.now[:alert] = "#{patient_picked.name} has time to meditate with a worry-free mind, as this patient is not obsessing about anything!"
         else # The selected patient has obsessions
           first_timeframe = patient_picked.obsessions.first.time_consumed
-          if patient_picked.obsession_count == 1 # If the selected patient only has 1 obsession
+          if patient_picked.obsessions.count == 1 # If the selected patient only has 1 obsession
             @patient_obsessions = patient_picked.obsessions#.decorate
             flash.now[:notice] = "#{patient_picked.name} only has one obsession that consumes #{first_timeframe} #{'hour'.pluralize(first_timeframe)} of the patient's time daily."
           else # If the selected patient has more than 1 obsession
