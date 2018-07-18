@@ -63,7 +63,7 @@ class ObsessionsController < ApplicationController
           flash.now[:notice] = "Patient #{patient_picked.name} has #{plural_inflection(@patient_obsessions)} for which no ERP plans were designed."
         end
       else # Therapist did not select a filter
-        @patient_obsessions = obsessions#.decorate # stores the therapist's patients' obsessions
+        @patient_obsessions = obsessions.decorate # stores Draper::CollectionDecorator object of the therapist's patients' obsessions (there must be at least 1 obsession to view the obsessions index)
       end
     elsif current_user.admin?
       @obsessions = filter_by_date unless filter_by_date.nil?#.decorate unless filter_by_date.nil?
