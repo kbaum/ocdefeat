@@ -35,8 +35,4 @@ class Obsession < ApplicationRecord
   def self.by_patient(patient)
     where(user: patient)
   end
-
-  def self.average_anxiety_rating # Find the average anxiety_rating for all obsessions
-    average(:anxiety_rating)
-  end
 end
