@@ -6,7 +6,6 @@ class ObsessionsController < ApplicationController
 
   def index
     obsessions = policy_scope(Obsession)
-    @themes = policy_scope(Theme)
     @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params) unless current_user.admin?
 
     if current_user.therapist?
