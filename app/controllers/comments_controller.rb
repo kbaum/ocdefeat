@@ -57,7 +57,7 @@ class CommentsController < ApplicationController
     authorize @comment # retrieved from set_comment
     obsession_commented_on = @comment.obsession
     @comment.destroy
-    redirect_to obsession_comments_path(obsession_commented_on), flash: { success: "Your comment was successfully deleted. Would you like to comment on another obsession?" }
+    redirect_to obsession_comments_path(obsession_commented_on), flash: { success: "Your comment was successfully deleted." }
   end
 
   private
