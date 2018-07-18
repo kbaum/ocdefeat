@@ -1,6 +1,6 @@
 class ObsessionsController < ApplicationController
   before_action :set_obsession, only: [:show, :edit, :update, :destroy]
-  before_action :set_themes, only: [:new, :edit]
+  before_action :set_themes, only: [:new, :edit, :index]
   before_action :prevent_obsessions_viewing, only: [:index]
   include AdminFiltersConcern
 
