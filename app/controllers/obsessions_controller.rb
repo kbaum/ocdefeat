@@ -152,8 +152,7 @@ class ObsessionsController < ApplicationController
         :anxiety_rating,
         :symptoms,
         :rituals,
-        :theme_id,
-        :search
+        :theme_id
       )
     end
 
