@@ -7,10 +7,8 @@ class ObsessionsController < ApplicationController
   def index
     obsessions = policy_scope(Obsession)
     @obsessions = ObsessionFinder.new(obsessions).call(filter_obsessions_params) unless current_user.admin?
-
     if current_user.therapist?
       @counselees = policy_scope(User)
-
       if !params[:patient].blank? # Therapist filters obsessions by patient -- params[:patient] is the ID of the user selected from dropdown
         if @counselees.find(params[:patient]).obsessions.empty? # If the selected patient has no obsessions
           flash.now[:alert] = "Patient #{@counselees.find(params[:patient]).name} is not obsessing!"
