@@ -19,6 +19,7 @@ class Obsession < ApplicationRecord
   validates :time_consumed, inclusion: { in: 0..24, message: "must be a valid timeframe within a 24-hour day" }
   validates :anxiety_rating, inclusion: { in: 1..10, message: "must be measured on a scale of 1-10" }
   validates :rituals, presence: true
+  validates :theme_id, presence: true, on: :create # adds field_with_errors styling to select label
 
   def self.by_anxiety_rating(anxiety_rating)
     where(anxiety_rating: anxiety_rating)
