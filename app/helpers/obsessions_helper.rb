@@ -8,7 +8,7 @@ module ObsessionsHelper
     current_user.patient? ? "Take a moment to introspect. Search your thoughts..." : "Search thoughts containing..."
   end
 
-  def display_obsessions(obsessions)
+  def display_obsessions(obsessions) # Each obsession in this collection must be an ObsessionDecorator object
     if obsessions.nil? || obsessions.empty?
       content_tag(:small, content_tag(:mark, "No obsessions were found."))
     else
@@ -20,3 +20,5 @@ module ObsessionsHelper
     end
   end
 end
+# obsessions.nil? => true if patient_obsessions is not set, or if obsessions is not set = filter_by_date.decorate when obsessions are not found for filter
+# obsessions.empty? => true from ObsessionFinder query object
