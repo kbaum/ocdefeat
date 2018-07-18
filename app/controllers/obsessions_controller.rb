@@ -59,7 +59,7 @@ class ObsessionsController < ApplicationController
         elsif patient_picked.obsessions.sans_plans.empty? # If the selected patient has obsessions, but all of these obsessions have ERP plans
           flash.now[:alert] = "Patient #{patient_picked.name} diligently designed ERP plans for every obsession."
         else # If the patient has obsessions for which no ERP plans were designed
-          @patient_obsessions = patient_picked.obsessions.sans_plans#.decorate
+          @patient_obsessions = patient_picked.obsessions.sans_plans.decorate
           flash.now[:notice] = "Patient #{patient_picked.name} has #{plural_inflection(@patient_obsessions)} for which no ERP plans were designed."
         end
       else # Therapist did not select a filter
