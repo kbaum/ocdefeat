@@ -1,7 +1,5 @@
-<%= render partial: "filter_obsessions/shared_obsession_filters", locals: { themes: themes, obsessions: obsessions } %>
-<br>
-<%= display_obsessions(obsessions) %>
-<hr>
+<%= render partial: "filter_obsessions/shared_obsession_filters", locals: { themes: themes, obsessions: obsessions.decorate } %>
+
 <div class="patient-obsessions">
   <h4>Filter Obsessions Reported by a Specific Patient</h4>
   <br>
@@ -18,4 +16,5 @@
   <% end %>
 </div>
 <br>
+
 <%= display_obsessions(patient_obsessions) %>
