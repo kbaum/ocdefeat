@@ -7,8 +7,7 @@ module AdminFiltersConcern
 
   def filter_by_date
     scoped_objects = policy_scope(controller_name.classify.constantize)
-    verb = scoped_objects.first.class == Obsession ? "reported" : "designed"
-
+    verb = scoped_objects.first.class == Obsession ? "recorded" : "designed"
     if current_user.admin?
       if !params[:date].blank? # Admin filters obsessions/plans by date created
         if params[:date] == "Today"
@@ -27,7 +26,7 @@ module AdminFiltersConcern
           end
         end
       else # Admin did not choose a filter
-        objects = scoped_objects # stores AR::Relation of all patients' obsessions/plans
+        objects = scoped_objects # stores AR::Relation of all patients' obsessions/plans (at least 1 to view obsessions/plans index)
         message =
           if objects.first.class == Obsession
             "OCD spikes are sparsely detailed and displayed anonymously to preserve patient privacy."
@@ -36,7 +35,7 @@ module AdminFiltersConcern
           end
         flash.now[:notice] = "#{message}"
       end
-      objects
+      objects # AR::Relation or nil if obsessions/plans are not found for the specific filter (Today/Before Today) and object is not set
     end
   end
 end
