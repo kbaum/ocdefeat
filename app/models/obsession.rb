@@ -36,14 +36,6 @@ class Obsession < ApplicationRecord
     where(user: patient)
   end
 
-  def self.search_thoughts(search)
-    if search
-      where('intrusive_thought LIKE ?', "%#{search}%")
-    else
-      all
-    end
-  end
-
   def self.average_anxiety_rating # Find the average anxiety_rating for all obsessions
     average(:anxiety_rating)
   end
