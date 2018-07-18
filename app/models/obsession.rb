@@ -28,10 +28,6 @@ class Obsession < ApplicationRecord
     order(anxiety_rating: :desc)
   end
 
-  def self.least_to_most_time_consuming
-    order(:time_consumed)
-  end
-
   def self.most_to_least_time_consuming
     order(time_consumed: :desc)
   end
