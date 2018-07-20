@@ -14,10 +14,10 @@
     <%= render partial: "plans/finish_plan_form", locals: { plan: @plan } if policy(@plan).create? %>
   </div>
   <div class="panel-body">
-    <%= render partial: "steps/step_div", collection: @plan_steps, as: :step %>
+    <%= render partial: "steps/step_div", collection: @plan.steps, as: :step %>
   </div>
 </div>
-
+<!-- Due to decorates_association :steps in PlanDecorator, when PlanDecorator decorates plan (@plan is PlanDecorator object), it uses StepDecorator to decorate each step that belongs to the plan -->
 <% if !@plan.finished? && policy(@step).create? %>
   <div class="well well-lg">
     <h3>Add a New Step to "<%= @plan.title %>"</h3>
