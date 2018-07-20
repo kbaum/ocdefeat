@@ -46,7 +46,7 @@ class PlansController < ApplicationController
   end
 
   def update # PATCH or PUT request to "/plans/:id" maps to plans#update due to shallow nesting
-    authorize @plan # @plan was retrieved from before_action
+    authorize @plan
     if @plan.update_attributes(permitted_attributes(@plan))
       message =
         if @plan.finished? # If the plan is updated from unfinished to finished (boolean value)
@@ -54,7 +54,6 @@ class PlansController < ApplicationController
         else
           "An overview of this ERP plan was successfully updated!"
         end
-      @plan = @plan.decorate # store decorated plan after updating changes in DB, right before presenting show pg
       redirect_to plan_path(@plan), flash: { success: message }
     else # If user did NOT try to update plan w/ blank title/goal, since flooded is always T/F, the plan must be invalid b/c user tried to mark plan w/ no steps/at least one incomplete step as finished
       @plan = @plan.decorate if !@plan.title.blank? && !@plan.goal.blank? # Only call #decorate if the user tried to mark plan as finished and it's invalid
