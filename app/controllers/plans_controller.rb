@@ -55,8 +55,8 @@ class PlansController < ApplicationController
           "An overview of this ERP plan was successfully updated!"
         end
       redirect_to plan_path(@plan), flash: { success: message }
-    else # If user did NOT try to update plan w/ blank title/goal, since flooded is always T/F, the plan must be invalid b/c user tried to mark plan w/ no steps/at least one incomplete step as finished
-      @plan = @plan.decorate if !@plan.title.blank? && !@plan.goal.blank? # Only call #decorate if the user tried to mark plan as finished and it's invalid
+    else # If user did NOT try to update plan w/ blank title/goal or a flooded attribute value that does NOT evaluate to T/F, the plan must be invalid b/c user tried to mark plan w/o steps/at least one incomplete step as finished
+      @plan = @plan.decorate if !@plan.title.blank? && !@plan.goal.blank? && @plan.flooded.in?([true, false])
       flash.now[:error] = "Your attempt to edit this ERP plan was unsuccessful. Please try again."
       render :edit
     end
