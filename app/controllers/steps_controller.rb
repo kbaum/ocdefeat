@@ -4,7 +4,7 @@ class StepsController < ApplicationController
   before_action :set_step_and_parent_plan, only: [:edit, :update, :destroy]
 
   def create # POST request to "/plans/:plan_id/steps" maps to steps#create
-    @step = Step.new(step_params) # Step automatically belongs to plan due to nested resource form in _step partial
+    @step = Step.new(step_params) # Step automatically belongs to plan due to nested resource form in _step partial (plan_id is mass assigned due to hidden_field)
     authorize @step
     if @step.save
       redirect_to plan_path(@step.plan), flash: { success: "A new step has been added to this ERP plan!" }
