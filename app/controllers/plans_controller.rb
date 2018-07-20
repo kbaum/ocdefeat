@@ -27,10 +27,8 @@ class PlansController < ApplicationController
     authorize @plan
 
     if @plan.save
-      @plan = plan.decorate # b/c I call decorator methods #show_strategy and #last_modified in plan show view
       redirect_to plan_path(@plan), flash: { success: "You successfully created the ERP plan entitled \"#{@plan.title}.\"" }
     else
-      @plan = plan
       @obsession = obsession.decorate # Need ObsessionDecorator object b/c I call #hypotheticalize when rerendering new plan form
       flash.now[:error] = "Your attempt to create a new ERP plan was unsuccessful. Please try again."
       render :new
