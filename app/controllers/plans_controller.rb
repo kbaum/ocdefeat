@@ -36,9 +36,8 @@ class PlansController < ApplicationController
   end
 
   def show
-    plan = Plan.find(params[:id]) # due to shallow nesting in routing file
-    authorize plan # A patient can view her own plans' show pages. A therapist can view her patients' plans' show pages.
-    @plan = plan.decorate # set @plan = PlanDecorator object right before rendering plan show view
+    authorize @plan # A patient can view her own plans' show pages. A therapist can view her patients' plans' show pages.
+    @plan = @plan.decorate # resassign @plan to PlanDecorator object right before rendering plan show view
     @step = Step.new # define instance for form_with to wrap around in nested resource form to create a new step on plan show page
   end
 
