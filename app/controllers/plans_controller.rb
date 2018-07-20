@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
+  before_action :prepare_plan, only: [:edit, :update, :destroy]
   before_action :prevent_plans_viewing, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
   include AdminFiltersConcern
@@ -36,10 +36,9 @@ class PlansController < ApplicationController
   end
 
   def show
-    authorize @plan # make sure the 'current_user' can view the plan show page
+    authorize @plan # A patient can view her own plans' show pages. A therapist can view her patients' plans' show pages.
     @plan_steps = @plan.steps.decorate # decorate each step instance that belongs to @plan instance
-    @plan = @plan.decorate # set @plan = decorated plan right before rendering plan show view
-    @step = Step.new # define instance for form_for to wrap around in nested resource form to create a new step on plan show page
+    @step = Step.new # define instance for form_with to wrap around in nested resource form to create a new step on plan show page
   end
 
   def edit
