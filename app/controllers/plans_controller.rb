@@ -1,7 +1,7 @@
 class PlansController < ApplicationController
   before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :prevent_plans_viewing, only: [:index]
-  before_action :preserve_plan, only: [:edit, :update]
+  before_action :preserve_finished_plan, only: [:edit, :update]
   include AdminFiltersConcern
 
   def index
@@ -62,14 +62,14 @@ class PlansController < ApplicationController
     end
   end
 
-  def destroy  # DELETE request to "/plans/:id" maps to plans#destroy
+  def destroy # DELETE request to "/plans/:id" maps to plans#destroy
     authorize @plan
     @plan.destroy
     redirect_to plans_path, flash: { success: "You successfully deleted an ERP plan!" }
   end
 
   private
-    def preserve_plan
+    def preserve_finished_plan
       plan = Plan.find(params[:id])
       if plan.finished?
         redirect_to plan_path(plan), alert: "You already accomplished and archived this ERP plan!"
