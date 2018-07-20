@@ -15,6 +15,7 @@ class Plan < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true
   validates :finished, finished: true, on: :update
+  validates :flooded, inclusion: { in: [true, false] }
 
   def self.with_incomplete_step # Returns AR::Relation of plans with steps where at least 1 step in each plan is incomplete
     with_steps.merge(Step.incomplete)
