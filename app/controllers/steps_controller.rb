@@ -41,7 +41,8 @@ class StepsController < ApplicationController
     redirect_to plan_path(@plan), flash: { success: "A step was successfully deleted from this ERP plan!" }
   end
 
-  private # Creating a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
+  private
+    # Creating a new step on the plan show page - POST request to "/plans/:plan_id/steps" maps to steps#create
     def prevent_changes_if_plan_performed # Editing/updating/destroying a step - Step.find(params[:id])
       step = action_name == "create" ? Plan.find(params[:plan_id]).steps.build : Step.find(params[:id])
       redirect_to plan_path(step.plan), alert: "The steps that comprise an ERP plan cannot be changed once that plan is finished." if step.plan.finished?
@@ -66,7 +67,6 @@ class StepsController < ApplicationController
         :completed
       )
     end
-
 end
 # If steps#update is triggered, I know that the step is incomplete because a completed step cannot be updated due to #check_completion
 # and I know that the plan to which the step belongs is not finished due to #prevent_changes_if_plan_performed
