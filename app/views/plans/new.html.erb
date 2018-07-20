@@ -1,9 +1,9 @@
 <div class="well well-lg">
-  <h3>Create an ERP Plan <small><em>...after reading some <%= link_to "helpful hints", about_path %>!</em></small></h3>
+  <h3>Create an ERP Plan</h3>
 
   <h4>Develop an exposure plan tailored to your obsession:</h4>
 
   <p><em>"<%= @obsession.hypotheticalize %>"</em></p>
-  
+
   <%= render partial: "plan", locals: { obsession: @obsession, plan: @plan } %>
 </div>
