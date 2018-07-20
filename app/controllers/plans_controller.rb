@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :prepare_plan, only: [:edit, :update, :destroy]
+  before_action :prepare_plan, only: [:show, :edit, :update, :destroy]
   before_action :prevent_plans_viewing, only: [:index]
   before_action :preserve_plan, only: [:edit, :update]
   include AdminFiltersConcern
