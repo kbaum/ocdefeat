@@ -69,11 +69,9 @@ class PlansController < ApplicationController
   end
 
   private
-    def preserve_finished_plan
+    def preserve_finished_plan # displays alert if the patient tries to navigate to edit page of a finished plan, or if the patient tries to uncheck the checkbox of a finished plan on the plan show page
       plan = Plan.find(params[:id])
-      if plan.finished?
-        redirect_to plan_path(plan), alert: "You already accomplished and archived this ERP plan!"
-      end
+      redirect_to plan_path(plan), alert: "You already accomplished and archived this ERP plan!" if plan.finished?
     end
 
     def prepare_plan
