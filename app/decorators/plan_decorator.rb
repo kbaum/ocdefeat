@@ -1,4 +1,6 @@
 class PlanDecorator < ApplicationDecorator
+  decorates_association :steps
+  # A plan has_many steps. When PlanDecorator decorates a plan (the primary model), it will also use StepDecorator to decorate the associated steps.
   def present_progress
     if finished?
       "Accomplished! (Fully implemented and marked as finished)"
