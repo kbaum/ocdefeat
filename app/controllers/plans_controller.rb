@@ -15,10 +15,10 @@ class PlansController < ApplicationController
     @plans = filter_by_date.decorate unless filter_by_date.nil? || !current_user.admin?
   end
 
-  def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new"
-    @obsession = Obsession.find(params[:obsession_id]).decorate # @obsession is the parent. The form to create a new plan for an obsession is found at: "/obsessions/:obsession_id/plans/new"
-    @plan = Plan.new # instance for form_for to wrap around
-    authorize @plan
+  def new # Route helper #new_obsession_plan_path(obsession) returns GET "/obsessions/:obsession_id/plans/new" = where form is presented to create a new plan for an obsession
+    @obsession = Obsession.find(params[:obsession_id]).decorate # @obsession = ObsessionDecorator object so I can call @obsession.hypotheticalize in app/views/plans/new.html.erb
+    @plan = Plan.new # instance for form_with to wrap around
+    authorize @plan # a patient (user w/ role 1) can create a plan overview
   end
 
   def create # When the form to create a new plan is submitted, form data is sent via POST request to "/obsessions/:obsession_id/plans"
