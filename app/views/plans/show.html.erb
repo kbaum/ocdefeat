@@ -21,7 +21,6 @@
 <% if !@plan.finished? && policy(@step).create? %>
   <div class="well well-lg">
     <h3>Add a New Step to "<%= @plan.title %>"</h3>
-    <br>
     <%= render partial: "steps/step", locals: { plan: @plan, step: @step } %>
   </div>
 <% end %>
