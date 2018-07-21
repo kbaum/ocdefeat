@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :reset_role_requested, only: [:update]
   before_action :prevent_users_viewing, only: [:index]
+  before_action :confirm_current_user_counselor_with_counselees, only: [:symptomatic]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the current user's role and the filtered objects they're permitted to see)
     users = policy_scope(User)
