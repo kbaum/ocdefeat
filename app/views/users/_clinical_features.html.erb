@@ -1,0 +1,14 @@
+<div class="well well-lg">
+  <p><strong>Physical Symptoms Reported by <%= link_to(patient.name, user_path(patient)) %> for Each Obsession Recorded</strong></p>
+  <br>
+  <ul> <!-- decorate each obsession in the collection of obsessions belonging to the patient -->
+    <% patient.obsessions.decorate.each do |obsession| %>
+      <li>
+        The anxiety elicited by the intrusive thought <em class="spike">"<%= obsession.hypotheticalize %>"</em>
+        manifests physically as:
+        <p><%= obsession.symptoms %></p>
+        <br>
+      </li>
+    <% end %>
+  </ul>
+</div>
