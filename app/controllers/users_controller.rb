@@ -95,9 +95,10 @@ class UsersController < ApplicationController
   end
 
   def symptomatic # implicitly renders app/views/users/symptomatic.html.erb
+    authorize current_user
     @your_symptomatic_patients = User.symptomatic.where(counselor: current_user)
   end
-  # before_action :confirm_current_user_counselor_with_counselees ensures that: current_user.therapist? && !current_user.counselees.empty?
+  # #symptomatic? in UserPolicy ensures that: current_user.therapist? && !current_user.counselees.empty?
   private
 
     def therapist_filters_patients_params
