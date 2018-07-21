@@ -96,6 +96,10 @@ class UsersController < ApplicationController
 
   private
 
+  def confirm_current_user_counselor_with_counselees
+    redirect_to user_path(current_user), alert: "To preserve doctor-patient confidentiality, only therapists who are assigned to patients can evaluate the clinical presentation of OCD in those patients." unless current_user.therapist? && !current_user.counselees.empty?
+  end
+
     def therapist_filters_patients_params
       params.permit(
         :severity,
