@@ -59,6 +59,10 @@ class UserPolicy < ApplicationPolicy
     record.counselor == user || oneself
   end
 
+  def symptomatic?
+    user.therapist? && !user.counselees.empty?
+  end
+
   private
 
     def oneself # the user logged in is the selfsame user (record) whose profile is being viewed
