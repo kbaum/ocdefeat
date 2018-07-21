@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :reset_role_requested, only: [:update]
   before_action :prevent_users_viewing, only: [:index]
-  before_action :confirm_current_user_counselor_with_counselees, only: [:symptomatic]
 
   def index # implicitly renders app/views/users/index.html.erb (where #filter method will be called to determine what the users index looks like depending on the current user's role and the filtered objects they're permitted to see)
     users = policy_scope(User)
@@ -100,10 +99,6 @@ class UsersController < ApplicationController
   end
   # before_action :confirm_current_user_counselor_with_counselees ensures that: current_user.therapist? && !current_user.counselees.empty?
   private
-
-    def confirm_current_user_counselor_with_counselees
-      redirect_to user_path(current_user), alert: "To preserve doctor-patient confidentiality, only therapists who are assigned to patients can evaluate the clinical presentation of OCD in those patients." unless current_user.therapist? && !current_user.counselees.empty?
-    end
 
     def therapist_filters_patients_params
       params.permit(
