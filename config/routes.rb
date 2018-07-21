@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/auth/twitter/callback' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
+  get '/users/symptomatic' => 'users#symptomatic'
 
   resources :users, except: :new
   resources :plans, only: :index
