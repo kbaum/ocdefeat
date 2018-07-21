@@ -8,6 +8,7 @@ en:
       edit?: "You cannot edit another user's account information!"
       destroy?: "As an admin, you cannot delete your own account!"
       show_comments?: "Access denied! You cannot read comments about that patient's obsessions!"
+      symptomatic?: "Access denied! Only therapists who are assigned to patients can observe the clinical presentation of OCD in those patients."
     obsession_policy:
       index?: "Access denied! An admin must formally assign your role before you can view the Obsessions Log."
       new?: "Access denied! Only patients are authorized to report new obsessions."
