@@ -14,7 +14,7 @@ During the registration process, prospective users request a role in the OCDefea
 # Contributors' Guide
 1. Please fork and clone this repository.
 2. Run bundle install (or bundle) to install/update gems
-3. Make any changes you see fit, such as the addition of a new feature or a big fix.
+3. Make any changes you see fit, such as the addition of a new feature or a bug fix.
 4. Concisely and clearly document any changes you make with a descriptive commit message!
 5. Send a pull request.
 Bug reports and pull requests are welcome on GitHub at https://github.com/Jenna424/ocdefeat. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
