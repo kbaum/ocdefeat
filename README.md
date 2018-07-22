@@ -19,7 +19,7 @@ Contributors' Guide:
 5). Send a pull request.
 Bug reports and pull requests are welcome on GitHub at https://github.com/Jenna424/ocdefeat. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
-License:
+License
 
 This project has been licensed under the MIT open source license.
 
