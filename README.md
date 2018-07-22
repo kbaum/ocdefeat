@@ -22,7 +22,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Jenna4
 # License
 
 This project has been licensed under the MIT open source license.
-[Read the LICENSE.md file in this repository](LICENSE)
+[Read the LICENSE.md file in this repository.](LICENSE)
 
 MIT License
 
