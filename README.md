@@ -3,7 +3,7 @@ OCDefeat is a Ruby on Rails application that enables patients and mental health 
 
 During the registration process, prospective users request a role in the OCDefeat community. After their roles have been formally assigned by an admin, newly-minted OCDefeat patients can record their obsessions, voice their concerns about a particular obsession and establish personal goals for themselves when selecting a treatment approach and structuring ERP plans. Therapists, who are assigned a patient caseload by the admin, can add OCD themes in which to classify their patients' obsessions, filter obsessions, provide advice about overcoming obsessions and facilitate the design of treatment plans by contributing, editing or deleting steps in each plan. OCDefeat administrators have the ability to assign roles and manage users accounts.
 
-Installation Guide:
+# Installation Guide
 1). Fork and clone this repository
 2). Install all gem dependencies by running bundle install (or bundle)
 3). Run migrations with the command rake db:migrate to set up the database
@@ -11,7 +11,7 @@ Installation Guide:
 4). Run command rails s to start up your application's local server
 5). Navigate to http://localhost:3000/ to start using OCDefeat!
 
-Contributors' Guide:
+# Contributors' Guide
 1). Please fork and clone this repository.
 2). Run bundle install (or bundle) to install/update gems
 3). Make any changes you see fit, such as the addition of a new feature or a big fix.
