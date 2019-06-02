@@ -1,0 +1,72 @@
+<% entitle_page "Patient Census" %>
+
+<h2>Patient Census</h2>
+
+<%= present_patient_census %>
+
+<br>
+
+<h4>Filter Your Patients by...</h4>
+
+<br>
+
+<%= form_tag users_path, method: "get" do %>
+  <%= select_tag "severity", options_for_select(["Mild", "Moderate", "Severe", "Extreme"]), prompt: "OCD Severity" %>
+  <br><br>
+  <%= select_tag "variant", options_for_select(["Traditional", "Purely Obsessional", "Both"]), prompt: "OCD Variant" %>
+  <br><br>
+  <%= select_tag "theme_fixation", options_from_collection_for_select(themes, "id", "name"), prompt: "Fixation on OCD Theme" %>
+  <br><br>
+  <%= select_tag "treatment_undergone", options_from_collection_for_select(treatments, "id", "treatment_type"), prompt: "Treatment Undergone" %>
+  <br><br>
+  <%= select_tag "recent_ruminators", options_for_select(["Patients who reported new obsessions yesterday", "Patients who reported new obsessions today"]), prompt: "Recent Ruminators" %>
+  <br><br>
+  <%= submit_tag "Filter Patients" %>
+<% end %>
+
+<br>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Patient Name</th>
+      <th>Severity</th>
+      <th>Variant</th>
+      <th>Clinical Presentation</th>
+      <th>Obsession Count</th>
+      <th>ERP Plan Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "users/patient_chart_row", collection: filtered_users.decorate, as: :user %>
+  </tbody>
+</table>
+
+<div class="well well-lg">
+  <h4><em>Clinical Presentation of OCD in Patients</em></h4> <!-- The therapist's symptomatic/asymptomatic patients -->
+  <%= summarize_symptoms %>
+  <br><br>
+  <label>Physically Symptomatic Patients</label>:
+  <%= present_patients(symptomatic_patients) %>
+  <label>Asymptomatic Patients</label>
+  <br><br>
+  <small><em>~who are not obsessing:</em></small>
+  <%= present_patients(asymptomatic_nonobsessive_patients) %>
+  <small><em>~whose obsessions do not manifest physically:</em></small>
+  <%= present_patients(asymptomatic_obsessive_patients) %>
+</div>
+
+<div class="well well-lg">
+  <h4><em>Patients' Extent of Exposure to Triggers</em></h4>
+  <% if current_user.counselees.all? {|counselee| counselee.obsessions.empty?} %> <!-- If none of the therapist's patients are obsessing about anything at all -->
+    <small>None of your patients is obsessing!</small>
+  <% else %>
+    <br>
+    <label>Patients with obsession that lacks an ERP plan:</label> <!-- Therapist's patients who have at least 1 obsession for which no ERP plans were designed -->
+    <%= present_patients(patients_with_planless_obsession) %>
+    <label>Patients preparing or performing plans:</label> <!-- Therapist filters their patients by those with unfinished plans -->
+    <%= present_patients(patients_planning_or_practicing_erp) %>
+    <label>Patients who finished an ERP plan:</label> <!-- Therapist filters their patients by those who designed at least 1 plan that is marked as finished -->
+    <%= present_patients(patients_with_finished_plan) %>
+  <% end %>
+</div>

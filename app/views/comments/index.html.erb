@@ -1,0 +1,25 @@
+<% entitle_page "Read Comments" %>
+
+<h4>Comments on the Obsession:</h4>
+
+<small><em class="spike">"<%= @obsession.hypotheticalize %>"</em></small>
+
+<br><br>
+
+<%= render partial: "filter_comments", locals: { obsession: @obsession } unless @obsession.comments.empty? %>
+
+<br>
+
+<%= render(@comments.decorate) || content_tag(:p, "No comments were found.") unless @comments.nil? %>
+
+<%= link_to "Go back to the obsession!", obsession_path(@obsession), class: "btn btn-default btn-sm" %>
+
+<!--
+If comments are found:
+Decorate each comment in @comments collection right before rendering _comment.html.erb for each comment.
+If comments.empty? returns true when user clicks "Read Comments" on obsession show page,
+the message "No comments were found." is displayed.
+However, if the user filters comments by concerns/advice on comments index page,
+and there are no concerns/advice, @comments is not assigned, so @comments = nil.
+That's why I specify unless @comments.nil? in render call.
+-->

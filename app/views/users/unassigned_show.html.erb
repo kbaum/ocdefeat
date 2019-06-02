@@ -1,0 +1,23 @@
+<h2>Thank you for joining the OCDefeat community!</h2>
+
+<h5><em>Your registration information has been received, and your role assignment is pending.</em></h5>
+
+<br>
+
+<p><strong>Name:</strong> <%= @user.name %></p>
+<p><strong>Role Requested:</strong> <%= @user.role_requested %></p>
+
+<br>
+
+<% if @user.provider == "twitter" && @user.role_requested == "Patient" %>
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Thanks for logging in with Twitter!</h4>
+    <p>You automatically registered as a <strong>patient</strong> with <strong>mild</strong>, <strong>traditional</strong> OCD.</p>
+    <hr>
+    <p class="mb-0">Feel free to request a different role and/or edit the details of your diagnosis <%= link_to "here", edit_user_path(@user) %>!</p>
+  </div>
+<% end %>
+
+<br>
+
+<%= render partial: "manage_account", locals: { user: @user } %>

@@ -1,33 +1,26 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  pundit:
+    default: "You requested a page that you cannot access."
+    user_policy:
+      index?: "Access denied! An admin must formally assign your role before you can view the Index of OCDefeat Users."
+      new?: "Access denied! You cannot view the registration form since you already registered for OCDefeat!"
+      show?: "Access denied to prevent a breach of doctor-patient confidentiality!"
+      edit?: "You cannot edit another user's account information!"
+      destroy?: "As an admin, you cannot delete your own account!"
+      show_comments?: "Access denied! You cannot read comments about that patient's obsessions!"
+      symptomatic?: "Access denied! Only therapists who are assigned to patients can observe the clinical presentation of OCD in those patients."
+    obsession_policy:
+      index?: "Access denied! An admin must formally assign your role before you can view the Obsessions Log."
+      new?: "Access denied! Only patients are authorized to report new obsessions."
+      show?: "Access denied! The details of obsessions will not be disclosed to preserve doctor-patient confidentiality!"
+      edit?: "Access denied! An obsession is only editable by the patient who reported it."
+    plan_policy:
+      index?: "Access denied! An admin must formally assign your role before you can view the Index of ERP Plans."
+      new?: "Access denied! Only the patient who reported an obsession can design an ERP plan that targets this obsession!"
+      show?: "Access denied! Only the patient and therapist who developed an ERP plan can view its exposure exercises!"
+      edit?: "Access denied! You are not authorized to edit the overview of this ERP plan."
+    comment_policy:
+      edit?: "Access denied! You cannot edit a comment that you have not written!"
+    theme_policy:
+      new?: "Access denied! Only trained mental health professionals are permitted to create new OCD themes in which to classify patients' obsessions!"
+      destroy?: "Access denied! You cannot delete an OCD theme that another therapist contributed to our index page!"

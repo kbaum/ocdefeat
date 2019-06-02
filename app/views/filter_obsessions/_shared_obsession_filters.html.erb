@@ -1,0 +1,24 @@
+<div class="obsessions">
+  <%= obsessions_header %>
+  <br>
+  <%= form_tag obsessions_path, method: "get" do %>
+    <%= label_tag :search_thoughts, "Intrusive thoughts that contain" %>:
+    <%= text_field_tag :search_thoughts, params[:search_thoughts], placeholder: placefill_search, class: "form-control" %>
+    <br>
+    <%= label_tag :min_time_consumed, "Hours consumed daily, in the range" %>:
+    <%= number_field_tag :min_time_consumed, nil, in: 0..24 %> -
+    <%= number_field_tag :max_time_consumed, nil, in: 0..24 %>
+    <br><br>
+    <%= label_tag :min_anxiety_rating, "Anxiety rating, within the range" %>:
+    <%= number_field_tag :min_anxiety_rating, nil, in: 1..10 %> -
+    <%= number_field_tag :max_anxiety_rating, nil, in: 1..10 %>
+    <br><br>
+    <%= render partial: "shared/approach_and_theme_filters", locals: { themes: themes } %>
+    <br><br>
+    <%= submit_tag "Filter Obsessions", class: "btn btn-default btn-sm" %>
+  <% end %>
+</div>
+
+<br>
+<%= display_obsessions(obsessions) %>
+<hr>

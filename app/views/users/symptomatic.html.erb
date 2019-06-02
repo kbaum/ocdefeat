@@ -1,0 +1,7 @@
+<h3>Observe Clinical Features of OCD in Patients</h3>
+
+<h4><em>Your Caseload of Symptomatic Patients: <%= @your_symptomatic_patients.count %></em></h4>
+
+<br>
+
+<%= render partial: "clinical_features", collection: @your_symptomatic_patients, as: :patient %>

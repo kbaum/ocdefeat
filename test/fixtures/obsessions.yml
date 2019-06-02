@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  intrusive_thought: MyString
+  triggers: MyString
+  anxiety_rating: 1
+  symptoms: MyString
+  rituals: MyString
+  user_id: 1
+  time_consumed: 1
+
+two:
+  intrusive_thought: MyString
+  triggers: MyString
+  anxiety_rating: 1
+  symptoms: MyString
+  rituals: MyString
+  user_id: 1
+  time_consumed: 1

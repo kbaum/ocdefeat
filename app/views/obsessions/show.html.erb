@@ -1,0 +1,52 @@
+<% entitle_page "Obsession" %>
+
+<div class="well well-sm">
+  <h4>OCD Spike: <small class="spike">"<%= @obsession.hypotheticalize %>"</small></h4>
+
+  <small><em>—reported by <%= @obsession.patient_name %> on <%= @obsession.created_on %></em></small>
+
+  <br><br>
+
+  <% if policy(@obsession).create? %> <!-- Patient who recorded obsession can create plan for that obsession -->
+    <%= link_to new_obsession_plan_path(@obsession), class: "btn btn-success btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-pencil") %> Create Plan
+    <% end %>
+  <% end %>
+
+  <%= @obsession.edit_link if policy(@obsession).update? %>
+
+  <%= @obsession.delete_link if policy(@obsession).destroy? %>
+
+  <% if policy(@obsession).show? %>
+    <%= link_to obsession_comments_path(@obsession), class: "btn btn-default btn-sm" do %>
+      <%= content_tag(:span, nil, class: "glyphicon glyphicon-book") %> Read Comments
+    <% end %>
+  <% end %>
+</div>
+
+<%= render partial: "obsessions/obsession_data", locals: { obsession: @obsession } %>
+<%= render partial: "obsessions/self_help_ul", locals: { obsession: @obsession } %>
+
+<% if current_user.therapist? && !@obsession.comments.concerns.empty? %>
+  <br>
+  <p><strong>Most Recent Concern to Address</strong>: <em class="spike">"<%= @obsession.comments.concerns.most_recently_updated.content %>"</em></p>
+<% elsif current_user.patient? && !@obsession.comments.advice.empty? %>
+  <br>
+  <p><strong>Most Recent Advice to Heed</strong>: <em class="advice">"<%= @obsession.comments.advice.most_recently_updated.content %>"</em></p>
+<% end %>
+
+<div class="well well-sm">
+  <%= render partial: "comments/comment_form", locals: { obsession: @obsession, comment: @comment.decorate } %>
+</div>
+<!--
+Explanation of locals: *decorated obsession instance is needed even before render is called on obsession show view*
+The local variable obsession in _comment_form partial is either
+1). The decorated obsession set in obsessions#show passed to this obsession show view, or
+2). The decorated obsession set in the else clause of comments#create if a new comment is invalid (not saved to DB)
+and "obsessions/show" is re-rendered to present the comment form w/ validation errors
+* 1st time comment appears in obsession show view = when rendering form to create comment on obsession show page*
+*comment needs to be decorated because _comment_form uses decorator methods like #label*
+The local variable comment in _comment_form partial is either
+1). Comment.new instance for form_for to wrap around, set in obsessions#show and decorated here in render call
+2). The comment set in else clause of comments#create that is populated with errors and decorated here in render call
+-->

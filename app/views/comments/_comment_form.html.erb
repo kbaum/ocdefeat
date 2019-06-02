@@ -1,0 +1,14 @@
+<%= form_with(model: comment, local: true, url: (comment.new_record? ? [obsession, comment]: comment)) do |comment_builder| %>
+  <%= validation_errors_for(comment) %>
+  <br>
+  <div class="field">
+    <%= comment_builder.label :content, comment.label %><br>
+    <%= comment_builder.text_area :content, placeholder: comment.placefill, class: "form-control" %>
+    <small class="form-text text-muted">Please refrain from <%= comment.reassurance_gerunds %> reassurance, as this exacerbates OCD!</small>
+  </div>
+  <br>
+  <div class="actions">
+    <%= comment_builder.hidden_field :obsession_id, value: obsession.id %>
+    <%= comment_builder.submit comment.submit_btn_text, class: "btn btn-default btn-sm" %>
+  </div>
+<% end %>

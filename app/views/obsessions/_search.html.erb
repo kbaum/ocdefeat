@@ -1,0 +1,7 @@
+<div class="well well-lg">
+  <%= form_tag obsessions_path, method: :get do %>
+    <%= label_tag :search, label_search %>:
+    <%= text_field_tag :search, params[:search], placeholder: placefill_search, class: "form-control" %><br>
+    <%= submit_tag 'Search Thoughts', name: nil, class: "btn btn-default btn-sm", role: "button" %>
+  <% end %>
+</div>

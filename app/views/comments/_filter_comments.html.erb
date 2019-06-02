@@ -1,0 +1,5 @@
+<%= form_tag(obsession_comments_path(obsession), method: "get") do %>
+  <%= label_tag "type", "Filter Comments by" %>:
+  <%= select_tag "type", options_for_select(["Patient Concerns", "Advice from Therapists"]), prompt: "Type" %>
+  <%= submit_tag "Filter Comments" %>
+<% end %>

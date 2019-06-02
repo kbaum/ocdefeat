@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  instructions: MyText
+  duration: 1
+  discomfort_degree: 1
+  plan_id: 1
+  status: 1
+
+two:
+  instructions: MyText
+  duration: 1
+  discomfort_degree: 1
+  plan_id: 1
+  status: 1

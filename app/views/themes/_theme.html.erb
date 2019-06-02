@@ -1,0 +1,18 @@
+<div class="well well-lg">
+  <h4><mark><%= theme.name %></mark></h4>
+  <small><em> — Added by <%= theme.contributor_name %></em></small>
+  <br>
+  <small><em> — <%= theme.last_modified %></em></small>
+
+  <br><br>
+
+  <%= content_tag(:p, theme.definition) unless theme.definition.blank? %>
+
+  <p><em><%= theme.popularity %></em></p>
+
+  <% if policy(theme).edit? %> <!-- Only the therapist who created the theme can edit and delete it -->
+    <br>
+    <%= theme.edit_link %>
+    <%= theme.delete_link %>
+  <% end %>
+</div>

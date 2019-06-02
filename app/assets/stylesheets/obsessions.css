@@ -1,0 +1,25 @@
+.spike {
+  color: red;
+}
+
+.advice {
+  color: #5cb85c;
+}
+
+.obsessions {
+  background-color: #f1f8ff;
+  padding: 10px;
+  border: 5px solid #dde7f2;
+}
+
+.patient-obsessions {
+  background-color: #ffeef0;
+  padding: 10px;
+  border: 5px solid #f3e3e5;
+}
+
+.techniques {
+  background-color: #eae1f9;
+  padding: 10px;
+  border: 5px solid #d8cddc;
+}

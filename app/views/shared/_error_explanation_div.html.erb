@@ -1,0 +1,14 @@
+<%= content_tag(:div, id: "error_explanation") do %>
+  <br>
+  
+  <h4>
+    <%= pluralize(object.errors.count, "error") %> prevented this
+    <%= object.model_name.human.downcase %> from being saved:
+  </h4>
+
+  <%= content_tag(:ul) do %>
+    <% object.errors.full_messages.each do |message| %>
+      <%= content_tag(:li, message) %>
+    <% end %>
+  <% end %>
+<% end %>

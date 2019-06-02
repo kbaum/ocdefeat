@@ -1,0 +1,44 @@
+<% entitle_page "Patient Profile" %>
+
+<h2>Patient Profile</h2>
+
+<%= @user.show_severity %>
+
+<br>
+
+<div class="well well-sm">
+  <h4><em>Medical History</em></h4>
+
+  <br>
+
+  <%= @user.vary_variant %>
+
+  <% unless @user.treatments.empty? %>
+    <br><br>
+    <p><strong>Previous Treatment:</strong></p>
+    <ul>
+      <% @user.treatments.each do |treatment| %>
+        <li><%= treatment.treatment_type %> - <%= UserTreatment.find_by(user: @user, treatment: treatment).duration %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<div class="well well-sm">
+  <h4><em>OCDefeat Statistics</em></h4>
+
+  <br>
+
+  <p><strong>Obsession Count</strong>: <%= @user.pronouns_for_defeating_ocd %> <%= @user.objects_count("obsession") %>.</p>
+
+  <br>
+
+  <% if policy(Obsession).create? %>
+    <p>Fixated on something else? <%= link_to "Report a new obsession.", new_obsession_path %></p>
+    <br>
+  <% end %>
+
+  <p><strong>ERP Plan Count</strong>: <%= @user.pronouns_for_designing_plans %> <%= @user.objects_count("plan") %>.</p>
+</div>
+
+<%= render partial: "manage_account", locals: { user: @user } %>

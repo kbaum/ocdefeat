@@ -1,0 +1,12 @@
+<% entitle_page "Obsessions Log" %>
+
+<h2>History of Obsessions</h2>
+
+<% if current_user.therapist? %>
+  <small><em>A full psychiatric history of your patients' obsessions is recorded below.</em></small>
+  <br>
+<% end %>
+
+<br>
+
+<%= render partial: filters, locals: { counselees: @counselees, themes: @themes, obsessions: @obsessions, patient_obsessions: @patient_obsessions } %>

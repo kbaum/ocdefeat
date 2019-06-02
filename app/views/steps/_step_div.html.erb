@@ -1,0 +1,23 @@
+<%= div_for_step(step) do %>
+  <% if step.completed? %>
+    <h4><span class="glyphicon glyphicon-ok-circle"></span> STEP #<%= step.position_in_plan %></h4>
+  <% else %>
+    <h4>STEP #<%= step.position_in_plan %></h4>
+  <% end %>
+
+  <em><%= step.last_modified %></em>
+
+  <br><br>
+
+  <p><strong>Instructions for Performing Step</strong>: <%= step.instructions %></p>
+  <p><strong>Duration of Step</strong>: <%= step.duration %></p>
+  <p><strong>Degree of Discomfort</strong>: <%= step.display_discomfort %></p>
+
+  <%= render partial: "steps/set_step_status", locals: { step: step } if current_user == step.plan.user %>
+
+  <br>
+
+  <%= step.edit_link if policy(step).update? && !step.plan.finished? %>
+
+  <%= step.delete_link if policy(step).destroy? && !step.plan.finished? %>
+<% end %>

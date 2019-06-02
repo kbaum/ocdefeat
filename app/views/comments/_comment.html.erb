@@ -1,0 +1,11 @@
+<div class="well well-lg">
+  <p><%= comment.commenter_name %> wrote: "<em><%= comment.content %></em>"</p>
+
+  <small><em><%= comment.last_modified %></em></small>
+
+  <br><br>
+
+  <%= comment.edit_link if policy(comment).edit? %>
+  
+  <%= comment.delete_link if policy(comment).destroy? %>
+</div>

@@ -1,0 +1,11 @@
+<% entitle_page "Edit ERP Exercise" %>
+
+<h3>Editing ERP Exercise</h3>
+
+<p><em>How can you optimize this exposure opportunity to achieve desensitization?</em></p>
+
+<%= render partial: "step", locals: { step: @step, plan: @plan } %>
+
+<br>
+
+<p><%= link_to "Go back to plan", plan_path(@plan) %></p>
